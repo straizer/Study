@@ -4,6 +4,6 @@
 
 using std::pair;
 
-pair<int, double> GetInput(void);
-void PrintOutput(double, double, double);
+pair<double, double> GetInput(void);
+void PrintOutput(double, size_t componentCount, double);
 void WaitForExit(void);

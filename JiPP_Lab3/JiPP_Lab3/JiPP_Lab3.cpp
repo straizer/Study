@@ -3,13 +3,19 @@
 
 int main(void)
 {
-	auto [ componentCount, xValue ] = GetInput();
-
-	double calculatedValue = GetSum(componentCount, xValue);
+	auto [ epsilon, xValue ] = GetInput();
 	double exactValue = exp(xValue);
-	double error = CalculateError(calculatedValue, exactValue);
 
-	PrintOutput(exactValue, calculatedValue, error);
+	double calculatedValue, error;
+	size_t componentCount = 0;
+	do 
+	{
+		calculatedValue = GetSum(componentCount, xValue);
+		error = CalculateError(calculatedValue, exactValue);
+		componentCount++;
+	}
+	while (error > epsilon);	
 
+	PrintOutput(calculatedValue, componentCount, error);
 	WaitForExit();
 }

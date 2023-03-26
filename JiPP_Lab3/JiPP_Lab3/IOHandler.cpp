@@ -7,24 +7,23 @@ using std::cout;
 using std::endl;
 using std::scientific;
 
-pair<int, double> GetInput(void)
+pair<double, double> GetInput(void)
 {
-	cout << "Program calculates sum of 'n' first elements of series 'x^n/n!'" << endl;
-	cout << "Input component count and x value: ";
-	int componentCount;
-	double x_value;
-	if (cin >> componentCount >> x_value)
-		return { componentCount, x_value };
+	cout << "Program calculates how many components of series 'x^n/n!' are necessary for error to be below certain epsilon value." << endl;
+	cout << "Input epsilon and x value: ";
+	double epsilon, xValue;
+	if (cin >> epsilon >> xValue)
+		return { epsilon, xValue };
 	cout << endl << "Error!";
 	exit(1);
 }
 
-void PrintOutput(double exactValue, double calculatedValue, double error)
+void PrintOutput(double calculatedValue, size_t componentCount, double error)
 {
 	cout.precision(14);
 	cout << scientific;
-	cout << "Exact value = " << exactValue << endl;
 	cout << "Calculated value = " << calculatedValue << endl;
+	cout << "Component count = " << componentCount << endl;
 	cout << "Error = " << error << endl;
 }
 

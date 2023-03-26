@@ -16,5 +16,5 @@ double GetSum(int componentCount, double xValue)
 
 double CalculateError(double calculatedValue, double exactValue)
 {
-	return fabs(calculatedValue - exactValue) / fabs(exactValue);
+	return fabs(calculatedValue - exactValue);
 }

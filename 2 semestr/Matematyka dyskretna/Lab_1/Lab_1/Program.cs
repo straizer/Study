@@ -11,15 +11,15 @@
         var engine = new NumericalEngine();
 
         for (int i = 1; i <= number; i++)
-            Console.WriteLine($"Triangular number for {i}: {engine.TriangularNumber(i)}");
+            Console.WriteLine($"{i}. triangular number: {engine.TriangularNumber(i)}");
 
         Console.WriteLine();
         for (int i = 1; i <= number; i++)
-            Console.WriteLine($"Fibonacci number for {i}: {engine.Fibonacci(i)}");
+            Console.WriteLine($"{i}. Fibonacci number: {engine.Fibonacci(i)}");
 
         Console.WriteLine();
         for (int i = 1; i <= number; i++)
-            Console.WriteLine($"Factorial for {i}: {engine.Factorial((ulong)i)}");
+            Console.WriteLine($"Factorial for {i}: {engine.Factorial(i)}");
 
         Console.WriteLine();
         for (int i = 1; i <= number; i++)

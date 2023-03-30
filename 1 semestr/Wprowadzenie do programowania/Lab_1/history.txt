@@ -1,0 +1,108 @@
+    1  ls
+    2  cd .
+    3  ls
+    4  cd ..
+    5  ls
+    6  cd roman
+    7  cd romaniak.hubert
+    8  ls
+    9  mkdir Zadania
+   10  ls
+   11  cd Zadania/
+   12  mkdir Zadanie-1
+   13  man mkdir
+   14  cd ..
+   15  mkdir kat1/kat2/kat3 -p
+   16  ls
+   17  cd kat1
+   18  ls
+   19  cd ../Zadania
+   20  cd Zadanie-1/
+   21  cd ..
+   22  ls
+   23  cd ..
+   24  ls
+   25  rmdir kat1
+   26  man rmdir
+   27  rmdir kat1 -p
+   28  ls
+   29  rmdir kat1 -p
+   30  man rmdir
+   31  rmdir -p kat1
+   32  man rmdir
+   33  rm kat1
+   34  rm kat1 -r
+   35  ls
+   36  cd Zadania
+   37  ls
+   38  touch plik1.txt plik2.txt plik3.txt plik4.txt
+   39  ls
+   40  touch plik1.c plik2.c plik3.c plik4.c
+   41  ls
+   42  man mkdir
+   43  man cpman cp
+   44  ls
+   45  man find
+   46  cp 'find -name \*.c' ./Zadanie-1
+   47  cp 'find -name \*.c*' ./Zadanie-1
+   48  find -name \*.c*
+   49  find -name \*.c
+   50  find -name .c
+   51  find -name *.c
+   52  find -name \*.c
+   53  cp *.c ./Zadanie-1
+   54  ls
+   55  cd Zadanie-1/
+   56  ls
+   57  rm plik1.c
+   58  rm plik2.c
+   59  rm plik3.c
+   60  rm plik4.c 
+   61  cd ..
+   62  ls
+   63  man cp
+   64  cp *.c ./Zadanie-1
+   65  cd Zadanie-1/
+   66  ls
+   67  cd ../..
+   68  ls
+   69  cp -R ./Zadania ./Zadania-kopia
+   70  cd Zadania-kopia/
+   71  ls
+   72  cd Zadanie-1/
+   73  rm -v ./*
+   74  ls
+   75  man mv
+   76  cd ..
+   77  mv ./Zadanie-1 ./Zadanie-2
+   78  ls
+   79  history
+   80  history > ./Zadanie-2/history.txt
+   81  cat Zadanie-2/history.txt 
+   82  ls
+   83  mv ./plik[24].\* ./Zadanie-2/plik[24].\*
+   84  mv ./plik[24].*+ ./Zadanie-2/plik[24].*+
+   85  find plik[24]*
+   86  mv 'find plik[24]*' ./Zadanie-2/
+   87  mv ./'find plik[24]*' ./Zadanie-2/
+   88* find plik[24]* ./Zadanie-2/
+   89  mv -v 'find .  plik[24]*' ./Zadanie-2/
+   90  mv 'find -name plik[24]*' ./Zadanie-2/
+   91  mv 'find -name "plik[24]*"' ./Zadanie-2/
+   92  find . -name plik[24]
+   93  find . -name plik[24]*
+   94  find . -name 'plik[24]*'
+   95  mv 'find . -name 'plik[24]*'' ./Zadanie-2/
+   96  find . -name 'plik[24]*' -exec '{}' ./Zadanie-2/
+   97  find . -name 'plik[24]*' -exec '{}' ./Zadanie-2/ \
+   98  ls
+   99  ls ./Zadanie-2/
+  100  man find
+  101  find . -name 'plik[24]*' -exec mv '{}' ./Zadanie-2/ \
+  102  man mv
+  103  find . -name 'plik[24]*' -exec mv -t ./Zadanie-2/ {} +
+  104  ls
+  105  ls ./Zadanie-2/
+  106  ls
+  107  cat Zadanie-2/history.txt
+  108  history > ./Zadanie-2/history.txt

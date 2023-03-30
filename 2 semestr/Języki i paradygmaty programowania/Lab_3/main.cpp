@@ -4,15 +4,15 @@
 int main(void)
 {
 	auto [ epsilon, xValue ] = GetInput();
-	double exactValue = exp(xValue);
+	double exactValue = getExactValue(xValue);
 
 	double calculatedValue, error;
 	size_t componentCount = 0;
 	do 
 	{
+		componentCount++;
 		calculatedValue = GetSum(componentCount, xValue);
 		error = CalculateError(calculatedValue, exactValue);
-		componentCount++;
 	}
 	while (error > epsilon);	
 

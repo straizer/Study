@@ -130,7 +130,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="IOHandler.cpp" />
-    <ClCompile Include="JiPP_Lab3.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="SeriesCalculator.cpp" />
   </ItemGroup>
   <ItemGroup>

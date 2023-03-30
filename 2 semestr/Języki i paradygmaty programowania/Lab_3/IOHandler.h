@@ -5,5 +5,5 @@
 using std::pair;
 
 pair<double, double> GetInput(void);
-void PrintOutput(double, size_t componentCount, double);
+void PrintOutput(const double&, const size_t&, const double&);
 void WaitForExit(void);

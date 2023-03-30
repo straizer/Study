@@ -18,7 +18,7 @@ pair<double, double> GetInput(void)
 	exit(1);
 }
 
-void PrintOutput(double calculatedValue, size_t componentCount, double error)
+void PrintOutput(const double& calculatedValue, const size_t& componentCount, const double& error)
 {
 	cout.precision(14);
 	cout << scientific;

@@ -1,50 +1,82 @@
-﻿class NumericalEngine
+﻿/// <summary>
+/// Provides static methods for obtaining n-th values of mathematical sequences.
+/// </summary>
+class NumericalEngine
 {
-    private ulong[] triangularNumbersCache = { 0, 1 };
-    private ulong[] fibonacciNumbersCache = { 0, 1 };
-    private ulong[] factorialsCache = { 1, 1 };
-    private bool[] primeCache = { false, false };
-
-    public ulong TriangularNumber(int number)
+    private static ulong[] triangularNumbersCache = { 0, 1 };
+    private static ulong[] fibonacciNumbersCache = { 0, 1 };
+    private static ulong[] factorialsCache = { 1, 1 };
+    private static bool[] primeCache = { false, false };
+            
+    /// <summary>
+    /// Calculates <paramref name="n"/>-th triangular number.
+    /// </summary>
+    /// <param name="n">Number of triangular number to calculate.</param>
+    /// <remarks>First two triangular numbers are 0 and 1.</remarks>
+    /// <returns><paramref name="n"/>-th triangular number.</returns>
+    public static ulong TriangularNumber(ushort n)
     {
-        if (number >= triangularNumbersCache.Length)
-        {
-            ExtendArray(ref triangularNumbersCache, 0UL, number + 1);
-            triangularNumbersCache[number] = (ulong)number + TriangularNumber(number - 1);
-        }
-        return triangularNumbersCache[number];
+        if (n > 100)
+            TriangularNumber((ushort)(n - 100));
+        if (n >= triangularNumbersCache.Length)
+            ExtendArray(ref triangularNumbersCache, 0UL, (uint)(n + 1));
+        if (triangularNumbersCache[n] == 0 && n != 0)
+            triangularNumbersCache[n] = n + TriangularNumber((ushort)(n - 1));
+        return triangularNumbersCache[n];
     }
 
-    public ulong Fibonacci(int number)
+    /// <summary>
+    /// Calculates <paramref name="n"/>-th Fibonacci number.
+    /// </summary>
+    /// <param name="n">Number of Fibonacci number to calculate.</param>
+    /// <remarks>First two Fibonacci numbers are 0 and 1. If <paramref name="n"/> > 93, throws <see cref="ArgumentOutOfRangeException"/>.</remarks>
+    /// <exception cref="ArgumentOutOfRangeException"/>
+    /// <returns><paramref name="n"/>-th Fibonacci number.</returns>
+    public static ulong Fibonacci(ushort n)
     {
-        if (number >= fibonacciNumbersCache.Length)
-        {
-            ExtendArray(ref fibonacciNumbersCache, 0UL, number + 1);
-            fibonacciNumbersCache[number] = Fibonacci(number - 1) + Fibonacci(number - 2);
-        }
-        return fibonacciNumbersCache[number];
+        if (n > 93)
+            throw new ArgumentOutOfRangeException(nameof(n), "Argument too big to compute");
+        if (n >= fibonacciNumbersCache.Length)
+            ExtendArray(ref fibonacciNumbersCache, 0UL, (uint)(n + 1));
+        if (fibonacciNumbersCache[n] == 0 && n != 0)
+            fibonacciNumbersCache[n] = Fibonacci((ushort)(n - 1)) + Fibonacci((ushort)(n - 2));
+        return fibonacciNumbersCache[n];
     }
 
-    public ulong Factorial(int number)
+    /// <summary>
+    /// Calculates factorial of <paramref name="n"/>.
+    /// </summary>
+    /// <param name="n">Number whose factorial will be calculated.</param>
+    /// <remarks>0! = 1 and 1! = 1. If <paramref name="n"/> > 20, throws <see cref="ArgumentOutOfRangeException"/>.</remarks>
+    /// <exception cref="ArgumentOutOfRangeException"/>
+    /// <returns><paramref name="n"/>!</returns>
+    public static ulong Factorial(ushort n)
     {
-        if (number >= factorialsCache.Length)
-        {
-            ExtendArray(ref factorialsCache, 0UL, number + 1);
-            factorialsCache[number] = (ulong)number * Factorial(number - 1);
-        }
-        return factorialsCache[number];
+        if (n > 20)
+            throw new ArgumentOutOfRangeException(nameof(n), "Argument too big to compute");
+        if (n >= factorialsCache.Length)
+            ExtendArray(ref factorialsCache, 0UL, (uint)(n + 1));
+        if (factorialsCache[n] == 0)
+            factorialsCache[n] = n * Factorial((ushort)(n - 1));
+        return factorialsCache[n];
     }
 
-    public bool IsPrime(int number)
+    /// <summary>
+    /// Checks if <paramref name="n"/> is prime.
+    /// </summary>
+    /// <param name="n">Number to check.</param>
+    /// <remarks>0 and 1 are marked as not prime.</remarks>
+    /// <returns><see langword="true"/> if <paramref name="n"/> is prime; <see langword="false"/> otherwise.</returns>
+    public static bool IsPrime(ushort n)
     {
-        var limit = (int)Math.Floor(Math.Sqrt(number));
-        var oldArraySize = ExtendArray(ref primeCache, true, number + 1);
-        for (int i = 2; i <= limit; i++)
+        var limit = (uint)Math.Floor(Math.Sqrt(n));
+        var oldArraySize = ExtendArray(ref primeCache, true, (uint)(n + 1));
+        for (uint i = 2; i <= limit; i++)
             if (primeCache[i])
-                for (int j = oldArraySize; j < primeCache.Length; j++)
+                for (uint j = oldArraySize > i ? oldArraySize : i + 1; j < primeCache.Length; j++)
                     if (j % i == 0)
                         primeCache[j] = false;
-        return primeCache[number];
+        return primeCache[n];
     }
 
     /// <summary>
@@ -56,19 +88,17 @@
     /// <param name="newSize">New size of <paramref name="array"/>, default is <see langword="null"/>.</param>
     /// <remarks>
     /// If <paramref name="array"/> size is greater or equal to <paramref name="newSize"/>, <paramref name="array"/> is not extended.
-    /// If <paramref name="newSize"/> is <see langword="null"/>, <paramref name="array"/> is extended by 1 element.
     /// </remarks>
     /// <returns>Size of <paramref name="array"/> before extending.</returns>
-    private static int ExtendArray<T>(ref T[] array, T defaultValue, int? newSize = null)
+    private static uint ExtendArray<T>(ref T[] array, T defaultValue, uint newSize)
     {
         var oldSize = array.Length;
-        newSize ??= oldSize + 1;
         if (newSize > oldSize)
         {
             var tempArray = Enumerable.Repeat(defaultValue, (int)newSize).ToArray();
             array.CopyTo(tempArray, 0);
             array = tempArray;
         }
-        return oldSize;
+        return (uint)oldSize;
     }
 }

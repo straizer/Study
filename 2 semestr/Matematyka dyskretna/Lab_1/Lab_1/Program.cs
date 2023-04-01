@@ -1,28 +1,77 @@
-﻿class Program
+﻿/// <summary>
+/// Main class.
+/// </summary>
+class Program
 {
+    /// <summary>
+    /// Main program.
+    /// </summary>
     static void Main()
     {
-        Console.Write("Enter number: ");
-        int number;
-        while (!int.TryParse(Console.ReadLine(), out number))
-            Console.Write("Try again: ");
+        try
+        {
+            var number = GetInput();
+            WriteResults(number, "triangular number", NumericalEngine.TriangularNumber);
+            WriteResults(number, "Fibonacci number", NumericalEngine.Fibonacci);
+            WriteResults(number, "factorial", NumericalEngine.Factorial);
+            WriteResults(number, "prime", NumericalEngine.IsPrime);
+        }
+        catch (IOException)
+        {
+            Environment.Exit(0);
+        }
+    }
+
+    /// <summary>
+    /// Gets input from user.
+    /// </summary>
+    /// <remarks>Only integer in range 1 - 65535 is accepted.</remarks>
+    /// <exception cref="IOException"/>
+    /// <returns>Integer entered by user.</returns>
+    static ushort GetInput()
+    {
+        Console.Write("Enter number (1 - 65535): ");
+        ushort input;
+        do
+        {
+            try
+            {
+                string? raw = Console.ReadLine();
+                if (!ushort.TryParse(raw, out input) || input == 0)
+                    throw new ArgumentOutOfRangeException();
+                break;
+            }
+            catch (SystemException ex) when (ex is OutOfMemoryException || ex is ArgumentOutOfRangeException)
+            {
+                Console.Write("Try again: ");
+            }
+
+        } while (true);
+        return input;
+    }
+
+    /// <summary>
+    /// Prints given <paramref name="function"/> output from 1 to <paramref name="limit"/>.
+    /// </summary>
+    /// <typeparam name="T"><paramref name="function"/> output type.</typeparam>
+    /// <param name="limit">Max number to pass to <paramref name="function"/>.</param>
+    /// <param name="description">Additional description to print.</param>
+    /// <param name="function">Function whose output will be calculated and printed.</param>
+    /// <exception cref="IOException"/>
+    static void WriteResults<T>(ushort limit, string description, Func<ushort, T> function)
+    {
         Console.WriteLine();
-
-        var engine = new NumericalEngine();
-
-        for (int i = 1; i <= number; i++)
-            Console.WriteLine($"{i}. triangular number: {engine.TriangularNumber(i)}");
-
-        Console.WriteLine();
-        for (int i = 1; i <= number; i++)
-            Console.WriteLine($"{i}. Fibonacci number: {engine.Fibonacci(i)}");
-
-        Console.WriteLine();
-        for (int i = 1; i <= number; i++)
-            Console.WriteLine($"Factorial for {i}: {engine.Factorial(i)}");
-
-        Console.WriteLine();
-        for (int i = 1; i <= number; i++)
-            Console.WriteLine($"Is {i} prime: {engine.IsPrime(i)}");
+        for (ushort i = 1; i <= limit; i++)
+        {
+            var iPadded = i.ToString().PadLeft((int)Math.Floor(Math.Log10(limit) + 1));
+            try
+            {
+                Console.WriteLine($"{iPadded}. {description}: {function(i)}");
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Console.WriteLine($"{iPadded}. {description}: {ex.Message}.");
+            }
+        }
     }
 }

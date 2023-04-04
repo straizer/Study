@@ -13,15 +13,10 @@ class Vector
 private:
 	vector<double> value;
 
-	void dotProduct(double) = delete;
-	void dotProduct(double, double) = delete;
-	void crossProduct(double) = delete;
-	void crossProduct(double, double) = delete;
-
 public:
-	Vector(void);
-	Vector(const size_t&, const double&);
-	Vector(const size_t&);
+	explicit Vector(void);
+	explicit Vector(const size_t&);
+	explicit Vector(const size_t&, const double&);
 	Vector(const initializer_list<double>&);
 
 	size_t size(void) const;

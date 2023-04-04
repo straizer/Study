@@ -19,9 +19,9 @@ static void _printSeparators(ostream&, const size_t&, const size_t&);
 
 Vector::Vector(void) : value(vector<double>()) { }
 
-Vector::Vector(const size_t& size, const double& defaultValue) : value(vector<double>(size, defaultValue)) { }
-
 Vector::Vector(const size_t& size) : value(vector<double>(size, 0)) { }
+
+Vector::Vector(const size_t& size, const double& defaultValue) : value(vector<double>(size, defaultValue)) { }
 
 Vector::Vector(const initializer_list<double>& list) : value(list) { }
 

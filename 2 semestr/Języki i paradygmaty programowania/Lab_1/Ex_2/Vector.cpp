@@ -5,41 +5,57 @@
 #include <format>
 #include "InputHandler.h"
 
-using std::right;
 using std::fixed;
 using std::defaultfloat;
 using std::setw;
 using std::format;
 using std::length_error;
 using std::overflow_error;
+using std::out_of_range;
+using std::bad_alloc;
 
 static size_t _getMaxDigitsCount(const Vector&);
 static void _printSeparators(ostream&, const size_t&, const size_t&);
 
 
-Vector::Vector(void) : value(vector<double>()) { }
+Vector::Vector(void) noexcept : value(vector<double>()) { }
 
-Vector::Vector(const size_t& size) : value(vector<double>(size, 0)) { }
+Vector::Vector(const size_t& size)
+try : value(vector<double>(size, 0)) { }
+catch (const length_error&)
+{
+	throw length_error("Vector length too big.");
+}
 
-Vector::Vector(const size_t& size, const double& defaultValue) : value(vector<double>(size, defaultValue)) { }
+Vector::Vector(const size_t& size, const double& value)
+try : value(vector<double>(size, value)) { }
+catch (const length_error&)
+{
+	throw length_error("Vector length too big.");
+}
 
-Vector::Vector(const initializer_list<double>& list) : value(list) { }
+Vector::Vector(const initializer_list<double>& list)
+try : value(list) { }
+catch (const length_error&)
+{
+	throw length_error("List is too big to create Vector.");
+}
 
 
-size_t Vector::size(void) const
+size_t Vector::size(void) const noexcept
 {
 	return value.size();
 }
 
 
-double Vector::dotProduct(const Vector& lhs, const Vector& rhs)
+double Vector::dotProduct(const Vector& left, const Vector& right)
 {
-	if (lhs.size() != rhs.size())
+	if (left.size() != right.size())
 		throw length_error("Size of vectors are not the same.");
 
 	double result = 0;
-	for (size_t i = 0; i < lhs.size(); i++)
-		result += lhs[i] * rhs[i];
+	for (size_t i = 0; i < left.size(); i++)
+		result += left[i] * right[i];
 
 	return result;
 }
@@ -49,9 +65,9 @@ double Vector::dotProduct(const Vector& other) const
 	return Vector::dotProduct(*this, other);
 }
 
-double Vector::dotProduct(const Vector& lhs, const initializer_list<double>& list)
+double Vector::dotProduct(const Vector& left, const initializer_list<double>& list)
 {
-	return Vector::dotProduct(lhs, Vector(list));
+	return Vector::dotProduct(left, Vector(list));
 }
 
 double Vector::dotProduct(const initializer_list<double>& list) const
@@ -60,20 +76,20 @@ double Vector::dotProduct(const initializer_list<double>& list) const
 }
 
 
-Vector Vector::crossProduct(const Vector& lhs, const Vector& rhs)
+Vector Vector::crossProduct(const Vector& left, const Vector& right)
 {
-	if (lhs.size() != rhs.size())
+	if (left.size() != right.size())
 		throw length_error("Size of vectors are not the same.");
 
-	if (lhs.size() == 7)
+	if (left.size() == 7)
 		throw length_error("Cross product of 7D vectors not implemented yet.");
 
-	if (lhs.size() != 3)
+	if (left.size() != 3)
 		throw length_error("Cross product of 2 vectors exist only for 3D and 7D vectors.");
 
 	Vector result = Vector(3);
 	for (size_t i = 0; i < 3; i++)
-		result[i] = lhs[(i + 1) % 3] * rhs[(i + 2) % 3] - lhs[(i + 2) % 3] * rhs[(i + 1) % 3];
+		result[i] = left[(i + 1) % 3] * right[(i + 2) % 3] - left[(i + 2) % 3] * right[(i + 1) % 3];
 
 	return result;
 }
@@ -83,9 +99,9 @@ Vector Vector::crossProduct(const Vector& other) const
 	return Vector::crossProduct(*this, other);
 }
 
-Vector Vector::crossProduct(const Vector& lhs, const initializer_list<double>& list)
+Vector Vector::crossProduct(const Vector& left, const initializer_list<double>& list)
 {
-	return Vector::crossProduct(lhs, Vector(list));
+	return Vector::crossProduct(left, Vector(list));
 }
 
 Vector Vector::crossProduct(const initializer_list<double>& list) const
@@ -94,31 +110,37 @@ Vector Vector::crossProduct(const initializer_list<double>& list) const
 }
 
 
-double& Vector::operator[](size_t id)
+double& Vector::operator[](const size_t& index)
 {
-	return value[id];
+	if (index >= size())
+		throw out_of_range("Vector subscript out of range.");
+
+	return value[index];
 }
 
-const double& Vector::operator[](size_t id) const
+const double& Vector::operator[](const size_t& index) const
 {
-	return value[id];
+	if (index >= size())
+		throw out_of_range("Vector subscript out of range.");
+
+	return value[index];
 }
 
 
 Vector& Vector::operator+=(const Vector& other)
 {
-	if (value.size() != other.size())
+	if (size() != other.size())
 		throw length_error("Size of vectors are not the same.");
 
-	for (size_t i = 0; i < value.size(); i++)
+	for (size_t i = 0; i < size(); i++)
 		value[i] += other[i];
 
 	return *this;
 }
 
-Vector operator+(Vector lhs, const Vector& rhs)
+Vector operator+(Vector left, const Vector& right)
 {	
-	return lhs += rhs;
+	return left += right;
 }
 
 Vector& Vector::operator+=(const double& number)
@@ -126,9 +148,9 @@ Vector& Vector::operator+=(const double& number)
 	return *this += Vector(this->size(), number);
 }
 
-Vector operator+(Vector lhs, const double& number)
+Vector operator+(Vector _vector, const double& number)
 {	
-	return lhs += number;
+	return _vector += number;
 }
 
 Vector& Vector::operator+=(const initializer_list<double>& list)
@@ -149,9 +171,9 @@ Vector& Vector::operator-=(const Vector& other)
 	return *this;
 }
 
-Vector operator-(Vector lhs, const Vector& rhs)
+Vector operator-(Vector left, const Vector& right)
 {	
-	return lhs -= rhs;
+	return left -= right;
 }
 
 Vector& Vector::operator-=(const double& number)
@@ -159,9 +181,9 @@ Vector& Vector::operator-=(const double& number)
 	return *this -= Vector(this->size(), number);
 }
 
-Vector operator-(Vector lhs, const double& number)
+Vector operator-(Vector _vector, const double& number)
 {	
-	return lhs -= number;
+	return _vector -= number;
 }
 
 Vector& Vector::operator-=(const initializer_list<double>& list)
@@ -181,9 +203,9 @@ Vector& Vector::operator*=(const Vector& other)
 	return *this;
 }
 
-Vector operator*(Vector lhs, const Vector& rhs)
+Vector operator*(Vector left, const Vector& right)
 {
-	return lhs *= rhs;
+	return left *= right;
 }
 
 Vector& Vector::operator*=(const double& number)
@@ -191,9 +213,9 @@ Vector& Vector::operator*=(const double& number)
 	return *this *= Vector(this->size(), number);
 }
 
-Vector operator*(Vector lhs, const double& number)
+Vector operator*(Vector _vector, const double& number)
 {
-	return lhs *= number;
+	return _vector *= number;
 }
 
 Vector& Vector::operator*=(const initializer_list<double>& list)
@@ -216,9 +238,9 @@ Vector& Vector::operator/=(const Vector& other)
 	return *this;
 }
 
-Vector operator/(Vector lhs, const Vector& rhs)
+Vector operator/(Vector left, const Vector& right)
 {
-	return lhs /= rhs;
+	return left /= right;
 }
 
 Vector& Vector::operator/=(const double& number)
@@ -226,9 +248,9 @@ Vector& Vector::operator/=(const double& number)
 	return *this /= Vector(this->size(), number);
 }
 
-Vector operator/(Vector lhs, const double& number)
+Vector operator/(Vector _vector, const double& number)
 {
-	return lhs /= number;
+	return _vector /= number;
 }
 
 Vector& Vector::operator/=(const initializer_list<double>& list)
@@ -248,9 +270,9 @@ Vector& Vector::operator^=(const Vector& other)
 	return *this;
 }
 
-Vector operator^(Vector lhs, const Vector& rhs)
+Vector operator^(Vector left, const Vector& right)
 {
-	return lhs ^= rhs;
+	return left ^= right;
 }
 
 Vector& Vector::operator^=(const double& number)
@@ -258,9 +280,9 @@ Vector& Vector::operator^=(const double& number)
 	return *this ^= Vector(this->size(), number);
 }
 
-Vector operator^(Vector lhs, const double& number)
+Vector operator^(Vector _vector, const double& number)
 {
-	return lhs ^= number;
+	return _vector ^= number;
 }
 
 Vector& Vector::operator^=(const initializer_list<double>& list)
@@ -294,21 +316,21 @@ Vector Vector::operator--(int)
 }
 
 
-bool operator==(const Vector& lhs, const Vector& rhs)
+bool operator==(const Vector& left, const Vector& right)
 {
-	if (lhs.size() != rhs.size())
+	if (left.size() != right.size())
 		return false;
 
-	for (size_t i = 0; i < lhs.size(); i++)
-		if (lhs[i] != rhs[i])
+	for (size_t i = 0; i < left.size(); i++)
+		if (left[i] != right[i])
 			return false;
 
 	return true;
 }
 
-bool operator!=(const Vector& lhs, const Vector& rhs)
+bool operator!=(const Vector& left, const Vector& right)
 {
-	return !(lhs == rhs);
+	return !(left == right);
 }
 
 

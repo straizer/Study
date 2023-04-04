@@ -8,13 +8,15 @@ vector<vector<double>> createVector(const size_t&);
 
 int main(void)
 {
-	//cout << Vector{ 1, 3, 4 }.crossProduct(3, 2);
-	Vector v;
-	v = { 1, 2 };
-	cout << v << "\n";
-
-	//cout << Vector{ 1, 3, -5 };
-	//cout << Vector{ 1, 3, -5 }.dotProduct(Vector{ 4, -2, -1 });
+	try
+	{
+		auto a = Vector{ 1, 2 };
+		cout << (a += { 1, 2 });
+	}
+	catch (const std::exception& ex)
+	{
+		cout << ex.what();
+	}
 
 	//size_t rows = getInput<size_t>("Enter rows count: ");
 	//size_t columns = getInput<size_t>("Enter columns count: ");

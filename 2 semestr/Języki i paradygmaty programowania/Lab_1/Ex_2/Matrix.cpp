@@ -1,6 +1,5 @@
-//#include "Matrix.h"
-//
-//#include <iostream>
+#include "Matrix.h"
+
 //#include <iomanip>
 //
 //using std::cout;
@@ -8,7 +7,7 @@
 //using std::right;
 //using std::setprecision;
 //using std::setw;
-//using std::length_error;
+using std::length_error;
 //
 //static void printSeparators(const size_t& columns, const size_t& width)
 //{
@@ -56,3 +55,30 @@
 //		printSeparators(matrix[0].size(), precision + 5);
 //	}
 //}
+
+Matrix::Matrix(void) : value(vector<Vector>()) { }
+
+Matrix::Matrix(const size_t& rows, const size_t& columns) : value(vector<Vector>(rows, Vector(columns))) { }
+
+Matrix::Matrix(const size_t& rows, const size_t& columns, const double& defaultValue) : value(vector<Vector>(rows, Vector(columns, defaultValue))) { }
+
+Matrix::Matrix(const initializer_list<initializer_list<double>>& list) : value(vector<Vector>(list.size()))
+{ 
+	size_t columns = list.begin()->size();
+
+	for (size_t i = 0; i < list.size(); i++)
+	{
+		auto sublist = *(list.begin() + i);
+
+		if (sublist.size() != columns)
+			throw length_error("Columns must have the same size.");
+
+		value[i] = Vector(sublist);
+	}
+}
+
+
+size_t Matrix::size(void) const
+{
+	return value.size();
+}

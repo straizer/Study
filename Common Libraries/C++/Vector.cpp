@@ -17,6 +17,8 @@ static size_t _getMaxDigitsCount(const Vector&);
 static void _printSeparators(ostream&, const size_t&, const size_t&);
 
 
+Vector::Vector(void) : value(vector<double>()) { }
+
 Vector::Vector(const size_t& size, const double& defaultValue) : value(vector<double>(size, defaultValue)) { }
 
 Vector::Vector(const size_t& size) : value(vector<double>(size, 0)) { }
@@ -312,6 +314,9 @@ bool operator!=(const Vector& lhs, const Vector& rhs)
 
 ostream& operator<<(ostream& stream, const Vector& _vector)
 {
+	if (!_vector)
+		return stream;
+
 	size_t width = stream.precision() + _getMaxDigitsCount(_vector) + 2;
 	_printSeparators(stream, _vector.size(), width);	
 
@@ -332,6 +337,12 @@ istream& operator>>(istream& stream, Vector& _vector)
 		_vector[i] = getInput<double>(format("Enter {}. element: ", i), stream);
 
 	return stream;
+}
+
+
+Vector::operator bool() const
+{
+	return !value.empty();
 }
 
 

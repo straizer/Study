@@ -8,10 +8,10 @@ vector<vector<double>> createVector(const size_t&);
 
 int main(void)
 {
-	auto a = Vector{ 1, 3, 4 };
-	cout << "\n" << ++a;
-	cout << "\n" << a++;
-	cout << "\n" << a;
+	//cout << Vector{ 1, 3, 4 }.crossProduct(3, 2);
+	Vector v;
+	v = { 1, 2 };
+	cout << v << "\n";
 
 	//cout << Vector{ 1, 3, -5 };
 	//cout << Vector{ 1, 3, -5 }.dotProduct(Vector{ 4, -2, -1 });

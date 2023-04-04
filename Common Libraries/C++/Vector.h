@@ -13,9 +13,13 @@ class Vector
 private:
 	vector<double> value;
 
-	Vector(void) = delete;
+	void dotProduct(double) = delete;
+	void dotProduct(double, double) = delete;
+	void crossProduct(double) = delete;
+	void crossProduct(double, double) = delete;
 
 public:
+	Vector(void);
 	Vector(const size_t&, const double&);
 	Vector(const size_t&);
 	Vector(const initializer_list<double>&);
@@ -75,4 +79,6 @@ public:
 
 	friend ostream& operator<<(ostream&, const Vector&);
 	friend istream& operator>>(istream&, Vector&);
+
+	operator bool() const;
 };

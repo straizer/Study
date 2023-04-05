@@ -15,10 +15,16 @@ class Vector
 {
 private:
 
+#pragma region Private fields
+
 	/// <summary>
 	/// Private field that holds elements of Vector.
 	/// </summary>
 	vector<double> value;
+
+#pragma endregion
+
+#pragma region Private methods
 
 	/// <summary>
 	/// Gives maximum number of digits before decimal point for elements in given Vector.
@@ -36,7 +42,46 @@ private:
 	/// <exception cref="std::ios_base::failure">If any unhandled exeption was thrown by stream. Leaves the stream in a valid state.</exception>
 	static void writeSeparators(ostream& stream, const size_t& length, const size_t& width);
 
+#pragma endregion
+
 public:
+
+#pragma region Defaults
+
+	/// <summary>
+	/// Copies given Vector to new Vector.
+	/// </summary>
+	/// <exception cref="std::bad_alloc">If allocation fails.</exception>
+	/// <param name="_vector">- Vector whose copy will be made</param>
+	Vector(const Vector& _vector) = default;
+
+	/// <summary>
+	/// Moves given Vector to new Vector.
+	/// </summary>
+	/// <param name="_vector">- Vector which will be moved</param>
+	Vector(Vector&& _vector) noexcept = default;
+
+	/// <summary>
+	/// Assigns copy of given Vector.
+	/// </summary>
+	/// <exception cref="std::bad_alloc">If allocation fails.</exception>
+	/// <param name="_vector">- Vector whose copy will be assigned</param>
+	Vector& operator=(const Vector& _vector) = default;
+
+	/// <summary>
+	/// Assigns given Vector to new Vector.
+	/// </summary>
+	/// <param name="_vector">- Vector whose value will be reassigned</param>
+	Vector& operator=(Vector&& _vector) noexcept = default;
+
+	/// <summary>
+	/// Destroys Vector.
+	/// </summary>
+	~Vector() noexcept = default;
+
+#pragma endregion
+
+#pragma region Constructors
 
 	/// <summary>
 	/// Constructs empty Vector.
@@ -68,6 +113,9 @@ public:
 	/// <exception cref="std::length_error">If total size of list is too big to create Vector.</exception>
 	Vector(const initializer_list<double>& list);
 
+#pragma endregion
+
+#pragma region Public methods
 
 	/// <summary>
 	/// Gives Vector length.
@@ -168,6 +216,9 @@ public:
 	/// <returns>New cross product Vector.</returns>
 	Vector crossProduct(const initializer_list<double>& list) const;
 
+#pragma endregion
+
+#pragma region Operators
 
 	/// <summary>
 	/// Gives Vector element with given index.
@@ -496,4 +547,7 @@ public:
 	/// </summary>
 	/// <returns>true if current Vector is not empty; false otherwise.</returns>
 	operator bool(void) const noexcept;
+
+#pragma endregion
+
 };

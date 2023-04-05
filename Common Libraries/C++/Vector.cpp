@@ -14,6 +14,7 @@ using std::overflow_error;
 using std::out_of_range;
 using std::bad_alloc;
 
+#pragma region Private methods
 
 size_t Vector::getMaxDigitsCount(const Vector& _vector) noexcept
 {
@@ -40,6 +41,9 @@ void Vector::writeSeparators(ostream& stream, const size_t& columns, const size_
 	}
 }
 
+#pragma endregion
+
+#pragma region Constructors
 
 Vector::Vector(void) noexcept : value(vector<double>()) { }
 
@@ -64,6 +68,9 @@ catch (const length_error&)
 	throw length_error("List is too big to create Vector.");
 }
 
+#pragma endregion
+
+#pragma region Public methods
 
 size_t Vector::size(void) const noexcept
 {
@@ -85,7 +92,6 @@ const double& Vector::at(const size_t& index) const
 
 	return value[index];
 }
-
 
 
 double Vector::dotProduct(const Vector& left, const Vector& right)
@@ -149,6 +155,9 @@ Vector Vector::crossProduct(const initializer_list<double>& list) const
 	return Vector::crossProduct(*this, list);
 }
 
+#pragma endregion
+
+#pragma region Operators
 
 double& Vector::operator[](const size_t& index)
 {
@@ -173,7 +182,7 @@ Vector& Vector::operator+=(const Vector& other)
 }
 
 Vector operator+(Vector left, const Vector& right)
-{	
+{
 	return left += right;
 }
 
@@ -183,7 +192,7 @@ Vector& Vector::operator+=(const double& number)
 }
 
 Vector operator+(Vector _vector, const double& number)
-{	
+{
 	return _vector += number;
 }
 
@@ -206,7 +215,7 @@ Vector& Vector::operator-=(const Vector& other)
 }
 
 Vector operator-(Vector left, const Vector& right)
-{	
+{
 	return left -= right;
 }
 
@@ -216,7 +225,7 @@ Vector& Vector::operator-=(const double& number)
 }
 
 Vector operator-(Vector _vector, const double& number)
-{	
+{
 	return _vector -= number;
 }
 
@@ -383,7 +392,7 @@ ostream& operator<<(ostream& stream, const Vector& _vector)
 		return stream;
 
 	size_t width = stream.precision() + Vector::getMaxDigitsCount(_vector) + 2;
-	Vector::writeSeparators(stream, _vector.size(), width);	
+	Vector::writeSeparators(stream, _vector.size(), width);
 
 	stream << fixed << "\n|";
 	for (size_t i = 0; i < _vector.size(); i++)
@@ -409,3 +418,5 @@ Vector::operator bool(void) const noexcept
 {
 	return !value.empty();
 }
+
+#pragma endregion

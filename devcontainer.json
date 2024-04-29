@@ -1,0 +1,35 @@
+{
+    "name": "Python",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/app",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "python.analysis.typeCheckingMode": "basic"
+            },
+            "extensions": [
+                "ms-python.python",
+                "ms-azuretools.vscode-docker",
+                "RTG.py-snippets",
+                "tushortz.python-extended-snippets",
+                "KevinRose.vsc-python-indent",
+                "frhtylcn.pythonsnippets",
+                "almenon.arepl",
+                "njpwerner.autodocstring",
+                "streetsidesoftware.code-spell-checker",
+                "VisualStudioExptTeam.vscodeintellicode",
+                "VisualStudioExptTeam.intellicode-api-usage-examples",
+                "ms-python.vscode-pylance",
+                "ms-python.pylint",
+                "076923.python-image-preview",
+                "mgesbert.python-path",
+                "dongli.python-preview",
+                "njqdev.vscode-python-typehint",
+                "TabNine.tabnine-vscode",
+                "shardulm94.trailing-spaces",
+                "ms-python.debugpy"
+            ]
+        }
+    }
+}

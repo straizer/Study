@@ -1,0 +1,114 @@
+A51 MACRO ASSEMBLER  MAIN                                                                 04/20/2024 08:29:31 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\MAIN.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE MAIN.A51 SET(SMALL) DEBUG PRINT(.\Listings\MAIN.lst) OBJECT(.\Objects\M
+                      AIN.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     MAIN SEGMENT CODE
+                       2             
+  0007                 3     J                       EQU 7
+  000A                 4     K                       EQU 10
+  0004                 5     M                       EQU 4           
+  0020                 6     BufferStart     EQU 20h
+                       7             
+  002A                 8     BufferEnd       EQU BufferStart+K
+  0003                 9     J_COMP          EQU K-J 
+  0020                10     Buffer          DATA BufferStart
+                      11     
+----                  12     CSEG AT 0h
+0000 020000   F       13             JMP start
+                      14             
+----                  15     RSEG MAIN
+0000                  16     start:
+0000 900000   F       17                     MOV             DPTR, #seed
+0003 7820             18                     MOV     R0, #Buffer
+0005 790A             19                     MOV     R1, #K
+0007                  20             start_loop:
+0007 E4               21                             CLR             A
+0008 93               22                             MOVC    A, @A+DPTR
+0009 F6               23                             MOV     @R0, A
+000A A3               24                             INC     DPTR
+000B 08               25                             INC     R0
+000C D9F9             26                             DJNZ    R1, start_loop          
+000E 7820             27                     MOV     R0, #Buffer     
+0010                  28     main_loop:
+0010 C3               29                     CLR             C
+0011 E8               30                     MOV             A, R0
+0012 9420             31                     SUBB    A, #Buffer
+0014 B40702           32                     CJNE    A, #J, a_not_equal_j
+0017 8002             33                     JMP             a_equal_or_greater_than_j
+0019                  34             a_not_equal_j:
+0019 4007             35                     JC              a_less_than_j           
+001B                  36             a_equal_or_greater_than_j:
+001B E8               37                     MOV             A, R0
+001C 9407             38                     SUBB    A, #J
+001E F9               39                     MOV             R1, A
+001F E7               40                     MOV             A, @R1
+0020 8005             41                     JMP     after_compare_shift             
+0022                  42             a_less_than_j:
+0022 E8               43                     MOV             A, R0
+0023 2403             44                     ADD             A, #J_COMP
+0025 F9               45                     MOV             R1, A
+0026 E7               46                     MOV             A, @R1  
+0027                  47             after_compare_shift:    
+0027 26               48                     ADD             A, @R0
+0028                  49             modulo_loop:
+0028 B40402           50                             CJNE    A, #M, a_not_equal_m
+002B 8002             51                             JMP             a_equal_or_greater_than_m
+002D                  52                     a_not_equal_m:
+002D 4005             53                             JC              a_less_than_m           
+002F                  54                     a_equal_or_greater_than_m:
+002F C3               55                             CLR             C
+0030 9404             56                             SUBB    A, #M
+0032 80F4             57                             JMP     modulo_loop             
+A51 MACRO ASSEMBLER  MAIN                                                                 04/20/2024 08:29:31 PAGE     2
+
+0034                  58             a_less_than_m:
+0034 F6               59                     MOV             @R0, A
+0035 08               60                     INC             R0
+0036 B82AD7           61                     CJNE    R0, #BufferEnd, main_loop
+0039 7820             62                     MOV             R0, #Buffer
+003B 80D3             63                     JMP             main_loop               
+003D                  64     seed:
+003D 04050303         65             DB 4, 5, 3, 3, 3, 4, 6, 2, 6, 5                 
+0041 03040602                
+0045 0605                    
+                      66     END
+A51 MACRO ASSEMBLER  MAIN                                                                 04/20/2024 08:29:31 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E                    T Y P E  V A L U E   ATTRIBUTES
+
+AFTER_COMPARE_SHIFT . . .  C ADDR   0027H   R   SEG=MAIN
+A_EQUAL_OR_GREATER_THAN_J  C ADDR   001BH   R   SEG=MAIN
+A_EQUAL_OR_GREATER_THAN_M  C ADDR   002FH   R   SEG=MAIN
+A_LESS_THAN_J . . . . . .  C ADDR   0022H   R   SEG=MAIN
+A_LESS_THAN_M . . . . . .  C ADDR   0034H   R   SEG=MAIN
+A_NOT_EQUAL_J . . . . . .  C ADDR   0019H   R   SEG=MAIN
+A_NOT_EQUAL_M . . . . . .  C ADDR   002DH   R   SEG=MAIN
+BUFFER. . . . . . . . . .  D ADDR   0020H   A   
+BUFFEREND . . . . . . . .  N NUMB   002AH   A   
+BUFFERSTART . . . . . . .  N NUMB   0020H   A   
+J . . . . . . . . . . . .  N NUMB   0007H   A   
+J_COMP. . . . . . . . . .  N NUMB   0003H   A   
+K . . . . . . . . . . . .  N NUMB   000AH   A   
+M . . . . . . . . . . . .  N NUMB   0004H   A   
+MAIN. . . . . . . . . . .  C SEG    0047H       REL=UNIT
+MAIN_LOOP . . . . . . . .  C ADDR   0010H   R   SEG=MAIN
+MODULO_LOOP . . . . . . .  C ADDR   0028H   R   SEG=MAIN
+SEED. . . . . . . . . . .  C ADDR   003DH   R   SEG=MAIN
+START . . . . . . . . . .  C ADDR   0000H   R   SEG=MAIN
+START_LOOP. . . . . . . .  C ADDR   0007H   R   SEG=MAIN
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

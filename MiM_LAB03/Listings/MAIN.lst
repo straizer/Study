@@ -1,0 +1,271 @@
+A51 MACRO ASSEMBLER  MAIN                                                                 04/25/2024 00:44:09 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\MAIN.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE MAIN.A51 INCDIR(..\MiM_LAB03) SET(SMALL) DEBUG PRINT(.\Listings\MAIN.ls
+                      t) OBJECT(.\Objects\MAIN.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     EXTRN CODE (random_init, random_get)
+                       2     
+                       3     PROGRAM SEGMENT CODE
+                       4             
+  0003                 5     LightUpTime                                     EQU 3                                   ; i
+                             nitial diode light up time (3 * 50ms)
+  0003                 6     GuessesUntilLightUpIncrease EQU 3                                       ; number of guesses
+                              until diode light up time is increased
+                       7     
+----                   8     CSEG AT 0h
+0000 020000   F        9             JMP main
+                      10     
+----                  11     RSEG PROGRAM
+0000                  12     main:
+0000 7A03             13                     MOV             R2, #LightUpTime
+0002 7B03             14                     MOV             R3, #GuessesUntilLightUpIncrease
+0004 1100     F       15                     ACALL   random_init                                                     ; i
+                             nitialize random generator
+0006 1100     F       16                     ACALL   wait_to_press_any_to_start                      ; wait for user to 
+                             press any button to start
+0008                  17             main__loop:
+0008 1100     F       18                             ACALL   wait_3000ms                                             ; w
+                             ait 3s before diode is light up
+000A 1100     F       19                             ACALL   random_get                                              ; r
+                             andom number 0-3 is in A
+000C 1100     F       20                             ACALL   light_up_diode                                  ; light up 
+                             diode represented by random number
+000E 1100     F       21                             ACALL   wait_for_press                                  ; wait for 
+                             button press; carry bit set - correct button pressed, carry bit reset - incorrect button pressed
+0010 1100     F       22                             ACALL   show_diode_sequence                             ; sequence 
+                             displayed when button was pressed                    
+0012 1100     F       23                             ACALL   wait_for_release                                ; wait for 
+                             release all buttons
+0014 80F2             24                             JMP             main__loop
+                      25     
+0016                  26     wait_to_press_any_to_start:
+0016 E5B0             27                     MOV             A, P3
+0018 F4               28                     CPL             A
+0019 60FB             29                     JZ              wait_to_press_any_to_start
+001B 1100     F       30                     ACALL   wait_for_release
+001D 22               31                     RET
+                      32     
+                      33     ; A, R0, P2
+001E                  34     light_up_diode:
+001E 2401             35                     ADD             A, #1
+0020 F8               36                     MOV             R0, A
+0021 7401             37                     MOV             A, #1
+0023                  38             light_up_diode__selector_loop:
+0023 D802             39                             DJNZ    R0, light_up_diode__diode_not_selected
+0025 8003             40                             JMP             light_up_diode__diode_selected
+0027                  41                     light_up_diode__diode_not_selected:     
+0027 23               42                             RL              A
+0028 80F9             43                             JMP             light_up_diode__selector_loop
+002A                  44             light_up_diode__diode_selected: 
+002A F4               45                     CPL             A
+002B F5A0             46                     MOV             P2, A
+002D 22               47                     RET
+A51 MACRO ASSEMBLER  MAIN                                                                 04/25/2024 00:44:09 PAGE     2
+
+                      48     
+                      49     ; A, C, R0-3
+002E                  50     wait_for_press:
+002E EA               51                             MOV             A, R2
+002F F9               52                             MOV             R1, A
+0030                  53                             wait_for_press__R1_x_50ms_loop:
+0030 7819             54                                     MOV             R0, #25
+0032                  55                                     wait_for_press__50ms_loop:
+0032 1100     F       56                                             ACALL   wait_2ms
+0034 E5B0             57                                             MOV             A, P3
+0036 F4               58                                             CPL             A
+0037 7009             59                                             JNZ             wait_for_press__button_pressed_or_t
+                             imeout
+0039 D8F7             60                                             DJNZ    R0, wait_for_press__50ms_loop
+003B D9F3             61                                     DJNZ    R1, wait_for_press__R1_x_50ms_loop
+003D DB03             62                             DJNZ    R3, wait_for_press__button_pressed_or_timeout
+003F 0A               63                             INC             R2
+0040 7B03             64                             MOV             R3, #GuessesUntilLightUpIncrease
+0042                  65                     wait_for_press__button_pressed_or_timeout:      
+0042 D3               66                             SETB    C
+0043 F4               67                             CPL             A
+0044 65A0             68                             XRL             A, P2
+0046 6001             69                             JZ              wait_for_press__correct_button
+0048 C3               70                             CLR             C
+0049                  71                     wait_for_press__correct_button:
+0049 22               72                             RET
+                      73     
+                      74     ; A, C, R0, R6-7, P2    
+004A                  75     show_diode_sequence:
+004A 4003             76                             JC              correct_button
+004C 1100     F       77                             ACALL   show_incorrect_diode_sequence   ; sequence displayed when i
+                             ncorrect button was pressed
+004E 22               78                             RET
+004F                  79                     correct_button: 
+004F 1100     F       80                             ACALL   show_correct_diode_sequence             ; sequence displaye
+                             d when correct button was pressed    
+0051 22               81                             RET
+                      82     
+                      83     ; A, R0, R6-7, P2
+0052                  84     show_incorrect_diode_sequence:
+0052 7821             85                     MOV             R0, #33
+0054 74FF             86                     MOV             A, #0FFh
+0056                  87             show_incorrect_diode_sequence__loop:
+0056 1100     F       88                     ACALL   wait_100ms
+0058 F5A0             89                     MOV             P2, A
+005A F4               90                     CPL     A
+005B D8F9             91                     DJNZ    R0, show_incorrect_diode_sequence__loop
+005D 22               92                     RET
+                      93             
+                      94     ; A, C, R0, R6-7, P2    
+005E                  95     show_correct_diode_sequence:
+005E 7808             96                     MOV             R0, #8
+0060 74FF             97                     MOV             A, #0FFh
+0062                  98             show_correct_diode_sequence__loop1:
+0062 1100     F       99                             ACALL   wait_100ms
+0064 F5A0            100                             MOV             P2, A
+0066 C3              101                             CLR             C
+0067 33              102                             RLC             A
+0068 D8F8            103                             DJNZ    R0, show_correct_diode_sequence__loop1                     
+                                  
+006A 7808            104                     MOV             R0, #8
+006C 7400            105                     MOV             A, #0h
+006E                 106             show_correct_diode_sequence__loop2:
+006E 1100     F      107                             ACALL   wait_100ms
+0070 F5A0            108                             MOV             P2, A
+0072 D3              109                             SETB    C
+A51 MACRO ASSEMBLER  MAIN                                                                 04/25/2024 00:44:09 PAGE     3
+
+0073 33              110                             RLC             A
+0074 D8F8            111                             DJNZ    R0, show_correct_diode_sequence__loop2                  
+0076 7808            112                     MOV             R0, #8
+0078 74FF            113                     MOV             A, #0FFh
+007A                 114             show_correct_diode_sequence__loop3:
+007A 1100     F      115                             ACALL   wait_100ms
+007C F5A0            116                             MOV             P2, A
+007E C3              117                             CLR             C
+007F 13              118                             RRC             A
+0080 D8F8            119                             DJNZ    R0, show_correct_diode_sequence__loop3                     
+                                  
+0082 7808            120                     MOV             R0, #8
+0084 7400            121                     MOV             A, #0h
+0086                 122             show_correct_diode_sequence__loop4:
+0086 1100     F      123                             ACALL   wait_100ms
+0088 F5A0            124                             MOV             P2, A
+008A D3              125                             SETB    C
+008B 13              126                             RRC             A
+008C D8F8            127                             DJNZ    R0, show_correct_diode_sequence__loop4  
+                     128                     
+008E 1100     F      129                     ACALL   wait_100ms
+0090 75A0FF          130                     MOV             P2, #0FFh
+0093 22              131                     RET
+                     132     
+                     133     ; A
+0094                 134     wait_for_release:               
+0094 E5B0            135                     MOV             A, P3
+0096 F4              136                     CPL             A
+0097 70FB            137                     JNZ             wait_for_release
+0099 22              138                     RET
+                     139     
+                     140     ; lasts almost exactly 2ms on 11.0592 MHz target
+009A                 141     wait_2ms:
+009A 758901          142                     MOV             TMOD, #01h
+009D 758CF8          143                     MOV             TH0, #0F8h
+00A0 758ADB          144                     MOV             TL0, #0DBh
+00A3 D28C            145                     SETB    TR0
+00A5 308DFD          146                     JNB             TF0, $
+00A8 C28D            147                     CLR             TF0
+00AA C28C            148                     CLR             TR0
+00AC 22              149                     RET
+                     150             
+                     151     ; lasts exactly 100ms on 11.0592 MHz target     
+00AD                 152     wait_100ms:
+00AD 758901          153                     MOV             TMOD, #01h
+00B0 758C00          154                     MOV             TH0, #0h
+00B3 758A00          155                     MOV             TL0, #0h
+00B6 D28C            156                     SETB    TR0
+00B8 308DFD          157                     JNB             TF0, $
+00BB C28D            158                     CLR             TF0
+00BD C28C            159                     CLR             TR0
+00BF 758C98          160                     MOV             TH0, #098h
+00C2 758A17          161                     MOV             TL0, #017h
+00C5 D28C            162                     SETB    TR0
+00C7 308DFD          163                     JNB             TF0, $
+00CA C28C            164                     CLR             TR0
+00CC C28D            165                     CLR             TF0
+00CE 22              166                     RET
+                     167     
+                     168     ; R0 - lasts exactly 3s on 11.0592 MHz target           
+00CF                 169     wait_3000ms:
+00CF 758901          170                     MOV             TMOD, #01h
+00D2 758C00          171                     MOV             TH0, #0h
+00D5 758A00          172                     MOV             TL0, #0h
+00D8 D28C            173                     SETB    TR0
+00DA 782A            174                     MOV             R0, #42
+A51 MACRO ASSEMBLER  MAIN                                                                 04/25/2024 00:44:09 PAGE     4
+
+00DC                 175             wait_3000ms__loop:
+00DC 308DFD          176                             JNB             TF0, $
+00DF C28D            177                             CLR             TF0
+00E1 D8F9            178                             DJNZ    R0, wait_3000ms__loop
+00E3 C28C            179                     CLR             TR0
+00E5 758CD0          180                     MOV             TH0, #0D0h
+00E8 758A19          181                     MOV             TL0, #019h
+00EB D28C            182                     SETB    TR0
+00ED 308DFD          183                     JNB             TF0, $
+00F0 C28D            184                     CLR             TF0
+00F2 C28C            185                     CLR             TR0
+00F4 22              186                     RET
+                     187             
+                     188     END
+A51 MACRO ASSEMBLER  MAIN                                                                 04/25/2024 00:44:09 PAGE     5
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E                                    T Y P E  V A L U E   ATTRIBUTES
+
+CORRECT_BUTTON. . . . . . . . . . . . .    C ADDR   004FH   R   SEG=PROGRAM
+GUESSESUNTILLIGHTUPINCREASE . . . . . .    N NUMB   0003H   A   
+LIGHTUPTIME . . . . . . . . . . . . . .    N NUMB   0003H   A   
+LIGHT_UP_DIODE. . . . . . . . . . . . .    C ADDR   001EH   R   SEG=PROGRAM
+LIGHT_UP_DIODE__DIODE_NOT_SELECTED. . .    C ADDR   0027H   R   SEG=PROGRAM
+LIGHT_UP_DIODE__DIODE_SELECTED. . . . .    C ADDR   002AH   R   SEG=PROGRAM
+LIGHT_UP_DIODE__SELECTOR_LOOP . . . . .    C ADDR   0023H   R   SEG=PROGRAM
+MAIN. . . . . . . . . . . . . . . . . .    C ADDR   0000H   R   SEG=PROGRAM
+MAIN__LOOP. . . . . . . . . . . . . . .    C ADDR   0008H   R   SEG=PROGRAM
+P2. . . . . . . . . . . . . . . . . . .    D ADDR   00A0H   A   
+P3. . . . . . . . . . . . . . . . . . .    D ADDR   00B0H   A   
+PROGRAM . . . . . . . . . . . . . . . .    C SEG    00F5H       REL=UNIT
+RANDOM_GET. . . . . . . . . . . . . . .    C ADDR   -----       EXT
+RANDOM_INIT . . . . . . . . . . . . . .    C ADDR   -----       EXT
+SHOW_CORRECT_DIODE_SEQUENCE . . . . . .    C ADDR   005EH   R   SEG=PROGRAM
+SHOW_CORRECT_DIODE_SEQUENCE__LOOP1. . .    C ADDR   0062H   R   SEG=PROGRAM
+SHOW_CORRECT_DIODE_SEQUENCE__LOOP2. . .    C ADDR   006EH   R   SEG=PROGRAM
+SHOW_CORRECT_DIODE_SEQUENCE__LOOP3. . .    C ADDR   007AH   R   SEG=PROGRAM
+SHOW_CORRECT_DIODE_SEQUENCE__LOOP4. . .    C ADDR   0086H   R   SEG=PROGRAM
+SHOW_DIODE_SEQUENCE . . . . . . . . . .    C ADDR   004AH   R   SEG=PROGRAM
+SHOW_INCORRECT_DIODE_SEQUENCE . . . . .    C ADDR   0052H   R   SEG=PROGRAM
+SHOW_INCORRECT_DIODE_SEQUENCE__LOOP . .    C ADDR   0056H   R   SEG=PROGRAM
+TF0 . . . . . . . . . . . . . . . . . .    B ADDR   0088H.5 A   
+TH0 . . . . . . . . . . . . . . . . . .    D ADDR   008CH   A   
+TL0 . . . . . . . . . . . . . . . . . .    D ADDR   008AH   A   
+TMOD. . . . . . . . . . . . . . . . . .    D ADDR   0089H   A   
+TR0 . . . . . . . . . . . . . . . . . .    B ADDR   0088H.4 A   
+WAIT_100MS. . . . . . . . . . . . . . .    C ADDR   00ADH   R   SEG=PROGRAM
+WAIT_2MS. . . . . . . . . . . . . . . .    C ADDR   009AH   R   SEG=PROGRAM
+WAIT_3000MS . . . . . . . . . . . . . .    C ADDR   00CFH   R   SEG=PROGRAM
+WAIT_3000MS__LOOP . . . . . . . . . . .    C ADDR   00DCH   R   SEG=PROGRAM
+WAIT_FOR_PRESS. . . . . . . . . . . . .    C ADDR   002EH   R   SEG=PROGRAM
+WAIT_FOR_PRESS__50MS_LOOP . . . . . . .    C ADDR   0032H   R   SEG=PROGRAM
+WAIT_FOR_PRESS__BUTTON_PRESSED_OR_TIMEOUT  C ADDR   0042H   R   SEG=PROGRAM
+WAIT_FOR_PRESS__CORRECT_BUTTON. . . . .    C ADDR   0049H   R   SEG=PROGRAM
+WAIT_FOR_PRESS__R1_X_50MS_LOOP. . . . .    C ADDR   0030H   R   SEG=PROGRAM
+WAIT_FOR_RELEASE. . . . . . . . . . . .    C ADDR   0094H   R   SEG=PROGRAM
+WAIT_TO_PRESS_ANY_TO_START. . . . . . .    C ADDR   0016H   R   SEG=PROGRAM
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

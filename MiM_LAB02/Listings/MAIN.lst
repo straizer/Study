@@ -1,0 +1,56 @@
+A51 MACRO ASSEMBLER  MAIN                                                                 04/22/2024 23:06:38 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\MAIN.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE MAIN.A51 SET(SMALL) DEBUG PRINT(.\Listings\MAIN.lst) OBJECT(.\Objects\M
+                      AIN.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     MAIN SEGMENT CODE
+                       2             
+----                   3     CSEG AT 0h
+0000 020000   F        4             JMP start
+                       5             
+----                   6     RSEG MAIN
+0000                   7             setup:
+0000 7800              8                     MOV             R0, #0
+0002 7900              9                     MOV             R1, #0
+0004                  10             start:
+0004 C3               11                     CLR             C
+0005 E5B0             12                     MOV             A, P3
+0007 F4               13                     CPL     A
+0008 60F6             14                     JZ              setup
+000A F9               15                     MOV             R1, A
+000B 98               16                     SUBB    A, R0
+000C 4006             17                     JC              cleanup
+000E E9               18                     MOV             A, R1           
+000F 68               19                     XRL             A, R0
+0010 65A0             20                     XRL             A, P2
+0012 F5A0             21                     MOV             P2, A
+0014                  22             cleanup:
+0014 E9               23                     MOV             A, R1   
+0015 F8               24                     MOV             R0, A   
+0016 80EC             25                     JMP             start
+                      26     END
+A51 MACRO ASSEMBLER  MAIN                                                                 04/22/2024 23:06:38 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+CLEANUP. . . . . .  C ADDR   0014H   R   SEG=MAIN
+MAIN . . . . . . .  C SEG    0018H       REL=UNIT
+P2 . . . . . . . .  D ADDR   00A0H   A   
+P3 . . . . . . . .  D ADDR   00B0H   A   
+SETUP. . . . . . .  C ADDR   0000H   R   SEG=MAIN
+START. . . . . . .  C ADDR   0004H   R   SEG=MAIN
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

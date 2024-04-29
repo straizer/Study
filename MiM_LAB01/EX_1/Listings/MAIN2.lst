@@ -1,0 +1,38 @@
+A51 MACRO ASSEMBLER  MAIN2                                                                04/20/2024 01:57:32 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\MAIN2.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE MAIN2.A51 SET(SMALL) DEBUG PRINT(.\Listings\MAIN2.lst) OBJECT(.\Objects
+                      \MAIN2.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+----                   1     CSEG AT 0h                                                      ; _SEG AT <address>        
+                                                  -       used as label for compiler to indicate what type of data and w
+                             here in memory it will be added;
+                       2                                                                             ;                  
+                                                                                  possible options for respective segmen
+                             ts: BSEG, CSEG, DSEG, ISEG, XSEG                                                           
+                                                                                                                                    
+0000 2150              3             JMP start                                               ; JMP <label>              
+                                                  -       unconditionally jump to label
+                       4     
+----                   5     CSEG AT 150h
+0150                   6     start:
+                       7     END
+A51 MACRO ASSEMBLER  MAIN2                                                                04/20/2024 01:57:32 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+START. . . . . . .  C ADDR   0150H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

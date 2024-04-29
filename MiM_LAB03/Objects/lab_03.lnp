@@ -1,0 +1,5 @@
+".\Objects\STARTUP.obj",
+".\Objects\MAIN.obj",
+".\Objects\RANDOM.obj" 
+TO ".\Objects\lab_03" 
+PRINT(".\Listings\lab_03.m51") RAMSIZE(256) 

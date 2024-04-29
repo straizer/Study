@@ -1,0 +1,125 @@
+A51 MACRO ASSEMBLER  RANDOM                                                               04/24/2024 03:54:28 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\RANDOM.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE RANDOM.A51 INCDIR(..\MiM_LAB03) SET(SMALL) DEBUG PRINT(.\Listings\RANDO
+                      M.lst) OBJECT(.\Objects\RANDOM.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     RANDOM SEGMENT CODE
+                       2             
+  0007                 3     J                       EQU 7
+  000A                 4     K                       EQU 10
+  0004                 5     M                       EQU 4           
+  0020                 6     BufferStart     EQU 20h
+                       7             
+  002A                 8     BufferEnd       EQU BufferStart+K
+  002B                 9     BufferIdx       EQU BufferEnd+1
+  0003                10     J_COMP          EQU K-J 
+  0020                11     Buffer          DATA BufferStart
+                      12                     
+                      13     PUBLIC random_init, random_get
+                      14     
+----                  15     RSEG RANDOM
+                      16     ; DPTR, A, R0-1
+0000                  17     random_init:
+0000 900000   F       18                     MOV             DPTR, #seed
+0003 7820             19                     MOV     R0, #Buffer
+0005 790A             20                     MOV     R1, #K
+0007                  21             random_init__loop:
+0007 E4               22                             CLR             A
+0008 93               23                             MOVC    A, @A+DPTR
+0009 F6               24                             MOV     @R0, A
+000A A3               25                             INC     DPTR
+000B 08               26                             INC     R0
+000C D9F9             27                             DJNZ    R1, random_init__loop           
+000E 752B20           28                     MOV     BufferIdx, #Buffer      
+0011 22               29                     RET
+                      30     
+                      31     ; A, R0-1               
+0012                  32     random_get:
+0012 C3               33                     CLR             C
+0013 A82B             34                     MOV             R0, BufferIdx
+0015 E8               35                     MOV             A, R0
+0016 9420             36                     SUBB    A, #Buffer
+0018 B40702           37                     CJNE    A, #J, random_get__a_not_equal_j
+001B 8002             38                     JMP             random_get__a_equal_or_greater_than_j
+001D                  39             random_get__a_not_equal_j:
+001D 4007             40                     JC              random_get__a_less_than_j               
+001F                  41             random_get__a_equal_or_greater_than_j:
+001F E8               42                     MOV             A, R0
+0020 9407             43                     SUBB    A, #J
+0022 F9               44                     MOV             R1, A
+0023 E7               45                     MOV             A, @R1
+0024 8005             46                     JMP     random_get__after_compare_shift         
+0026                  47             random_get__a_less_than_j:
+0026 E8               48                     MOV             A, R0
+0027 2403             49                     ADD             A, #J_COMP
+0029 F9               50                     MOV             R1, A
+002A E7               51                     MOV             A, @R1  
+002B                  52             random_get__after_compare_shift:        
+002B 26               53                     ADD             A, @R0
+002C                  54             random_get__modulo_loop:
+002C B40402           55                             CJNE    A, #M, random_get__a_not_equal_m
+002F 8002             56                             JMP             random_get__a_equal_or_greater_than_m
+0031                  57                     random_get__a_not_equal_m:
+A51 MACRO ASSEMBLER  RANDOM                                                               04/24/2024 03:54:28 PAGE     2
+
+0031 4005             58                             JC              random_get__a_less_than_m               
+0033                  59                     random_get__a_equal_or_greater_than_m:
+0033 C3               60                             CLR             C
+0034 9404             61                             SUBB    A, #M
+0036 80F4             62                             JMP     random_get__modulo_loop         
+0038                  63             random_get__a_less_than_m:
+0038 F6               64                     MOV             @R0, A
+0039 08               65                     INC             R0
+003A B82A02           66                     CJNE    R0, #BufferEnd, random_get__return
+003D 7820             67                     MOV             R0, #Buffer
+003F                  68             random_get__return:
+003F 882B             69                     MOV             BufferIdx, R0
+0041 22               70                     RET
+                      71                     
+0042                  72     seed:
+0042 04050303         73             DB 4, 5, 3, 3, 3, 4, 6, 2, 6, 5                 
+0046 03040602                
+004A 0605                    
+                      74             
+                      75     END
+A51 MACRO ASSEMBLER  RANDOM                                                               04/24/2024 03:54:28 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E                                T Y P E  V A L U E   ATTRIBUTES
+
+BUFFER. . . . . . . . . . . . . . . .  D ADDR   0020H   A   
+BUFFEREND . . . . . . . . . . . . . .  N NUMB   002AH   A   
+BUFFERIDX . . . . . . . . . . . . . .  N NUMB   002BH   A   
+BUFFERSTART . . . . . . . . . . . . .  N NUMB   0020H   A   
+J . . . . . . . . . . . . . . . . . .  N NUMB   0007H   A   
+J_COMP. . . . . . . . . . . . . . . .  N NUMB   0003H   A   
+K . . . . . . . . . . . . . . . . . .  N NUMB   000AH   A   
+M . . . . . . . . . . . . . . . . . .  N NUMB   0004H   A   
+RANDOM. . . . . . . . . . . . . . . .  C SEG    004CH       REL=UNIT
+RANDOM_GET. . . . . . . . . . . . . .  C ADDR   0012H   R   SEG=RANDOM
+RANDOM_GET__AFTER_COMPARE_SHIFT . . .  C ADDR   002BH   R   SEG=RANDOM
+RANDOM_GET__A_EQUAL_OR_GREATER_THAN_J  C ADDR   001FH   R   SEG=RANDOM
+RANDOM_GET__A_EQUAL_OR_GREATER_THAN_M  C ADDR   0033H   R   SEG=RANDOM
+RANDOM_GET__A_LESS_THAN_J . . . . . .  C ADDR   0026H   R   SEG=RANDOM
+RANDOM_GET__A_LESS_THAN_M . . . . . .  C ADDR   0038H   R   SEG=RANDOM
+RANDOM_GET__A_NOT_EQUAL_J . . . . . .  C ADDR   001DH   R   SEG=RANDOM
+RANDOM_GET__A_NOT_EQUAL_M . . . . . .  C ADDR   0031H   R   SEG=RANDOM
+RANDOM_GET__MODULO_LOOP . . . . . . .  C ADDR   002CH   R   SEG=RANDOM
+RANDOM_GET__RETURN. . . . . . . . . .  C ADDR   003FH   R   SEG=RANDOM
+RANDOM_INIT . . . . . . . . . . . . .  C ADDR   0000H   R   SEG=RANDOM
+RANDOM_INIT__LOOP . . . . . . . . . .  C ADDR   0007H   R   SEG=RANDOM
+SEED. . . . . . . . . . . . . . . . .  C ADDR   0042H   R   SEG=RANDOM
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

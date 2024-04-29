@@ -1,0 +1,1 @@
+"MAIN.A51" INCDIR(..\MiM_LAB03) SET (SMALL) DEBUG PRINT(.\Listings\MAIN.lst) OBJECT(.\Objects\MAIN.obj) EP

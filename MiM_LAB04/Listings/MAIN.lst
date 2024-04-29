@@ -1,0 +1,84 @@
+A51 MACRO ASSEMBLER  MAIN                                                                 04/25/2024 23:43:25 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\MAIN.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE MAIN.A51 SET(SMALL) DEBUG PRINT(.\Listings\MAIN.lst) OBJECT(.\Objects\M
+                      AIN.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     PROGRAM SEGMENT CODE
+                       2             
+----                   3     CSEG AT 00h
+0000 020000   F        4             JMP main
+                       5             
+----                   6     CSEG AT 0Bh
+000B 020000   F        7             JMP t0_handle
+                       8             
+----                   9     CSEG AT 1Bh
+001B 020000   F       10             JMP t1_handle
+                      11             
+----                  12     RSEG PROGRAM
+0000                  13     main:
+0000 758911           14                     MOV             TMOD, #11h
+0003 D28C             15                     SETB    TR0             
+0005 D2AF             16                     SETB    EA
+0007 D2A9             17                     SETB    ET0
+0009 D2AB             18                     SETB    ET1
+000B 780E             19                     MOV             R0, #14
+000D 80FE             20                     JMP             $
+                      21     
+000F                  22     t0_handle:
+000F D80A             23                     DJNZ    R0, t0_handle__return
+0011 C28C             24                     CLR             TR0
+0013 758DF0           25                     MOV             TH1, #0F0h
+0016 758B16           26                     MOV             TL1, #016h      
+0019 D28E             27                     SETB    TR1
+001B                  28             t0_handle__return:
+001B 32               29                     RETI
+                      30                     
+001C                  31     t1_handle:              
+001C C28E             32                     CLR             TR1
+001E 758C00           33                     MOV             TH0, #000h
+0021 758A00           34                     MOV             TL0, #000h      
+0024 D28C             35                     SETB    TR0
+0026 780E             36                     MOV             R0, #14
+0028 00               37                     NOP
+0029 04               38                     INC             A
+002A F4               39                     CPL             A
+002B F5A0             40                     MOV             P2, A
+002D F4               41                     CPL             A
+002E 32               42                     RETI
+                      43     
+                      44     END
+A51 MACRO ASSEMBLER  MAIN                                                                 04/25/2024 23:43:25 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+EA . . . . . . . .  B ADDR   00A8H.7 A   
+ET0. . . . . . . .  B ADDR   00A8H.1 A   
+ET1. . . . . . . .  B ADDR   00A8H.3 A   
+MAIN . . . . . . .  C ADDR   0000H   R   SEG=PROGRAM
+P2 . . . . . . . .  D ADDR   00A0H   A   
+PROGRAM. . . . . .  C SEG    002FH       REL=UNIT
+T0_HANDLE. . . . .  C ADDR   000FH   R   SEG=PROGRAM
+T0_HANDLE__RETURN.  C ADDR   001BH   R   SEG=PROGRAM
+T1_HANDLE. . . . .  C ADDR   001CH   R   SEG=PROGRAM
+TH0. . . . . . . .  D ADDR   008CH   A   
+TH1. . . . . . . .  D ADDR   008DH   A   
+TL0. . . . . . . .  D ADDR   008AH   A   
+TL1. . . . . . . .  D ADDR   008BH   A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR0. . . . . . . .  B ADDR   0088H.4 A   
+TR1. . . . . . . .  B ADDR   0088H.6 A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

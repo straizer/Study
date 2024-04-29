@@ -1,0 +1,346 @@
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    04/25/2024  00:44:10  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.4.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\STARTUP.obj, .\Objects\MAIN.obj, .\Objects\RANDOM.obj TO .\Objects\lab_03 PRINT (.
+>> \Listings\lab_03.m51) RAMSIZE (256)
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\STARTUP.obj (?C_STARTUP)
+  .\Objects\MAIN.obj (MAIN)
+  .\Objects\RANDOM.obj (RANDOM)
+
+
+LINK MAP OF MODULE:  .\Objects\lab_03 (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+* OVERLAP * CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     00F5H     UNIT         PROGRAM
+            CODE    08F5H     004CH     UNIT         RANDOM
+            CODE    0941H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+UNRESOLVED EXTERNAL SYMBOLS:
+   ?C_START
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\lab_03 (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0941H         SEGMENT       ?C_C51STARTUP
+  I:0008H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0944H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  04/25/2024  00:44:10  PAGE 2
+
+
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0941H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:0941H         LINE#         133
+  C:0943H         LINE#         134
+  C:0944H         LINE#         135
+  C:0945H         LINE#         136
+  C:0947H         LINE#         185
+  C:094AH         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        MAIN
+  C:0800H         SEGMENT       PROGRAM
+  C:084FH         SYMBOL        CORRECT_BUTTON
+  N:0003H         SYMBOL        GUESSESUNTILLIGHTUPINCREASE
+  N:0003H         SYMBOL        LIGHTUPTIME
+  C:081EH         SYMBOL        LIGHT_UP_DIODE
+  C:0827H         SYMBOL        LIGHT_UP_DIODE__DIODE_NOT_SELECTED
+  C:082AH         SYMBOL        LIGHT_UP_DIODE__DIODE_SELECTED
+  C:0823H         SYMBOL        LIGHT_UP_DIODE__SELECTOR_LOOP
+  C:0800H         SYMBOL        MAIN
+  C:0808H         SYMBOL        MAIN__LOOP
+  D:00A0H         SYMBOL        P2
+  D:00B0H         SYMBOL        P3
+  C:085EH         SYMBOL        SHOW_CORRECT_DIODE_SEQUENCE
+  C:0862H         SYMBOL        SHOW_CORRECT_DIODE_SEQUENCE__LOOP1
+  C:086EH         SYMBOL        SHOW_CORRECT_DIODE_SEQUENCE__LOOP2
+  C:087AH         SYMBOL        SHOW_CORRECT_DIODE_SEQUENCE__LOOP3
+  C:0886H         SYMBOL        SHOW_CORRECT_DIODE_SEQUENCE__LOOP4
+  C:084AH         SYMBOL        SHOW_DIODE_SEQUENCE
+  C:0852H         SYMBOL        SHOW_INCORRECT_DIODE_SEQUENCE
+  C:0856H         SYMBOL        SHOW_INCORRECT_DIODE_SEQUENCE__LOOP
+  B:0088H.5       SYMBOL        TF0
+  D:008CH         SYMBOL        TH0
+  D:008AH         SYMBOL        TL0
+  D:0089H         SYMBOL        TMOD
+  B:0088H.4       SYMBOL        TR0
+  C:08ADH         SYMBOL        WAIT_100MS
+  C:089AH         SYMBOL        WAIT_2MS
+  C:08CFH         SYMBOL        WAIT_3000MS
+  C:08DCH         SYMBOL        WAIT_3000MS__LOOP
+  C:082EH         SYMBOL        WAIT_FOR_PRESS
+  C:0832H         SYMBOL        WAIT_FOR_PRESS__50MS_LOOP
+  C:0842H         SYMBOL        WAIT_FOR_PRESS__BUTTON_PRESSED_OR_TIMEOUT
+  C:0849H         SYMBOL        WAIT_FOR_PRESS__CORRECT_BUTTON
+  C:0830H         SYMBOL        WAIT_FOR_PRESS__R1_X_50MS_LOOP
+  C:0894H         SYMBOL        WAIT_FOR_RELEASE
+  C:0816H         SYMBOL        WAIT_TO_PRESS_ANY_TO_START
+  C:0000H         LINE#         9
+  C:0800H         LINE#         13
+  C:0802H         LINE#         14
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  04/25/2024  00:44:10  PAGE 3
+
+
+  C:0804H         LINE#         15
+  C:0806H         LINE#         16
+  C:0808H         LINE#         18
+  C:080AH         LINE#         19
+  C:080CH         LINE#         20
+  C:080EH         LINE#         21
+  C:0810H         LINE#         22
+  C:0812H         LINE#         23
+  C:0814H         LINE#         24
+  C:0816H         LINE#         27
+  C:0818H         LINE#         28
+  C:0819H         LINE#         29
+  C:081BH         LINE#         30
+  C:081DH         LINE#         31
+  C:081EH         LINE#         35
+  C:0820H         LINE#         36
+  C:0821H         LINE#         37
+  C:0823H         LINE#         39
+  C:0825H         LINE#         40
+  C:0827H         LINE#         42
+  C:0828H         LINE#         43
+  C:082AH         LINE#         45
+  C:082BH         LINE#         46
+  C:082DH         LINE#         47
+  C:082EH         LINE#         51
+  C:082FH         LINE#         52
+  C:0830H         LINE#         54
+  C:0832H         LINE#         56
+  C:0834H         LINE#         57
+  C:0836H         LINE#         58
+  C:0837H         LINE#         59
+  C:0839H         LINE#         60
+  C:083BH         LINE#         61
+  C:083DH         LINE#         62
+  C:083FH         LINE#         63
+  C:0840H         LINE#         64
+  C:0842H         LINE#         66
+  C:0843H         LINE#         67
+  C:0844H         LINE#         68
+  C:0846H         LINE#         69
+  C:0848H         LINE#         70
+  C:0849H         LINE#         72
+  C:084AH         LINE#         76
+  C:084CH         LINE#         77
+  C:084EH         LINE#         78
+  C:084FH         LINE#         80
+  C:0851H         LINE#         81
+  C:0852H         LINE#         85
+  C:0854H         LINE#         86
+  C:0856H         LINE#         88
+  C:0858H         LINE#         89
+  C:085AH         LINE#         90
+  C:085BH         LINE#         91
+  C:085DH         LINE#         92
+  C:085EH         LINE#         96
+  C:0860H         LINE#         97
+  C:0862H         LINE#         99
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  04/25/2024  00:44:10  PAGE 4
+
+
+  C:0864H         LINE#         100
+  C:0866H         LINE#         101
+  C:0867H         LINE#         102
+  C:0868H         LINE#         103
+  C:086AH         LINE#         104
+  C:086CH         LINE#         105
+  C:086EH         LINE#         107
+  C:0870H         LINE#         108
+  C:0872H         LINE#         109
+  C:0873H         LINE#         110
+  C:0874H         LINE#         111
+  C:0876H         LINE#         112
+  C:0878H         LINE#         113
+  C:087AH         LINE#         115
+  C:087CH         LINE#         116
+  C:087EH         LINE#         117
+  C:087FH         LINE#         118
+  C:0880H         LINE#         119
+  C:0882H         LINE#         120
+  C:0884H         LINE#         121
+  C:0886H         LINE#         123
+  C:0888H         LINE#         124
+  C:088AH         LINE#         125
+  C:088BH         LINE#         126
+  C:088CH         LINE#         127
+  C:088EH         LINE#         129
+  C:0890H         LINE#         130
+  C:0893H         LINE#         131
+  C:0894H         LINE#         135
+  C:0896H         LINE#         136
+  C:0897H         LINE#         137
+  C:0899H         LINE#         138
+  C:089AH         LINE#         142
+  C:089DH         LINE#         143
+  C:08A0H         LINE#         144
+  C:08A3H         LINE#         145
+  C:08A5H         LINE#         146
+  C:08A8H         LINE#         147
+  C:08AAH         LINE#         148
+  C:08ACH         LINE#         149
+  C:08ADH         LINE#         153
+  C:08B0H         LINE#         154
+  C:08B3H         LINE#         155
+  C:08B6H         LINE#         156
+  C:08B8H         LINE#         157
+  C:08BBH         LINE#         158
+  C:08BDH         LINE#         159
+  C:08BFH         LINE#         160
+  C:08C2H         LINE#         161
+  C:08C5H         LINE#         162
+  C:08C7H         LINE#         163
+  C:08CAH         LINE#         164
+  C:08CCH         LINE#         165
+  C:08CEH         LINE#         166
+  C:08CFH         LINE#         170
+  C:08D2H         LINE#         171
+  C:08D5H         LINE#         172
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  04/25/2024  00:44:10  PAGE 5
+
+
+  C:08D8H         LINE#         173
+  C:08DAH         LINE#         174
+  C:08DCH         LINE#         176
+  C:08DFH         LINE#         177
+  C:08E1H         LINE#         178
+  C:08E3H         LINE#         179
+  C:08E5H         LINE#         180
+  C:08E8H         LINE#         181
+  C:08EBH         LINE#         182
+  C:08EDH         LINE#         183
+  C:08F0H         LINE#         184
+  C:08F2H         LINE#         185
+  C:08F4H         LINE#         186
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        RANDOM
+  C:08F5H         SEGMENT       RANDOM
+  C:0907H         PUBLIC        RANDOM_GET
+  C:08F5H         PUBLIC        RANDOM_INIT
+  D:0020H         SYMBOL        BUFFER
+  N:002AH         SYMBOL        BUFFEREND
+  N:002BH         SYMBOL        BUFFERIDX
+  N:0020H         SYMBOL        BUFFERSTART
+  N:0007H         SYMBOL        J
+  N:0003H         SYMBOL        J_COMP
+  N:000AH         SYMBOL        K
+  N:0004H         SYMBOL        M
+  C:0920H         SYMBOL        RANDOM_GET__AFTER_COMPARE_SHIFT
+  C:0914H         SYMBOL        RANDOM_GET__A_EQUAL_OR_GREATER_THAN_J
+  C:0928H         SYMBOL        RANDOM_GET__A_EQUAL_OR_GREATER_THAN_M
+  C:091BH         SYMBOL        RANDOM_GET__A_LESS_THAN_J
+  C:092DH         SYMBOL        RANDOM_GET__A_LESS_THAN_M
+  C:0912H         SYMBOL        RANDOM_GET__A_NOT_EQUAL_J
+  C:0926H         SYMBOL        RANDOM_GET__A_NOT_EQUAL_M
+  C:0921H         SYMBOL        RANDOM_GET__MODULO_LOOP
+  C:0934H         SYMBOL        RANDOM_GET__RETURN
+  C:08FCH         SYMBOL        RANDOM_INIT__LOOP
+  C:0937H         SYMBOL        SEED
+  C:08F5H         LINE#         18
+  C:08F8H         LINE#         19
+  C:08FAH         LINE#         20
+  C:08FCH         LINE#         22
+  C:08FDH         LINE#         23
+  C:08FEH         LINE#         24
+  C:08FFH         LINE#         25
+  C:0900H         LINE#         26
+  C:0901H         LINE#         27
+  C:0903H         LINE#         28
+  C:0906H         LINE#         29
+  C:0907H         LINE#         33
+  C:0908H         LINE#         34
+  C:090AH         LINE#         35
+  C:090BH         LINE#         36
+  C:090DH         LINE#         37
+  C:0910H         LINE#         38
+  C:0912H         LINE#         40
+  C:0914H         LINE#         42
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  04/25/2024  00:44:10  PAGE 6
+
+
+  C:0915H         LINE#         43
+  C:0917H         LINE#         44
+  C:0918H         LINE#         45
+  C:0919H         LINE#         46
+  C:091BH         LINE#         48
+  C:091CH         LINE#         49
+  C:091EH         LINE#         50
+  C:091FH         LINE#         51
+  C:0920H         LINE#         53
+  C:0921H         LINE#         55
+  C:0924H         LINE#         56
+  C:0926H         LINE#         58
+  C:0928H         LINE#         60
+  C:0929H         LINE#         61
+  C:092BH         LINE#         62
+  C:092DH         LINE#         64
+  C:092EH         LINE#         65
+  C:092FH         LINE#         66
+  C:0932H         LINE#         67
+  C:0934H         LINE#         69
+  C:0936H         LINE#         70
+  -------         ENDMOD        RANDOM
+
+*** WARNING L5: CODE SPACE MEMORY OVERLAP
+    FROM:    0000H
+    TO:      0002H
+
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  ?C_START
+    MODULE:  .\Objects\STARTUP.obj (?C_STARTUP)
+
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  ?C_START
+    MODULE:  .\Objects\STARTUP.obj (?C_STARTUP)
+    ADDRESS: 094BH
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0153H BYTE (16%) *
+******************************************************************************
+
+Program Size: data=9.0 xdata=0 code=339
+LINK/LOCATE RUN COMPLETE.  3 WARNING(S),  0 ERROR(S)

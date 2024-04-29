@@ -1,0 +1,86 @@
+A51 MACRO ASSEMBLER  MAIN                                                                 04/20/2024 02:12:12 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\MAIN.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE MAIN.A51 SET(SMALL) DEBUG PRINT(.\Listings\MAIN.lst) OBJECT(.\Objects\M
+                      AIN.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;       Assembly code is separated into segments that can be saved only into specified addr
+                             esses. There are 5 types of segments:
+                       2     ;       BIT             - bit adresses in range          20h -   2Fh
+                       3     ;       CODE    - code adresses in range   0000h - FFFFh
+                       4     ;       DATA    - memory adresses in range   00h -   7Fh and SFR (special registers in addr
+                             esses 80h - FFh)
+                       5     ;       IDATA   - memory adresses in range   00h -   FFh (internal RAM)
+                       6     ;       XDATA   - memory adresses in range 0000h - FFFFh (external RAM)
+                       7     
+                       8     ;       Addressing modes:
+                       9     ;       Immediate       - #<value>
+                      10     ;       Register        - <register>
+                      11     ;       Direct          - <address>
+                      12     ;       Indirect        - @<register> (address of DATA is in register (MOV)) OR @DPTR (addr
+                             ess of XDATA is in DPTR register (MOVX))
+                      13     ;       Indexed         - @A+<register> (used to access ROM (MOVC))
+                      14     
+  03E8                15     Constant        EQU 1000                                ; <name> EQU <expression>          
+                                  -       define constant, like #define in C; must be evaluated at compile time
+  0020                16     DataLow         DATA 20h                                ; <name> SET <expression>          
+                                  -       like EQU, but value can be changed
+  0021                17     DataHigh        DATA 21h                                ; <name> (I|X)?DATA <address>   -  
+                                  create 'C pointer' that points to specified memory address;
+  0030                18     ResultLow       DATA 30h                                ;                                  
+                                                                  20h is first address allowed for variables;
+  0031                19     ResultHigh      DATA 31h                                ;                                  
+                                                                  there is also IDATA and XDATA for their respective segments
+                      20                                             
+----                  21     CSEG AT 0h                                                      ; _SEG AT <address>        
+                                                  -       used as label for compiler to indicate what type of data and w
+                             here in memory it will be added;
+                      22                                                                             ;                  
+                                                                                  possible options for respective segmen
+                             ts: BSEG, CSEG, DSEG, ISEG, XSEG                                                           
+                                                                                                                                    
+0000 2100             23             JMP start                                               ; JMP <label>              
+                                                  -       unconditionally jump to label
+                      24     
+----                  25     CSEG AT 100h
+                      26             
+0100                  27             start:
+0100 E520             28                     MOV             A, DataLow                      ; MOV <destination>, <sourc
+                             e>   -       transfer data between RAM or SFR locations; upper 128 bytes of data RAM can be addressed indirectly,
+                      29                                                                             ;                  
+                                                                                  and SFR space can be addressed only directly    
+0102 94E8             30                     SUBB    A, #LOW(Constant)       ; ADD A, <value>                           
+                                  -       add value to accumulator; if overflows out of bit 7, CY/PSW.7 (carry bit) is set
+0104 F530             31                     MOV             ResultLow, A            ; LOW(<value>)                     
+                                          -       get low byte of 2-byte variable; analogically HIGH(<value>)
+0106 E521             32                     MOV             A, DataHigh
+0108 9403             33                     SUBB    A, #HIGH(Constant)      ; ADDC A, <value>                          
+                                  -       same as ADD, but also adds CY/PSW.7 (carry bit)
+010A F531             34                     MOV     ResultHigh, A
+                      35     
+                      36     END                                                                     ; END              
+                                                                  - obligatory at end of program, anything beyond END is ommited
+A51 MACRO ASSEMBLER  MAIN                                                                 04/20/2024 02:12:12 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+CONSTANT . . . . .  N NUMB   03E8H   A   
+DATAHIGH . . . . .  D ADDR   0021H   A   
+DATALOW. . . . . .  D ADDR   0020H   A   
+RESULTHIGH . . . .  D ADDR   0031H   A   
+RESULTLOW. . . . .  D ADDR   0030H   A   
+START. . . . . . .  C ADDR   0100H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

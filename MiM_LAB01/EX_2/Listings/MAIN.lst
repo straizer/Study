@@ -1,0 +1,57 @@
+A51 MACRO ASSEMBLER  MAIN                                                                 04/20/2024 05:20:24 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\MAIN.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE MAIN.A51 SET(SMALL) DEBUG PRINT(.\Listings\MAIN.lst) OBJECT(.\Objects\M
+                      AIN.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     MAIN SEGMENT CODE
+                       2             
+  0020                 3     Destination     DATA 20h
+  0005                 4     DataAmount      EQU 5
+                       5             
+----                   6     CSEG AT 0h
+0000 020000   F        7             JMP start
+                       8     
+----                   9     RSEG MAIN
+0000                  10             start:
+0000 900000   F       11                     MOV             DPTR, #hardcoded_data
+0003 7820             12                     MOV     R0, #Destination
+0005 7905             13                     MOV     R1, #DataAmount
+0007                  14             loop:
+0007 7400             15                     MOV             A, #0h
+0009 93               16                     MOVC    A, @A+DPTR
+000A F6               17                     MOV     @R0, A
+000B A3               18                     INC     DPTR
+000C 08               19                     INC     R0
+000D D9F8             20                     DJNZ    R1, loop
+                      21                     
+000F 80FE             22                     SJMP $
+                      23     
+0011                  24             hardcoded_data:
+0011 0B150412         25                     DB      11, 21, 4, 18, 8
+0015 08                      
+                      26     END
+A51 MACRO ASSEMBLER  MAIN                                                                 04/20/2024 05:20:24 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+DATAAMOUNT . . . .  N NUMB   0005H   A   
+DESTINATION. . . .  D ADDR   0020H   A   
+HARDCODED_DATA . .  C ADDR   0011H   R   SEG=MAIN
+LOOP . . . . . . .  C ADDR   0007H   R   SEG=MAIN
+MAIN . . . . . . .  C SEG    0016H       REL=UNIT
+START. . . . . . .  C ADDR   0000H   R   SEG=MAIN
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

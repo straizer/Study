@@ -1,0 +1,50 @@
+<!--suppress LongLine, GrazieInspection, Style -->
+<root>
+    <item name='straizer.java.lang.object.Interrupter'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;ClassUnconnectedToPackage&quot;, &quot;ClassOnlyUsedInOnePackage&quot;}"/>
+        </annotation>
+    </item>
+    <item name='straizer.java.lang.object.Interrupter void run()'>
+    </item>
+    <item name='straizer.java.lang.object.Notifier'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;ClassUnconnectedToPackage&quot;, &quot;ClassOnlyUsedInOnePackage&quot;, &quot;GrazieInspection&quot;, &quot;Style&quot;}"/>
+        </annotation>
+    </item>
+    <item name='straizer.java.lang.object.Notifier void run()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;NakedNotify&quot;, &quot;NotifyWithoutCorrespondingWait&quot;}"/>
+        </annotation>
+    </item>
+    <item name='straizer.java.lang.object.NotifyTestBase NOT_OWNER_TEST_NAME'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;HardCodedStringLiteral&quot;"/>
+        </annotation>
+    </item>
+    <item name='straizer.java.lang.object.NotifyTestBase java.lang.Thread[] notifyPositiveCase(java.util.function.Consumer&lt;? super straizer.java.lang.object.UUT&gt;)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;NonPrivateFieldAccessedInSynchronizedContext&quot;, &quot;SynchronizeOnNonFinalField&quot;}"/>
+        </annotation>
+    </item>
+    <item name='straizer.java.lang.object.NotifyTestBase void verifyThreads(java.lang.Thread[], java.lang.Thread.State)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;AssertWithoutMessage&quot;"/>
+        </annotation>
+    </item>
+    <item name='straizer.java.lang.object.NotifyWaitTestBase void synchronizedWait(long)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;NonPrivateFieldAccessedInSynchronizedContext&quot;, &quot;SynchronizeOnNonFinalField&quot;, &quot;UnconditionalWait&quot;}"/>
+        </annotation>
+    </item>
+    <item name='straizer.java.lang.object.TestBase'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;AbstractClassWithoutAbstractMethods&quot;"/>
+        </annotation>
+    </item>
+    <item name='straizer.java.lang.object.Waiter void run()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;WaitOrAwaitWithoutTimeout&quot;, &quot;WaitWithoutCorrespondingNotify&quot;, &quot;UnconditionalWait&quot;}"/>
+        </annotation>
+    </item>
+</root>

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="8" />
+    <option name="CUSTOM_SCOPE_NAME" value="Java example usage" />
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e04acbbb-6e8d-4a2c-ad48-111993c4ea47" name="Changes" comment="Add tests for `java.lang.Object`" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" show_ignored="true">
+    <option name="groupingKeys">
+      <option value="directory" />
+      <option value="module" />
+    </option>
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+    <option name="PARALLEL_COMPILATION" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Record" />
+        <option value="package-info" />
+        <option value="AnnotationType" />
+        <option value="Class" />
+        <option value="module-info" />
+      </list>
+    </option>
+  </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;straizer&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/straizer/Study.git&quot;,
+    &quot;accountId&quot;: &quot;b29cef37-ffdb-49e3-9508-82537f4f30c4&quot;
+  }
+}</component>
+  <component name="KotlinCodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="MaliciousPackageCheckinHandlerState">
+    <option name="packageCheck" value="true" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="alwaysUpdateSnapshots" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="NamedScopeManager">
+    <order>
+      <scope name="Java example usage" />
+    </order>
+  </component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2mWlLxlHIwIlMCJan9oxZGKCp8p" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+    <ConfirmationsSetting value="2" id="Remove" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main (1).executor": "Debug",
+    "Application.Main (2).executor": "Debug",
+    "Application.Main (3).executor": "Run",
+    "Application.Main (4).executor": "Debug",
+    "Application.Main (5).executor": "Run",
+    "Application.Main.executor": "Run",
+    "Attach to process.pid 54364.executor": "ProcessAttachDebug",
+    "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.All in example-usage.executor": "Run",
+    "JUnit.GetClassTests.positiveTest.executor": "Debug",
+    "JUnit.Main.testHashCode.executor": "Run",
+    "JUnit.ObjectTest.executor": "Run",
+    "JUnit.ObjectTest.getClassTest.executor": "Run",
+    "JUnit.ObjectTest.testHashCode.executor": "Run",
+    "JUnit.Tests.executor": "Run",
+    "JUnit.Tests.notifyNotOwnerTest.executor": "Run",
+    "JUnit.Tests.notifyTest.executor": "Run",
+    "JUnit.Utils.executor": "Run",
+    "Repository.Attach.Annotations": "true",
+    "Repository.Attach.JavaDocs": "true",
+    "Repository.Attach.Sources": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/huber/source/repos/Study/Java example usage/src/test/resources/annotations",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.stylelint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.stylelint": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "C:/Users/huber/source/repos/Study/Java example usage/src/test/java/straizer/java/lang/object/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "rearrange.code.on.save": "true",
+    "run.code.analysis.last.selected.profile": "aStrict",
+    "settings.build.tools.auto.reload": "ALL",
+    "settings.editor.selected.configurable": "settings.qodana",
+    "typescript.add.unambiguous.imports.on.the.fly": "true",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\huber\source\repos\Study\Java example usage\src\main\java\straizer\java\lang\object" />
+      <recent name="C:\Users\huber\source\repos\Study\Java example usage\src\test\java\straizer\java\lang\object" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\huber\source\repos\Study\Java example usage\src\test\resources\annotations\straizer\java\lang\object" />
+      <recent name="C:\Users\huber\source\repos\Study\Java example usage\src\main\resources\annotations\straizer\java\lang\object" />
+      <recent name="C:\Users\huber\source\repos\Study\Java example usage\src\main\resources" />
+      <recent name="C:\Users\huber\source\repos\Study\Java example usage\src" />
+      <recent name="C:\Users\huber\source\repos\Study\Java example usage\test\java" />
+    </key>
+    <key name="IntroduceConstantDialog.RECENTS_KEY">
+      <recent name="straizer.java.lang.object.tests.ToStringTests" />
+      <recent name="straizer.java.lang.object.tests.NotifyTests" />
+      <recent name="straizer.java.lang.ObjectTest" />
+    </key>
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="straizer" />
+      <recent name="straizer.java.lang.object" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="straizer.java.lang.object" />
+      <recent name="straizer" />
+      <recent name="straizer.java.lang" />
+      <recent name="src.straizer.java.lang.object" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="straizer.java.lang.object.tests" />
+      <recent name="straizer.java.lang.object" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.All in example-usage">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="src.straizer.java.lang.object.Main" />
+      <module name="Study" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="src.straizer.java.lang.object.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="straizer.java.lang.object.Main" />
+      <module name="Study" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="straizer.java.lang.object.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All in example-usage" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="example-usage" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GetClassTests.positiveTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="example-usage" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="straizer.java.lang.object.tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="straizer.java.lang.object.tests" />
+      <option name="MAIN_CLASS_NAME" value="straizer.java.lang.object.tests.GetClassTests" />
+      <option name="METHOD_NAME" value="positiveTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NotifyWaitTestBase" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="example-usage" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="straizer.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="straizer.java.lang.object" />
+      <option name="MAIN_CLASS_NAME" value="straizer.java.lang.object.NotifyWaitTestBase" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NotifyWaitTestBase.notifyNotOwnerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="example-usage" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="straizer.java.lang.object.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="straizer.java.lang.object" />
+      <option name="MAIN_CLASS_NAME" value="straizer.java.lang.object.NotifyWaitTestBase" />
+      <option name="METHOD_NAME" value="notifyNotOwnerTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NotifyWaitTestBase.notifyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="example-usage" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="straizer.java.lang.object.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="straizer.java.lang.object" />
+      <option name="MAIN_CLASS_NAME" value="straizer.java.lang.object.NotifyWaitTestBase" />
+      <option name="METHOD_NAME" value="notifyTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.All in example-usage" />
+        <item itemvalue="JUnit.GetClassTests.positiveTest" />
+        <item itemvalue="JUnit.NotifyWaitTestBase" />
+        <item itemvalue="JUnit.NotifyWaitTestBase.notifyTest" />
+        <item itemvalue="JUnit.NotifyWaitTestBase.notifyNotOwnerTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="ShelveChangesManager">
+    <option name="remove_strategy" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="project-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\huber\AppData\Roaming\Subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e04acbbb-6e8d-4a2c-ad48-111993c4ea47" name="Changes" comment="" />
+      <created>1727200161244</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1727200161244</updated>
+      <workItem from="1727200162332" duration="899000" />
+      <workItem from="1727201172027" duration="266000" />
+      <workItem from="1727201478713" duration="2746000" />
+      <workItem from="1727204252302" duration="1414000" />
+      <workItem from="1727205684399" duration="798000" />
+      <workItem from="1727206494728" duration="12601000" />
+      <workItem from="1727385853493" duration="180000" />
+      <workItem from="1727386069813" duration="17179000" />
+      <workItem from="1728236522226" duration="67000" />
+      <workItem from="1728236595413" duration="13000" />
+      <workItem from="1728236613723" duration="31202000" />
+    </task>
+    <task id="LOCAL-00001" summary="Add tests for `java.lang.Object`">
+      <option name="closed" value="true" />
+      <created>1728348223313</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1728348223313</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UpdateCopyrightCheckinHandler">
+    <option name="UPDATE_COPYRIGHT" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="true" />
+    <option name="CHANGED_ON_SERVER_INTERVAL" value="10" />
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <option name="MAXIMUM_HISTORY_ROWS" value="10000" />
+    <MESSAGE value="Add tests for `java.lang.Object`" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add tests for `java.lang.Object`" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

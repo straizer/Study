@@ -1,0 +1,73 @@
+<!--suppress LongLine, GrazieInspection, Style -->
+<root>
+    <item name='straizer.java.lang.object.tests.CloneTests'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;HardCodedStringLiteral&quot;, &quot;AssertWithoutMessage&quot;, &quot;LawOfDemeter&quot;, &quot;ClassUnconnectedToPackage&quot;, &quot;UseOfClone&quot;}"/>
+        </annotation>
+    </item>
+    <item name='straizer.java.lang.object.tests.EqualsTests'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;HardCodedStringLiteral&quot;, &quot;AssertWithoutMessage&quot;, &quot;LawOfDemeter&quot;, &quot;ClassUnconnectedToPackage&quot;, &quot;SimplifiableAssertion&quot;}"/>
+        </annotation>
+    </item>
+    <item name='straizer.java.lang.object.tests.EqualsTests void onSelfTest()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;EqualsWithItself&quot;"/>
+        </annotation>
+    </item>
+    <item name='straizer.java.lang.object.tests.GetClassTests'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;HardCodedStringLiteral&quot;, &quot;AssertWithoutMessage&quot;, &quot;LawOfDemeter&quot;, &quot;ClassUnconnectedToPackage&quot;}"/>
+        </annotation>
+    </item>
+    <item name='straizer.java.lang.object.tests.GetClassTests void getNameEqualsFullNameTest()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;GrazieInspection&quot;, &quot;Style&quot;}"/>
+        </annotation>
+    </item>
+    <item name='straizer.java.lang.object.tests.HashCodeTests'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;HardCodedStringLiteral&quot;, &quot;AssertWithoutMessage&quot;, &quot;LawOfDemeter&quot;, &quot;ClassUnconnectedToPackage&quot;}"/>
+        </annotation>
+    </item>
+    <item name='straizer.java.lang.object.tests.NotifyAllTests'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;HardCodedStringLiteral&quot;, &quot;AssertWithoutMessage&quot;, &quot;LawOfDemeter&quot;, &quot;ClassUnconnectedToPackage&quot;}"/>
+        </annotation>
+    </item>
+    <item name='straizer.java.lang.object.tests.NotifyTests'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;HardCodedStringLiteral&quot;, &quot;AssertWithoutMessage&quot;, &quot;LawOfDemeter&quot;, &quot;ClassUnconnectedToPackage&quot;}"/>
+        </annotation>
+    </item>
+    <item name='straizer.java.lang.object.tests.NotifyTests void singleThreadStoppedAfterNotifyTest()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;TestMethodWithoutAssertion&quot;"/>
+        </annotation>
+    </item>
+    <item name='straizer.java.lang.object.tests.ToStringTests'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;HardCodedStringLiteral&quot;, &quot;AssertWithoutMessage&quot;, &quot;LawOfDemeter&quot;, &quot;ClassUnconnectedToPackage&quot;}"/>
+        </annotation>
+    </item>
+    <item name='straizer.java.lang.object.tests.WaitTests'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;HardCodedStringLiteral&quot;, &quot;AssertWithoutMessage&quot;, &quot;LawOfDemeter&quot;, &quot;ClassUnconnectedToPackage&quot;}"/>
+        </annotation>
+    </item>
+    <item name='straizer.java.lang.object.tests.WaitTests void positiveTest()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;TestMethodWithoutAssertion&quot;"/>
+        </annotation>
+    </item>
+    <item name='straizer.java.lang.object.tests.WaitTests void synchronizedWait(long)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;NonPrivateFieldAccessedInSynchronizedContext&quot;, &quot;SynchronizeOnNonFinalField&quot;, &quot;UnconditionalWait&quot;}"/>
+        </annotation>
+    </item>
+    <item name='straizer.java.lang.object.tests.WaitTests void timeoutTest()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;TestMethodWithoutAssertion&quot;"/>
+        </annotation>
+    </item>
+</root>

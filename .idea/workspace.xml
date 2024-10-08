@@ -8,7 +8,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e04acbbb-6e8d-4a2c-ad48-111993c4ea47" name="Changes" comment="Add tests for `java.lang.Object`" />
+    <list default="true" id="e04acbbb-6e8d-4a2c-ad48-111993c4ea47" name="Changes" comment="Add missing idea files">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -203,14 +205,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="All in example-usage" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="example-usage" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="GetClassTests.positiveTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="example-usage" />
       <extension name="coverage">
@@ -274,6 +268,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="JUnit.All in example-usage" />
+      <item itemvalue="JUnit.GetClassTests.positiveTest" />
+      <item itemvalue="JUnit.NotifyWaitTestBase" />
+      <item itemvalue="JUnit.NotifyWaitTestBase.notifyNotOwnerTest" />
+      <item itemvalue="JUnit.NotifyWaitTestBase.notifyTest" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.All in example-usage" />
@@ -316,7 +317,7 @@
       <workItem from="1727386069813" duration="17179000" />
       <workItem from="1728236522226" duration="67000" />
       <workItem from="1728236595413" duration="13000" />
-      <workItem from="1728236613723" duration="31202000" />
+      <workItem from="1728236613723" duration="31819000" />
     </task>
     <task id="LOCAL-00001" summary="Add tests for `java.lang.Object`">
       <option name="closed" value="true" />
@@ -326,7 +327,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728348223313</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Add missing idea files">
+      <option name="closed" value="true" />
+      <created>1728348737816</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1728348737816</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -342,7 +351,8 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="MAXIMUM_HISTORY_ROWS" value="10000" />
     <MESSAGE value="Add tests for `java.lang.Object`" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add tests for `java.lang.Object`" />
+    <MESSAGE value="Add missing idea files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add missing idea files" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />

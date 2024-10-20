@@ -8,9 +8,7 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e04acbbb-6e8d-4a2c-ad48-111993c4ea47" name="Changes" comment="Add missing idea files">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="e04acbbb-6e8d-4a2c-ad48-111993c4ea47" name="Changes" comment="Podstawy baz danych 2 - lab_01" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,6 +43,11 @@
     <option name="myRunOnSave" value="true" />
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Hubert Romaniak &lt;hubert.romaniak@gmail.com&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -85,7 +88,7 @@
     <option name="myRunOnSave" value="true" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
@@ -122,11 +125,13 @@
     "Repository.Attach.Annotations": "true",
     "Repository.Attach.JavaDocs": "true",
     "Repository.Attach.Sources": "true",
+    "RunOnceActivity.OpenDatabaseViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/huber/source/repos/Study/Java example usage/src/test/resources/annotations",
+    "last_opened_file_path": "C:/Users/huber/source/repos/Study/5 semestr/Podstawy baz danych/PBD_LAB2",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.stylelint": "true",
     "node.js.detected.package.tslint": "true",
@@ -141,22 +146,36 @@
     "rearrange.code.on.save": "true",
     "run.code.analysis.last.selected.profile": "aStrict",
     "settings.build.tools.auto.reload": "ALL",
-    "settings.editor.selected.configurable": "settings.qodana",
+    "settings.editor.selected.configurable": "Console",
+    "sql.codeStylePanel.last.previewDialect": "Oracle",
     "typescript.add.unambiguous.imports.on.the.fly": "true",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "oracle"
+    ],
+    "com.intellij.ide.scratch.LRUPopupBuilder$1/": [
+      "OracleSqlPlus"
+    ],
+    "com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect": [
+      "OracleSqlPlus"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\huber\source\repos\Study\5 semestr\Podstawy baz danych\PBD_LAB2" />
+      <recent name="C:\Users\huber\source\repos\Study\5 semestr\Podstawy baz danych 2\PBD_LAB1" />
       <recent name="C:\Users\huber\source\repos\Study\Java example usage\src\main\java\straizer\java\lang\object" />
       <recent name="C:\Users\huber\source\repos\Study\Java example usage\src\test\java\straizer\java\lang\object" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\huber\source\repos\Study\5 semestr\Podstawy baz danych 2\PBD_LAB1" />
+      <recent name="C:\Users\huber\source\repos\Study" />
       <recent name="C:\Users\huber\source\repos\Study\Java example usage\src\test\resources\annotations\straizer\java\lang\object" />
       <recent name="C:\Users\huber\source\repos\Study\Java example usage\src\main\resources\annotations\straizer\java\lang\object" />
       <recent name="C:\Users\huber\source\repos\Study\Java example usage\src\main\resources" />
-      <recent name="C:\Users\huber\source\repos\Study\Java example usage\src" />
-      <recent name="C:\Users\huber\source\repos\Study\Java example usage\test\java" />
     </key>
     <key name="IntroduceConstantDialog.RECENTS_KEY">
       <recent name="straizer.java.lang.object.tests.ToStringTests" />
@@ -178,7 +197,7 @@
       <recent name="straizer.java.lang.object" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.All in example-usage">
+  <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="src.straizer.java.lang.object.Main" />
       <module name="Study" />
@@ -268,22 +287,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <list>
-      <item itemvalue="JUnit.All in example-usage" />
-      <item itemvalue="JUnit.GetClassTests.positiveTest" />
-      <item itemvalue="JUnit.NotifyWaitTestBase" />
-      <item itemvalue="JUnit.NotifyWaitTestBase.notifyNotOwnerTest" />
-      <item itemvalue="JUnit.NotifyWaitTestBase.notifyTest" />
-    </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="JUnit.All in example-usage" />
-        <item itemvalue="JUnit.GetClassTests.positiveTest" />
-        <item itemvalue="JUnit.NotifyWaitTestBase" />
-        <item itemvalue="JUnit.NotifyWaitTestBase.notifyTest" />
-        <item itemvalue="JUnit.NotifyWaitTestBase.notifyNotOwnerTest" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -317,7 +320,8 @@
       <workItem from="1727386069813" duration="17179000" />
       <workItem from="1728236522226" duration="67000" />
       <workItem from="1728236595413" duration="13000" />
-      <workItem from="1728236613723" duration="31819000" />
+      <workItem from="1728236613723" duration="32461000" />
+      <workItem from="1728826876551" duration="21000" />
     </task>
     <task id="LOCAL-00001" summary="Add tests for `java.lang.Object`">
       <option name="closed" value="true" />
@@ -335,7 +339,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728348737816</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Add missing idea files 2">
+      <option name="closed" value="true" />
+      <created>1728348865405</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1728348865405</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -343,6 +355,17 @@
   </component>
   <component name="UpdateCopyrightCheckinHandler">
     <option name="UPDATE_COPYRIGHT" value="true" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
@@ -352,7 +375,9 @@
     <option name="MAXIMUM_HISTORY_ROWS" value="10000" />
     <MESSAGE value="Add tests for `java.lang.Object`" />
     <MESSAGE value="Add missing idea files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add missing idea files" />
+    <MESSAGE value="Add missing idea files 2" />
+    <MESSAGE value="Podstawy baz danych 2 - lab_01" />
+    <option name="LAST_COMMIT_MESSAGE" value="Podstawy baz danych 2 - lab_01" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />

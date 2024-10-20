@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="PASSWORD" host="torus.uck.pk.edu.pl" id="d15d8b15-cdb4-457e-a91e-0b3ab46fed37" port="22" nameFormat="DESCRIPTIVE" username="romaniak.hubert" useOpenSSHConfig="true" />
+    </configs>
+  </component>
+</project>

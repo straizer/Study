@@ -1,0 +1,370 @@
+-- SKRYPT TWORZACY OBIEKTY DO CWICZEN
+
+DROP TABLE autor_tytul CASCADE CONSTRAINTS PURGE;
+DROP TABLE autor CASCADE CONSTRAINTS PURGE;
+DROP TABLE gatunek CASCADE CONSTRAINTS PURGE;
+DROP TABLE format CASCADE CONSTRAINTS PURGE;
+DROP TABLE ksiazka CASCADE CONSTRAINTS PURGE;
+DROP TABLE czytelnik CASCADE CONSTRAINTS PURGE;
+DROP TABLE wypozyczenia CASCADE CONSTRAINTS PURGE;
+DROP TABLE wydawnictwo CASCADE CONSTRAINTS PURGE;
+
+CREATE TABLE gatunek
+(
+    id_gat  NUMBER(4)
+        CONSTRAINT pk_id_gat PRIMARY KEY,
+    g_nazwa VARCHAR2(30)
+);
+
+CREATE TABLE wydawnictwo
+(
+    id_wyd  NUMBER(4)
+        CONSTRAINT pk_id_wyd PRIMARY KEY,
+    w_nazwa VARCHAR2(30)
+);
+
+CREATE TABLE autor
+(
+    id_aut   NUMBER(4)
+        CONSTRAINT pk_id_aut PRIMARY KEY,
+    nazwisko VARCHAR2(30),
+    imie     VARCHAR2(30),
+    kraj     VARCHAR2(30)
+);
+
+CREATE TABLE format
+(
+    id_for  NUMBER(4)
+        CONSTRAINT pk_id_for PRIMARY KEY,
+    f_nazwa VARCHAR2(30)
+);
+
+CREATE TABLE czytelnik
+(
+    id_czyt      NUMBER(4)
+        CONSTRAINT pk_id_czyt PRIMARY KEY,
+    nazwisko     VARCHAR2(15),
+    imie         VARCHAR2(15),
+    kod_pocztowy VARCHAR2(6),
+    miasto       VARCHAR2(25),
+    ulica        VARCHAR2(25),
+    telefon      VARCHAR2(20)
+);
+
+CREATE TABLE ksiazka
+(
+    id_ks    NUMBER(4)
+        CONSTRAINT pk_id_ks PRIMARY KEY,
+    tytul    VARCHAR2(100),
+    cena     NUMBER(5, 2),
+    id_gat   NUMBER(4)
+        CONSTRAINT fk_id_gat REFERENCES gatunek (id_gat),
+    id_wyd   NUMBER(4)
+        CONSTRAINT fk_id_wyd REFERENCES wydawnictwo (id_wyd),
+    id_for   NUMBER(4)
+        CONSTRAINT fk_id_for REFERENCES format (id_for),
+    data_wyd DATE,
+    l_stron  NUMBER(4)
+);
+
+CREATE TABLE autor_tytul
+(
+    id_aut NUMBER(4)
+        CONSTRAINT fk_id_autor REFERENCES autor (id_aut),
+    id_ks  NUMBER(4)
+        CONSTRAINT fk_id_ksi REFERENCES ksiazka (id_ks)
+);
+
+CREATE TABLE wypozyczenia
+(
+    id_wyp   NUMBER(4)
+        CONSTRAINT pk_id_wyp PRIMARY KEY,
+    id_ks    NUMBER(4)
+        CONSTRAINT fk_id_ks REFERENCES ksiazka (id_ks),
+    id_czyt  NUMBER(4)
+        CONSTRAINT fk_id_czyt REFERENCES czytelnik (id_czyt),
+    data_wyp DATE,
+    data_zwr DATE
+);
+
+
+-- WSTAWIANIE DANYCH
+INSERT INTO wydawnictwo
+VALUES (1, 'PWN');
+INSERT INTO wydawnictwo
+VALUES (2, 'Litera');
+INSERT INTO wydawnictwo
+VALUES (3, 'Helion');
+INSERT INTO wydawnictwo
+VALUES (4, 'Flamarion');
+INSERT INTO wydawnictwo
+VALUES (5, 'Znak');
+INSERT INTO wydawnictwo
+VALUES (6, 'Proza');
+INSERT INTO wydawnictwo
+VALUES (7, 'Sowa');
+INSERT INTO wydawnictwo
+VALUES (8, 'Muza');
+
+
+INSERT INTO gatunek
+VALUES (1, 'Poezja');
+INSERT INTO gatunek
+VALUES (2, 'Dramat');
+INSERT INTO gatunek
+VALUES (3, 'Krymina�');
+INSERT INTO gatunek
+VALUES (4, 'Horror');
+INSERT INTO gatunek
+VALUES (5, 'Fantastyka');
+INSERT INTO gatunek
+VALUES (6, 'Podr�e');
+INSERT INTO gatunek
+VALUES (7, 'Poradnik');
+INSERT INTO gatunek
+VALUES (8, 'Dzienniki');
+
+INSERT INTO autor
+VALUES (1, 'Mickiewicz', 'Adam', 'Polska');
+INSERT INTO autor
+VALUES (2, 'S�owacki', 'Juliusz', 'Polska');
+INSERT INTO autor
+VALUES (3, 'Aseron', 'Juan', 'Hiszpania');
+INSERT INTO autor
+VALUES (4, 'Tren', 'Jan', 'Polska');
+INSERT INTO autor
+VALUES (5, 'Kowal', 'Dariusz', 'Polska');
+INSERT INTO autor
+VALUES (6, 'Porter', 'Emma', 'USA');
+INSERT INTO autor
+VALUES (7, 'Christie', 'Agatha', 'Anglia');
+INSERT INTO autor
+VALUES (8, 'Monro', 'Manuela', 'Hiszpania');
+INSERT INTO autor
+VALUES (9, 'Smith', 'William', 'Anglia');
+INSERT INTO autor
+VALUES (10, 'Lindgren', 'Astrid', 'Szwecja');
+INSERT INTO autor
+VALUES (11, 'Goethe', 'Anna', 'Niemcy');
+INSERT INTO autor
+VALUES (12, 'Jao', 'Tiago', 'Portugalia');
+INSERT INTO autor
+VALUES (13, 'Luna', 'Amelia', 'Francja');
+INSERT INTO autor
+VALUES (14, 'Nilson', 'Emil', 'Szwecja');
+INSERT INTO autor
+VALUES (15, 'Bond', 'James', 'Anglia');
+
+INSERT INTO format
+VALUES (1, 'EBOOK');
+INSERT INTO format
+VALUES (2, 'PAPIER');
+INSERT INTO format
+VALUES (3, 'AUDIOBOOK');
+
+
+
+INSERT INTO czytelnik
+VALUES (1, 'KOWALSKI', 'PIOTR', '31-234', 'WARSZAWA', 'DLUGA 8/12', '123456789');
+INSERT INTO czytelnik
+VALUES (2, 'NOWAK', 'JAN', '43-345', 'WROC�AW', 'NORWIDA 2/1', '987654321');
+INSERT INTO czytelnik
+VALUES (3, 'ADAMCZYK', 'PAWEL', '55-123', 'SOPOT', 'KR�TKA 2', '345677654');
+INSERT INTO czytelnik
+VALUES (4, 'BRACKI', 'BOGDAN', '32-422', 'GDYNIA', 'BA�TYCKA 67/4', '876598457');
+INSERT INTO czytelnik
+VALUES (5, 'LIPKA', 'JAKUB', '33-100', 'KATOWICE', 'POLNA 9', '322143215');
+INSERT INTO czytelnik
+VALUES (6, 'NOWICKI', 'TOMASZ', '42-422', 'KRAK�W', 'SZEWSKA 8/10', '432756439');
+INSERT INTO czytelnik
+VALUES (7, 'LIS', 'ANITA', '77-345', 'KRAK�W', 'MIKO�AJSKA 20/10', '874536932');
+INSERT INTO czytelnik
+VALUES (8, 'DUDEK', 'AGATA', '33-345', 'WARSZAWA', 'KOTLARSKA 9', '564783457');
+INSERT INTO czytelnik
+VALUES (9, 'GIL', 'KRYSTYNA', '22-780', 'GDYNIA', 'WOLNA 77/44', '985327548');
+INSERT INTO czytelnik
+VALUES (10, 'S�OWIK', 'WERONIKA', '87-456', 'KRAK�W', 'SZLAK 23/56', '665766685');
+INSERT INTO czytelnik
+VALUES (11, 'SOSNA', 'AMELIA', '11-486', 'SOPOT', 'SOLNA 56', '665333685');
+INSERT INTO czytelnik
+VALUES (12, 'SIKORA', 'WIKTOR', '87-456', 'KATOWICE', 'WARSZAWSKA 24', '998766685');
+
+
+INSERT INTO ksiazka
+VALUES (1, 'PAN TADEUSZ', 30.00, 1, 2, 1, TO_DATE('2024-01-16', 'YYYY-MM-DD'), 400);
+INSERT INTO ksiazka
+VALUES (2, 'KORDIAN', 25.80, 2, 2, 2, TO_DATE('2023-01-25', 'YYYY-MM-DD'), 200);
+INSERT INTO ksiazka
+VALUES (3, 'DZIADY', 20.00, 2, 2, 1, TO_DATE('2024-01-30', 'YYYY-MM-DD'), 155);
+INSERT INTO ksiazka
+VALUES (4, 'LOKOMOTYWA', 15.25, 3, 4, 3, TO_DATE('2023-11-30', 'YYYY-MM-DD'), 15);
+INSERT INTO ksiazka
+VALUES (5, 'POLLYANNA', 40.00, 7, 2, 2, TO_DATE('2024-08-03', 'YYYY-MM-DD'), 226);
+INSERT INTO ksiazka
+VALUES (6, 'POLANA', 34.44, 7, 2, 2, TO_DATE('2024-02-16', 'YYYY-MM-DD'), 245);
+INSERT INTO ksiazka
+VALUES (7, 'ZMIERZCH', 50.55, 3, 2, 1, TO_DATE('2019-05-15', 'YYYY-MM-DD'), 345);
+INSERT INTO ksiazka
+VALUES (8, 'TAJEMNICA ZAMKU', 25.50, 7, 2, 1, TO_DATE('2021-01-26', 'YYYY-MM-DD'), 258);
+INSERT INTO ksiazka
+VALUES (9, 'SZKOCJA', 44.00, 4, 6, 3, TO_DATE('2022-09-16', 'YYYY-MM-DD'), 120);
+INSERT INTO ksiazka
+VALUES (10, 'HRABIA', 14.00, 3, 8, 3, TO_DATE('2023-03-16', 'YYYY-MM-DD'), 10);
+INSERT INTO ksiazka
+VALUES (11, 'SQL', 130.00, 1, 4, 1, TO_DATE('2022-07-16', 'YYYY-MM-DD'), 400);
+INSERT INTO ksiazka
+VALUES (12, 'PROGRAMOWANIE', 65.50, 2, 2, 2, TO_DATE('2019-01-25', 'YYYY-MM-DD'), 220);
+INSERT INTO ksiazka
+VALUES (13, 'LISTY DOMOWE', 20.99, 2, 2, 1, TO_DATE('2018-01-30', 'YYYY-MM-DD'), 55);
+INSERT INTO ksiazka
+VALUES (14, 'LOKACJA MIASTA', 72.00, 3, 4, 3, TO_DATE('2020-11-30', 'YYYY-MM-DD'), 150);
+INSERT INTO ksiazka
+VALUES (15, 'PLAN ROCZNY', 40.00, 7, 2, 2, TO_DATE('2022-08-03', 'YYYY-MM-DD'), 239);
+INSERT INTO ksiazka
+VALUES (16, 'MORZE CZERWONE', 39.99, 7, 2, 2, TO_DATE('2021-03-06', 'YYYY-MM-DD'), 220);
+INSERT INTO ksiazka
+VALUES (17, 'NIEZNAJOMY', 59.00, 5, 1, 2, TO_DATE('2020-05-15', 'YYYY-MM-DD'), 300);
+INSERT INTO ksiazka
+VALUES (18, 'OGRODNIK', 55.00, 7, 7, 1, TO_DATE('2023-04-16', 'YYYY-MM-DD'), 310);
+INSERT INTO ksiazka
+VALUES (19, 'ZAPISKI', 25.50, 8, 2, 1, TO_DATE('2021-06-26', 'YYYY-MM-DD'), 258);
+INSERT INTO ksiazka
+VALUES (20, 'NOWY DOM', 49.99, 2, 7, 3, TO_DATE('2022-04-04', 'YYYY-MM-DD'), 999);
+
+
+
+INSERT INTO autor_tytul
+VALUES (1, 1);
+INSERT INTO autor_tytul
+VALUES (2, 1);
+INSERT INTO autor_tytul
+VALUES (2, 2);
+INSERT INTO autor_tytul
+VALUES (3, 3);
+INSERT INTO autor_tytul
+VALUES (4, 4);
+INSERT INTO autor_tytul
+VALUES (6, 6);
+INSERT INTO autor_tytul
+VALUES (7, 6);
+INSERT INTO autor_tytul
+VALUES (3, 9);
+INSERT INTO autor_tytul
+VALUES (4, 10);
+INSERT INTO autor_tytul
+VALUES (10, 7);
+INSERT INTO autor_tytul
+VALUES (10, 8);
+INSERT INTO autor_tytul
+VALUES (13, 8);
+INSERT INTO autor_tytul
+VALUES (11, 11);
+INSERT INTO autor_tytul
+VALUES (1, 13);
+INSERT INTO autor_tytul
+VALUES (12, 12);
+INSERT INTO autor_tytul
+VALUES (13, 18);
+INSERT INTO autor_tytul
+VALUES (14, 20);
+INSERT INTO autor_tytul
+VALUES (15, 17);
+INSERT INTO autor_tytul
+VALUES (11, 7);
+INSERT INTO autor_tytul
+VALUES (14, 15);
+INSERT INTO autor_tytul
+VALUES (10, 4);
+INSERT INTO autor_tytul
+VALUES (10, 19);
+INSERT INTO autor_tytul
+VALUES (1, 13);
+INSERT INTO autor_tytul
+VALUES (3, 10);
+INSERT INTO autor_tytul
+VALUES (15, 16);
+INSERT INTO autor_tytul
+VALUES (5, 17);
+
+
+
+INSERT INTO wypozyczenia
+VALUES (1, 1, 1, TO_DATE('2024-01-16', 'YYYY-MM-DD'), TO_DATE('2024-02-15', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (2, 11, 3, TO_DATE('2024-02-08', 'YYYY-MM-DD'), TO_DATE('2024-04-17', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (3, 4, 2, TO_DATE('2024-09-10', 'YYYY-MM-DD'), TO_DATE('2025-01-11', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (4, 4, 5, TO_DATE('2023-12-30', 'YYYY-MM-DD'), TO_DATE('2024-01-14', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (5, 6, 1, TO_DATE('2024-01-10', 'YYYY-MM-DD'), TO_DATE('2024-01-29', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (6, 6, 3, TO_DATE('2023-11-27', 'YYYY-MM-DD'), TO_DATE('2024-02-05', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (7, 2, 5, TO_DATE('2024-01-11', 'YYYY-MM-DD'), TO_DATE('2024-07-02', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (8, 17, 3, TO_DATE('2023-11-02', 'YYYY-MM-DD'), TO_DATE('2024-01-30', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (9, 6, 7, TO_DATE('2024-02-15', 'YYYY-MM-DD'), TO_DATE('2024-06-01', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (10, 1, 6, TO_DATE('2024-02-16', 'YYYY-MM-DD'), TO_DATE('2024-10-01', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (11, 1, 1, TO_DATE('2024-01-16', 'YYYY-MM-DD'), TO_DATE('2024-06-15', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (12, 3, 3, TO_DATE('2023-04-08', 'YYYY-MM-DD'), TO_DATE('2023-04-17', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (13, 14, 12, TO_DATE('2023-03-10', 'YYYY-MM-DD'), TO_DATE('2023-04-11', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (14, 14, 5, TO_DATE('2023-12-30', 'YYYY-MM-DD'), TO_DATE('2024-01-14', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (15, 16, 1, TO_DATE('2024-01-10', 'YYYY-MM-DD'), TO_DATE('2024-08-29', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (16, 6, 3, TO_DATE('2023-11-27', 'YYYY-MM-DD'), TO_DATE('2024-02-05', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (17, 2, 5, TO_DATE('2024-01-04', 'YYYY-MM-DD'), TO_DATE('2024-01-22', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (18, 1, 6, TO_DATE('2023-09-02', 'YYYY-MM-DD'), TO_DATE('2023-09-30', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (19, 6, 7, TO_DATE('2023-07-15', 'YYYY-MM-DD'), TO_DATE('2023-09-01', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (20, 1, 6, TO_DATE('2024-11-16', 'YYYY-MM-DD'), TO_DATE('2024-12-01', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (21, 1, 11, TO_DATE('2024-01-16', 'YYYY-MM-DD'), TO_DATE('2024-02-15', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (22, 1, 1, TO_DATE('2024-04-08', 'YYYY-MM-DD'), TO_DATE('2024-04-17', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (23, 14, 12, TO_DATE('2024-09-10', 'YYYY-MM-DD'), TO_DATE('2024-11-19', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (24, 4, 5, TO_DATE('2023-12-30', 'YYYY-MM-DD'), TO_DATE('2024-01-14', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (25, 6, 11, TO_DATE('2024-01-10', 'YYYY-MM-DD'), TO_DATE('2024-05-29', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (26, 6, 3, TO_DATE('2023-11-27', 'YYYY-MM-DD'), TO_DATE('2024-02-05', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (27, 2, 5, TO_DATE('2024-01-01', 'YYYY-MM-DD'), TO_DATE('2024-01-04', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (28, 1, 6, TO_DATE('2024-11-02', 'YYYY-MM-DD'), TO_DATE('2024-12-30', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (29, 4, 7, TO_DATE('2023-02-15', 'YYYY-MM-DD'), TO_DATE('2023-02-24', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (30, 1, 9, TO_DATE('2023-02-16', 'YYYY-MM-DD'), TO_DATE('2023-12-01', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (31, 1, 6, TO_DATE('2024-01-16', 'YYYY-MM-DD'), TO_DATE('2024-02-15', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (32, 1, 3, TO_DATE('2024-02-28', 'YYYY-MM-DD'), TO_DATE('2024-04-17', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (33, 4, 2, TO_DATE('2022-09-10', 'YYYY-MM-DD'), TO_DATE('2022-11-11', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (34, 4, 12, TO_DATE('2023-02-26', 'YYYY-MM-DD'), TO_DATE('2023-08-14', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (35, 6, 5, TO_DATE('2023-01-10', 'YYYY-MM-DD'), TO_DATE('2023-06-29', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (36, 5, 9, TO_DATE('2024-08-27', 'YYYY-MM-DD'), TO_DATE('2024-09-05', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (37, 2, 4, TO_DATE('2024-02-01', 'YYYY-MM-DD'), TO_DATE('2024-02-09', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (38, 1, 6, TO_DATE('2024-01-09', 'YYYY-MM-DD'), TO_DATE('2024-03-30', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (39, 6, 7, TO_DATE('2024-01-15', 'YYYY-MM-DD'), TO_DATE('2024-08-01', 'YYYY-MM-DD'));
+INSERT INTO wypozyczenia
+VALUES (40, 1, 4, TO_DATE('2024-02-16', 'YYYY-MM-DD'), TO_DATE('2024-12-01', 'YYYY-MM-DD'));

@@ -8,18 +8,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e04acbbb-6e8d-4a2c-ad48-111993c4ea47" name="Changes" comment="Podstawy baz danych 2 - lab_01">
-      <change afterPath="$PROJECT_DIR$/5 semestr/Podstawy sieci komputerowych/PSK_LAB1/Obliczenia.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/5 semestr/Podstawy sieci komputerowych/PSK_LAB1/Sprawozdanie.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/5 semestr/Programowanie w języku Java/PwJJ_LAB1/PwJJ_LAB1.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/5 semestr/Programowanie w języku Java/PwJJ_LAB1/Sprawozdanie.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/5 semestr/Programowanie w języku Java/PwJJ_LAB1/Sprawozdanie.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/5 semestr/Programowanie w języku Java/PwJJ_LAB1/src/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/5 semestr/Programowanie w języku Java/PwJJ_LAB1/src/Rectangle.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/5 semestr/Programowanie w języku Java/PwJJ_LAB1/src/Shape.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/5 semestr/Programowanie w języku Java/PwJJ_LAB1/src/ShapeDescriber.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/5 semestr/Programowanie w języku Java/PwJJ_LAB1/src/Triangle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="e04acbbb-6e8d-4a2c-ad48-111993c4ea47" name="Changes" comment="ASK: lab1-4, PSK: lab1, PwJJ: lab1">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -142,6 +132,7 @@
     "Repository.Attach.Sources": "true",
     "RunOnceActivity.OpenDatabaseViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
@@ -286,8 +277,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
       </set>
     </attachedChunks>
   </component>
@@ -319,6 +310,7 @@
       <workItem from="1728826876551" duration="1845000" />
       <workItem from="1730760029456" duration="1175000" />
       <workItem from="1730761553673" duration="2966000" />
+      <workItem from="1732558842448" duration="614000" />
     </task>
     <task id="LOCAL-00001" summary="Add tests for `java.lang.Object`">
       <option name="closed" value="true" />
@@ -344,7 +336,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728348865405</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="ASK: lab1-4, PSK: lab1, PwJJ: lab1">
+      <option name="closed" value="true" />
+      <created>1732559236895</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1732559236895</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -374,7 +374,8 @@
     <MESSAGE value="Add missing idea files" />
     <MESSAGE value="Add missing idea files 2" />
     <MESSAGE value="Podstawy baz danych 2 - lab_01" />
-    <option name="LAST_COMMIT_MESSAGE" value="Podstawy baz danych 2 - lab_01" />
+    <MESSAGE value="ASK: lab1-4, PSK: lab1, PwJJ: lab1" />
+    <option name="LAST_COMMIT_MESSAGE" value="ASK: lab1-4, PSK: lab1, PwJJ: lab1" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />

@@ -8,10 +8,7 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e04acbbb-6e8d-4a2c-ad48-111993c4ea47" name="Changes" comment="ASK: lab1-4, PSK: lab1, PwJJ: lab1">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="e04acbbb-6e8d-4a2c-ad48-111993c4ea47" name="Changes" comment="Update `.gitignore`" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -105,70 +102,70 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main (1).executor": "Run",
-    "Application.Main (2).executor": "Debug",
-    "Application.Main (3).executor": "Run",
-    "Application.Main (4).executor": "Debug",
-    "Application.Main (5).executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.PwJJ_LAB1.executor": "Run",
-    "Application.Shape.executor": "Run",
-    "Attach to process.pid 54364.executor": "ProcessAttachDebug",
-    "Downloaded.Files.Path.Enabled": "false",
-    "JUnit.All in example-usage.executor": "Run",
-    "JUnit.GetClassTests.positiveTest.executor": "Debug",
-    "JUnit.Main.testHashCode.executor": "Run",
-    "JUnit.ObjectTest.executor": "Run",
-    "JUnit.ObjectTest.getClassTest.executor": "Run",
-    "JUnit.ObjectTest.testHashCode.executor": "Run",
-    "JUnit.Tests.executor": "Run",
-    "JUnit.Tests.notifyNotOwnerTest.executor": "Run",
-    "JUnit.Tests.notifyTest.executor": "Run",
-    "JUnit.Utils.executor": "Run",
-    "Repository.Attach.Annotations": "true",
-    "Repository.Attach.JavaDocs": "true",
-    "Repository.Attach.Sources": "true",
-    "RunOnceActivity.OpenDatabaseViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/huber/source/repos/Study/5 semestr/Programowanie w języku Java/PwJJ_LAB1",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.stylelint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.stylelint": "",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "C:/Users/huber/source/repos/Study/5 semestr/Programowanie w języku Java/PwJJ_LAB1/src/Main.java",
-    "project.structure.last.edited": "Global Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "rearrange.code.on.save": "true",
-    "run.code.analysis.last.selected.profile": "aStrict",
-    "settings.build.tools.auto.reload": "ALL",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "sql.codeStylePanel.last.previewDialect": "Oracle",
-    "typescript.add.unambiguous.imports.on.the.fly": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main (1).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main (2).executor&quot;: &quot;Debug&quot;,
+    &quot;Application.Main (3).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main (4).executor&quot;: &quot;Debug&quot;,
+    &quot;Application.Main (5).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.PwJJ_LAB1.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Shape.executor&quot;: &quot;Run&quot;,
+    &quot;Attach to process.pid 54364.executor&quot;: &quot;ProcessAttachDebug&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;JUnit.All in example-usage.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GetClassTests.positiveTest.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.Main.testHashCode.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ObjectTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ObjectTest.getClassTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ObjectTest.testHashCode.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.Tests.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.Tests.notifyNotOwnerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.Tests.notifyTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.Utils.executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;true&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;true&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenDatabaseViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/huber/source/repos/Study/5 semestr/Programowanie w języku Java/PwJJ_LAB1&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.stylelint&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/huber/source/repos/Study/5 semestr/Programowanie w języku Java/PwJJ_LAB1/src/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Global Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aStrict&quot;,
+    &quot;settings.build.tools.auto.reload&quot;: &quot;ALL&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;sql.codeStylePanel.last.previewDialect&quot;: &quot;Oracle&quot;,
+    &quot;typescript.add.unambiguous.imports.on.the.fly&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "oracle"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;oracle&quot;
     ],
-    "com.intellij.ide.scratch.LRUPopupBuilder$1/": [
-      "OracleSqlPlus"
+    &quot;com.intellij.ide.scratch.LRUPopupBuilder$1/&quot;: [
+      &quot;OracleSqlPlus&quot;
     ],
-    "com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect": [
-      "OracleSqlPlus"
+    &quot;com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect&quot;: [
+      &quot;OracleSqlPlus&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\huber\source\repos\Study\5 semestr\Programowanie w języku Java\PwJJ_LAB1" />
@@ -310,7 +307,7 @@
       <workItem from="1728826876551" duration="1845000" />
       <workItem from="1730760029456" duration="1175000" />
       <workItem from="1730761553673" duration="2966000" />
-      <workItem from="1732558842448" duration="614000" />
+      <workItem from="1732558842448" duration="916000" />
     </task>
     <task id="LOCAL-00001" summary="Add tests for `java.lang.Object`">
       <option name="closed" value="true" />
@@ -344,7 +341,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732559236895</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Update `.gitignore`">
+      <option name="closed" value="true" />
+      <created>1732559510938</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1732559510938</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -375,7 +380,8 @@
     <MESSAGE value="Add missing idea files 2" />
     <MESSAGE value="Podstawy baz danych 2 - lab_01" />
     <MESSAGE value="ASK: lab1-4, PSK: lab1, PwJJ: lab1" />
-    <option name="LAST_COMMIT_MESSAGE" value="ASK: lab1-4, PSK: lab1, PwJJ: lab1" />
+    <MESSAGE value="Update `.gitignore`" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update `.gitignore`" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />

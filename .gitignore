@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudio,visualstudiocode,jetbrains,intellij,c++,java,python,csharp,assembler
-# Edit at https://www.toptal.com/developers/gitignore?templates=windows,linux,macos,visualstudio,visualstudiocode,jetbrains,intellij,c++,java,python,csharp,assembler
+# Created by https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudio,visualstudiocode,jetbrains,intellij,c++,java,maven,python,csharp,assembler
+# Edit at https://www.toptal.com/developers/gitignore?templates=windows,linux,macos,visualstudio,visualstudiocode,jetbrains,intellij,c++,java,maven,python,csharp,assembler
 
 ### Assembler ###
 *.exe
@@ -694,6 +694,25 @@ Temporary Items
 # iCloud generated files
 *.icloud
 
+### Maven ###
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+# https://github.com/takari/maven-wrapper#usage-without-binary-jar
+.mvn/wrapper/maven-wrapper.jar
+
+# Eclipse m2e generated files
+# Eclipse Core
+.project
+# JDT-specific (Eclipse Java Development Tools)
+.classpath
+
 ### Python ###
 # Byte-compiled / optimized / DLL files
 *.py[cod]
@@ -767,7 +786,6 @@ docs/_build/
 
 # PyBuilder
 .pybuilder/
-target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -1078,15 +1096,4 @@ $RECYCLE.BIN/
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
-# End of https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudio,visualstudiocode,jetbrains,intellij,c++,java,python,csharp,assembler
-/.idea/codeStyles/codeStyleConfig.xml
-/.idea/copyright/profiles_settings.xml
-/.idea/inspectionProfiles/profiles_settings.xml
-/.idea/.gitignore
-/.idea/compiler.xml
-/.idea/kotlinc.xml
-/.idea/misc.xml
-/.idea/modules.xml
-/.idea/prettier.xml
-/.idea/Study.iml
-/.idea/vcs.xml
+# End of https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudio,visualstudiocode,jetbrains,intellij,c++,java,maven,python,csharp,assembler

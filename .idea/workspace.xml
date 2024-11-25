@@ -8,7 +8,20 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e04acbbb-6e8d-4a2c-ad48-111993c4ea47" name="Changes" comment="Podstawy baz danych 2 - lab_01" />
+    <list default="true" id="e04acbbb-6e8d-4a2c-ad48-111993c4ea47" name="Changes" comment="Podstawy baz danych 2 - lab_01">
+      <change afterPath="$PROJECT_DIR$/5 semestr/Podstawy sieci komputerowych/PSK_LAB1/Obliczenia.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/5 semestr/Podstawy sieci komputerowych/PSK_LAB1/Sprawozdanie.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/5 semestr/Programowanie w języku Java/PwJJ_LAB1/PwJJ_LAB1.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/5 semestr/Programowanie w języku Java/PwJJ_LAB1/Sprawozdanie.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/5 semestr/Programowanie w języku Java/PwJJ_LAB1/Sprawozdanie.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/5 semestr/Programowanie w języku Java/PwJJ_LAB1/src/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/5 semestr/Programowanie w języku Java/PwJJ_LAB1/src/Rectangle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/5 semestr/Programowanie w języku Java/PwJJ_LAB1/src/Shape.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/5 semestr/Programowanie w języku Java/PwJJ_LAB1/src/ShapeDescriber.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/5 semestr/Programowanie w języku Java/PwJJ_LAB1/src/Triangle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,8 +47,8 @@
         <option value="Record" />
         <option value="package-info" />
         <option value="AnnotationType" />
-        <option value="Class" />
         <option value="module-info" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -104,12 +117,14 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Main (1).executor": "Debug",
+    "Application.Main (1).executor": "Run",
     "Application.Main (2).executor": "Debug",
     "Application.Main (3).executor": "Run",
     "Application.Main (4).executor": "Debug",
     "Application.Main (5).executor": "Run",
     "Application.Main.executor": "Run",
+    "Application.PwJJ_LAB1.executor": "Run",
+    "Application.Shape.executor": "Run",
     "Attach to process.pid 54364.executor": "ProcessAttachDebug",
     "Downloaded.Files.Path.Enabled": "false",
     "JUnit.All in example-usage.executor": "Run",
@@ -131,7 +146,7 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/huber/source/repos/Study/5 semestr/Podstawy baz danych/PBD_LAB2",
+    "last_opened_file_path": "C:/Users/huber/source/repos/Study/5 semestr/Programowanie w języku Java/PwJJ_LAB1",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.stylelint": "true",
     "node.js.detected.package.tslint": "true",
@@ -139,14 +154,14 @@
     "node.js.selected.package.stylelint": "",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "C:/Users/huber/source/repos/Study/Java example usage/src/test/java/straizer/java/lang/object/Main.java",
-    "project.structure.last.edited": "Modules",
+    "onboarding.tips.debug.path": "C:/Users/huber/source/repos/Study/5 semestr/Programowanie w języku Java/PwJJ_LAB1/src/Main.java",
+    "project.structure.last.edited": "Global Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "rearrange.code.on.save": "true",
     "run.code.analysis.last.selected.profile": "aStrict",
     "settings.build.tools.auto.reload": "ALL",
-    "settings.editor.selected.configurable": "Console",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "sql.codeStylePanel.last.previewDialect": "Oracle",
     "typescript.add.unambiguous.imports.on.the.fly": "true",
     "vue.rearranger.settings.migration": "true"
@@ -165,6 +180,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\huber\source\repos\Study\5 semestr\Programowanie w języku Java\PwJJ_LAB1" />
       <recent name="C:\Users\huber\source\repos\Study\5 semestr\Podstawy baz danych\PBD_LAB2" />
       <recent name="C:\Users\huber\source\repos\Study\5 semestr\Podstawy baz danych 2\PBD_LAB1" />
       <recent name="C:\Users\huber\source\repos\Study\Java example usage\src\main\java\straizer\java\lang\object" />
@@ -193,49 +209,16 @@
       <recent name="src.straizer.java.lang.object" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="" />
       <recent name="straizer.java.lang.object.tests" />
       <recent name="straizer.java.lang.object" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="src.straizer.java.lang.object.Main" />
-      <module name="Study" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="src.straizer.java.lang.object.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="straizer.java.lang.object.Main" />
-      <module name="Study" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="straizer.java.lang.object.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GetClassTests.positiveTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="example-usage" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="straizer.java.lang.object.tests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="straizer.java.lang.object.tests" />
-      <option name="MAIN_CLASS_NAME" value="straizer.java.lang.object.tests.GetClassTests" />
-      <option name="METHOD_NAME" value="positiveTest" />
-      <option name="TEST_OBJECT" value="method" />
+  <component name="RunManager" selected="Application.PwJJ_LAB1">
+    <configuration name="PwJJ_LAB1" type="Application" factoryName="Application" temporary="true">
+      <option name="UNNAMED_CLASS_CONFIGURATION" value="true" />
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="PwJJ_LAB1" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -287,12 +270,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.PwJJ_LAB1" />
+      <item itemvalue="JUnit.All in example-usage" />
+      <item itemvalue="JUnit.NotifyWaitTestBase" />
+      <item itemvalue="JUnit.NotifyWaitTestBase.notifyNotOwnerTest" />
+      <item itemvalue="JUnit.NotifyWaitTestBase.notifyTest" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.PwJJ_LAB1" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
       </set>
     </attachedChunks>
   </component>
@@ -321,7 +316,9 @@
       <workItem from="1728236522226" duration="67000" />
       <workItem from="1728236595413" duration="13000" />
       <workItem from="1728236613723" duration="32461000" />
-      <workItem from="1728826876551" duration="21000" />
+      <workItem from="1728826876551" duration="1845000" />
+      <workItem from="1730760029456" duration="1175000" />
+      <workItem from="1730761553673" duration="2966000" />
     </task>
     <task id="LOCAL-00001" summary="Add tests for `java.lang.Object`">
       <option name="closed" value="true" />

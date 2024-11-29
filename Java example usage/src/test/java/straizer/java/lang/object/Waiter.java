@@ -1,7 +1,7 @@
 package straizer.java.lang.object;
 
 /**
- * {@code Runnable} waiting on {@code uut}.
+ * {@link Runnable} waiting on {@code uut}.
  *
  * @param uut object to wait
  */

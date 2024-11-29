@@ -1,7 +1,7 @@
 package straizer.java.lang.object;
 
 /**
- * {@code Runnable} interrupting {@code thread}.
+ * {@link Runnable} interrupting {@code thread}.
  *
  * @param thread thread to interrupt
  */

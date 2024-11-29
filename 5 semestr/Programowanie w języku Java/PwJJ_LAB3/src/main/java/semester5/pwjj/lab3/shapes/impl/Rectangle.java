@@ -1,7 +1,12 @@
+package semester5.pwjj.lab3.shapes.impl;
+
+import semester5.pwjj.lab3.Color;
+import semester5.pwjj.lab3.shapes.Shape;
+
 /**
  * Class representing rectangle.
  */
-final class Rectangle extends Shape {
+public final class Rectangle extends Shape {
 
 	private final double x;
 	private final double y;
@@ -11,8 +16,10 @@ final class Rectangle extends Shape {
 	 *
 	 * @param x first side length
 	 * @param y second side length
+	 * @param color color of the rectangle
 	 */
-	Rectangle(final double x, final double y) {
+	public Rectangle(final double x, final double y, final Color color) {
+		super(color);
 		this.x = x;
 		this.y = y;
 	}

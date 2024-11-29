@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import straizer.MainTestBase;
 
 /**
- * Base class for {@code Object} tests.
+ * Base class for {@link Object} tests.
  */
 public abstract class TestBase extends MainTestBase<UUT> {
 

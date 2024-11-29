@@ -1,7 +1,12 @@
+package semester5.pwjj.lab3.shapes.impl;
+
+import semester5.pwjj.lab3.Color;
+import semester5.pwjj.lab3.shapes.Shape;
+
 /**
  * Class representing triangle.
  */
-final class Triangle extends Shape {
+public final class Triangle extends Shape {
 
 	private final double x;
 	private final double y;
@@ -13,8 +18,10 @@ final class Triangle extends Shape {
 	 * @param x first side length
 	 * @param y second side length
 	 * @param z third side length
+	 * @param color color of the triangle
 	 */
-	Triangle(final double x, final double y, final double z) {
+	public Triangle(final double x, final double y, final double z, final Color color) {
+		super(color);
 		this.x = x;
 		this.y = y;
 		this.z = z;

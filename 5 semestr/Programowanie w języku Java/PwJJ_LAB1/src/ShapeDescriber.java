@@ -1,11 +1,11 @@
 /**
- * Class for statically describing objects of type {@code Shape}.
+ * Class for statically describing objects of type {@link Shape}.
  */
 enum ShapeDescriber {
 	;
 
 	/**
-	 * Prints {@code shape} information.
+	 * Prints {@link Shape} information.
 	 *
 	 * @param shape shape to describe
 	 */

@@ -1,7 +1,7 @@
 package straizer.java.lang.object;
 
 /**
- * Example usage of {@code Object} class.
+ * Example usage of {@link Object} class.
  *
  * @author straizer
  */
@@ -10,7 +10,7 @@ public final class UUT implements Cloneable {
 	private final int n;
 
 	/**
-	 * Creates an instance of {@code UUT}.
+	 * Creates an instance of {@link UUT}.
 	 *
 	 * @param n value to hold
 	 */

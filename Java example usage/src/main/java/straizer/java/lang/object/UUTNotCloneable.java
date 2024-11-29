@@ -1,7 +1,7 @@
 package straizer.java.lang.object;
 
 /**
- * Example usage of {@code Object} class without implemented {@code Cloneable} interface.
+ * Example usage of {@link Object} class without implemented {@link Cloneable} interface.
  *
  * @author straizer
  */

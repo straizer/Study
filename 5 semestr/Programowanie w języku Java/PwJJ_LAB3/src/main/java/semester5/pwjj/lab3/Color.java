@@ -35,4 +35,14 @@ public record Color(byte red, byte green, byte blue, byte alpha) {
 	public Color(final byte red, final byte green, final byte blue) {
 		this(red, green, blue, (byte) 0);
 	}
+
+	@Override
+	public String toString() {
+		return String.format(
+			"red={}, green={}, blue={}, alpha={}",
+			Byte.toUnsignedInt(red),
+			Byte.toUnsignedInt(green),
+			Byte.toUnsignedInt(blue),
+			Byte.toUnsignedInt(alpha));
+	}
 }

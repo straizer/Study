@@ -4,4 +4,24 @@
             <val val="&quot;ClassWithoutLogger&quot;"/>
         </annotation>
     </item>
+    <item name='semester5.pwjj.lab3.Messages LOADED_BUNDLES'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;StaticCollection&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.Messages currentLocale'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;NonFinalFieldInEnum&quot;, &quot;FieldHasSetterButNoGetter&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.Messages java.lang.String get(java.lang.String, java.util.Locale)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;HardCodedStringLiteral&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.Messages java.util.ResourceBundle getBundle(java.util.Locale)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;SynchronizationOnStaticField&quot;"/>
+        </annotation>
+    </item>
 </root>

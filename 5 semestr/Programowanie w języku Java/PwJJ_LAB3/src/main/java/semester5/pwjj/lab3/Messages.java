@@ -1,5 +1,6 @@
 package semester5.pwjj.lab3;
 
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -11,16 +12,27 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+/**
+ * I18n handler.
+ */
 @Slf4j
-public enum MessageProvider {
+public enum Messages {
 	;
 
 	private static final Path I18N_PATH = Paths.get("i18n", "Messages");
-	private static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
 	private static final Map<Locale, ResourceBundle> LOADED_BUNDLES = new HashMap<>(3);
 
+	@Setter
+	private static Locale currentLocale = Locale.getDefault();
+
+	/**
+	 * Get i18n
+	 *
+	 * @param messageName
+	 * @return
+	 */
 	public static String get(@NonNull final String messageName) {
-		return get(messageName, DEFAULT_LOCALE);
+		return get(messageName, currentLocale);
 	}
 
 	@SuppressWarnings("HardCodedStringLiteral")
@@ -33,9 +45,13 @@ public enum MessageProvider {
 		}
 	}
 
+	public static void log(@NonNull final String messageName, @NonNull final Object @NonNull ... args) {
+		log.info(get(messageName), args);
+	}
+
 	private static ResourceBundle getBundle(@NonNull final Locale locale) {
 		synchronized (LOADED_BUNDLES) {
-			return LOADED_BUNDLES.computeIfAbsent(locale, MessageProvider::loadBundle);
+			return LOADED_BUNDLES.computeIfAbsent(locale, Messages::loadBundle);
 		}
 	}
 

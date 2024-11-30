@@ -15,9 +15,9 @@ public final class Triangle extends Shape {
 	/**
 	 * Creates {@link Shape} representing triangle.
 	 *
-	 * @param x first side length
-	 * @param y second side length
-	 * @param z third side length
+	 * @param x     first side length
+	 * @param y     second side length
+	 * @param z     third side length
 	 * @param color color of the triangle
 	 */
 	public Triangle(final double x, final double y, final double z, final Color color) {

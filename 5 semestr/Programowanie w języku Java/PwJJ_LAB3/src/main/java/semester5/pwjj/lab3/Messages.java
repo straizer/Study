@@ -26,16 +26,22 @@ public enum Messages {
 	private static Locale currentLocale = Locale.getDefault();
 
 	/**
-	 * Get i18n
+	 * Gets i18nized message.
 	 *
-	 * @param messageName
-	 * @return
+	 * @param messageName name of the message to get
+	 * @return message in current {@link Locale}
 	 */
 	public static String get(@NonNull final String messageName) {
 		return get(messageName, currentLocale);
 	}
 
-	@SuppressWarnings("HardCodedStringLiteral")
+	/**
+	 * Gets i18nized message.
+	 *
+	 * @param messageName name of the message to get
+	 * @param locale      locale to retrieve the message in
+	 * @return message in current {@link Locale}
+	 */
 	public static String get(@NonNull final String messageName, @NonNull final Locale locale) {
 		try {
 			return getBundle(locale).getString(messageName);
@@ -45,6 +51,12 @@ public enum Messages {
 		}
 	}
 
+	/**
+	 * Logs i18nized message with level {@code info}.
+	 *
+	 * @param messageName name of the message to log
+	 * @param args        optional args for parameterized message
+	 */
 	public static void log(@NonNull final String messageName, @NonNull final Object @NonNull ... args) {
 		log.info(get(messageName), args);
 	}

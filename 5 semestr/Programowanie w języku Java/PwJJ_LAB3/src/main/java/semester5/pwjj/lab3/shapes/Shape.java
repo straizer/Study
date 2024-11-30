@@ -26,8 +26,7 @@ public abstract class Shape {
 	 * @return text description of the color
 	 */
 	public final String getColorDescription() {
-		final String rawColorDescription = color.toString();
-		return rawColorDescription.substring(rawColorDescription.indexOf('[') + 1, rawColorDescription.lastIndexOf(']'));
+		return color.toString();
 	}
 
 	/**

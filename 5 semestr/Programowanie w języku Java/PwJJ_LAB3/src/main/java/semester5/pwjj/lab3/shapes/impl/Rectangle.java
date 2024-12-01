@@ -25,6 +25,11 @@ public final class Rectangle extends Shape {
 	}
 
 	@Override
+	public String toString() {
+		return String.format(super.toString(), String.format("x=%.2f,y=%.2f", x, y));
+	}
+
+	@Override
 	public double getArea() {
 		return x * y;
 	}

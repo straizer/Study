@@ -1,32 +1,32 @@
 package semester5.pwjj.lab3.shapes;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import semester5.pwjj.lab3.Color;
+import semester5.pwjj.lab3.Messages;
 
 /**
  * Class representing any shape.
  */
+@Slf4j
 @RequiredArgsConstructor
 public abstract class Shape {
 
 	private final Color color;
 
 	/**
-	 * Returns class name.
+	 * Creates human-readable description.
 	 *
-	 * @return instance class name
+	 * @return description of the current object
 	 */
-	public final String getType() {
-		return getClass().getSimpleName();
-	}
-
-	/**
-	 * Describes color in human-readable form.
-	 *
-	 * @return text description of the color
-	 */
-	public final String getColorDescription() {
-		return color.toString();
+	@Override
+	public String toString() {
+		return String.format(
+			Messages.get("toString.shape"),
+			Messages.get("name." + getClass().getSimpleName().toLowerCase()),
+			getPerimeter(),
+			getArea(),
+			color.toString());
 	}
 
 	/**

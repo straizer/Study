@@ -41,17 +41,4 @@ public class TriangleTests {
 		//then
 		assertThat(actual).isEqualTo(expected);
 	}
-
-	@Test
-	@DisplayName("get color description")
-	public void getColorDescriptionTest() {
-		// given
-		final String expected = Color.RED.toString();
-
-		// when
-		final String actual = uut.getColorDescription();
-
-		//then
-		assertThat(actual).isEqualTo(expected);
-	}
 }

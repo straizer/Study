@@ -1,6 +1,6 @@
 /*
  * Laboratorium Grafiki Komputerowej
- * Pierwszy program wykorzystuj¹cy OpenGL'a
+ * Pierwszy program wykorzystujï¿½cy OpenGL'a
  */
 
 /* System */
@@ -10,8 +10,8 @@
 /* Biblioteka GLUT */
 #include <freeglut.h>
 
-/* W tej funkcji okreœlamy to co ma byc narysowane na ekranie.
- * Jest wywo³ywana zawsze wtedy, gdy trzeba przerysowaæ ekran - bufor ramki.
+/* W tej funkcji okreï¿½lamy to co ma byc narysowane na ekranie.
+ * Jest wywoï¿½ywana zawsze wtedy, gdy trzeba przerysowaï¿½ ekran - bufor ramki.
  */
 void drawScene(void)
 {
@@ -27,9 +27,9 @@ void drawScene(void)
 	glFlush();
 }
 
-/* Tê funkcjê wywo³uje system w momencie gdy u¿ytkownik zmieni mysz¹
- * rozmiar g³ownego okna. jej zadaniem jest zachowanie propocji wymiarów
- * rysowanych obiektów niezale¿nie od wymiarów okna.
+/* Tï¿½ funkcjï¿½ wywoï¿½uje system w momencie gdy uï¿½ytkownik zmieni myszï¿½
+ * rozmiar gï¿½ownego okna. jej zadaniem jest zachowanie propocji wymiarï¿½w
+ * rysowanych obiektï¿½w niezaleï¿½nie od wymiarï¿½w okna.
  */
 void reshapeWindow(int width, int height)
 {
@@ -39,14 +39,14 @@ void reshapeWindow(int width, int height)
 	if (height == 0)
 		height = 1;
 
-	// Wyliczamy wspó³czynnik proporcji
+	// Wyliczamy wspï¿½czynnik proporcji
 	aspectRatio = width / height;
 
-	// Ustawiamy wielkoœci okna okna urz¹dzenia w zakresie
-	// od 0,0 do wysokoœæ, szerokoœæ
+	// Ustawiamy wielkoï¿½ci okna okna urzï¿½dzenia w zakresie
+	// od 0,0 do wysokoï¿½ï¿½, szerokoï¿½ï¿½
 	glViewport(0, 0, width, height);
      
-	// Ustawiamy uk³ad wspó³rzêdnych obserwatora
+	// Ustawiamy ukï¿½ad wspï¿½rzï¿½dnych obserwatora
     glMatrixMode(GL_PROJECTION); 
 
 	// Resetujemy macierz projkecji 
@@ -65,20 +65,20 @@ void reshapeWindow(int width, int height)
     glLoadIdentity();	
 }
 
-/* Ta funkcja s³u¿y do wstêpnej konfiguracji OpenGLa.
- * Zanim coœ narysujemy musimy wywo³aæ tê funkcjê.
+/* Ta funkcja sï¿½uï¿½y do wstï¿½pnej konfiguracji OpenGLa.
+ * Zanim coï¿½ narysujemy musimy wywoï¿½aï¿½ tï¿½ funkcjï¿½.
  */
 void initOpenGL(int argc, char **argv)
 {
-	// Inicjujemy bibliotekê GLUT
+	// Inicjujemy bibliotekï¿½ GLUT
 	glutInit(&argc, argv);
 	// Inicjujemy: format koloru, jeden bufor ramki
     glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
-	// Ustawiamy pocz¹tkowe wymiary okna
+	// Ustawiamy poczï¿½tkowe wymiary okna
     glutInitWindowSize(800, 600);
-	// Ustawiamy pozycjê okna - lewy górny naro¿nik
+	// Ustawiamy pozycjï¿½ okna - lewy gï¿½rny naroï¿½nik
 	glutInitWindowPosition(150,150);
-	// Tworzymy g³ówne okno programu
+	// Tworzymy gï¿½ï¿½wne okno programu
     int mainWindow = glutCreateWindow("Pierwsze Laboratorium");
 
 	// Sprawdzamy powodzenie operacji
@@ -87,24 +87,24 @@ void initOpenGL(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	}
 
-	// Czynimy aktywnym okno g³ówne programu
+	// Czynimy aktywnym okno gï¿½ï¿½wne programu
 	glutSetWindow(mainWindow);
 
-	// Tutaj rejestrujemy funkcje narzêdziowe - tzw. callbacks
+	// Tutaj rejestrujemy funkcje narzï¿½dziowe - tzw. callbacks
 	glutDisplayFunc(drawScene);
 	glutReshapeFunc(reshapeWindow);
 	
-	// Ustawiamy domyœlny, czarny kolor t³a okna - bufor ramki malujemy na czarno
+	// Ustawiamy domyï¿½lny, czarny kolor tï¿½a okna - bufor ramki malujemy na czarno
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 /* Funkcja main */
 int main(int argc, char **argv)
 {	
-	// ustawienia pocz¹tkowe
+	// ustawienia poczï¿½tkowe
 	initOpenGL(argc, argv);
 
-	// Wejœcie do pêtli programu
+	// Wejï¿½cie do pï¿½tli programu
 	glutMainLoop();
 	
 	return 0;

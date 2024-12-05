@@ -1,0 +1,43 @@
+<!--suppress GrazieInspection, LongLine, Style -->
+<root>
+    <item name='semester5.pwjj.lab3.ColorTests java.util.stream.Stream&lt;org.junit.jupiter.params.provider.Arguments&gt; toStringTest()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;SpellCheckingInspection&quot;, &quot;WeakerAccess&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.ColorTests void blueTest()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;NumericCastThatLosesPrecision&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.ColorTests void greenTest()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;NumericCastThatLosesPrecision&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.ColorTests void redTest()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;NumericCastThatLosesPrecision&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.ErrorTestsBase'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;AbstractClassWithoutAbstractMethods&quot;, &quot;AbstractClassWithOnlyOneDirectInheritor&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.MessageProviderTests PROPERTY_NAME'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;UseOfConcreteClass&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.MessageProviderTests java.util.stream.Stream&lt;org.junit.jupiter.params.provider.Arguments&gt; getCustomTest()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;SpellCheckingInspection&quot;, &quot;WeakerAccess&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.TestsBase'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;AbstractClassWithoutAbstractMethods&quot;"/>
+        </annotation>
+    </item>
+</root>

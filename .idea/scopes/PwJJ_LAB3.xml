@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="PwJJ_LAB3" pattern="test[PwJJ_LAB3]:*..*" />
+</component>

@@ -1,0 +1,13 @@
+<!--suppress GrazieInspection, LongLine -->
+<root>
+    <item name='semester5.pwjj.lab3.i18n.MessageProviderTests PROPERTY_NAME'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;UseOfConcreteClass&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.i18n.MessageProviderTests java.util.stream.Stream&lt;org.junit.jupiter.params.provider.Arguments&gt; getCustomTest()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;SpellCheckingInspection&quot;, &quot;WeakerAccess&quot;}"/>
+        </annotation>
+    </item>
+</root>

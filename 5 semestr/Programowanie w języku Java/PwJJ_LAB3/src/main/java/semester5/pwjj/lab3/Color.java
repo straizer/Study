@@ -1,5 +1,8 @@
 package semester5.pwjj.lab3;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
+import semester5.pwjj.lab3.i18n.Messages;
+
 /**
  * Record representing any color in RGBA format.
  *
@@ -16,16 +19,19 @@ public record Color(byte red, byte green, byte blue, byte alpha) {
 	/**
 	 * Default red color.
 	 */
+	@NonNull
 	public static final Color RED = new Color(BYTE_MAX, BYTE_MIN, BYTE_MIN);
 
 	/**
 	 * Default green color.
 	 */
+	@NonNull
 	public static final Color GREEN = new Color(BYTE_MIN, BYTE_MAX, BYTE_MIN);
 
 	/**
 	 * Default blue color.
 	 */
+	@NonNull
 	public static final Color BLUE = new Color(BYTE_MIN, BYTE_MIN, BYTE_MAX);
 
 	/**
@@ -45,9 +51,9 @@ public record Color(byte red, byte green, byte blue, byte alpha) {
 	 * @return description of the current object
 	 */
 	@Override
+	@NonNull
 	public String toString() {
-		return String.format(
-			Messages.get("toString.color"),
+		return Messages.ToString.COLOR(
 			Byte.toUnsignedInt(red),
 			Byte.toUnsignedInt(green),
 			Byte.toUnsignedInt(blue),

@@ -1,17 +1,19 @@
 package semester5.pwjj.lab3.shapes.impl;
 
+import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import semester5.pwjj.lab3.Color;
+import semester5.pwjj.lab3.DoubleReducers;
+import semester5.pwjj.lab3.i18n.Messages;
 import semester5.pwjj.lab3.shapes.Shape;
+
+import java.util.Arrays;
 
 /**
  * Class representing triangle.
  */
+@Slf4j
 public final class Triangle extends Shape {
-
-	private final double x;
-	private final double y;
-	private final double z;
-
 	/**
 	 * Creates {@link Shape} representing triangle.
 	 *
@@ -20,21 +22,21 @@ public final class Triangle extends Shape {
 	 * @param z     third side length
 	 * @param color color of the triangle
 	 */
-	public Triangle(final double x, final double y, final double z, final Color color) {
-		super(color);
-		this.x = x;
-		this.y = y;
-		this.z = z;
+	public Triangle(final double x, final double y, final double z, @NonNull final Color color) {
+		super(new double[]{x, y, z}, color);
+		if (x + y <= z || y + z <= x || x + z <= y) {
+			final String message = Messages.Error.TRIANGLE_RULE();
+			log.warn(message);
+			throw new IllegalArgumentException(message);
+		}
 	}
 
 	@Override
 	public double getArea() {
 		final double halfPerimeter = getPerimeter() / 2.0;
-		return Math.sqrt(halfPerimeter * (halfPerimeter - x) * (halfPerimeter - y) * (halfPerimeter - z));
-	}
-
-	@Override
-	public double getPerimeter() {
-		return x + y + z;
+		final double temp = Arrays.stream(sides)
+			.map(it -> halfPerimeter - it)
+			.reduce(1.0, DoubleReducers.MULTIPLYING);
+		return Math.sqrt(halfPerimeter * temp);
 	}
 }

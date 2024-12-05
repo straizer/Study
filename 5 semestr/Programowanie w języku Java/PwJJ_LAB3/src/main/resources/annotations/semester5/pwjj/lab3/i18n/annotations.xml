@@ -1,0 +1,33 @@
+<!--suppress GrazieInspection, LongLine -->
+<root>
+    <item name='semester5.pwjj.lab3.i18n.MessageProvider LOADED_BUNDLES'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;StaticCollection&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.i18n.MessageProvider java.lang.String get(semester5.pwjj.lab3.i18n.Messages.I18nProperty)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;UseOfConcreteClass&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.i18n.MessageProvider java.lang.String get(semester5.pwjj.lab3.i18n.Messages.I18nProperty, java.util.Locale)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;UseOfConcreteClass&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.i18n.MessageProvider java.util.ResourceBundle getBundle(java.util.Locale)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;SynchronizationOnStaticField&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.i18n.Messages'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;GrazieInspection&quot;, &quot;MissingJavadoc&quot;, &quot;InnerClassTooDeeplyNested&quot;, &quot;PublicInnerClass&quot;, &quot;EmptyClass&quot;, &quot;WeakerAccess&quot;, &quot;UseOfConcreteClass&quot;, &quot;StaticMethodOnlyUsedInOneClass&quot;, &quot;unused&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.i18n.Messages.I18nProperty'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;ClassNamePrefixedWithPackageName&quot;"/>
+        </annotation>
+    </item>
+</root>

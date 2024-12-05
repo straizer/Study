@@ -1,0 +1,38 @@
+<!--suppress GrazieInspection, LongLine, Style -->
+<root>
+    <item name='semester5.pwjj.lab3.shapes.RectangleErrorTests'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;TestMethodWithoutAssertion&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.shapes.RectangleTests'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;ClassUnconnectedToPackage&quot;, &quot;ClassOnlyUsedInOnePackage&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.shapes.RectangleTests java.util.stream.Stream&lt;org.junit.jupiter.params.provider.Arguments&gt; toStringTest()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;SpellCheckingInspection&quot;, &quot;WeakerAccess&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.shapes.ShapeErrorTestsBase'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;AbstractClassWithoutAbstractMethods&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.shapes.TriangleErrorTests'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;TestMethodWithoutAssertion&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.shapes.TriangleTests'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;ClassUnconnectedToPackage&quot;, &quot;ClassOnlyUsedInOnePackage&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.shapes.TriangleTests java.util.stream.Stream&lt;org.junit.jupiter.params.provider.Arguments&gt; toStringTest()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;SpellCheckingInspection&quot;, &quot;WeakerAccess&quot;}"/>
+        </annotation>
+    </item>
+</root>

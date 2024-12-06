@@ -2,6 +2,7 @@ package semester5.pwjj.lab3.i18n;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import semester5.pwjj.lab3.Color;
+import semester5.pwjj.lab3.i18n.MessageProvider.I18nProperty;
 
 import java.util.Locale;
 
@@ -67,11 +68,5 @@ public enum Messages {
 		                           @NonNull final Color arg4, @NonNull final String arg5) {
 			return String.format(MessageProvider.get(SHAPE), arg1, arg2, arg3, arg4, arg5);
 		}
-	}
-
-	/**
-	 * Class storing i18n property constants.
-	 */
-	public record I18nProperty(@NonNull String propertyName) {
 	}
 }

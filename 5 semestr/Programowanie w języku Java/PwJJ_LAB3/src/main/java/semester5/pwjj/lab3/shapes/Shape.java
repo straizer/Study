@@ -67,6 +67,6 @@ public abstract class Shape {
 	@NonNull
 	private String getClassNameNls() {
 		return MessageProvider.get(
-			new Messages.I18nProperty("name." + getClass().getSimpleName().toLowerCase())); //NON-NLS
+			new MessageProvider.I18nProperty("name." + getClass().getSimpleName().toLowerCase())); //NON-NLS
 	}
 }

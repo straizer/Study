@@ -1,10 +1,5 @@
 <!--suppress GrazieInspection, LongLine, Style -->
 <root>
-    <item name='semester5.pwjj.lab3.ColorTests java.util.stream.Stream&lt;org.junit.jupiter.params.provider.Arguments&gt; toStringTest()'>
-        <annotation name='java.lang.SuppressWarnings'>
-            <val val="{&quot;SpellCheckingInspection&quot;, &quot;WeakerAccess&quot;}"/>
-        </annotation>
-    </item>
     <item name='semester5.pwjj.lab3.ColorTests void blueTest()'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="&quot;NumericCastThatLosesPrecision&quot;"/>
@@ -27,7 +22,22 @@
     </item>
     <item name='semester5.pwjj.lab3.TestsBase'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="&quot;AbstractClassWithoutAbstractMethods&quot;"/>
+            <val val="{&quot;AbstractClassWithoutAbstractMethods&quot;, &quot;WeakerAccess&quot;, &quot;unused&quot;, &quot;UtilityClassCanBeEnum&quot;, &quot;UtilityClass&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.TestsBase messageProviderMock'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;RedundantFieldInitialization&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.TestsBase void beforeAll()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;ObjectAllocationInLoop&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.TestsBase void globalBeforeAll()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;ObjectAllocationInLoop&quot;"/>
         </annotation>
     </item>
 </root>

@@ -2,7 +2,7 @@
 <root>
     <item name='semester5.pwjj.lab3.shapes.RectangleErrorTests'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="&quot;TestMethodWithoutAssertion&quot;"/>
+            <val val="{&quot;TestMethodWithoutAssertion&quot;, &quot;ClassUnconnectedToPackage&quot;, &quot;ClassOnlyUsedInOnePackage&quot;}"/>
         </annotation>
     </item>
     <item name='semester5.pwjj.lab3.shapes.RectangleTests'>
@@ -10,19 +10,19 @@
             <val val="{&quot;ClassUnconnectedToPackage&quot;, &quot;ClassOnlyUsedInOnePackage&quot;}"/>
         </annotation>
     </item>
-    <item name='semester5.pwjj.lab3.shapes.RectangleTests java.util.stream.Stream&lt;org.junit.jupiter.params.provider.Arguments&gt; toStringTest()'>
+    <item name='semester5.pwjj.lab3.shapes.RectangleTests void createRectangleTest()'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="{&quot;SpellCheckingInspection&quot;, &quot;WeakerAccess&quot;}"/>
-        </annotation>
-    </item>
-    <item name='semester5.pwjj.lab3.shapes.ShapeErrorTestsBase'>
-        <annotation name='java.lang.SuppressWarnings'>
-            <val val="&quot;AbstractClassWithoutAbstractMethods&quot;"/>
+            <val val="&quot;TestMethodWithoutAssertion&quot;"/>
         </annotation>
     </item>
     <item name='semester5.pwjj.lab3.shapes.TriangleErrorTests'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="&quot;TestMethodWithoutAssertion&quot;"/>
+            <val val="{&quot;TestMethodWithoutAssertion&quot;, &quot;ClassUnconnectedToPackage&quot;, &quot;ClassOnlyUsedInOnePackage&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.lab3.shapes.TriangleErrorTests java.util.stream.Stream&lt;org.junit.jupiter.params.provider.Arguments&gt; getPerimeterTriangleRuleNotFulfilledTest()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;WeakerAccess&quot;"/>
         </annotation>
     </item>
     <item name='semester5.pwjj.lab3.shapes.TriangleTests'>
@@ -30,9 +30,9 @@
             <val val="{&quot;ClassUnconnectedToPackage&quot;, &quot;ClassOnlyUsedInOnePackage&quot;}"/>
         </annotation>
     </item>
-    <item name='semester5.pwjj.lab3.shapes.TriangleTests java.util.stream.Stream&lt;org.junit.jupiter.params.provider.Arguments&gt; toStringTest()'>
+    <item name='semester5.pwjj.lab3.shapes.TriangleTests void createTriangleTest()'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="{&quot;SpellCheckingInspection&quot;, &quot;WeakerAccess&quot;}"/>
+            <val val="&quot;TestMethodWithoutAssertion&quot;"/>
         </annotation>
     </item>
 </root>

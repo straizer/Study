@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="PwJJ Main" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="semester5.pwjj.Main" />
+    <module name="PwJJ" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="semester5.pwjj.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

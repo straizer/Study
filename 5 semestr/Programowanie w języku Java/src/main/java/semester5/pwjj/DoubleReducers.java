@@ -14,5 +14,5 @@ public enum DoubleReducers {
 	 * Reducer reducing by multiplying.
 	 */
 	@NonNull
-	public static final DoubleBinaryOperator MULTIPLYING = (first, second) -> first * second;
+	public static final DoubleBinaryOperator MULTIPLYING = (x, y) -> x * y;
 }

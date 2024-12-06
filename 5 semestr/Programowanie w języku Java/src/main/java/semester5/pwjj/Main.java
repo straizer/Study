@@ -3,6 +3,7 @@ package semester5.pwjj;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import semester5.pwjj.shapes.Shape;
 import semester5.pwjj.shapes.impl.Rectangle;
 import semester5.pwjj.shapes.impl.Triangle;
@@ -18,8 +19,10 @@ public final class Main {
 
 	/**
 	 * Application entry point.
+	 *
+	 * @param ignoredArgs console arguments
 	 */
-	public static void main() {
+	public static void main(@NonNull final String[] ignoredArgs) {
 		final List<Shape> shapes = List.of(
 			new Rectangle(1.0, 2.0, Color.RED),
 			new Triangle(3.0, 4.0, 5.0, Color.GREEN)

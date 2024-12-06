@@ -20,11 +20,6 @@
             <val val="{&quot;TestMethodWithoutAssertion&quot;, &quot;ClassUnconnectedToPackage&quot;, &quot;ClassOnlyUsedInOnePackage&quot;}"/>
         </annotation>
     </item>
-    <item name='semester5.pwjj.shapes.TriangleErrorTests java.util.stream.Stream&lt;org.junit.jupiter.params.provider.Arguments&gt; getPerimeterTriangleRuleNotFulfilledTest()'>
-        <annotation name='java.lang.SuppressWarnings'>
-            <val val="&quot;WeakerAccess&quot;"/>
-        </annotation>
-    </item>
     <item name='semester5.pwjj.shapes.TriangleTests'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="{&quot;ClassUnconnectedToPackage&quot;, &quot;ClassOnlyUsedInOnePackage&quot;}"/>

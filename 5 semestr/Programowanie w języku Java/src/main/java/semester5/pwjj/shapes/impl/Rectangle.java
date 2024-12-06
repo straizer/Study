@@ -21,15 +21,22 @@ public final class Rectangle extends Shape {
 	 */
 	public Rectangle(final double x, final double y, @NonNull final Color color) {
 		super(new double[]{x, y}, color);
+		_logCtor();
 	}
 
 	@Override
 	public double getPerimeter() {
-		return 2 * super.getPerimeter();
+		return _log(2 * super.getPerimeter());
 	}
 
 	@Override
 	public double getArea() {
-		return Arrays.stream(sides).reduce(1.0, DoubleReducers.MULTIPLYING);
+		return _log(Arrays.stream(sides).reduce(1.0, DoubleReducers.MULTIPLYING));
+	}
+
+	@Override
+	@NonNull
+	public String _repr() {
+		return String.format("Rectangle(super=(%s))", super._repr()); //NON-NLS
 	}
 }

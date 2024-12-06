@@ -22,7 +22,7 @@
     </item>
     <item name='semester5.pwjj.TestsBase'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="{&quot;AbstractClassWithoutAbstractMethods&quot;, &quot;WeakerAccess&quot;, &quot;unused&quot;, &quot;UtilityClassCanBeEnum&quot;, &quot;UtilityClass&quot;}"/>
+            <val val="{&quot;AbstractClassWithoutAbstractMethods&quot;, &quot;unused&quot;, &quot;UtilityClassCanBeEnum&quot;, &quot;UtilityClass&quot;}"/>
         </annotation>
     </item>
     <item name='semester5.pwjj.TestsBase messageProviderMock'>

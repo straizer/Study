@@ -44,16 +44,6 @@ public enum Messages {
 		}
 	}
 
-	public enum Test {
-		;
-
-		public static final I18nProperty MESSAGE = new I18nProperty("test.message");
-
-		public static String MESSAGE() {
-			return MessageProvider.get(MESSAGE);
-		}
-	}
-
 	public enum ToString {
 		;
 

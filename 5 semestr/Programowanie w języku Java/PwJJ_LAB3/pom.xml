@@ -18,6 +18,7 @@
         <project.package.main>semester5/pwjj/lab3</project.package.main>
 
         <!--plugins-->
+        <dependency.version>3.8.1</dependency.version>
         <surefire.version>3.5.2</surefire.version>
         <tree-reporter.version>1.4.0</tree-reporter.version>
         <jacoco.version>0.8.12</jacoco.version>
@@ -33,6 +34,7 @@
         <junit-pioneer.version>2.3.0</junit-pioneer.version>
         <assertj.version>3.26.3</assertj.version>
         <jacoco.version>0.8.12</jacoco.version>
+        <mockito.version>5.14.2</mockito.version>
     </properties>
 
     <dependencies>
@@ -78,6 +80,19 @@
             <version>${assertj.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -99,6 +114,17 @@
                 </configuration>
             </plugin>
             <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>${dependency.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.version}</version>
                 <dependencies>
@@ -111,6 +137,8 @@
                 <!--suppress GrazieInspection -->
                 <configuration>
                     <reportFormat>plain</reportFormat>
+                    <!--suppress MavenModelInspection -->
+                    <argLine>@{argLine} -javaagent:${org.mockito:mockito-core:jar} -Xshare:off</argLine>
                     <!--<consoleOutputReporter>-->
                     <!--    <disable>true</disable>-->
                     <!--</consoleOutputReporter>-->

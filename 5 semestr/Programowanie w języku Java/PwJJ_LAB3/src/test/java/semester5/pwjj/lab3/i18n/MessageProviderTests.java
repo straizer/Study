@@ -4,13 +4,13 @@ import org.assertj.core.api.Assertions;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import semester5.pwjj.lab3.TestsBase;
 
 import java.lang.reflect.Field;
 import java.nio.file.Path;
@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
 @DisplayName("Message Provider Tests")
-class MessageProviderTests extends TestsBase {
+class MessageProviderTests {
 
 	private static final MessageProvider.I18nProperty PROPERTY = new MessageProvider.I18nProperty("test.message");
 
@@ -56,6 +56,11 @@ class MessageProviderTests extends TestsBase {
 		return Stream.of(
 			Arguments.of(POLISH_LOCALE, POLISH_MESSAGE),
 			Arguments.of(ENGLISH_LOCALE, ENGLISH_MESSAGE));
+	}
+
+	@AfterEach
+	void afterEach() {
+		Locale.setDefault(Locale.ROOT);
 	}
 
 	@DisplayName("get default translation")

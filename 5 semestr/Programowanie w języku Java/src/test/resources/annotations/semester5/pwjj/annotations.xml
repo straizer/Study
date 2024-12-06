@@ -1,0 +1,43 @@
+<!--suppress GrazieInspection, LongLine, Style -->
+<root>
+    <item name='semester5.pwjj.ColorTests void blueTest()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;NumericCastThatLosesPrecision&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.ColorTests void greenTest()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;NumericCastThatLosesPrecision&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.ColorTests void redTest()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;NumericCastThatLosesPrecision&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.ErrorTestsBase'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;AbstractClassWithoutAbstractMethods&quot;, &quot;AbstractClassWithOnlyOneDirectInheritor&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.TestsBase'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;AbstractClassWithoutAbstractMethods&quot;, &quot;WeakerAccess&quot;, &quot;unused&quot;, &quot;UtilityClassCanBeEnum&quot;, &quot;UtilityClass&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.TestsBase messageProviderMock'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;RedundantFieldInitialization&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.TestsBase void beforeAll()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;ObjectAllocationInLoop&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.TestsBase void globalBeforeAll()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;ObjectAllocationInLoop&quot;"/>
+        </annotation>
+    </item>
+</root>

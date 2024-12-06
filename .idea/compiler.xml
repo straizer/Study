@@ -8,15 +8,18 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
       </profile>
-      <profile name="Annotation profile for PwJJ_LAB3" enabled="true">
+      <profile name="Annotation profile for PwJJ" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
         </processorPath>
-        <module name="PwJJ_LAB3" />
+        <module name="PwJJ" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="PwJJ_LAB3" target="23" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 @DisplayName("Message Provider Tests")
 class MessageProviderTests extends TestsBase {
 
-	private static final Messages.I18nProperty PROPERTY_NAME = Messages.Test.MESSAGE;
+	private static final MessageProvider.I18nProperty PROPERTY_NAME = Messages.Test.MESSAGE;
 
 	@NonNull
 	private static Stream<Arguments> getCustomTest() {
@@ -57,7 +57,7 @@ class MessageProviderTests extends TestsBase {
 	@Test
 	void nonExistingTranslationPropertyTest() {
 		final String propertyName = "test.missing";
-		Assertions.assertThat(MessageProvider.get(new Messages.I18nProperty(propertyName)))
+		Assertions.assertThat(MessageProvider.get(new MessageProvider.I18nProperty(propertyName)))
 			.isEqualTo("<%s:%s>", Locale.ROOT, propertyName);
 	}
 }

@@ -16,6 +16,6 @@ abstract class ShapeErrorTestsBase extends ErrorTestsBase {
 		@NonNull final String shapeName) {
 		throwsIllegalArgumentException(locale, callable,
 			() -> Messages.Error.SIDES_NOT_POSITIVE(
-				MessageProvider.get(new Messages.I18nProperty("name." + shapeName))));
+				MessageProvider.get(new MessageProvider.I18nProperty("name." + shapeName))));
 	}
 }

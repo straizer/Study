@@ -11,7 +11,7 @@ import semester5.pwjj.i18n.Messages;
  * @param blue  value of blue in range [0-255]
  * @param alpha value of transparency in range [0-255]
  */
-public record Color(byte red, byte green, byte blue, byte alpha) {
+public record Color(byte red, byte green, byte blue, byte alpha) implements ReturnLogger {
 
 	private static final byte BYTE_MIN = 0;
 	private static final byte BYTE_MAX = -1;
@@ -53,10 +53,21 @@ public record Color(byte red, byte green, byte blue, byte alpha) {
 	@Override
 	@NonNull
 	public String toString() {
-		return Messages.ToString.COLOR(
+		return _log(Messages.ToString.COLOR(
 			Byte.toUnsignedInt(red),
 			Byte.toUnsignedInt(green),
 			Byte.toUnsignedInt(blue),
-			Byte.toUnsignedInt(alpha));
+			Byte.toUnsignedInt(alpha)));
+	}
+
+	/**
+	 * Returns representation. FOR DEBUGGING PURPOSES ONLY
+	 *
+	 * @return string representation of an object
+	 */
+	@Override
+	@NonNull
+	public String _repr() {
+		return String.format("Color(red=%d, green=%d, blue=%d, alpha=%d)", red, green, blue, alpha); //NON-NLS
 	}
 }

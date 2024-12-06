@@ -17,7 +17,7 @@
     </item>
     <item name='semester5.pwjj.i18n.Messages'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="{&quot;GrazieInspection&quot;, &quot;MissingJavadoc&quot;, &quot;PublicInnerClass&quot;, &quot;WeakerAccess&quot;, &quot;StaticMethodOnlyUsedInOneClass&quot;, &quot;unused&quot;, &quot;UnqualifiedInnerClassAccess&quot;, &quot;DuplicateStringLiteralInspection&quot;}"/>
+            <val val="{&quot;GrazieInspection&quot;, &quot;MissingJavadoc&quot;, &quot;PublicInnerClass&quot;, &quot;StaticMethodOnlyUsedInOneClass&quot;, &quot;unused&quot;, &quot;UnqualifiedInnerClassAccess&quot;, &quot;DuplicateStringLiteralInspection&quot;}"/>
         </annotation>
     </item>
 </root>

@@ -29,14 +29,19 @@ public final class Triangle extends Shape {
 			log.warn(message);
 			throw new IllegalArgumentException(message);
 		}
+		_logCtor();
 	}
 
 	@Override
 	public double getArea() {
 		final double halfPerimeter = getPerimeter() / 2.0;
-		final double temp = Arrays.stream(sides)
-			.map(it -> halfPerimeter - it)
-			.reduce(1.0, DoubleReducers.MULTIPLYING);
-		return Math.sqrt(halfPerimeter * temp);
+		final double temp = Arrays.stream(sides).map(it -> halfPerimeter - it).reduce(1.0, DoubleReducers.MULTIPLYING);
+		return _log(Math.sqrt(halfPerimeter * temp));
+	}
+
+	@Override
+	@NonNull
+	public String _repr() {
+		return String.format("Triangle(super=(%s))", super._repr()); //NON-NLS
 	}
 }

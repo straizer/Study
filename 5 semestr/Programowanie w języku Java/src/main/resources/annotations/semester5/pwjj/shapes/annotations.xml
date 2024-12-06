@@ -1,5 +1,15 @@
 <!--suppress GrazieInspection -->
 <root>
+    <item name='semester5.pwjj.shapes.Shape'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;OverridableMethodCallDuringObjectConstruction&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.shapes.Shape Shape(double[], semester5.pwjj.Color)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;GrazieInspection&quot;"/>
+        </annotation>
+    </item>
     <item name='semester5.pwjj.shapes.Shape Shape(double[], semester5.pwjj.lab3.Color)'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="&quot;DuplicateStringLiteralInspection&quot;"/>

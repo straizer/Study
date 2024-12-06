@@ -15,11 +15,6 @@
             <val val="&quot;UseOfConcreteClass&quot;"/>
         </annotation>
     </item>
-    <item name='semester5.pwjj.i18n.MessageProviderTests java.util.stream.Stream&lt;org.junit.jupiter.params.provider.Arguments&gt; getCustomTest()'>
-        <annotation name='java.lang.SuppressWarnings'>
-            <val val="&quot;WeakerAccess&quot;"/>
-        </annotation>
-    </item>
     <item name='semester5.pwjj.i18n.MessageProviderTests.ResourceBundleMockPolish'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="&quot;SpellCheckingInspection&quot;"/>

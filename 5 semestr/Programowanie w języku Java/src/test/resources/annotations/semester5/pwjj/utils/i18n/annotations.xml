@@ -1,0 +1,13 @@
+<!--suppress GrazieInspection, LongLine, Style -->
+<root>
+    <item name='semester5.pwjj.utils.i18n.MessageProviderTests'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;ClassHasNoToStringMethod&quot;, &quot;CyclicClassDependency&quot;, }"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.i18n.MessageProviderTests POLISH_MESSAGE'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;SpellCheckingInspection&quot;"/>
+        </annotation>
+    </item>
+</root>

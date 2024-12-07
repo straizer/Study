@@ -1,0 +1,39 @@
+package semester5.pwjj.entities.shapes;
+
+import org.assertj.core.api.Assertions;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import semester5.pwjj.TestsBase;
+import semester5.pwjj.entities.Color;
+import semester5.pwjj.entities.shapes.impl.Rectangle;
+
+@DisplayName("Rectangle Tests")
+final class RectangleTests extends TestsBase {
+
+	private static final @NonNull Shape uut = new Rectangle(1.0, 2.0, Color.RED);
+
+	@DisplayName("get perimeter")
+	@Test
+	void getPerimeterTest() {
+		Assertions.assertThat(uut.getPerimeter()).isEqualTo(6.0);
+	}
+
+	@DisplayName("get area")
+	@Test
+	void getAreaTest() {
+		Assertions.assertThat(uut.getArea()).isEqualTo(2.0);
+	}
+
+	@DisplayName("get color")
+	@Test
+	void getColorTest() {
+		Assertions.assertThat(uut.getColor()).isEqualTo(Color.RED);
+	}
+
+	@DisplayName("to string")
+	@Test
+	void toStringTest() {
+		Assertions.assertThat(uut.toString()).isEqualTo(ENTITIES_SHAPES_TO_STRING_SHAPE.getPropertyName());
+	}
+}

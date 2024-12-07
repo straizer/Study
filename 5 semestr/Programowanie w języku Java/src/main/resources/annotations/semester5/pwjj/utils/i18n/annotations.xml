@@ -1,0 +1,18 @@
+<!--suppress GrazieInspection, LongLine -->
+<root>
+    <item name='semester5.pwjj.utils.i18n.I18nProperty'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;ClassHasNoToStringMethod&quot;, &quot;AbstractClassWithoutAbstractMethods&quot;, &quot;ClassNamePrefixedWithPackageName&quot;, &quot;ClassWithoutLogger&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.i18n.Messages'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;GrazieInspection&quot;, &quot;unused&quot;, &quot;PublicInnerClass&quot;, &quot;StaticMethodOnlyUsedInOneClass&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.i18n.Messages.UtilsI18nI18nProperty UtilsI18nI18nProperty(java.lang.String)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;StringConcatenation&quot;"/>
+        </annotation>
+    </item>
+</root>

@@ -1,0 +1,33 @@
+<!--suppress GrazieInspection, LongLine -->
+<root>
+    <item name='semester5.pwjj.entities.shapes.Messages'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;GrazieInspection&quot;, &quot;PublicInnerClass&quot;, &quot;StaticMethodOnlyUsedInOneClass&quot;, &quot;unused&quot;, &quot;UnqualifiedInnerClassAccess&quot;, &quot;MethodWithTooManyParameters&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.entities.shapes.Messages.EntitiesShapesI18nProperty EntitiesShapesI18nProperty(java.lang.String)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;StringConcatenation&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.entities.shapes.Messages.Error SIDES_NOT_POSITIVE'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;LongLine&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.entities.shapes.Shape'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;OverridableMethodCallDuringObjectConstruction&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.entities.shapes.Shape java.lang.String getClassNameNonNls()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;StringConcatenation&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.entities.shapes.Shape sides'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;FieldNotUsedInToString&quot;"/>
+        </annotation>
+    </item>
+</root>

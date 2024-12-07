@@ -32,6 +32,9 @@
         <!--logging-->
         <slf4j.version>2.0.16</slf4j.version>
         <logback.version>1.5.12</logback.version>
+        <!--database-->
+        <hibernate.version>7.0.0.Beta3</hibernate.version>
+        <postgres.version>42.7.4</postgres.version>
         <!--tests-->
         <junit.version>5.11.3</junit.version>
         <junit-pioneer.version>2.3.0</junit-pioneer.version>
@@ -65,6 +68,18 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
+        </dependency>
+
+        <!--database-->
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgres.version}</version>
         </dependency>
 
         <!--tests-->
@@ -160,9 +175,9 @@
                 <configuration>
                     <excludes>
                         <exclude>${project.package.main}/Main.*</exclude>
-                        <exclude>${project.package.main}/ReturnLogger.*</exclude>
-                        <exclude>${project.package.main}/i18n/Messages.*</exclude>
-                        <exclude>${project.package.main}/i18n/Messages$*</exclude>
+                        <exclude>${project.package.main}/utils/ReturnLogger.*</exclude>
+                        <exclude>${project.package.main}/**/Messages.*</exclude>
+                        <exclude>${project.package.main}/**/Messages$*</exclude>
                     </excludes>
                 </configuration>
                 <executions>

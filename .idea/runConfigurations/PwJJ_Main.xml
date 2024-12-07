@@ -4,7 +4,7 @@
     <module name="PwJJ" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="semester5.pwjj.*" />
+        <option name="PATTERN" value="semester5.pwjj.entities.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

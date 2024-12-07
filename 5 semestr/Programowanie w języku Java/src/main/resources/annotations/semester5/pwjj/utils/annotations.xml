@@ -1,0 +1,23 @@
+<!--suppress GrazieInspection, LongLine -->
+<root>
+    <item name='semester5.pwjj.utils.NullableUtils R mapOrNull(T, java.util.function.Function&lt;T,R&gt;)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;StaticMethodOnlyUsedInOneClass&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.ReturnLogger T trace(T, java.lang.Class&lt;?&gt;, java.lang.String, java.lang.Integer)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;unchecked&quot;, &quot;HardcodedLineSeparator&quot;, &quot;HardcodedFileSeparator&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.ReturnLogger _CACHED_LOGGERS'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;PublicStaticCollectionField&quot;, &quot;ConstantDeclaredInInterface&quot;, &quot;StaticCollection&quot;, &quot;CollectionWithoutInitialCapacity&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.StringUtils EMPTY'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;unused&quot;"/>
+        </annotation>
+    </item>
+</root>

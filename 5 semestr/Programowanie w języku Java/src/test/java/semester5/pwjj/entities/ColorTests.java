@@ -4,6 +4,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import semester5.pwjj.TestsBase;
+import semester5.pwjj.utils.i18n.MessageProvider;
+
+import static org.mockito.Mockito.times;
 
 @DisplayName("Color Tests")
 final class ColorTests extends TestsBase {
@@ -38,9 +41,10 @@ final class ColorTests extends TestsBase {
 			.hasFieldOrPropertyWithValue("alpha", (byte) 0);
 	}
 
-	@DisplayName("to string")
+	@DisplayName("to pretty string")
 	@Test
-	void toStringTest() {
+	void toPrettyStringTest() {
 		Assertions.assertThat(Color.RED.toPrettyString()).isEqualTo(ENTITIES_TO_STRING_COLOR.getPropertyName());
+		messageProviderMock.verify(() -> MessageProvider.get(ENTITIES_TO_STRING_COLOR), times(1));
 	}
 }

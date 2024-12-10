@@ -3,26 +3,27 @@ package semester5.pwjj.utils;
 import org.assertj.core.api.Assertions;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.api.Test;
 import semester5.pwjj.TestsBase;
+import semester5.pwjj.utils.i18n.MessageProvider;
 
-import java.util.stream.Stream;
+import static org.mockito.Mockito.times;
 
 @DisplayName("Nullable Utils Tests")
 final class StringUtilsTests extends TestsBase {
 
-	private static @NonNull Stream<Arguments> formatTest() {
-		return Stream.of(
-			Arguments.argumentSet("invalid format", "%d", StringUtils.EMPTY, "%d"),
-			Arguments.argumentSet("valid format", "%d", 0, "0"));
+	private static final @NonNull String TEMPLATE = "%d";
+
+	@DisplayName("valid format")
+	@Test
+	void validFormatTest() {
+		Assertions.assertThat(StringUtils.format(TEMPLATE, 0)).isEqualTo("0");
 	}
 
-	@DisplayName("format")
-	@ParameterizedTest
-	@MethodSource
-	void formatTest(final @NonNull String template, final @NonNull Object args, final @NonNull String expected) {
-		Assertions.assertThat(StringUtils.format(template, args)).isEqualTo(expected);
+	@DisplayName("invalid format")
+	@Test
+	void invalidFormatTest() {
+		Assertions.assertThat(StringUtils.format(TEMPLATE, StringUtils.EMPTY)).isEqualTo("%d");
+		messageProviderMock.verify(() -> MessageProvider.get(UTILS_ERROR_FORMATTING), times(1));
 	}
 }

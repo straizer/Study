@@ -18,8 +18,8 @@ import java.util.Optional;
  * @param <T> type of data that {@link DAO} handles
  */
 @Slf4j
-@RequiredArgsConstructor
 @ToString
+@RequiredArgsConstructor
 public abstract class AbstractDAO<T extends Representative> implements DAO<T>, Representative {
 
 	private final @NonNull Class<T> handledClass;

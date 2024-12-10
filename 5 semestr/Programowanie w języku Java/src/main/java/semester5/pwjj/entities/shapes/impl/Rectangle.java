@@ -2,6 +2,7 @@ package semester5.pwjj.entities.shapes.impl;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Transient;
+import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -11,8 +12,8 @@ import semester5.pwjj.utils.DoubleReducers;
 
 /** Class representing rectangle. */
 @Entity
-@NoArgsConstructor
 @ToString(callSuper = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public final class Rectangle extends Shape {
 
 	/**

@@ -1,6 +1,7 @@
 package semester5.pwjj.entities;
 
 import jakarta.persistence.Embeddable;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -11,9 +12,9 @@ import semester5.pwjj.Representative;
  * Record representing any color in RGBA format.
  */
 @Embeddable
-@NoArgsConstructor
-@AllArgsConstructor
 @ToString
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public final class Color implements Representative {
 
 	private static final byte BYTE_MIN = 0;

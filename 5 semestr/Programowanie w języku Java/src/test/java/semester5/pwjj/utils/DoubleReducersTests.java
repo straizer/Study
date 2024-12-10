@@ -8,7 +8,7 @@ import semester5.pwjj.TestsBase;
 import java.util.stream.DoubleStream;
 
 @DisplayName("Double Reducers Tests")
-class DoubleReducersTests extends TestsBase {
+final class DoubleReducersTests extends TestsBase {
 
 	@DisplayName("multiplying")
 	@Test

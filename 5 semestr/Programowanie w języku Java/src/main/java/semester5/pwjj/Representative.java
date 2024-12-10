@@ -1,4 +1,4 @@
-package semester5.pwjj.utils;
+package semester5.pwjj;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -9,10 +9,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
-/** Interface providing methods for logging return value. */
-@FunctionalInterface
-public interface ReturnLogger {
+/** Interface providing methods for tracing. */
+public interface Representative {
 
 	/** Cached loggers. FOR INTERNAL PURPOSES ONLY! */
 	@NonNull
@@ -45,7 +45,7 @@ public interface ReturnLogger {
 	 * @param <T>          type of value to return
 	 * @return {@code returnValue}
 	 */
-	static <T> @NonNull T traceNotNull(final @NonNull T returnValue, final @NonNull Class<?> callingClass) {
+	static <T> @NonNull T traceNonNull(final @NonNull T returnValue, final @NonNull Class<?> callingClass) {
 		return Objects.requireNonNull(trace(returnValue, callingClass));
 	}
 
@@ -63,11 +63,11 @@ public interface ReturnLogger {
 		try {
 			final @NonNull StackTraceElement @NonNull [] stackTrace = Thread.currentThread().getStackTrace();
 			methodName = Arrays.stream(stackTrace).skip(2)
-				.dropWhile(it -> it.getMethodName().equals("trace") || it.getMethodName().equals("traceNotNull"))
+				.dropWhile(it -> it.getMethodName().equals("trace") || it.getMethodName().equals("traceNonNull"))
 				.toList().getFirst().getMethodName();
 		} catch (final SecurityException _) {
 			methodName = "<unknown>"; //NON-NLS
-			getLogger(ReturnLogger.class)
+			getLogger(Representative.class)
 				.trace("Unable to retrieve method name; falling back to {}", methodName); //NON-NLS
 		}
 		return trace(returnValue, callingClass, methodName, identityHashCode);
@@ -84,13 +84,16 @@ public interface ReturnLogger {
 	 */
 	private static <T> @Nullable T trace(final @Nullable T returnValue, final @NonNull Class<?> callingClass,
 	                                     final @Nullable String methodName, @Nullable final Integer identityHashCode) {
-		@Nullable T returnValueCopy = returnValue;
+		@Nullable Object returnValueCopy = returnValue;
 		if (returnValueCopy instanceof final @NonNull String str) {
-			returnValueCopy = (T) str.replace("\n", "\\n"); //NON-NLS
+			returnValueCopy = str.replace("\n", "\\n"); //NON-NLS
+		}
+		if (returnValueCopy instanceof final @NonNull Optional<?> optional) {
+			returnValueCopy = optional.orElse(null); //NON-NLS
 		}
 		getLogger(callingClass).trace("{}@{}::{} -> {}",
-			callingClass.getSimpleName(),
-			Objects.requireNonNullElse(identityHashCode, "STATIC"), methodName, returnValueCopy);
+			callingClass.getSimpleName(), Objects.requireNonNullElse(identityHashCode, "STATIC"),
+			methodName, returnValueCopy);
 		return returnValue;
 	}
 
@@ -114,23 +117,8 @@ public interface ReturnLogger {
 		return Objects.requireNonNull(trace(returnValue));
 	}
 
-	/** Logs constructor call based on object {@link ReturnLogger#_repr()} method. */
+	/** Logs constructor call based on object {@link Object#toString()} method. */
 	default void traceCtor() {
-		traceCtor(_repr());
+		trace(this, getClass(), "<ctor>", System.identityHashCode(this)); //NON-NLS
 	}
-
-	/**
-	 * Logs constructor call based on given {@code repr}.
-	 * @param repr repr of instance
-	 */
-	default void traceCtor(final @NonNull String repr) {
-		trace(repr, getClass(), "<ctor>", System.identityHashCode(this)); //NON-NLS
-	}
-
-	/**
-	 * Creates {@link String} representation, FOR DEBBUGING PURPOSES ONLY.
-	 * @return programmer friendly {@link String} representation
-	 */
-	@NonNull
-	String _repr();
 }

@@ -3,15 +3,16 @@ package semester5.pwjj.entities.shapes.impl;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Transient;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import semester5.pwjj.entities.Color;
 import semester5.pwjj.entities.shapes.Shape;
 import semester5.pwjj.utils.DoubleReducers;
-import semester5.pwjj.utils.StringUtils;
 
 /** Class representing rectangle. */
 @Entity
 @NoArgsConstructor
+@ToString(callSuper = true)
 public final class Rectangle extends Shape {
 
 	/**
@@ -37,10 +38,5 @@ public final class Rectangle extends Shape {
 	@Override
 	public double getArea() {
 		return traceNonNull(mapSides(stream -> stream.reduce(1.0, DoubleReducers.MULTIPLYING)));
-	}
-
-	@Override
-	public @NonNull String _repr() {
-		return StringUtils.format("Rectangle(super=(%s))", super._repr()); //NON-NLS
 	}
 }

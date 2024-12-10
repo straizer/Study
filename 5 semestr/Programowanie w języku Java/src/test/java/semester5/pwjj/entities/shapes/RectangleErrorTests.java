@@ -11,7 +11,7 @@ import semester5.pwjj.entities.Color;
 import semester5.pwjj.entities.shapes.impl.Rectangle;
 
 @DisplayName("Rectangle Error Tests")
-class RectangleErrorTests extends ShapeErrorTestsBase {
+final class RectangleErrorTests extends ShapeErrorTestsBase {
 
 	@BeforeAll
 	static void beforeAll() {

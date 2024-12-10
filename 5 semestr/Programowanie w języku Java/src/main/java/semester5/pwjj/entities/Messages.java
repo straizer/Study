@@ -1,7 +1,7 @@
 package semester5.pwjj.entities;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import semester5.pwjj.utils.ReturnLogger;
+import semester5.pwjj.Representative;
 import semester5.pwjj.utils.StringUtils;
 import semester5.pwjj.utils.i18n.I18nProperty;
 import semester5.pwjj.utils.i18n.MessageProvider;
@@ -33,7 +33,7 @@ public enum Messages {
 		 * @return value of key {@code entities.toString.color}
 		 */
 		public static @NonNull String COLOR(final int red, final int green, final int blue, final int alpha) {
-			return ReturnLogger.traceNotNull(
+			return Representative.traceNonNull(
 				StringUtils.format(MessageProvider.get(COLOR), red, green, blue, alpha), ToString.class);
 		}
 	}

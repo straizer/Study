@@ -175,9 +175,11 @@
                 <configuration>
                     <excludes>
                         <exclude>${project.package.main}/Main.*</exclude>
-                        <exclude>${project.package.main}/utils/ReturnLogger.*</exclude>
+                        <exclude>${project.package.main}/Representative.*</exclude>
                         <exclude>${project.package.main}/**/Messages.*</exclude>
                         <exclude>${project.package.main}/**/Messages$*</exclude>
+                        <exclude>${project.package.main}/dao/**/*</exclude>
+                        <exclude>${project.package.main}/utils/HibernateSession.*</exclude>
                     </excludes>
                 </configuration>
                 <executions>
@@ -256,6 +258,7 @@
                 </executions>
                 <configuration>
                     <mainClass>${project.groupId}.Main</mainClass>
+                    <cleanupDaemonThreads>false</cleanupDaemonThreads>
                 </configuration>
             </plugin>
         </plugins>

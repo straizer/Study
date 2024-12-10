@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import semester5.pwjj.TestsBase;
 
 @DisplayName("Color Tests")
-class ColorTests extends TestsBase {
+final class ColorTests extends TestsBase {
 
 	@DisplayName("red constant")
 	@Test
@@ -41,6 +41,6 @@ class ColorTests extends TestsBase {
 	@DisplayName("to string")
 	@Test
 	void toStringTest() {
-		Assertions.assertThat(Color.RED.toString()).isEqualTo(ENTITIES_TO_STRING_COLOR.getPropertyName());
+		Assertions.assertThat(Color.RED.toPrettyString()).isEqualTo(ENTITIES_TO_STRING_COLOR.getPropertyName());
 	}
 }

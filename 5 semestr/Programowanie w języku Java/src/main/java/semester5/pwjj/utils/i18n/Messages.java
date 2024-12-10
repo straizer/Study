@@ -1,11 +1,9 @@
 package semester5.pwjj.utils.i18n;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
-import semester5.pwjj.utils.ReturnLogger;
+import semester5.pwjj.Representative;
 import semester5.pwjj.utils.StringUtils;
 
-import java.util.Arrays;
 import java.util.Locale;
 
 /**
@@ -21,21 +19,19 @@ public enum Messages {
 	public enum Error {
 		;
 
-		/** I18n key with value {@code utils.i18n.error.formatting}. */
-		public static final @NonNull I18nProperty FORMATTING = new UtilsI18nI18nProperty("error.formatting");
+		/** I18n key with value {@code utils.i18n.error.translationNotFound}. */
+		public static final @NonNull I18nProperty TRANSLATION_NOT_FOUND = new UtilsI18nI18nProperty("error.translationNotFound");
 
 		/**
-		 * I18n value retriever for key {@code utils.i18n.error.formatting}.
-		 * @param template template for which formatting failed
-		 * @param args     args for which formatting failed
-		 * @param message  error message thrown by formatting call
-		 * @return value of key {@code utils.i18n.error.formatting}
+		 * I18n value retriever for key {@code utils.i18n.error.translationNotFound}.
+		 * @param locale      locale for which translation cannot be found
+		 * @param messageName messageName for which translation cannot be found
+		 * @return value of key {@code utils.i18n.error.translationNotFound}
 		 */
-		public static @NonNull String FORMATTING(
-			final @NonNull String template, final @Nullable Object @Nullable [] args, final @NonNull String message) {
-			return ReturnLogger.traceNotNull(
-				StringUtils.format(MessageProvider.get(FORMATTING), template, Arrays.toString(args), message),
-				Error.class);
+		public static @NonNull String TRANSLATION_NOT_FOUND(
+			final @NonNull Locale locale, final @NonNull String messageName) {
+			return Representative.traceNonNull(
+				StringUtils.format(MessageProvider.get(TRANSLATION_NOT_FOUND), locale, messageName), Error.class);
 		}
 	}
 

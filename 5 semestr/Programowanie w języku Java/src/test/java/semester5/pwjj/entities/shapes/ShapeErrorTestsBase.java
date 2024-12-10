@@ -9,7 +9,7 @@ import semester5.pwjj.ErrorTestsBase;
 import java.util.stream.Stream;
 
 /** Base class for all {@link Shape} error tests. */
-public abstract class ShapeErrorTestsBase extends ErrorTestsBase {
+abstract class ShapeErrorTestsBase extends ErrorTestsBase {
 
 	protected static @Nullable Shape emptyShape;
 

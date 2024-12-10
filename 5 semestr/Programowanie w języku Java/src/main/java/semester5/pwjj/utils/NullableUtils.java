@@ -2,6 +2,7 @@ package semester5.pwjj.utils;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import semester5.pwjj.Representative;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -20,6 +21,6 @@ public enum NullableUtils {
 	 * {@code null} otherwise
 	 */
 	public static <T, R> @Nullable R mapOrNull(@Nullable final T object, final @NonNull Function<T, R> mapper) {
-		return ReturnLogger.trace(Optional.ofNullable(object).map(mapper).orElse(null), NullableUtils.class);
+		return Representative.trace(Optional.ofNullable(object).map(mapper).orElse(null), NullableUtils.class);
 	}
 }

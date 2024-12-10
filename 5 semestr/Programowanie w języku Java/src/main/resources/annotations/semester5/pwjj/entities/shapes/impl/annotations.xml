@@ -1,7 +1,18 @@
+<!--suppress GrazieInspection, LongLine -->
 <root>
     <item name='semester5.pwjj.entities.shapes.impl.Rectangle'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="&quot;ClassWithoutLogger&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.entities.shapes.impl.Rectangle Rectangle(double, double, semester5.pwjj.entities.Color) 2'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;UseOfConcreteClass&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.entities.shapes.impl.Triangle Triangle(double, double, double, semester5.pwjj.entities.Color) 3'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;UseOfConcreteClass&quot;"/>
         </annotation>
     </item>
 </root>

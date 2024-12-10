@@ -14,7 +14,7 @@ import semester5.pwjj.entities.shapes.impl.Triangle;
 import java.util.stream.Stream;
 
 @DisplayName("Triangle Error Tests")
-class TriangleErrorTests extends ShapeErrorTestsBase {
+final class TriangleErrorTests extends ShapeErrorTestsBase {
 
 	@BeforeAll
 	static void beforeAll() {
@@ -38,7 +38,7 @@ class TriangleErrorTests extends ShapeErrorTestsBase {
 	@DisplayName("triangle rule isn't fulfilled")
 	@ParameterizedTest
 	@MethodSource
-	void getPerimeterTriangleRuleNotFulfilledTest(final ThrowingCallable callable) {
+	void getPerimeterTriangleRuleNotFulfilledTest(final @NonNull ThrowingCallable callable) {
 		throwsIllegalArgumentException(callable, ENTITIES_SHAPES_ERROR_TRIANGLE_RULE.getPropertyName());
 	}
 

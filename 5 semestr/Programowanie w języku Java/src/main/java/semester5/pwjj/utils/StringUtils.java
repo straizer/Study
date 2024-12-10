@@ -3,7 +3,6 @@ package semester5.pwjj.utils;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import semester5.pwjj.utils.i18n.Messages;
 
 import java.util.IllegalFormatException;
 
@@ -23,10 +22,10 @@ public enum StringUtils {
 	 */
 	public static @NonNull String format(final @NonNull String template, final @Nullable Object @Nullable ... args) {
 		try {
-			return ReturnLogger.traceNotNull(String.format(template, args), StringUtils.class);
+			return String.format(template, args);
 		} catch (final IllegalFormatException ex) {
-			log.warn(Messages.Error.FORMATTING(template, args, ex.getMessage()));
-			return ReturnLogger.traceNotNull(template, StringUtils.class);
+			log.warn(Messages.Error.FORMATTING(template, args, ex));
+			return template;
 		}
 	}
 }

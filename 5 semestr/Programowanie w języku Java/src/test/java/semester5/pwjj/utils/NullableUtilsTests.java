@@ -12,12 +12,12 @@ import semester5.pwjj.TestsBase;
 import java.util.stream.Stream;
 
 @DisplayName("Nullable Utils Tests")
-class NullableUtilsTests extends TestsBase {
+final class NullableUtilsTests extends TestsBase {
 
 	private static @NonNull Stream<Arguments> mapOrNullTest() {
 		return Stream.of(
 			Arguments.argumentSet("null object", null, null),
-			Arguments.argumentSet("non null object", "", 0));
+			Arguments.argumentSet("non null object", StringUtils.EMPTY, 0));
 	}
 
 	@DisplayName("map or null")

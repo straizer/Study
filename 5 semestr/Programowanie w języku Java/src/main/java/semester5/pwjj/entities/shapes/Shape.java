@@ -8,12 +8,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import semester5.pwjj.Representative;
 import semester5.pwjj.entities.Color;
 import semester5.pwjj.utils.NullableUtils;
-import semester5.pwjj.utils.ReturnLogger;
 import semester5.pwjj.utils.StringUtils;
 import semester5.pwjj.utils.i18n.MessageProvider;
 
@@ -29,11 +30,12 @@ import java.util.stream.DoubleStream;
 @Entity
 @Inheritance
 @NoArgsConstructor
-public abstract class Shape implements ReturnLogger {
+@ToString
+public abstract class Shape implements Representative {
 
 	@Id
 	@GeneratedValue
-	private long id;
+	private int id;
 
 	@ElementCollection
 	private double @Nullable [] sides;
@@ -46,7 +48,7 @@ public abstract class Shape implements ReturnLogger {
 	 * Creates {@code Shape}.
 	 * @param sides sides of the {@code Shape}
 	 * @param color color of the {@code Shape}
-	 * @throws IllegalArgumentException when any side of the {@code Shape} is not positive
+	 * @throws IllegalArgumentException when any side of the {@code Shape} is not positive.
 	 */
 	protected Shape(final double @NonNull [] sides, final @NonNull Color color) {
 		for (final double side : sides) {
@@ -58,18 +60,17 @@ public abstract class Shape implements ReturnLogger {
 		}
 		this.sides = sides.clone();
 		this.color = color;
-		traceCtor(getRepr());
+		traceCtor();
 	}
 
 	/**
 	 * Creates human-readable description.
 	 * @return description of the current object
 	 */
-	@Override
-	public @NonNull String toString() {
+	public @NonNull String toPrettyString() {
 		return traceNonNull(Messages.ToString.SHAPE(id, getClassNameNonNls(), getPerimeter(), getArea(), color,
 			mapSides(stream -> stream
-				.mapToObj(it -> StringUtils.format("%.2f", it))
+				.mapToObj(it -> StringUtils.format("%.2f", it)) //NON-NLS
 				.collect(Collectors.joining("; ", "[", "]")))));
 	}
 
@@ -88,11 +89,6 @@ public abstract class Shape implements ReturnLogger {
 	 */
 	public abstract double getArea();
 
-	@Override
-	public @NonNull String _repr() {
-		return getRepr();
-	}
-
 	/**
 	 * Maps {@code sides} using given {@code mapper}
 	 * @param mapper mapper to apply on {@code sides}
@@ -107,15 +103,6 @@ public abstract class Shape implements ReturnLogger {
 			throw new IllegalStateException(message);
 		}
 		return Objects.requireNonNull(NullableUtils.mapOrNull(sides, it -> mapper.apply(Arrays.stream(it))));
-	}
-
-	/**
-	 * Creates {@link String} representation of {@code Shape}, FOR DEBBUGING PURPOSES ONLY.
-	 * @return {@link String} representation of {@code Shape}
-	 */
-	private @NonNull String getRepr() {
-		return StringUtils.format("Shape(id=%d, sides=%s, color=%s)", //NON-NLS
-			id, Arrays.toString(sides), NullableUtils.mapOrNull(color, Color::_repr));
 	}
 
 	/**

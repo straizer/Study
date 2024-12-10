@@ -1,11 +1,12 @@
 package semester5.pwjj.utils;
 
 import jakarta.persistence.PersistenceException;
+import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.Delegate;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -20,11 +21,11 @@ import java.util.Objects;
 @ToString
 public final class HibernateSession implements AutoCloseable, Representative {
 
-	private static volatile @Nullable SessionFactory sessionFactory;
+	@Getter(value = AccessLevel.PRIVATE, lazy = true)
+	private static final SessionFactory sessionFactory = initializeSessionFactory();
 
 	@Delegate(excludes = NotDelegated.class)
 	private final @NonNull Session session;
-
 
 	/**
 	 * Creates {@link AutoCloseable} Hibernate session and starts transaction.
@@ -46,28 +47,10 @@ public final class HibernateSession implements AutoCloseable, Representative {
 	}
 
 	/**
-	 * Returns {@code sessionFactory}. If it's not initialized, initializes it.
-	 * @return current {@code sessionFactory}
+	 * Initializes {@code sessionFactory}.
 	 * @throws HibernateException if the `hibernate.cfg.xml` file is missing or invalid.
 	 */
-	private static @NonNull SessionFactory getSessionFactory() {
-		log.debug("Getting session factory"); //NON-NLS
-		if (Objects.isNull(sessionFactory)) {
-			synchronized (HibernateSession.class) {
-				if (Objects.isNull(sessionFactory)) {
-					initializeSessionFactory();
-				}
-			}
-		}
-		log.debug("Session factory got: {}", sessionFactory); //NON-NLS
-		return Objects.requireNonNull(sessionFactory);
-	}
-
-	/**
-	 * Initializes {@code sessionFactory}.
-	 * @throws HibernateException if the `hibernate.cfg.xml` file is missing or invalid
-	 */
-	private static void initializeSessionFactory() {
+	private static @NonNull SessionFactory initializeSessionFactory() {
 		log.debug("Initializing session factory"); //NON-NLS
 		final Configuration configuration;
 		try {
@@ -76,13 +59,14 @@ public final class HibernateSession implements AutoCloseable, Representative {
 			log.warn(Messages.Error.MISSING_HIBERNATE_CONFIG());
 			throw ex;
 		}
+		final @NonNull SessionFactory _sessionFactory;
 		try {
-			sessionFactory = configuration.buildSessionFactory();
+			_sessionFactory = configuration.buildSessionFactory();
 		} catch (final HibernateException ex) {
 			log.warn(Messages.Error.INVALID_HIBERNATE_CONFIG());
 			throw ex;
 		}
-		log.debug("Session factory initialized: {}", sessionFactory); //NON-NLS
+		log.debug("Session factory initialized: {}", _sessionFactory); //NON-NLS
 		log.debug("Adding a shutdown hook destroying the session factory"); //NON-NLS
 		try {
 			Runtime.getRuntime().addShutdownHook(new Thread(HibernateSession::shutdown));
@@ -90,17 +74,18 @@ public final class HibernateSession implements AutoCloseable, Representative {
 			log.warn(Messages.Error.CANNOT_ADD_SHUTDOWN_HOOK("HibernateSession::shutdown")); //NON-NLS
 		}
 		log.debug("Shutdown hook destroying the session factory added"); //NON-NLS
+		return _sessionFactory;
 	}
 
 	/** Closes session factory. */
 	private static void shutdown() {
-		log.debug("Closing session factory: {}", sessionFactory); //NON-NLS
+		log.debug("Closing session factory: {}", getSessionFactory()); //NON-NLS
 		try {
-			Objects.requireNonNull(sessionFactory).close();
+			Objects.requireNonNull(getSessionFactory()).close();
 		} catch (final HibernateException ex) {
 			log.warn(Messages.Error.CLOSE_SESSION_FACTORY_FAILED(ex));
 		}
-		log.debug("Session factory closed: {}", sessionFactory); //NON-NLS
+		log.debug("Session factory closed: {}", getSessionFactory()); //NON-NLS
 	}
 
 	/** Commits the current transaction. */
@@ -147,13 +132,11 @@ public final class HibernateSession implements AutoCloseable, Representative {
 
 	/** Holds signatures of methods that should be not delegated to {@code session} object. */
 	private interface NotDelegated {
-		//@formatter:off
 		@NonNull SessionFactory getSessionFactory();
 		@NonNull Transaction beginTransaction();
 		@NonNull Transaction getTransaction();
 		boolean isJoinedToTransaction();
 		void joinTransaction();
 		void close();
-		//@formatter:on
 	}
 }

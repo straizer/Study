@@ -30,7 +30,7 @@ import java.util.stream.DoubleStream;
 @Entity
 @Inheritance
 @ToString
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 public abstract class Shape implements Representative {
 
 	@Id
@@ -38,11 +38,11 @@ public abstract class Shape implements Representative {
 	private int id;
 
 	@ElementCollection
-	private double @Nullable [] sides;
+	private final double @Nullable [] sides;
 
 	@Embedded
 	@Getter
-	private @Nullable Color color;
+	private final @Nullable Color color;
 
 	/**
 	 * Creates {@code Shape}.

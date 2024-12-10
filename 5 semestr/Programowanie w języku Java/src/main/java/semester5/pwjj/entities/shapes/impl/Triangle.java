@@ -15,7 +15,7 @@ import semester5.pwjj.utils.DoubleReducers;
 /** Class representing triangle. */
 @Slf4j
 @Entity
-@ToString(callSuper = true)
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public final class Triangle extends Shape {
 

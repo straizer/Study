@@ -40,7 +40,7 @@ public enum MessageProvider {
 			return Representative.traceNonNull(
 				ResourceBundle.getBundle(I18N_PATH.toString(), locale).getString(messageName), MessageProvider.class);
 		} catch (final MissingResourceException _) {
-			if (i18nProperty == Messages.Error.TRANSLATION_NOT_FOUND) {
+			if (i18nProperty.equals(Messages.Error.TRANSLATION_NOT_FOUND)) {
 				log.warn("Translation for locale <{}> for message <{}> not found.", locale, messageName); //NON-NLS
 			} else {
 				log.warn(Messages.Error.TRANSLATION_NOT_FOUND(locale, messageName));

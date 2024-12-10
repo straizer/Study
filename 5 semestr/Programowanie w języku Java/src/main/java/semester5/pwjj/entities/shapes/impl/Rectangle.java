@@ -12,7 +12,7 @@ import semester5.pwjj.utils.DoubleReducers;
 
 /** Class representing rectangle. */
 @Entity
-@ToString(callSuper = true)
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public final class Rectangle extends Shape {
 

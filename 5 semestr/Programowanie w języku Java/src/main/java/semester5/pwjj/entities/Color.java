@@ -2,8 +2,8 @@ package semester5.pwjj.entities;
 
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import semester5.pwjj.Representative;
@@ -13,8 +13,8 @@ import semester5.pwjj.Representative;
  */
 @Embeddable
 @ToString
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@RequiredArgsConstructor
 public final class Color implements Representative {
 
 	private static final byte BYTE_MIN = 0;
@@ -29,10 +29,10 @@ public final class Color implements Representative {
 	/** Default blue {@code Color}. */
 	public static final @NonNull Color BLUE = new Color(BYTE_MIN, BYTE_MIN, BYTE_MAX);
 
-	private byte red;
-	private byte green;
-	private byte blue;
-	private byte alpha;
+	private final byte red;
+	private final byte green;
+	private final byte blue;
+	private final byte alpha;
 
 	/**
 	 * Constructor with default value 0 for the alpha channel

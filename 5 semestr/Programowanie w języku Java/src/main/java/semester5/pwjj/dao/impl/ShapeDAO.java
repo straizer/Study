@@ -6,7 +6,7 @@ import semester5.pwjj.dao.DAO;
 import semester5.pwjj.entities.shapes.Shape;
 
 /** {@link DAO} (Data Access Object) implementation for {@link Shape}. */
-@ToString(callSuper = true)
+@ToString
 public final class ShapeDAO extends AbstractDAO<Shape> {
 
 	/**

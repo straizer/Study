@@ -13,19 +13,19 @@ final class TriangleTests extends TestsBase {
 
 	private static final @NonNull Shape uut = new Triangle(3.0, 4.0, 5.0, Color.RED);
 
-	@DisplayName("get perimeter")
+	@DisplayName("read perimeter")
 	@Test
 	void getPerimeterTest() {
 		Assertions.assertThat(uut.getPerimeter()).isEqualTo(12.0);
 	}
 
-	@DisplayName("get area")
+	@DisplayName("read area")
 	@Test
 	void getAreaTest() {
 		Assertions.assertThat(uut.getArea()).isEqualTo(6.0);
 	}
 
-	@DisplayName("get color")
+	@DisplayName("read color")
 	@Test
 	void getColorTest() {
 		Assertions.assertThat(uut.getColor()).isEqualTo(Color.RED);
@@ -34,6 +34,6 @@ final class TriangleTests extends TestsBase {
 	@DisplayName("to string")
 	@Test
 	void toStringTest() {
-		Assertions.assertThat(uut.toString()).isEqualTo(ENTITIES_SHAPES_TO_STRING_SHAPE.getPropertyName());
+		Assertions.assertThat(uut.toPrettyString()).isEqualTo(ENTITIES_SHAPES_TO_STRING_SHAPE.getPropertyName());
 	}
 }

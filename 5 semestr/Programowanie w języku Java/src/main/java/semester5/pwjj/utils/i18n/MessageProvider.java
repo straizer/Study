@@ -2,7 +2,7 @@ package semester5.pwjj.utils.i18n;
 
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import semester5.pwjj.utils.ReturnLogger;
+import semester5.pwjj.Representative;
 import semester5.pwjj.utils.StringUtils;
 
 import java.nio.file.Path;
@@ -37,11 +37,15 @@ public enum MessageProvider {
 		final @NonNull String messageName = i18nProperty.getPropertyName();
 		log.debug("Retrieving translation for locale <{}> for message <{}>", locale, messageName); //NON-NLS
 		try {
-			return ReturnLogger.traceNotNull(
+			return Representative.traceNonNull(
 				ResourceBundle.getBundle(I18N_PATH.toString(), locale).getString(messageName), MessageProvider.class);
 		} catch (final MissingResourceException _) {
-			log.warn("Translation for locale <{}> for message <{}> not found.", locale, messageName); //NON-NLS
-			return ReturnLogger.traceNotNull(
+			if (i18nProperty == Messages.Error.TRANSLATION_NOT_FOUND) {
+				log.warn("Translation for locale <{}> for message <{}> not found.", locale, messageName); //NON-NLS
+			} else {
+				log.warn(Messages.Error.TRANSLATION_NOT_FOUND(locale, messageName));
+			}
+			return Representative.traceNonNull(
 				StringUtils.format("<%s:%s>", locale, messageName), MessageProvider.class); //NON-NLS
 		}
 	}

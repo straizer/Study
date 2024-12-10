@@ -11,11 +11,11 @@ import semester5.pwjj.TestsBase;
 import java.util.stream.Stream;
 
 @DisplayName("Nullable Utils Tests")
-class StringUtilsTests extends TestsBase {
+final class StringUtilsTests extends TestsBase {
 
 	private static @NonNull Stream<Arguments> formatTest() {
 		return Stream.of(
-			Arguments.argumentSet("invalid format", "%d", "", "%d"),
+			Arguments.argumentSet("invalid format", "%d", StringUtils.EMPTY, "%d"),
 			Arguments.argumentSet("valid format", "%d", 0, "0"));
 	}
 

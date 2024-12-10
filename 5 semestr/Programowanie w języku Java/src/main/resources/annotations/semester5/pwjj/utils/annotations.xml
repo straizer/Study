@@ -1,23 +1,48 @@
 <!--suppress GrazieInspection, LongLine -->
 <root>
-    <item name='semester5.pwjj.utils.NullableUtils R mapOrNull(T, java.util.function.Function&lt;T,R&gt;)'>
+    <item name='semester5.pwjj.utils.HibernateSession'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="&quot;StaticMethodOnlyUsedInOneClass&quot;"/>
+            <val val="&quot;OverlyComplexClass&quot;"/>
         </annotation>
     </item>
-    <item name='semester5.pwjj.utils.ReturnLogger T trace(T, java.lang.Class&lt;?&gt;, java.lang.String, java.lang.Integer)'>
+    <item name='semester5.pwjj.utils.HibernateSession org.hibernate.SessionFactory getSessionFactory()'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="{&quot;unchecked&quot;, &quot;HardcodedLineSeparator&quot;, &quot;HardcodedFileSeparator&quot;}"/>
+            <val val="{&quot;StaticVariableUsedBeforeInitialization&quot;, &quot;SynchronizeOnThis&quot;}"/>
         </annotation>
     </item>
-    <item name='semester5.pwjj.utils.ReturnLogger _CACHED_LOGGERS'>
+    <item name='semester5.pwjj.utils.HibernateSession void initializeSessionFactory()'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="{&quot;PublicStaticCollectionField&quot;, &quot;ConstantDeclaredInInterface&quot;, &quot;StaticCollection&quot;, &quot;CollectionWithoutInitialCapacity&quot;}"/>
+            <val val="{&quot;DuplicatedCode&quot;, &quot;FeatureEnvy&quot;}"/>
         </annotation>
     </item>
-    <item name='semester5.pwjj.utils.StringUtils EMPTY'>
+    <item name='semester5.pwjj.utils.HibernateSession void shutdown()'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="&quot;unused&quot;"/>
+            <val val="&quot;StaticVariableUsedBeforeInitialization&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.HibernateSession.NotDelegated'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;InterfaceNeverImplemented&quot;, &quot;unused&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.Messages'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;GrazieInspection&quot;, &quot;PublicInnerClass&quot;, &quot;StaticMethodOnlyUsedInOneClass&quot;, &quot;DuplicatedCode&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.Messages.Error OPEN_SESSION_FAILED'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;DuplicateStringLiteralInspection&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.Messages.UtilsI18nProperty'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;ClassNamePrefixedWithPackageName&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.Messages.UtilsI18nProperty UtilsI18nProperty(java.lang.String)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;StringConcatenation&quot;"/>
         </annotation>
     </item>
 </root>

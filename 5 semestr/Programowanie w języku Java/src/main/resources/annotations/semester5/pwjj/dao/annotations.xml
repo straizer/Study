@@ -1,0 +1,33 @@
+<!--suppress GrazieInspection, LongLine -->
+<root>
+    <item name='semester5.pwjj.dao.AbstractDAO'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;AbstractClassWithOnlyOneDirectInheritor&quot;, &quot;AbstractClassWithoutAbstractMethods&quot;, &quot;DuplicatedCode&quot;, &quot;UseOfConcreteClass&quot;, &quot;FeatureEnvy&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.dao.DAO'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;ClassNamePrefixedWithPackageName&quot;, &quot;InterfaceWithOnlyOneDirectInheritor&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.dao.Messages'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;GrazieInspection&quot;, &quot;PublicInnerClass&quot;, &quot;StaticMethodOnlyUsedInOneClass&quot;, &quot;DuplicatedCode&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.dao.Messages.DAOI18nProperty'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;ClassNamePrefixedWithPackageName&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.dao.Messages.DAOI18nProperty DAOI18nProperty(java.lang.String)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;StringConcatenation&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.dao.Messages.Error OPEN_SESSION_FAILED'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;DuplicateStringLiteralInspection&quot;"/>
+        </annotation>
+    </item>
+</root>

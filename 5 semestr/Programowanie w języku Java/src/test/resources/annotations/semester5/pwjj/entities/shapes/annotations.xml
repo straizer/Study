@@ -12,7 +12,7 @@
     </item>
     <item name='semester5.pwjj.entities.shapes.TriangleErrorTests'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="{&quot;TestMethodWithoutAssertion&quot;, }"/>
+            <val val="&quot;TestMethodWithoutAssertion&quot;"/>
         </annotation>
     </item>
 </root>

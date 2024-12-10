@@ -5,9 +5,24 @@
             <val val="&quot;ClassWithoutLogger&quot;"/>
         </annotation>
     </item>
+    <item name='semester5.pwjj.entities.Color BLUE'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;UseOfConcreteClass&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.entities.Color GREEN'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;UseOfConcreteClass&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.entities.Color RED'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;UseOfConcreteClass&quot;"/>
+        </annotation>
+    </item>
     <item name='semester5.pwjj.entities.Messages'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="{&quot;GrazieInspection&quot;, &quot;unused&quot;, &quot;PublicInnerClass&quot;, &quot;StaticMethodOnlyUsedInOneClass&quot;}"/>
+            <val val="{&quot;GrazieInspection&quot;, &quot;PublicInnerClass&quot;, &quot;StaticMethodOnlyUsedInOneClass&quot;}"/>
         </annotation>
     </item>
     <item name='semester5.pwjj.entities.Messages.EntitiesI18nProperty'>

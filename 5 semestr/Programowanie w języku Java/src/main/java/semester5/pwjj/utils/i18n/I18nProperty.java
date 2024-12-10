@@ -3,12 +3,14 @@ package semester5.pwjj.utils.i18n;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import semester5.pwjj.utils.ReturnLogger;
+import semester5.pwjj.Representative;
 
 /** Base class for storing i18n property constants. */
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 public abstract class I18nProperty {
 
 	private final @NonNull String propertyName;
@@ -21,6 +23,6 @@ public abstract class I18nProperty {
 	public static @NonNull I18nProperty of(final @NonNull String propertyName) {
 		final @NonNull I18nProperty instance = new I18nProperty(propertyName) {
 		};
-		return ReturnLogger.traceNotNull(instance, I18nProperty.class);
+		return Representative.traceNonNull(instance, I18nProperty.class);
 	}
 }

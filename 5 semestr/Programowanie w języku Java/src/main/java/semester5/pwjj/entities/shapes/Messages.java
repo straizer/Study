@@ -2,8 +2,9 @@ package semester5.pwjj.entities.shapes;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import semester5.pwjj.Representative;
 import semester5.pwjj.entities.Color;
-import semester5.pwjj.utils.ReturnLogger;
+import semester5.pwjj.utils.NullableUtils;
 import semester5.pwjj.utils.StringUtils;
 import semester5.pwjj.utils.i18n.I18nProperty;
 import semester5.pwjj.utils.i18n.MessageProvider;
@@ -38,7 +39,7 @@ public enum Messages {
 		 * @return value of key {@code entities.shapes.error.sidesAreNull}
 		 */
 		public static @NonNull String SIDES_ARE_NULL(final @Nullable String shapeName) {
-			return ReturnLogger.traceNotNull(
+			return Representative.traceNonNull(
 				StringUtils.format(MessageProvider.get(SIDES_ARE_NULL), shapeName), Error.class);
 		}
 
@@ -48,7 +49,7 @@ public enum Messages {
 		 * @return value of key {@code entities.shapes.error.sidesNotPositive}
 		 */
 		public static @NonNull String SIDES_NOT_POSITIVE(final @Nullable String shapeName) {
-			return ReturnLogger.traceNotNull(
+			return Representative.traceNonNull(
 				StringUtils.format(MessageProvider.get(SIDES_NOT_POSITIVE), shapeName), Error.class);
 		}
 
@@ -57,7 +58,7 @@ public enum Messages {
 		 * @return value of key {@code entities.shapes.error.triangleRule}
 		 */
 		public static @NonNull String TRIANGLE_RULE() {
-			return ReturnLogger.traceNotNull(MessageProvider.get(TRIANGLE_RULE), Error.class);
+			return Representative.traceNonNull(MessageProvider.get(TRIANGLE_RULE), Error.class);
 		}
 	}
 
@@ -76,7 +77,7 @@ public enum Messages {
 		 * @return value of key {@code entities.shapes.name.rectangle}
 		 */
 		public static @NonNull String RECTANGLE() {
-			return ReturnLogger.traceNotNull(MessageProvider.get(RECTANGLE), Name.class);
+			return Representative.traceNonNull(MessageProvider.get(RECTANGLE), Name.class);
 		}
 
 		/**
@@ -84,7 +85,7 @@ public enum Messages {
 		 * @return value of key {@code entities.shapes.name.triangle}
 		 */
 		public static @NonNull String TRIANGLE() {
-			return ReturnLogger.traceNotNull(MessageProvider.get(TRIANGLE), Name.class);
+			return Representative.traceNonNull(MessageProvider.get(TRIANGLE), Name.class);
 		}
 	}
 
@@ -105,12 +106,14 @@ public enum Messages {
 		 * @param sides     {@link String} representation of sides of the {@link Shape}
 		 * @return value of key {@code entities.shapes.toString.shape}
 		 */
-		public static @NonNull String SHAPE(final long id, final @Nullable String shapeName, final double perimeter,
+		public static @NonNull String SHAPE(final int id, final @Nullable String shapeName, final double perimeter,
 		                                    final double area, final @Nullable Color color,
 		                                    final @Nullable String sides) {
-			return ReturnLogger.traceNotNull(
+			return Representative.traceNonNull(
 				StringUtils.format(
-					MessageProvider.get(SHAPE), id, shapeName, perimeter, area, color, sides), ToString.class);
+					MessageProvider.get(SHAPE), id, shapeName, perimeter, area,
+					NullableUtils.mapOrNull(color, Color::toPrettyString), sides),
+				ToString.class);
 		}
 	}
 

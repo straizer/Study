@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
 @DisplayName("Message Provider Tests")
-class MessageProviderTests {
+final class MessageProviderTests {
 
 	private static final @NonNull I18nProperty PROPERTY = I18nProperty.of("test.message");
 

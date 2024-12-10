@@ -2,6 +2,7 @@ package semester5.pwjj;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
@@ -53,10 +54,8 @@ public abstract class TestsBase {
 		= semester5.pwjj.utils.Messages.Error.OPEN_SESSION_FAILED;
 	protected static final @NonNull I18nProperty UTILS_ERROR_ROLLBACK_FAILED
 		= semester5.pwjj.utils.Messages.Error.ROLLBACK_FAILED;
-	protected static final @NonNull I18nProperty UTILS_I18N_ERROR_TRANSLATION_NOT_FOUND
-		= semester5.pwjj.utils.i18n.Messages.Error.TRANSLATION_NOT_FOUND;
 
-	private static MockedStatic<MessageProvider> messageProviderMock;
+	protected static MockedStatic<MessageProvider> messageProviderMock;
 
 	@BeforeAll
 	static void globalBeforeAll() throws IllegalAccessException {
@@ -75,5 +74,11 @@ public abstract class TestsBase {
 	@AfterAll
 	static void globalAfterAll() {
 		messageProviderMock.close();
+	}
+
+	@AfterEach
+	void globalAfterEach() {
+		messageProviderMock.verifyNoMoreInteractions();
+		messageProviderMock.clearInvocations();
 	}
 }

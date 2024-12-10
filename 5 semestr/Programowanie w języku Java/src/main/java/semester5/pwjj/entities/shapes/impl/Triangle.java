@@ -2,6 +2,7 @@ package semester5.pwjj.entities.shapes.impl;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Transient;
+import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
@@ -14,8 +15,8 @@ import semester5.pwjj.utils.DoubleReducers;
 /** Class representing triangle. */
 @Slf4j
 @Entity
-@NoArgsConstructor
 @ToString(callSuper = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public final class Triangle extends Shape {
 
 	/**

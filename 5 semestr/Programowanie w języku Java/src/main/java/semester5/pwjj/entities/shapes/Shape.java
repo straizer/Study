@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -14,7 +15,6 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import semester5.pwjj.Representative;
 import semester5.pwjj.entities.Color;
-import semester5.pwjj.utils.NullableUtils;
 import semester5.pwjj.utils.StringUtils;
 import semester5.pwjj.utils.i18n.MessageProvider;
 
@@ -29,8 +29,8 @@ import java.util.stream.DoubleStream;
 @Slf4j
 @Entity
 @Inheritance
-@NoArgsConstructor
 @ToString
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class Shape implements Representative {
 
 	@Id
@@ -53,7 +53,7 @@ public abstract class Shape implements Representative {
 	protected Shape(final double @NonNull [] sides, final @NonNull Color color) {
 		for (final double side : sides) {
 			if (side <= 0) {
-				final @NonNull String message = Messages.Error.SIDES_NOT_POSITIVE(getClassNameNonNls());
+				final @NonNull String message = Messages.Error.SIDES_NOT_POSITIVE(getClassNameNls());
 				log.warn(message);
 				throw new IllegalArgumentException(message);
 			}
@@ -68,7 +68,7 @@ public abstract class Shape implements Representative {
 	 * @return description of the current object
 	 */
 	public @NonNull String toPrettyString() {
-		return traceNonNull(Messages.ToString.SHAPE(id, getClassNameNonNls(), getPerimeter(), getArea(), color,
+		return traceNonNull(Messages.ToString.SHAPE(id, getClassNameNls(), getPerimeter(), getArea(), color,
 			mapSides(stream -> stream
 				.mapToObj(it -> StringUtils.format("%.2f", it)) //NON-NLS
 				.collect(Collectors.joining("; ", "[", "]")))));
@@ -98,18 +98,18 @@ public abstract class Shape implements Representative {
 	 */
 	protected <T> @NonNull T mapSides(final @NonNull Function<? super DoubleStream, T> mapper) {
 		if (Objects.isNull(sides)) {
-			final @NonNull String message = Messages.Error.SIDES_ARE_NULL(getClassNameNonNls());
+			final @NonNull String message = Messages.Error.SIDES_ARE_NULL(getClassNameNls());
 			log.warn(message);
 			throw new IllegalStateException(message);
 		}
-		return Objects.requireNonNull(NullableUtils.mapOrNull(sides, it -> mapper.apply(Arrays.stream(it))));
+		return mapper.apply(Arrays.stream(sides));
 	}
 
 	/**
 	 * Extracts non-nationalized class name.
 	 * @return class name
 	 */
-	private @NonNull String getClassNameNonNls() {
+	private @NonNull String getClassNameNls() {
 		final @NonNull String propertyName = "name." + getClass().getSimpleName().toLowerCase(Locale.ENGLISH); //NON-NLS
 		return MessageProvider.get(new Messages.EntitiesShapesI18nProperty(propertyName));
 	}

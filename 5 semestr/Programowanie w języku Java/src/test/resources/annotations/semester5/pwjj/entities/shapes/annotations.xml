@@ -1,18 +1,8 @@
 <!--suppress LongLine, GrazieInspection, Style -->
 <root>
-    <item name='semester5.pwjj.entities.shapes.RectangleErrorTests'>
-        <annotation name='java.lang.SuppressWarnings'>
-            <val val="{&quot;TestMethodWithoutAssertion&quot;}"/>
-        </annotation>
-    </item>
     <item name='semester5.pwjj.entities.shapes.ShapeErrorTestsBase java.util.stream.Stream&lt;org.junit.jupiter.params.provider.Arguments&gt; noSidesTest()'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="{&quot;DataFlowIssue&quot;, &quot;StaticVariableUsedBeforeInitialization&quot;, &quot;unused&quot;}"/>
-        </annotation>
-    </item>
-    <item name='semester5.pwjj.entities.shapes.TriangleErrorTests'>
-        <annotation name='java.lang.SuppressWarnings'>
-            <val val="&quot;TestMethodWithoutAssertion&quot;"/>
         </annotation>
     </item>
 </root>

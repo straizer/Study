@@ -1,16 +1,11 @@
 package semester5.pwjj.utils.i18n;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.Data;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import semester5.pwjj.Representative;
 
 /** Base class for storing i18n property constants. */
-@Getter
-@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
+@Data
 public abstract class I18nProperty {
 
 	private final @NonNull String propertyName;

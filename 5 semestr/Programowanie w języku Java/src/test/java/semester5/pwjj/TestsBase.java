@@ -46,10 +46,6 @@ public abstract class TestsBase {
 		= semester5.pwjj.utils.Messages.Error.CLOSE_SESSION_FAILED;
 	protected static final @NonNull I18nProperty UTILS_ERROR_COMMIT_FAILED
 		= semester5.pwjj.utils.Messages.Error.COMMIT_FAILED;
-	protected static final @NonNull I18nProperty UTILS_ERROR_EXCEPTION_INSTANTIATION_FAILED
-		= semester5.pwjj.utils.Messages.Error.EXCEPTION_INSTANTIATION_FAILED;
-	protected static final @NonNull I18nProperty UTILS_ERROR_FORMATTING
-		= semester5.pwjj.utils.Messages.Error.FORMATTING;
 	protected static final @NonNull I18nProperty UTILS_ERROR_INVALID_HIBERNATE_CONFIG
 		= semester5.pwjj.utils.Messages.Error.INVALID_HIBERNATE_CONFIG;
 	protected static final @NonNull I18nProperty UTILS_ERROR_MISSING_HIBERNATE_CONFIG
@@ -60,6 +56,10 @@ public abstract class TestsBase {
 		= semester5.pwjj.utils.Messages.Error.TRANSACTIONS_HANDLED_INTERNALLY;
 	protected static final @NonNull I18nProperty UTILS_ERROR_ROLLBACK_FAILED
 		= semester5.pwjj.utils.Messages.Error.ROLLBACK_FAILED;
+	protected static final @NonNull I18nProperty UTILS_EXTENSIONS_ERROR_EXCEPTION_INSTANTIATION_FAILED
+		= semester5.pwjj.utils.extensions.Messages.Error.EXCEPTION_INSTANTIATION_FAILED;
+	protected static final @NonNull I18nProperty UTILS_EXTENSIONS_ERROR_FORMATTING
+		= semester5.pwjj.utils.extensions.Messages.Error.FORMATTING;
 
 	protected static MockedStatic<MessageProvider> messageProviderMock;
 

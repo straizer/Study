@@ -11,8 +11,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.hibernate.HibernateException;
 import semester5.pwjj.Representative;
 import semester5.pwjj.utils.HibernateSession;
-import semester5.pwjj.utils.StringUtils;
 import semester5.pwjj.utils.TransactionalSession;
+import semester5.pwjj.utils.extensions.StringUtils;
 
 import java.util.List;
 import java.util.Objects;

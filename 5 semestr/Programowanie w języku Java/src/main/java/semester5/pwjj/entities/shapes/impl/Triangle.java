@@ -12,7 +12,7 @@ import semester5.pwjj.entities.Color;
 import semester5.pwjj.entities.shapes.Messages;
 import semester5.pwjj.entities.shapes.Shape;
 import semester5.pwjj.utils.DoubleReducers;
-import semester5.pwjj.utils.ExceptionUtils;
+import semester5.pwjj.utils.extensions.ExceptionUtils;
 
 /** Class representing triangle. */
 @Slf4j

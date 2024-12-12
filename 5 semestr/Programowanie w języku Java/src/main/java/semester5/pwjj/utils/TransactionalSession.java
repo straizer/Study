@@ -4,6 +4,7 @@ import lombok.experimental.ExtensionMethod;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import semester5.pwjj.utils.extensions.ExceptionUtils;
 
 import java.io.NotSerializableException;
 import java.io.ObjectInputStream;

@@ -16,9 +16,9 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import semester5.pwjj.Representative;
 import semester5.pwjj.entities.Color;
-import semester5.pwjj.utils.ExceptionUtils;
-import semester5.pwjj.utils.StreamUtils;
-import semester5.pwjj.utils.StringUtils;
+import semester5.pwjj.utils.extensions.ExceptionUtils;
+import semester5.pwjj.utils.extensions.StreamUtils;
+import semester5.pwjj.utils.extensions.StringUtils;
 
 import java.util.Arrays;
 import java.util.Locale;

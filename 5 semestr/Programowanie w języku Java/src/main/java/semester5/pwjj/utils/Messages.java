@@ -2,12 +2,11 @@ package semester5.pwjj.utils;
 
 import lombok.experimental.ExtensionMethod;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import semester5.pwjj.utils.extensions.RepresentativeUtils;
+import semester5.pwjj.utils.extensions.StringUtils;
 import semester5.pwjj.utils.i18n.I18nProperty;
 import semester5.pwjj.utils.i18n.MessageProvider;
 
-import java.util.Arrays;
-import java.util.IllegalFormatException;
 import java.util.Locale;
 
 /**
@@ -43,14 +42,6 @@ public enum Messages {
 		/** I18n key with value {@code utils.error.commitFailed}. */
 		public static final @NonNull I18nProperty COMMIT_FAILED =
 			new UtilsI18nProperty("error.commitFailed");
-
-		/** I18n key with value {@code utils.error.exceptionInstantiationFailed}. */
-		public static final @NonNull I18nProperty EXCEPTION_INSTANTIATION_FAILED =
-			new UtilsI18nProperty("error.exceptionInstantiationFailed");
-
-		/** I18n key with value {@code utils.error.formatting}. */
-		public static final @NonNull I18nProperty FORMATTING =
-			new UtilsI18nProperty("error.formatting");
 
 		/** I18n key with value {@code utils.error.invalidHibernateConfig}. */
 		public static final @NonNull I18nProperty INVALID_HIBERNATE_CONFIG =
@@ -116,34 +107,6 @@ public enum Messages {
 		 */
 		public static @NonNull String COMMIT_FAILED(final @NonNull Exception exception) {
 			return COMMIT_FAILED.getMessage().safeFormat(exception.getMessage()).traceNonNull(Error.class);
-		}
-
-		/**
-		 * I18n value retriever for key {@code utils.error.exceptionInstantiationFailed}.
-		 * @param clazz     related exception class
-		 * @param exception exception that was thrown
-		 * @return value of key {@code utils.error.exceptionInstantiationFailed}
-		 */
-		public static @NonNull String EXCEPTION_INSTANTIATION_FAILED(
-			final @NonNull Class<? extends Exception> clazz, final @NonNull Exception exception
-		) {
-			return EXCEPTION_INSTANTIATION_FAILED.getMessage().safeFormat(clazz.getSimpleName(), exception.getMessage())
-				.traceNonNull(Error.class);
-		}
-
-		/**
-		 * I18n value retriever for key {@code utils.error.formatting}.
-		 * @param template  template for which formatting failed
-		 * @param args      args for which formatting failed
-		 * @param exception exception that was thrown
-		 * @return value of key {@code utils.error.formatting}
-		 */
-		public static @NonNull String FORMATTING(
-			final @NonNull String template, final @Nullable Object @Nullable [] args,
-			final @NonNull IllegalFormatException exception
-		) {
-			return FORMATTING.getMessage().safeFormat(template, Arrays.toString(args), exception.getMessage())
-				.traceNonNull(Error.class);
 		}
 
 		/**

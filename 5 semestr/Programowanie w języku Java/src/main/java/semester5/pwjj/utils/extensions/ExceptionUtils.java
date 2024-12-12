@@ -20,7 +20,7 @@ public class ExceptionUtils {
 	public <T extends Exception> void warnAndThrow(
 		final @NonNull String message, final @NonNull Class<T> exceptionClass
 	) throws T {
-		log.warn(message); //NON-NLS
+		log.warn(message);
 		T exception = null;
 		try {
 			exception = exceptionClass.getConstructor(String.class).newInstance(message);
@@ -39,7 +39,7 @@ public class ExceptionUtils {
 	 * @throws T supplied exception
 	 */
 	public <T extends Exception> void warnAndThrow(final @NonNull String message, final @NonNull T exception) throws T {
-		log.warn(message); //NON-NLS
+		log.warn(message);
 		throw exception;
 	}
 }

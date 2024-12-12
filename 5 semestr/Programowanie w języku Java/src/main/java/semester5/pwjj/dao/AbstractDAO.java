@@ -1,6 +1,7 @@
 package semester5.pwjj.dao;
 
 import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.PersistenceException;
 import jakarta.persistence.criteria.CriteriaQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -8,10 +9,9 @@ import lombok.experimental.ExtensionMethod;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.hibernate.HibernateException;
 import semester5.pwjj.Representative;
-import semester5.pwjj.utils.HibernateSession;
-import semester5.pwjj.utils.TransactionalSession;
+import semester5.pwjj.utils.HibernateEntityManager;
+import semester5.pwjj.utils.TransactionalEntityManager;
 import semester5.pwjj.utils.extensions.StringUtils;
 
 import java.util.List;
@@ -33,40 +33,42 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 	private final @NonNull Class<T> handledClass;
 
 	/**
-	 * Supplies {@code function} with newly created {@link TransactionalSession} and executes it,
-	 * then perform {@link TransactionalSession#commitTransaction()}.
+	 * Supplies {@code function} with newly created {@link TransactionalEntityManager} and executes it,
+	 * then perform {@link TransactionalEntityManager#commitTransaction()}.
 	 * @param function   function to execute
 	 * @param methodName name of the calling method
 	 * @param <T>        type of {@code function} return value
 	 * @return {@link Optional} of {@code function} return value if function succeeds; null otherwise
 	 */
 	private static <T> @Nullable Optional<T> executeAndReturn(
-		final @NonNull Function<? super TransactionalSession, ? extends T> function,
+		final @NonNull Function<? super TransactionalEntityManager, ? extends T> function,
 		final @NonNull String methodName
 	) {
 		final @NonNull Optional<T> result;
-		try (final TransactionalSession session = new HibernateSession()) {
-			result = Optional.ofNullable(function.apply(session));
-			session.commitTransaction();
-		} catch (final HibernateException _) {
-			log.warn(Messages.Error.OPEN_SESSION_FAILED(methodName)); //NON-NLS
+		try (final TransactionalEntityManager entityManager = new HibernateEntityManager()) {
+			result = Optional.ofNullable(function.apply(entityManager));
+			entityManager.commitTransaction();
+		} catch (final EntityExistsException | IllegalArgumentException ex) {
+			throw ex;
+		} catch (final PersistenceException _) {
+			log.warn(Messages.Error.CREATE_ENTITY_MANAGER_FAILED(methodName));
 			return null;
 		}
 		return result;
 	}
 
 	/**
-	 * Supplies {@code function} with newly created {@link TransactionalSession} and executes it,
-	 * then perform {@link TransactionalSession#commitTransaction()}.
+	 * Supplies {@code function} with newly created {@link TransactionalEntityManager} and executes it,
+	 * then perform {@link TransactionalEntityManager#commitTransaction()}.
 	 * @param function   function to execute
 	 * @param methodName name of the calling method
 	 * @return Empty {@link Optional} if function succeeds; null otherwise
 	 */
 	private static <T> @Nullable Optional<T> execute(
-		final @NonNull Consumer<? super TransactionalSession> function, final @NonNull String methodName
+		final @NonNull Consumer<? super TransactionalEntityManager> function, final @NonNull String methodName
 	) {
-		return executeAndReturn(session -> {
-				function.accept(session);
+		return executeAndReturn(entityManager -> {
+				function.accept(entityManager);
 				return null;
 			},
 			methodName);
@@ -76,7 +78,7 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 	public void create(final @NonNull T entity) {
 		debugMessageWithObject("Saving in", entity); //NON-NLS
 		try {
-			if (execute(session -> session.persist(entity), "create").isNull()) { //NON-NLS
+			if (execute(entityManager -> entityManager.persist(entity), "create").isNull()) { //NON-NLS
 				return;
 			}
 		} catch (final EntityExistsException _) {
@@ -91,10 +93,10 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 
 	@Override
 	public @NonNull Optional<T> read(final int id) {
-		debugMessageWithPrefixGettingFrom(id); //NON-NLS
+		debugMessageWithPrefixGettingFrom(id);
 		final @Nullable Optional<T> entity;
 		try {
-			entity = executeAndReturn(session -> session.find(handledClass, id), "read"); //NON-NLS
+			entity = executeAndReturn(entityManager -> entityManager.find(handledClass, id), "read"); //NON-NLS
 			if (entity.isNull()) {
 				return Optional.empty();
 			}
@@ -105,7 +107,7 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 		if (entity.isEmpty()) {
 			debugMessageWithId("Not found in", id); //NON-NLS
 		} else {
-			debugMessageWithPrefixFoundIn(entity.get()); //NON-NLS
+			debugMessageWithPrefixFoundIn(entity.get());
 		}
 		return traceNonNull(entity);
 	}
@@ -114,10 +116,10 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 	public @NonNull List<T> readAll() {
 		debugMessageWithPrefixGettingFrom("all entities"); //NON-NLS
 		final @Nullable Optional<List<T>> entitiesOptional;
-		entitiesOptional = executeAndReturn(session -> {
-			final CriteriaQuery<T> query = session.getCriteriaBuilder().createQuery(handledClass);
+		entitiesOptional = executeAndReturn(entityManager -> {
+			final CriteriaQuery<T> query = entityManager.getCriteriaBuilder().createQuery(handledClass);
 			query.from(handledClass);
-			return session.createQuery(query).list();
+			return entityManager.createQuery(query).getResultList();
 		}, "readAll"); //NON-NLS
 		if (entitiesOptional.isNull()) {
 			return List.of();
@@ -132,7 +134,7 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 		debugMessageWithObject("Updating in", entity); //NON-NLS
 		final @Nullable Optional<T> updatedEntity;
 		try {
-			updatedEntity = executeAndReturn(session -> session.merge(entity), "update"); //NON-NLS
+			updatedEntity = executeAndReturn(entityManager -> entityManager.merge(entity), "update"); //NON-NLS
 			if (updatedEntity.isNull()) {
 				return Optional.empty();
 			}
@@ -148,7 +150,10 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 	public void delete(final int id) {
 		debugMessageWithId("Removing from", id); //NON-NLS
 		try {
-			if (execute(session -> session.remove(session.find(handledClass, id)), "delete").isNull()) { //NON-NLS
+			final @Nullable Optional<T> result = execute(
+				entityManager -> entityManager.remove(entityManager.find(handledClass, id)),
+				"delete"); //NON-NLS
+			if (result.isNull()) {
 				return;
 			}
 		} catch (final IllegalArgumentException _) {
@@ -240,7 +245,7 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 	 * @param infix  infix to insert
 	 */
 	private void debugMessageWithInfix(final @NonNull String prefix, final @NonNull String infix) {
-		debugMessage(prefix, infix, StringUtils.EMPTY); //NON-NLS
+		debugMessage(prefix, infix, StringUtils.EMPTY);
 	}
 
 	/**

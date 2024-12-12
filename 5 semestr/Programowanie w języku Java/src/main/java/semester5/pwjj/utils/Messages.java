@@ -27,10 +27,6 @@ public enum Messages {
 		public static final @NonNull I18nProperty CANNOT_ADD_SHUTDOWN_HOOK =
 			new UtilsI18nProperty("error.cannotAddShutdownHook");
 
-		/** I18n key with value {@code utils.error.classNotSerializable}. */
-		public static final @NonNull I18nProperty CLASS_NOT_SERIALIZABLE =
-			new UtilsI18nProperty("error.classNotSerializable");
-
 		/** I18n key with value {@code utils.error.closeSessionFactoryFailed}. */
 		public static final @NonNull I18nProperty CLOSE_SESSION_FACTORY_FAILED =
 			new UtilsI18nProperty("error.closeSessionFactoryFailed");
@@ -70,15 +66,6 @@ public enum Messages {
 		 */
 		public static @NonNull String CANNOT_ADD_SHUTDOWN_HOOK(final @NonNull String methodName) {
 			return CANNOT_ADD_SHUTDOWN_HOOK.getMessage().safeFormat(methodName).traceNonNull(Error.class);
-		}
-
-		/**
-		 * I18n value retriever for key {@code utils.error.classNotSerializable}.
-		 * @param clazz related class
-		 * @return value of key {@code utils.error.classNotSerializable}
-		 */
-		public static @NonNull String CLASS_NOT_SERIALIZABLE(final @NonNull Class<?> clazz) {
-			return CLASS_NOT_SERIALIZABLE.getMessage().safeFormat(clazz.getSimpleName()).traceNonNull(Error.class);
 		}
 
 		/**

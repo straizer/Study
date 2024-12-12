@@ -92,7 +92,7 @@ public class RepresentativeUtils {
 	) {
 		final @Nullable Object returnValueCopy = switch (returnValue) {
 			case final @NonNull String s -> s.replace("\n", "\\n"); //NON-NLS
-			case final @NonNull Optional<?> o -> o.orElse(null); //NON-NLS
+			case final @NonNull Optional<?> o -> o.orElse(null);
 			case null, default -> returnValue;
 		};
 		getLogger(callingClass).trace("{}@{}::{} -> {}",

@@ -16,14 +16,14 @@ import java.lang.reflect.Field;
 /** Base class for all tests. */
 public abstract class TestsBase {
 
+	protected static final @NonNull I18nProperty DAO_ERROR_CREATE_ENTITY_MANAGER_FAILED
+		= semester5.pwjj.dao.Messages.Error.CREATE_ENTITY_MANAGER_FAILED;
 	protected static final @NonNull I18nProperty DAO_ERROR_SIDES_ARE_NULL
 		= semester5.pwjj.dao.Messages.Error.ENTITY_ALREADY_EXISTS;
 	protected static final @NonNull I18nProperty DAO_ERROR_NOT_AN_ENTITY_TYPE
 		= semester5.pwjj.dao.Messages.Error.NOT_AN_ENTITY_TYPE;
 	protected static final @NonNull I18nProperty DAO_ERROR_NOT_AN_ENTITY_TYPE_OR_REMOVED
 		= semester5.pwjj.dao.Messages.Error.NOT_AN_ENTITY_TYPE_OR_REMOVED;
-	protected static final @NonNull I18nProperty DAO_ERROR_OPEN_SESSION_FAILED
-		= semester5.pwjj.dao.Messages.Error.OPEN_SESSION_FAILED;
 	protected static final @NonNull I18nProperty DAO_ERROR_UNEXPECTED_TYPE
 		= semester5.pwjj.dao.Messages.Error.UNEXPECTED_TYPE;
 	protected static final @NonNull I18nProperty ENTITIES_SHAPES_ERROR_SIDES_ARE_NULL
@@ -42,8 +42,6 @@ public abstract class TestsBase {
 		= semester5.pwjj.entities.Messages.ToString.COLOR;
 	protected static final @NonNull I18nProperty UTILS_ERROR_CANNOT_ADD_SHUTDOWN_HOOK
 		= semester5.pwjj.utils.Messages.Error.CANNOT_ADD_SHUTDOWN_HOOK;
-	protected static final @NonNull I18nProperty UTILS_ERROR_CLASS_NOT_SERIALIZABLE
-		= semester5.pwjj.utils.Messages.Error.CLASS_NOT_SERIALIZABLE;
 	protected static final @NonNull I18nProperty UTILS_ERROR_CLOSE_SESSION_FACTORY_FAILED
 		= semester5.pwjj.utils.Messages.Error.CLOSE_SESSION_FACTORY_FAILED;
 	protected static final @NonNull I18nProperty UTILS_ERROR_CLOSE_SESSION_FAILED

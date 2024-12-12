@@ -4,7 +4,9 @@ import lombok.experimental.ExtensionMethod;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import semester5.pwjj.Representative;
+import semester5.pwjj.utils.extensions.ArrayUtils;
 import semester5.pwjj.utils.extensions.RepresentativeUtils;
+import semester5.pwjj.utils.extensions.StreamUtils;
 import semester5.pwjj.utils.extensions.StringUtils;
 import semester5.pwjj.utils.i18n.I18nProperty;
 import semester5.pwjj.utils.i18n.MessageProvider;
@@ -17,7 +19,7 @@ import java.util.Locale;
  * @implNote If different translation is required without changing default locale,
  * use {@link MessageProvider#get(I18nProperty i18nProperty, Locale locale)}
  */
-@ExtensionMethod({StringUtils.class, RepresentativeUtils.class})
+@ExtensionMethod({StringUtils.class, RepresentativeUtils.class, ArrayUtils.class, StreamUtils.class})
 public enum Messages {
 	;
 
@@ -40,6 +42,10 @@ public enum Messages {
 		/** I18n key with value {@code dao.error.openSessionFailed}. */
 		public static final @NonNull I18nProperty OPEN_SESSION_FAILED =
 			new DAOI18nProperty("error.openSessionFailed");
+
+		/** I18n key with value {@code dao.error.unexpectedType}. */
+		public static final @NonNull I18nProperty UNEXPECTED_TYPE =
+			new DAOI18nProperty("error.unexpectedType");
 
 		/**
 		 * I18n value retriever for key {@code dao.error.entityAlreadyExists}.
@@ -89,6 +95,20 @@ public enum Messages {
 		 */
 		public static @NonNull String OPEN_SESSION_FAILED(final @NonNull String crudMethod) {
 			return OPEN_SESSION_FAILED.getMessage().safeFormat(crudMethod).traceNonNull(Error.class);
+		}
+
+		/**
+		 * I18n value retriever for key {@code dao.error.unexpectedType}.
+		 * @param unexpectedType unexpected type
+		 * @param expectedTypes  array of expected types
+		 * @return value of key {@code dao.error.unexpectedType}
+		 */
+		public static @NonNull String UNEXPECTED_TYPE(
+			final @NonNull String unexpectedType, final @NonNull Class<?> @NonNull ... expectedTypes
+		) {
+			return UNEXPECTED_TYPE.getMessage()
+				.safeFormat(unexpectedType, expectedTypes.map(Class::getSimpleName).joining(", "))
+				.traceNonNull(Error.class);
 		}
 	}
 

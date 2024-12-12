@@ -5,6 +5,11 @@
             <val val="&quot;ClassWithoutLogger&quot;"/>
         </annotation>
     </item>
+    <item name='semester5.pwjj.utils.extensions.ArrayUtils java.util.stream.Stream&lt;R&gt; map(T[], java.util.function.Function&lt;? super T,? extends R&gt;)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;MissingJavadoc&quot;, &quot;GrazieInspection&quot;}"/>
+        </annotation>
+    </item>
     <item name='semester5.pwjj.utils.extensions.ArrayUtils java.util.stream.Stream&lt;T&gt; skip(T[], long)'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="{&quot;MissingJavadoc&quot;, &quot;GrazieInspection&quot;}"/>
@@ -58,6 +63,11 @@
     <item name='semester5.pwjj.utils.extensions.StreamUtils'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="&quot;ClassWithoutLogger&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.extensions.StreamUtils java.lang.String joining(java.util.stream.Stream&lt;java.lang.String&gt;, java.lang.CharSequence)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;GrazieInspection&quot;, &quot;MissingJavadoc&quot;}"/>
         </annotation>
     </item>
     <item name='semester5.pwjj.utils.extensions.StreamUtils java.lang.String joining(java.util.stream.Stream&lt;java.lang.String&gt;, java.lang.CharSequence, java.lang.CharSequence, java.lang.CharSequence)'>

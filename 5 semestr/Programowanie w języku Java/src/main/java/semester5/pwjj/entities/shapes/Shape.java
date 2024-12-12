@@ -70,7 +70,7 @@ public abstract class Shape implements Representative {
 	 */
 	public @NonNull String toPrettyString() {
 		return traceNonNull(Messages.ToString.SHAPE(id, getClassNameNls(), getPerimeter(), getArea(), color,
-			mapSides(stream -> stream.mapToObj(it -> "%.2f".safeFormat(it)).joining("; ", "[", "]")))); //NON-NLS
+			mapSides(stream -> stream.mapToObj(it -> "%.2f".safeFormat(it)).joining("; ")))); //NON-NLS
 	}
 
 	/**

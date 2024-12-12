@@ -8,16 +8,16 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public abstract class ErrorTestsBase extends TestsBase {
 
 	protected static void throwsIllegalArgumentException(
-		final @NonNull ThrowingCallable callable,
-		final @NonNull String message) {
+		final @NonNull ThrowingCallable callable, final @NonNull String message
+	) {
 		Assertions.assertThatThrownBy(callable)
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage(message);
 	}
 
 	protected static void throwsIllegalStateException(
-		final @NonNull ThrowingCallable callable,
-		final @NonNull String message) {
+		final @NonNull ThrowingCallable callable, final @NonNull String message
+	) {
 		Assertions.assertThatThrownBy(callable)
 			.isInstanceOf(IllegalStateException.class)
 			.hasMessage(message);

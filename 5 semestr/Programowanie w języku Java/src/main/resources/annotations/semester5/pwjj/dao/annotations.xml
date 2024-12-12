@@ -2,7 +2,27 @@
 <root>
     <item name='semester5.pwjj.dao.AbstractDAO'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="{&quot;AbstractClassWithOnlyOneDirectInheritor&quot;, &quot;AbstractClassWithoutAbstractMethods&quot;, &quot;DuplicatedCode&quot;, &quot;UseOfConcreteClass&quot;, &quot;FeatureEnvy&quot;}"/>
+            <val val="{&quot;AbstractClassWithOnlyOneDirectInheritor&quot;, &quot;AbstractClassWithoutAbstractMethods&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.dao.AbstractDAO java.util.List&lt;T&gt; readAll()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;OptionalContainsCollection&quot;, &quot;DataFlowIssue&quot;, &quot;OptionalGetWithoutIsPresent&quot;, &quot;DuplicateStringLiteralInspection&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.dao.AbstractDAO java.util.Optional&lt;T&gt; executeAndReturn(java.util.function.Function&lt;? super semester5.pwjj.utils.TransactionalSession,? extends T&gt;, java.lang.String)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;OptionalAssignedToNull&quot;, &quot;ReturnOfNull&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.dao.AbstractDAO java.util.Optional&lt;T&gt; read(int)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;DataFlowIssue&quot;, &quot;DuplicatedCode&quot;, &quot;DuplicateStringLiteralInspection&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.dao.AbstractDAO java.util.Optional&lt;T&gt; update(T)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;DataFlowIssue&quot;, &quot;DuplicatedCode&quot;}"/>
         </annotation>
     </item>
     <item name='semester5.pwjj.dao.DAO'>
@@ -12,7 +32,7 @@
     </item>
     <item name='semester5.pwjj.dao.Messages'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="{&quot;GrazieInspection&quot;, &quot;PublicInnerClass&quot;, &quot;StaticMethodOnlyUsedInOneClass&quot;, &quot;DuplicatedCode&quot;}"/>
+            <val val="{&quot;PublicInnerClass&quot;, &quot;StaticMethodOnlyUsedInOneClass&quot;}"/>
         </annotation>
     </item>
     <item name='semester5.pwjj.dao.Messages.DAOI18nProperty'>

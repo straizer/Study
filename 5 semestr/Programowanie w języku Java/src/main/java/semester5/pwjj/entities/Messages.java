@@ -1,7 +1,8 @@
 package semester5.pwjj.entities;
 
+import lombok.experimental.ExtensionMethod;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import semester5.pwjj.Representative;
+import semester5.pwjj.utils.RepresentativeUtils;
 import semester5.pwjj.utils.StringUtils;
 import semester5.pwjj.utils.i18n.I18nProperty;
 import semester5.pwjj.utils.i18n.MessageProvider;
@@ -14,6 +15,7 @@ import java.util.Locale;
  * @implNote If different translation is required without changing default locale,
  * use {@link MessageProvider#get(I18nProperty i18nProperty, Locale locale)}
  */
+@ExtensionMethod({StringUtils.class, RepresentativeUtils.class})
 public enum Messages {
 	;
 
@@ -33,8 +35,7 @@ public enum Messages {
 		 * @return value of key {@code entities.toString.color}
 		 */
 		public static @NonNull String COLOR(final int red, final int green, final int blue, final int alpha) {
-			return Representative.traceNonNull(
-				StringUtils.format(MessageProvider.get(COLOR), red, green, blue, alpha), ToString.class);
+			return COLOR.getMessage().safeFormat(red, green, blue, alpha).traceNonNull(ToString.class);
 		}
 	}
 

@@ -1,7 +1,8 @@
 package semester5.pwjj.utils.i18n;
 
+import lombok.experimental.ExtensionMethod;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import semester5.pwjj.Representative;
+import semester5.pwjj.utils.RepresentativeUtils;
 import semester5.pwjj.utils.StringUtils;
 
 import java.util.Locale;
@@ -12,6 +13,7 @@ import java.util.Locale;
  * @implNote If different translation is required without changing default locale,
  * use {@link MessageProvider#get(I18nProperty i18nProperty, Locale locale)}
  */
+@ExtensionMethod({StringUtils.class, RepresentativeUtils.class})
 public enum Messages {
 	;
 
@@ -20,18 +22,19 @@ public enum Messages {
 		;
 
 		/** I18n key with value {@code utils.i18n.error.translationNotFound}. */
-		public static final @NonNull I18nProperty TRANSLATION_NOT_FOUND = new UtilsI18nI18nProperty("error.translationNotFound");
+		public static final @NonNull I18nProperty TRANSLATION_NOT_FOUND =
+			new UtilsI18nI18nProperty("error.translationNotFound");
 
 		/**
 		 * I18n value retriever for key {@code utils.i18n.error.translationNotFound}.
-		 * @param locale      locale for which translation cannot be found
-		 * @param messageName messageName for which translation cannot be found
+		 * @param locale      locale for which translation can't be found
+		 * @param messageName messageName for which translation can't be found
 		 * @return value of key {@code utils.i18n.error.translationNotFound}
 		 */
 		public static @NonNull String TRANSLATION_NOT_FOUND(
-			final @NonNull Locale locale, final @NonNull String messageName) {
-			return Representative.traceNonNull(
-				StringUtils.format(MessageProvider.get(TRANSLATION_NOT_FOUND), locale, messageName), Error.class);
+			final @NonNull Locale locale, final @NonNull String messageName
+		) {
+			return TRANSLATION_NOT_FOUND.getMessage().safeFormat(locale, messageName).traceNonNull(Error.class);
 		}
 	}
 

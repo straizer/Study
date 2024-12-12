@@ -33,7 +33,6 @@ public final class Triangle extends Shape {
 			log.warn(message);
 			throw new IllegalArgumentException(message);
 		}
-		traceCtor();
 	}
 
 	/** @throws IllegalStateException when {@code sides} are {@code null}. */
@@ -41,8 +40,7 @@ public final class Triangle extends Shape {
 	@Override
 	public double getArea() {
 		final double halfPerimeter = getPerimeter() / 2.0;
-		return traceNonNull(Math.sqrt(halfPerimeter * mapSides(stream -> stream
-			.map(it -> halfPerimeter - it)
-			.reduce(1.0, DoubleReducers.MULTIPLYING))));
+		return traceNonNull(Math.sqrt(halfPerimeter * mapSides(
+			stream -> stream.map(it -> halfPerimeter - it).reduce(1.0, DoubleReducers.MULTIPLYING))));
 	}
 }

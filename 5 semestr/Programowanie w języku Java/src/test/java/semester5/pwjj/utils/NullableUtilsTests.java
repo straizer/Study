@@ -1,5 +1,6 @@
 package semester5.pwjj.utils;
 
+import lombok.experimental.ExtensionMethod;
 import org.assertj.core.api.Assertions;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -12,6 +13,7 @@ import semester5.pwjj.TestsBase;
 import java.util.stream.Stream;
 
 @DisplayName("Nullable Utils Tests")
+@ExtensionMethod(NullableUtils.class)
 final class NullableUtilsTests extends TestsBase {
 
 	private static @NonNull Stream<Arguments> mapOrNullTest() {
@@ -24,6 +26,6 @@ final class NullableUtilsTests extends TestsBase {
 	@ParameterizedTest
 	@MethodSource
 	void mapOrNullTest(final @Nullable String str, final @Nullable Integer expected) {
-		Assertions.assertThat(NullableUtils.mapOrNull(str, String::length)).isEqualTo(expected);
+		Assertions.assertThat(str.mapOrNull(String::length)).isEqualTo(expected);
 	}
 }

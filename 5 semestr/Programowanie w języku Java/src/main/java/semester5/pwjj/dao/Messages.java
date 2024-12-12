@@ -1,8 +1,10 @@
 package semester5.pwjj.dao;
 
+import lombok.experimental.ExtensionMethod;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import semester5.pwjj.Representative;
+import semester5.pwjj.utils.RepresentativeUtils;
 import semester5.pwjj.utils.StringUtils;
 import semester5.pwjj.utils.i18n.I18nProperty;
 import semester5.pwjj.utils.i18n.MessageProvider;
@@ -15,6 +17,7 @@ import java.util.Locale;
  * @implNote If different translation is required without changing default locale,
  * use {@link MessageProvider#get(I18nProperty i18nProperty, Locale locale)}
  */
+@ExtensionMethod({StringUtils.class, RepresentativeUtils.class})
 public enum Messages {
 	;
 
@@ -46,10 +49,10 @@ public enum Messages {
 		 * @return value of key {@code dao.error.entityAlreadyExists}
 		 */
 		public static <T extends Representative> @NonNull String ENTITY_ALREADY_EXISTS(
-			final @NonNull Class<T> clazz, final @NonNull T entity) {
-			return Representative.traceNonNull(
-				StringUtils.format(MessageProvider.get(ENTITY_ALREADY_EXISTS), clazz.getSimpleName(), entity),
-				Error.class);
+			final @NonNull Class<T> clazz, final @NonNull T entity
+		) {
+			return ENTITY_ALREADY_EXISTS.getMessage().safeFormat(clazz.getSimpleName(), entity)
+				.traceNonNull(Error.class);
 		}
 
 		/**
@@ -60,10 +63,9 @@ public enum Messages {
 		 * @return value of key {@code dao.error.notAnEntity}
 		 */
 		public static <T extends Representative> @NonNull String NOT_AN_ENTITY_TYPE(
-			final @NonNull Class<T> clazz, final @Nullable T entity) {
-			return Representative.traceNonNull(
-				StringUtils.format(MessageProvider.get(NOT_AN_ENTITY_TYPE), clazz.getSimpleName(), entity),
-				Error.class);
+			final @NonNull Class<T> clazz, final @Nullable T entity
+		) {
+			return NOT_AN_ENTITY_TYPE.getMessage().safeFormat(clazz.getSimpleName(), entity).traceNonNull(Error.class);
 		}
 
 		/**
@@ -74,10 +76,10 @@ public enum Messages {
 		 * @return value of key {@code dao.error.notAnEntityOrRemoved}
 		 */
 		public static <T extends Representative> @NonNull String NOT_AN_ENTITY_TYPE_OR_REMOVED(
-			final @NonNull Class<T> clazz, final @NonNull T entity) {
-			return Representative.traceNonNull(
-				StringUtils.format(
-					MessageProvider.get(NOT_AN_ENTITY_TYPE_OR_REMOVED), clazz.getSimpleName(), entity), Error.class);
+			final @NonNull Class<T> clazz, final @NonNull T entity
+		) {
+			return NOT_AN_ENTITY_TYPE_OR_REMOVED.getMessage().safeFormat(clazz.getSimpleName(), entity)
+				.traceNonNull(Error.class);
 		}
 
 		/**
@@ -86,8 +88,7 @@ public enum Messages {
 		 * @return value of key {@code dao.error.openSessionFailed}
 		 */
 		public static @NonNull String OPEN_SESSION_FAILED(final @NonNull String crudMethod) {
-			return Representative.traceNonNull(
-				StringUtils.format(MessageProvider.get(OPEN_SESSION_FAILED), crudMethod), Error.class);
+			return OPEN_SESSION_FAILED.getMessage().safeFormat(crudMethod).traceNonNull(Error.class);
 		}
 	}
 

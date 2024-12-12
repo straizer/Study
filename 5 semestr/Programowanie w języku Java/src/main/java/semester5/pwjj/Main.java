@@ -1,7 +1,6 @@
 package semester5.pwjj;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import semester5.pwjj.dao.DAO;
@@ -15,14 +14,14 @@ import java.util.List;
 
 /** Application entry point class. */
 @Slf4j
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class Main {
+@UtilityClass
+public class Main {
 
 	/**
 	 * Application entry point.
 	 * @param ignoredArgs console arguments
 	 */
-	public static void main(final @NonNull String @NonNull [] ignoredArgs) {
+	public void main(final @NonNull String @NonNull [] ignoredArgs) {
 		final @NonNull List<Shape> shapes = List.of(
 			new Rectangle(1.0, 2.0, Color.RED),
 			new Triangle(3.0, 4.0, 5.0, Color.GREEN)

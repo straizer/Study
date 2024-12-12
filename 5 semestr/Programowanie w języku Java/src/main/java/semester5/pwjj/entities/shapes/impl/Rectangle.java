@@ -24,7 +24,6 @@ public final class Rectangle extends Shape {
 	 */
 	public Rectangle(final double x, final double y, final @NonNull Color color) {
 		super(new double[]{x, y}, color);
-		traceCtor();
 	}
 
 	/** @throws IllegalStateException if {@code sides} are {@code null}. */

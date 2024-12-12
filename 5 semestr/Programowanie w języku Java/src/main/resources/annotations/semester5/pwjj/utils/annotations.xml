@@ -1,8 +1,33 @@
 <!--suppress GrazieInspection, LongLine -->
 <root>
+    <item name='semester5.pwjj.utils.ArrayUtils'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;ClassWithoutLogger&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.ArrayUtils java.util.stream.Stream&lt;T&gt; skip(T[], long)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;MissingJavadoc&quot;, &quot;GrazieInspection&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.ArrayUtils java.util.stream.Stream&lt;T&gt; skip(T[], long) 1'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;StandardVariableNames&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.DoubleReducers'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;ClassWithoutLogger&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.ExceptionUtils void warnAndThrow(java.lang.String, java.lang.Class&lt;T&gt;)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;CallToSystemExit&quot;, &quot;OverlyBroadCatchBlock&quot;, &quot;CheckedExceptionClass&quot;}"/>
+        </annotation>
+    </item>
     <item name='semester5.pwjj.utils.HibernateSession'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="&quot;OverlyComplexClass&quot;"/>
+            <val val="{&quot;OverlyComplexClass&quot;, &quot;serial&quot;}"/>
         </annotation>
     </item>
     <item name='semester5.pwjj.utils.HibernateSession HibernateSession()'>
@@ -12,12 +37,12 @@
     </item>
     <item name='semester5.pwjj.utils.HibernateSession org.hibernate.SessionFactory getSessionFactory()'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="&quot;StaticVariableUsedBeforeInitialization&quot;"/>
+            <val val="&quot;CallToSimpleGetterFromWithinClass&quot;"/>
         </annotation>
     </item>
     <item name='semester5.pwjj.utils.HibernateSession org.hibernate.SessionFactory initializeSessionFactory()'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="{&quot;DuplicatedCode&quot;, &quot;FeatureEnvy&quot;}"/>
+            <val val="{&quot;CallToSimpleGetterFromWithinClass&quot;, &quot;FeatureEnvy&quot;, &quot;DuplicatedCode&quot;}"/>
         </annotation>
     </item>
     <item name='semester5.pwjj.utils.HibernateSession void shutdown()'>
@@ -32,7 +57,7 @@
     </item>
     <item name='semester5.pwjj.utils.Messages'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="{&quot;GrazieInspection&quot;, &quot;PublicInnerClass&quot;, &quot;StaticMethodOnlyUsedInOneClass&quot;, &quot;DuplicatedCode&quot;}"/>
+            <val val="{&quot;PublicInnerClass&quot;, &quot;StaticMethodOnlyUsedInOneClass&quot;, &quot;ClassWithTooManyFields&quot;}"/>
         </annotation>
     </item>
     <item name='semester5.pwjj.utils.Messages.Error OPEN_SESSION_FAILED'>
@@ -53,6 +78,36 @@
     <item name='semester5.pwjj.utils.NullableUtils'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="&quot;ClassWithoutLogger&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.RepresentativeUtils'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;ClassWithoutLogger&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.RepresentativeUtils T trace(T, java.lang.Class&lt;?&gt;, java.lang.String, java.lang.Integer)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;HardcodedLineSeparator&quot;, &quot;HardcodedFileSeparator&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.RepresentativeUtils _CACHED_LOGGERS'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;StaticCollection&quot;, &quot;CollectionWithoutInitialCapacity&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.StreamUtils'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;ClassWithoutLogger&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.StreamUtils java.lang.String joining(java.util.stream.Stream&lt;java.lang.String&gt;, java.lang.CharSequence, java.lang.CharSequence, java.lang.CharSequence)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;GrazieInspection&quot;, &quot;MissingJavadoc&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.TransactionalSession'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;MissingSerialAnnotation&quot;, &quot;InterfaceWithOnlyOneDirectInheritor&quot;}"/>
         </annotation>
     </item>
 </root>

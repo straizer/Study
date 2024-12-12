@@ -2,7 +2,7 @@
 <root>
     <item name='semester5.pwjj.entities.shapes.Messages'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="{&quot;GrazieInspection&quot;, &quot;PublicInnerClass&quot;, &quot;StaticMethodOnlyUsedInOneClass&quot;, &quot;unused&quot;}"/>
+            <val val="{&quot;PublicInnerClass&quot;, &quot;StaticMethodOnlyUsedInOneClass&quot;}"/>
         </annotation>
     </item>
     <item name='semester5.pwjj.entities.shapes.Messages.EntitiesShapesI18nProperty EntitiesShapesI18nProperty(java.lang.String)'>
@@ -10,9 +10,24 @@
             <val val="&quot;StringConcatenation&quot;"/>
         </annotation>
     </item>
-    <item name='semester5.pwjj.entities.shapes.Messages.Error SIDES_NOT_POSITIVE'>
+    <item name='semester5.pwjj.entities.shapes.Messages.Error java.lang.String SIDES_ARE_NULL(java.lang.String)'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="&quot;LongLine&quot;"/>
+            <val val="&quot;DataFlowIssue&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.entities.shapes.Messages.Error java.lang.String SIDES_NOT_POSITIVE(java.lang.String)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;DataFlowIssue&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.entities.shapes.Messages.Name java.lang.String RECTANGLE()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;unused&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.entities.shapes.Messages.Name java.lang.String TRIANGLE()'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;unused&quot;"/>
         </annotation>
     </item>
     <item name='semester5.pwjj.entities.shapes.Messages.ToString java.lang.String SHAPE(int, java.lang.String, double, double, semester5.pwjj.entities.Color, java.lang.String)'>
@@ -25,16 +40,6 @@
             <val val="&quot;UseOfConcreteClass&quot;"/>
         </annotation>
     </item>
-    <item name='semester5.pwjj.entities.shapes.Messages.ToString java.lang.String SHAPE(long, java.lang.String, double, double, semester5.pwjj.entities.Color, java.lang.String)'>
-        <annotation name='java.lang.SuppressWarnings'>
-            <val val="&quot;MethodWithTooManyParameters&quot;"/>
-        </annotation>
-    </item>
-    <item name='semester5.pwjj.entities.shapes.Messages.ToString java.lang.String SHAPE(long, java.lang.String, double, double, semester5.pwjj.entities.Color, java.lang.String) 4'>
-        <annotation name='java.lang.SuppressWarnings'>
-            <val val="&quot;UseOfConcreteClass&quot;"/>
-        </annotation>
-    </item>
     <item name='semester5.pwjj.entities.shapes.Shape Shape(double[], semester5.pwjj.entities.Color)'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="&quot;OverridableMethodCallDuringObjectConstruction&quot;"/>
@@ -43,6 +48,11 @@
     <item name='semester5.pwjj.entities.shapes.Shape Shape(double[], semester5.pwjj.entities.Color) 1'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="&quot;UseOfConcreteClass&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.entities.shapes.Shape T mapSides(java.util.function.Function&lt;? super java.util.stream.DoubleStream,T&gt;)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;FeatureEnvy&quot;, &quot;DataFlowIssue&quot;}"/>
         </annotation>
     </item>
     <item name='semester5.pwjj.entities.shapes.Shape color'>

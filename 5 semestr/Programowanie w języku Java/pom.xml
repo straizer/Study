@@ -179,6 +179,7 @@
                         <exclude>${project.package.main}/**/Messages.*</exclude>
                         <exclude>${project.package.main}/**/Messages$*</exclude>
                         <exclude>${project.package.main}/dao/**/*</exclude>
+                        <exclude>${project.package.main}/utils/HibernateSession.*</exclude>
                     </excludes>
                 </configuration>
                 <executions>

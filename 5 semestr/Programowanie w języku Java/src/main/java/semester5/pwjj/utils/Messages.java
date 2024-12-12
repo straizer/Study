@@ -1,8 +1,8 @@
 package semester5.pwjj.utils;
 
+import lombok.experimental.ExtensionMethod;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import semester5.pwjj.Representative;
 import semester5.pwjj.utils.i18n.I18nProperty;
 import semester5.pwjj.utils.i18n.MessageProvider;
 
@@ -16,6 +16,7 @@ import java.util.Locale;
  * @implNote If different translation is required without changing default locale,
  * use {@link MessageProvider#get(I18nProperty i18nProperty, Locale locale)}
  */
+@ExtensionMethod({StringUtils.class, RepresentativeUtils.class})
 public enum Messages {
 	;
 
@@ -26,6 +27,10 @@ public enum Messages {
 		/** I18n key with value {@code utils.error.cannotAddShutdownHook}. */
 		public static final @NonNull I18nProperty CANNOT_ADD_SHUTDOWN_HOOK =
 			new UtilsI18nProperty("error.cannotAddShutdownHook");
+
+		/** I18n key with value {@code utils.error.classNotSerializable}. */
+		public static final @NonNull I18nProperty CLASS_NOT_SERIALIZABLE =
+			new UtilsI18nProperty("error.classNotSerializable");
 
 		/** I18n key with value {@code utils.error.closeSessionFactoryFailed}. */
 		public static final @NonNull I18nProperty CLOSE_SESSION_FACTORY_FAILED =
@@ -38,6 +43,10 @@ public enum Messages {
 		/** I18n key with value {@code utils.error.commitFailed}. */
 		public static final @NonNull I18nProperty COMMIT_FAILED =
 			new UtilsI18nProperty("error.commitFailed");
+
+		/** I18n key with value {@code utils.error.exceptionInstantiationFailed}. */
+		public static final @NonNull I18nProperty EXCEPTION_INSTANTIATION_FAILED =
+			new UtilsI18nProperty("error.exceptionInstantiationFailed");
 
 		/** I18n key with value {@code utils.error.formatting}. */
 		public static final @NonNull I18nProperty FORMATTING =
@@ -55,18 +64,30 @@ public enum Messages {
 		public static final @NonNull I18nProperty OPEN_SESSION_FAILED =
 			new UtilsI18nProperty("error.openSessionFailed");
 
+		/** I18n key with value {@code utils.error.transactionsHandledInternally}. */
+		public static final @NonNull I18nProperty TRANSACTIONS_HANDLED_INTERNALLY =
+			new UtilsI18nProperty("error.transactionsHandledInternally");
+
 		/** I18n key with value {@code utils.error.rollbackFailed}. */
 		public static final @NonNull I18nProperty ROLLBACK_FAILED =
 			new UtilsI18nProperty("error.rollbackFailed");
 
 		/**
 		 * I18n value retriever for key {@code utils.error.cannotAddShutdownHook}.
-		 * @param methodName name of the method that failed to be added to shutdown hook
+		 * @param methodName name of the method that failed to be added as shutdown hook
 		 * @return value of key {@code utils.error.cannotAddShutdownHook}
 		 */
 		public static @NonNull String CANNOT_ADD_SHUTDOWN_HOOK(final @NonNull String methodName) {
-			return Representative.traceNonNull(
-				StringUtils.format(MessageProvider.get(CANNOT_ADD_SHUTDOWN_HOOK), methodName), Error.class);
+			return CANNOT_ADD_SHUTDOWN_HOOK.getMessage().safeFormat(methodName).traceNonNull(Error.class);
+		}
+
+		/**
+		 * I18n value retriever for key {@code utils.error.classNotSerializable}.
+		 * @param clazz related class
+		 * @return value of key {@code utils.error.classNotSerializable}
+		 */
+		public static @NonNull String CLASS_NOT_SERIALIZABLE(final @NonNull Class<?> clazz) {
+			return CLASS_NOT_SERIALIZABLE.getMessage().safeFormat(clazz.getSimpleName()).traceNonNull(Error.class);
 		}
 
 		/**
@@ -75,9 +96,8 @@ public enum Messages {
 		 * @return value of key {@code utils.error.closeSessionFactoryFailed}
 		 */
 		public static @NonNull String CLOSE_SESSION_FACTORY_FAILED(final @NonNull Exception exception) {
-			return Representative.traceNonNull(
-				StringUtils.format(MessageProvider.get(CLOSE_SESSION_FACTORY_FAILED), exception.getMessage()),
-				Error.class);
+			return CLOSE_SESSION_FACTORY_FAILED.getMessage().safeFormat(exception.getMessage())
+				.traceNonNull(Error.class);
 		}
 
 		/**
@@ -86,8 +106,7 @@ public enum Messages {
 		 * @return value of key {@code utils.error.closeSessionFailed}
 		 */
 		public static @NonNull String CLOSE_SESSION_FAILED(final @NonNull Exception exception) {
-			return Representative.traceNonNull(
-				StringUtils.format(MessageProvider.get(CLOSE_SESSION_FAILED), exception.getMessage()), Error.class);
+			return CLOSE_SESSION_FAILED.getMessage().safeFormat(exception.getMessage()).traceNonNull(Error.class);
 		}
 
 		/**
@@ -96,8 +115,20 @@ public enum Messages {
 		 * @return value of key {@code utils.error.commitFailed}
 		 */
 		public static @NonNull String COMMIT_FAILED(final @NonNull Exception exception) {
-			return Representative.traceNonNull(
-				StringUtils.format(MessageProvider.get(COMMIT_FAILED), exception.getMessage()), Error.class);
+			return COMMIT_FAILED.getMessage().safeFormat(exception.getMessage()).traceNonNull(Error.class);
+		}
+
+		/**
+		 * I18n value retriever for key {@code utils.error.exceptionInstantiationFailed}.
+		 * @param clazz     related exception class
+		 * @param exception exception that was thrown
+		 * @return value of key {@code utils.error.exceptionInstantiationFailed}
+		 */
+		public static @NonNull String EXCEPTION_INSTANTIATION_FAILED(
+			final @NonNull Class<? extends Exception> clazz, final @NonNull Exception exception
+		) {
+			return EXCEPTION_INSTANTIATION_FAILED.getMessage().safeFormat(clazz.getSimpleName(), exception.getMessage())
+				.traceNonNull(Error.class);
 		}
 
 		/**
@@ -109,11 +140,10 @@ public enum Messages {
 		 */
 		public static @NonNull String FORMATTING(
 			final @NonNull String template, final @Nullable Object @Nullable [] args,
-			final @NonNull IllegalFormatException exception) {
-			return Representative.traceNonNull(
-				StringUtils.format(
-					MessageProvider.get(FORMATTING), template, Arrays.toString(args), exception.getMessage()),
-				Error.class);
+			final @NonNull IllegalFormatException exception
+		) {
+			return FORMATTING.getMessage().safeFormat(template, Arrays.toString(args), exception.getMessage())
+				.traceNonNull(Error.class);
 		}
 
 		/**
@@ -121,7 +151,7 @@ public enum Messages {
 		 * @return value of key {@code utils.error.invalidHibernateConfig}
 		 */
 		public static @NonNull String INVALID_HIBERNATE_CONFIG() {
-			return Representative.traceNonNull(MessageProvider.get(INVALID_HIBERNATE_CONFIG), Error.class);
+			return INVALID_HIBERNATE_CONFIG.getMessage().traceNonNull(Error.class);
 		}
 
 		/**
@@ -129,7 +159,7 @@ public enum Messages {
 		 * @return value of key {@code utils.error.missingHibernateConfig}
 		 */
 		public static @NonNull String MISSING_HIBERNATE_CONFIG() {
-			return Representative.traceNonNull(MessageProvider.get(MISSING_HIBERNATE_CONFIG), Error.class);
+			return MISSING_HIBERNATE_CONFIG.getMessage().traceNonNull(Error.class);
 		}
 
 		/**
@@ -138,8 +168,17 @@ public enum Messages {
 		 * @return value of key {@code utils.error.openSessionFailed}
 		 */
 		public static @NonNull String OPEN_SESSION_FAILED(final @NonNull Exception exception) {
-			return Representative.traceNonNull(
-				StringUtils.format(MessageProvider.get(OPEN_SESSION_FAILED), exception.getMessage()), Error.class);
+			return OPEN_SESSION_FAILED.getMessage().safeFormat(exception.getMessage()).traceNonNull(Error.class);
+		}
+
+		/**
+		 * I18n value retriever for key {@code utils.error.transactionsHandledInternally}.
+		 * @param clazz related class
+		 * @return value of key {@code utils.error.transactionsHandledInternally}
+		 */
+		public static @NonNull String TRANSACTIONS_HANDLED_INTERNALLY(final @NonNull Class<?> clazz) {
+			return TRANSACTIONS_HANDLED_INTERNALLY.getMessage().safeFormat(clazz.getSimpleName())
+				.traceNonNull(Error.class);
 		}
 
 		/**
@@ -148,8 +187,7 @@ public enum Messages {
 		 * @return value of key {@code utils.error.rollbackFailed}
 		 */
 		public static @NonNull String ROLLBACK_FAILED(final @NonNull Exception exception) {
-			return Representative.traceNonNull(
-				StringUtils.format(MessageProvider.get(ROLLBACK_FAILED), exception.getMessage()), Error.class);
+			return ROLLBACK_FAILED.getMessage().safeFormat(exception.getMessage()).traceNonNull(Error.class);
 		}
 	}
 

@@ -22,7 +22,7 @@
     </item>
     <item name='semester5.pwjj.entities.Messages'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="{&quot;GrazieInspection&quot;, &quot;PublicInnerClass&quot;, &quot;StaticMethodOnlyUsedInOneClass&quot;}"/>
+            <val val="{&quot;PublicInnerClass&quot;, &quot;StaticMethodOnlyUsedInOneClass&quot;}"/>
         </annotation>
     </item>
     <item name='semester5.pwjj.entities.Messages.EntitiesI18nProperty'>
@@ -31,11 +31,6 @@
         </annotation>
     </item>
     <item name='semester5.pwjj.entities.Messages.EntitiesI18nProperty EntitiesI18nProperty(java.lang.String)'>
-        <annotation name='java.lang.SuppressWarnings'>
-            <val val="&quot;StringConcatenation&quot;"/>
-        </annotation>
-    </item>
-    <item name='semester5.pwjj.entities.Messages.EntitiesShapesI18nProperty EntitiesShapesI18nProperty(java.lang.String)'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="&quot;StringConcatenation&quot;"/>
         </annotation>

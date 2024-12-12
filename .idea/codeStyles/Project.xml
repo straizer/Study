@@ -5,8 +5,6 @@
     <option name="SOFT_MARGINS" value="80,120" />
     <option name="DO_NOT_FORMAT">
       <list>
-        <fileSet type="globPattern" pattern="HibernateSession.java" />
-        <fileSet type="globPattern" pattern="Shape.java" />
         <fileSet type="globPattern" pattern="logback.xml" />
       </list>
     </option>
@@ -27,6 +25,7 @@
       <option name="TYPE_CASE" value="3" />
     </SqlCodeStyleSettings>
     <codeStyleSettings language="JAVA">
+      <option name="ALIGN_THROWS_KEYWORD" value="true" />
       <option name="WRAP_COMMENTS" value="true" />
       <indentOptions>
         <option name="CONTINUATION_INDENT_SIZE" value="4" />

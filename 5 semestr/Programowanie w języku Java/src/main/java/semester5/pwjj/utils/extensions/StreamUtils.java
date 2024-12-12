@@ -17,10 +17,21 @@ public class StreamUtils {
 	 * @see Stream#collect(Collector)
 	 * @see Collectors#joining(CharSequence, CharSequence, CharSequence)
 	 */
-	public String joining(
+	public @NonNull String joining(
 		final @NonNull Stream<String> stream, final @NonNull CharSequence delimiter, final @NonNull CharSequence prefix,
 		final @NonNull CharSequence suffix
 	) {
 		return stream.collect(Collectors.joining(delimiter, prefix, suffix));
+	}
+
+	/**
+	 * Collects {@link Stream} of {@link String} using
+	 * {@link Collectors#joining(CharSequence, CharSequence, CharSequence)},
+	 * where prefix is {@code [} and suffix is {@code ]}.
+	 * @see Stream#collect(Collector)
+	 * @see Collectors#joining(CharSequence, CharSequence, CharSequence)
+	 */
+	public @NonNull String joining(final @NonNull Stream<String> stream, final @NonNull CharSequence delimiter) {
+		return joining(stream, delimiter, "[", "]");
 	}
 }

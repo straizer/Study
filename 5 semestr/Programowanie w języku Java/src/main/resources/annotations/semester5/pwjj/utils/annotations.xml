@@ -22,7 +22,7 @@
     </item>
     <item name='semester5.pwjj.utils.HibernateSession org.hibernate.SessionFactory initializeSessionFactory()'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="{&quot;CallToSimpleGetterFromWithinClass&quot;, &quot;FeatureEnvy&quot;, &quot;DuplicatedCode&quot;, &quot;DataFlowIssue&quot;}"/>
+            <val val="{&quot;FeatureEnvy&quot;, &quot;DataFlowIssue&quot;}"/>
         </annotation>
     </item>
     <item name='semester5.pwjj.utils.HibernateSession void shutdown()'>

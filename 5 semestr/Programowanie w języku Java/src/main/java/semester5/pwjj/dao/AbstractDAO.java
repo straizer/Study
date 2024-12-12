@@ -74,7 +74,7 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 
 	@Override
 	public void create(final @NonNull T entity) {
-		debugMessage("Saving in", entity); //NON-NLS
+		debugMessageWithObject("Saving in", entity); //NON-NLS
 		try {
 			if (execute(session -> session.persist(entity), "create").isNull()) { //NON-NLS
 				return;
@@ -86,12 +86,12 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 			log.warn(Messages.Error.NOT_AN_ENTITY_TYPE(handledClass, entity));
 			return;
 		}
-		debugMessage("Saved in", entity); //NON-NLS
+		debugMessageWithObject("Saved in", entity); //NON-NLS
 	}
 
 	@Override
 	public @NonNull Optional<T> read(final int id) {
-		debugMessage("Getting from", id); //NON-NLS
+		debugMessageWithPrefixGettingFrom(id); //NON-NLS
 		final @Nullable Optional<T> entity;
 		try {
 			entity = executeAndReturn(session -> session.find(handledClass, id), "read"); //NON-NLS
@@ -103,16 +103,16 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 			return Optional.empty();
 		}
 		if (entity.isEmpty()) {
-			debugMessage("Not found in", id); //NON-NLS
+			debugMessageWithId("Not found in", id); //NON-NLS
 		} else {
-			debugMessage("Found in", entity.get()); //NON-NLS
+			debugMessageWithPrefixFoundIn(entity.get()); //NON-NLS
 		}
 		return traceNonNull(entity);
 	}
 
 	@Override
 	public @NonNull List<T> readAll() {
-		debugMessage("Getting from", "all entities"); //NON-NLS
+		debugMessageWithPrefixGettingFrom("all entities"); //NON-NLS
 		final @Nullable Optional<List<T>> entitiesOptional;
 		entitiesOptional = executeAndReturn(session -> {
 			final CriteriaQuery<T> query = session.getCriteriaBuilder().createQuery(handledClass);
@@ -123,13 +123,13 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 			return List.of();
 		}
 		final @NonNull List<T> entities = entitiesOptional.get();
-		debugMessage("Found in", "%s entities".safeFormat(entities.size())); //NON-NLS
+		debugMessageWithPrefixFoundIn("%s entities".safeFormat(entities.size())); //NON-NLS
 		return traceNonNull(entities);
 	}
 
 	@Override
 	public @NonNull Optional<T> update(final @NonNull T entity) {
-		debugMessage("Updating in", entity); //NON-NLS
+		debugMessageWithObject("Updating in", entity); //NON-NLS
 		final @Nullable Optional<T> updatedEntity;
 		try {
 			updatedEntity = executeAndReturn(session -> session.merge(entity), "update"); //NON-NLS
@@ -140,13 +140,13 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 			log.warn(Messages.Error.NOT_AN_ENTITY_TYPE_OR_REMOVED(handledClass, entity));
 			return Optional.empty();
 		}
-		debugMessage("Updated in", entity); //NON-NLS
+		debugMessageWithObject("Updated in", updatedEntity.get()); //NON-NLS
 		return traceNonNull(updatedEntity);
 	}
 
 	@Override
 	public void delete(final int id) {
-		debugMessage("Removing from", id); //NON-NLS
+		debugMessageWithId("Removing from", id); //NON-NLS
 		try {
 			if (execute(session -> session.remove(session.find(handledClass, id)), "delete").isNull()) { //NON-NLS
 				return;
@@ -155,7 +155,65 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 			log.warn(Messages.Error.NOT_AN_ENTITY_TYPE(handledClass, null));
 			return;
 		}
-		debugMessage("Removed from", id); //NON-NLS
+		debugMessageWithId("Removed from", id); //NON-NLS
+	}
+
+	/**
+	 * Prints a debug message in form of
+	 * <ul>
+	 *     <li>
+	 *         {@code Found in persistence {object} of type <{handledClass}>}
+	 *          - if {@code object} is of type {@link String}
+	 *     </li>
+	 *     <li>
+	 *         {@code Found in persistence entity of type <{handledClass}>: {object}}
+	 *          - if {@code object} is of type {@link Representative}
+	 *     </li>
+	 * </ul>
+	 * If no type is matched, logs warning and treats {@code object} as in {@link Representative} case.
+	 * @param object object to print (correct formating is used depending on its type)
+	 */
+	private void debugMessageWithPrefixFoundIn(final @NonNull Object object) {
+		final @NonNull String prefix = "Found in"; //NON-NLS
+		switch (object) {
+			case final Representative r -> debugMessageWithObject(prefix, r);
+			case final String s -> debugMessageWithInfix(prefix, s);
+			default -> {
+				log.warn(
+					Messages.Error.UNEXPECTED_TYPE(
+						object.getClass().getSimpleName(), Representative.class, String.class));
+				debugMessageWithObject(prefix, object);
+			}
+		}
+	}
+
+	/**
+	 * Prints a debug message in form of
+	 * <ul>
+	 *     <li>
+	 *         {@code Getting from persistence {object} of type <{handledClass}>}
+	 *          - if {@code object} is of type {@link String}
+	 *     </li>
+	 *     <li>
+	 *         {@code Getting from persistence entity of type <{handledClass}> with id <{object}>}
+	 *          - if {@code object} is of type {@link Integer}
+	 *     </li>
+	 * </ul>
+	 * If no type is matched, logs warning, calls {@link Object#toString()} on {@code object}
+	 * and treats it as in {@link String} case.
+	 * @param object object to print (correct formating is used depending on its type)
+	 */
+	private void debugMessageWithPrefixGettingFrom(final @NonNull Object object) {
+		final @NonNull String prefix = "Getting from"; //NON-NLS
+		switch (object) {
+			case final Integer i -> debugMessageWithObject(prefix, i);
+			case final String s -> debugMessageWithInfix(prefix, s);
+			default -> {
+				log.warn(
+					Messages.Error.UNEXPECTED_TYPE(object.getClass().getSimpleName(), Integer.class, String.class));
+				debugMessageWithInfix(prefix, object.toString());
+			}
+		}
 	}
 
 	/**
@@ -163,8 +221,8 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 	 * @param prefix prefix to insert
 	 * @param entity entity to insert after calling {@link T#toString()}
 	 */
-	private void debugMessage(final @NonNull String prefix, final @NonNull T entity) {
-		debugMessageInternal(prefix, ": %s".safeFormat(entity)); //NON-NLS
+	private void debugMessageWithObject(final @NonNull String prefix, final @NonNull Object entity) {
+		debugMessage(prefix, ": %s".safeFormat(entity)); //NON-NLS
 	}
 
 	/**
@@ -172,8 +230,8 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 	 * @param prefix prefix to insert
 	 * @param id     id to insert
 	 */
-	private void debugMessage(final @NonNull String prefix, final int id) {
-		debugMessageInternal(prefix, " with id <%d>".safeFormat(id)); //NON-NLS
+	private void debugMessageWithId(final @NonNull String prefix, final int id) {
+		debugMessage(prefix, " with id <%d>".safeFormat(id)); //NON-NLS
 	}
 
 	/**
@@ -181,8 +239,8 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 	 * @param prefix prefix to insert
 	 * @param infix  infix to insert
 	 */
-	private void debugMessage(final @NonNull String prefix, final @NonNull String infix) {
-		debugMessageInternal(prefix, infix, StringUtils.EMPTY); //NON-NLS
+	private void debugMessageWithInfix(final @NonNull String prefix, final @NonNull String infix) {
+		debugMessage(prefix, infix, StringUtils.EMPTY); //NON-NLS
 	}
 
 	/**
@@ -190,8 +248,8 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 	 * @param prefix prefix to insert
 	 * @param suffix suffix to insert
 	 */
-	private void debugMessageInternal(final @NonNull String prefix, final @NonNull String suffix) {
-		debugMessageInternal(prefix, "entity", suffix); //NON-NLS
+	private void debugMessage(final @NonNull String prefix, final @NonNull String suffix) {
+		debugMessage(prefix, "entity", suffix); //NON-NLS
 	}
 
 	/**
@@ -200,9 +258,7 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 	 * @param infix  infix to insert
 	 * @param suffix suffix to insert
 	 */
-	private void debugMessageInternal(
-		final @NonNull String prefix, final @NonNull String infix, final @NonNull String suffix
-	) {
+	private void debugMessage(final @NonNull String prefix, final @NonNull String infix, final @NonNull String suffix) {
 		log.debug("{} persistence {} of type <{}>{}", prefix, infix, handledClass, suffix); //NON-NLS
 	}
 }

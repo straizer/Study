@@ -24,6 +24,8 @@ public abstract class TestsBase {
 		= semester5.pwjj.dao.Messages.Error.NOT_AN_ENTITY_TYPE_OR_REMOVED;
 	protected static final @NonNull I18nProperty DAO_ERROR_OPEN_SESSION_FAILED
 		= semester5.pwjj.dao.Messages.Error.OPEN_SESSION_FAILED;
+	protected static final @NonNull I18nProperty DAO_ERROR_UNEXPECTED_TYPE
+		= semester5.pwjj.dao.Messages.Error.UNEXPECTED_TYPE;
 	protected static final @NonNull I18nProperty ENTITIES_SHAPES_ERROR_SIDES_ARE_NULL
 		= semester5.pwjj.entities.shapes.Messages.Error.SIDES_ARE_NULL;
 	protected static final @NonNull I18nProperty ENTITIES_SHAPES_ERROR_SIDES_NOT_POSITIVE

@@ -7,7 +7,7 @@
     </item>
     <item name='semester5.pwjj.dao.AbstractDAO java.util.List&lt;T&gt; readAll()'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="{&quot;OptionalContainsCollection&quot;, &quot;DataFlowIssue&quot;, &quot;OptionalGetWithoutIsPresent&quot;, &quot;DuplicateStringLiteralInspection&quot;}"/>
+            <val val="{&quot;OptionalContainsCollection&quot;, &quot;DataFlowIssue&quot;, &quot;OptionalGetWithoutIsPresent&quot;}"/>
         </annotation>
     </item>
     <item name='semester5.pwjj.dao.AbstractDAO java.util.Optional&lt;T&gt; execute(java.util.function.Consumer&lt;? super semester5.pwjj.utils.TransactionalSession&gt;, java.lang.String)'>
@@ -22,12 +22,12 @@
     </item>
     <item name='semester5.pwjj.dao.AbstractDAO java.util.Optional&lt;T&gt; read(int)'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="{&quot;DataFlowIssue&quot;, &quot;DuplicatedCode&quot;, &quot;DuplicateStringLiteralInspection&quot;}"/>
+            <val val="&quot;DataFlowIssue&quot;"/>
         </annotation>
     </item>
     <item name='semester5.pwjj.dao.AbstractDAO java.util.Optional&lt;T&gt; update(T)'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="{&quot;DataFlowIssue&quot;, &quot;DuplicatedCode&quot;}"/>
+            <val val="{&quot;DataFlowIssue&quot;, &quot;OptionalGetWithoutIsPresent&quot;}"/>
         </annotation>
     </item>
     <item name='semester5.pwjj.dao.DAO'>

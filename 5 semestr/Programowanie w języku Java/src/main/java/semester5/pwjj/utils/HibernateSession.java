@@ -5,18 +5,22 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.Delegate;
+import lombok.experimental.ExtensionMethod;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import semester5.pwjj.Representative;
+import semester5.pwjj.utils.extensions.ExceptionUtils;
 
 /** Class managing Hibernate session. */
 @Slf4j
 @ToString
+@ExtensionMethod(ExceptionUtils.class)
 public final class HibernateSession implements TransactionalSession, Representative {
 
 	@Delegate(excludes = NotDelegated.class)
@@ -28,14 +32,15 @@ public final class HibernateSession implements TransactionalSession, Representat
 	 *                            or opening {@link Session} fails.
 	 */
 	public HibernateSession() {
-		final SessionFactory _sessionFactory = getStaticSessionFactory();
+		final @NonNull SessionFactory sessionFactory = getStaticSessionFactory();
 		log.debug("Opening session"); //NON-NLS
+		@Nullable Session _session = null;
 		try {
-			session = _sessionFactory.openSession();
+			_session = sessionFactory.openSession();
 		} catch (final HibernateException ex) {
-			log.warn(Messages.Error.OPEN_SESSION_FAILED(ex));
-			throw ex;
+			Messages.Error.OPEN_SESSION_FAILED(ex).warnAndThrow(ex);
 		}
+		session = _session;
 		log.debug("Session opened: {}", session); //NON-NLS
 		traceCtor();
 		beginTransactionInternal();
@@ -47,19 +52,17 @@ public final class HibernateSession implements TransactionalSession, Representat
 	 */
 	private static @NonNull SessionFactory initializeSessionFactory() {
 		log.debug("Initializing session factory"); //NON-NLS
-		final Configuration configuration;
+		@Nullable Configuration configuration = null;
 		try {
 			configuration = new Configuration().configure();
 		} catch (final HibernateException ex) {
-			log.warn(Messages.Error.MISSING_HIBERNATE_CONFIG());
-			throw ex;
+			Messages.Error.MISSING_HIBERNATE_CONFIG().warnAndThrow(ex);
 		}
-		final @NonNull SessionFactory _sessionFactory;
+		@Nullable SessionFactory _sessionFactory = null;
 		try {
 			_sessionFactory = configuration.buildSessionFactory();
 		} catch (final HibernateException ex) {
-			log.warn(Messages.Error.INVALID_HIBERNATE_CONFIG());
-			throw ex;
+			Messages.Error.INVALID_HIBERNATE_CONFIG().warnAndThrow(ex);
 		}
 		log.debug("Session factory initialized: {}", _sessionFactory); //NON-NLS
 		log.debug("Adding a shutdown hook destroying the session factory"); //NON-NLS

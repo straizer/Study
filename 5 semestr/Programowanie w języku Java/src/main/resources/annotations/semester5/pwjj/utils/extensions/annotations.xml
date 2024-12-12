@@ -15,6 +15,11 @@
             <val val="&quot;StandardVariableNames&quot;"/>
         </annotation>
     </item>
+    <item name='semester5.pwjj.utils.extensions.ExceptionUtils void warnAndThrow(java.lang.String, T)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;CheckedExceptionClass&quot;"/>
+        </annotation>
+    </item>
     <item name='semester5.pwjj.utils.extensions.ExceptionUtils void warnAndThrow(java.lang.String, java.lang.Class&lt;T&gt;)'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="{&quot;CallToSystemExit&quot;, &quot;OverlyBroadCatchBlock&quot;, &quot;CheckedExceptionClass&quot;}"/>

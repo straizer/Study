@@ -9,9 +9,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import semester5.pwjj.entities.Color;
 import semester5.pwjj.entities.shapes.ShapeErrorTestsBase;
-import semester5.pwjj.utils.i18n.MessageProvider;
-
-import static org.mockito.Mockito.times;
 
 @DisplayName("Rectangle Error Tests")
 final class RectangleErrorTests extends ShapeErrorTestsBase {
@@ -27,8 +24,8 @@ final class RectangleErrorTests extends ShapeErrorTestsBase {
 	void getPerimeterNonPositiveSideTest() {
 		throwsIllegalArgumentException(
 			() -> new Rectangle(0, 1, Color.RED), ENTITIES_SHAPES_ERROR_SIDES_NOT_POSITIVE.getPropertyName());
-		messageProviderMock.verify(() -> MessageProvider.get(ENTITIES_SHAPES_NAME_RECTANGLE), times(1));
-		messageProviderMock.verify(() -> MessageProvider.get(ENTITIES_SHAPES_ERROR_SIDES_NOT_POSITIVE), times(1));
+		verifyMessageProviderMockWasUsedFor(ENTITIES_SHAPES_NAME_RECTANGLE);
+		verifyMessageProviderMockWasUsedFor(ENTITIES_SHAPES_ERROR_SIDES_NOT_POSITIVE);
 	}
 
 	@DisplayName("no sides")
@@ -36,7 +33,7 @@ final class RectangleErrorTests extends ShapeErrorTestsBase {
 	@MethodSource
 	void noSidesTest(final @NonNull ThrowingCallable callable) {
 		throwsIllegalStateException(callable, ENTITIES_SHAPES_ERROR_SIDES_ARE_NULL.getPropertyName());
-		messageProviderMock.verify(() -> MessageProvider.get(ENTITIES_SHAPES_NAME_RECTANGLE), times(1));
-		messageProviderMock.verify(() -> MessageProvider.get(ENTITIES_SHAPES_ERROR_SIDES_ARE_NULL), times(1));
+		verifyMessageProviderMockWasUsedFor(ENTITIES_SHAPES_NAME_RECTANGLE);
+		verifyMessageProviderMockWasUsedFor(ENTITIES_SHAPES_ERROR_SIDES_ARE_NULL);
 	}
 }

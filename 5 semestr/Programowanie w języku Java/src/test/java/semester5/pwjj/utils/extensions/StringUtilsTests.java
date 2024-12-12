@@ -6,9 +6,6 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import semester5.pwjj.TestsBase;
-import semester5.pwjj.utils.i18n.MessageProvider;
-
-import static org.mockito.Mockito.times;
 
 @DisplayName("String Utils Tests")
 @ExtensionMethod(StringUtils.class)
@@ -26,6 +23,6 @@ final class StringUtilsTests extends TestsBase {
 	@Test
 	void invalidSafeFormatTest() {
 		Assertions.assertThat(TEMPLATE.safeFormat(StringUtils.EMPTY)).isEqualTo("%d");
-		messageProviderMock.verify(() -> MessageProvider.get(UTILS_EXTENSIONS_ERROR_FORMATTING), times(1));
+		verifyMessageProviderMockWasUsedFor(UTILS_EXTENSIONS_ERROR_FORMATTING);
 	}
 }

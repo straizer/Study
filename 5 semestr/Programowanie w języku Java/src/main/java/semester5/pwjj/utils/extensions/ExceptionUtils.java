@@ -28,6 +28,18 @@ public class ExceptionUtils {
 			log.error(Messages.Error.EXCEPTION_INSTANTIATION_FAILED(exceptionClass, ex));
 			System.exit(1);
 		}
+		warnAndThrow(message, exception);
+	}
+
+	/**
+	 * Logs {@link Exception#getMessage()} with level WARN and throws that {@code exception}.
+	 * @param message   message to log
+	 * @param exception exception to be thrown
+	 * @param <T>       type of exception to be thrown
+	 * @throws T supplied exception
+	 */
+	public <T extends Exception> void warnAndThrow(final @NonNull String message, final @NonNull T exception) throws T {
+		log.warn(message); //NON-NLS
 		throw exception;
 	}
 }

@@ -13,6 +13,7 @@ public abstract class ShapeErrorTestsBase extends ErrorTestsBase {
 
 	protected static @Nullable Shape emptyShape;
 
+	/** Method supplying {@link org.junit.jupiter.params.ParameterizedTest} in each extending class. */
 	private static @NonNull Stream<Arguments> noSidesTest() {
 		return Stream.of(
 			Arguments.argumentSet("call getPerimeter()", (ThrowableAssert.ThrowingCallable) emptyShape::getPerimeter),

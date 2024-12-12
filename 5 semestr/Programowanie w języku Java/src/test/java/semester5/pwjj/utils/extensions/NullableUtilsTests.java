@@ -16,6 +16,7 @@ import java.util.stream.Stream;
 @ExtensionMethod(NullableUtils.class)
 final class NullableUtilsTests extends TestsBase {
 
+	/** Method supplying {@link ParameterizedTest} with the same name. */
 	private static @NonNull Stream<Arguments> mapOrNullTest() {
 		return Stream.of(
 			Arguments.argumentSet("null object", null, null),

@@ -16,6 +16,7 @@ import static org.mockito.Mockito.times;
 @DisplayName("Rectangle Error Tests")
 final class RectangleErrorTests extends ShapeErrorTestsBase {
 
+	/** Method to execute before all tests. */
 	@BeforeAll
 	static void beforeAll() {
 		emptyShape = new Rectangle();

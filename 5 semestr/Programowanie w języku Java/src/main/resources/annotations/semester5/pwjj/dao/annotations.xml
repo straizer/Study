@@ -10,6 +10,11 @@
             <val val="{&quot;OptionalContainsCollection&quot;, &quot;DataFlowIssue&quot;, &quot;OptionalGetWithoutIsPresent&quot;, &quot;DuplicateStringLiteralInspection&quot;}"/>
         </annotation>
     </item>
+    <item name='semester5.pwjj.dao.AbstractDAO java.util.Optional&lt;T&gt; execute(java.util.function.Consumer&lt;? super semester5.pwjj.utils.TransactionalSession&gt;, java.lang.String)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;ReturnOfNull&quot;"/>
+        </annotation>
+    </item>
     <item name='semester5.pwjj.dao.AbstractDAO java.util.Optional&lt;T&gt; executeAndReturn(java.util.function.Function&lt;? super semester5.pwjj.utils.TransactionalSession,? extends T&gt;, java.lang.String)'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="{&quot;OptionalAssignedToNull&quot;, &quot;ReturnOfNull&quot;}"/>

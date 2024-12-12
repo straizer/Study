@@ -88,6 +88,7 @@ public final class HibernateSession implements TransactionalSession, Representat
 		return getStaticSessionFactory();
 	}
 
+	@Override
 	public void commitTransaction() {
 		log.debug("Commiting transaction: {}", session.getTransaction()); //NON-NLS
 		try {
@@ -141,6 +142,7 @@ public final class HibernateSession implements TransactionalSession, Representat
 		//@formatter:on
 	}
 
+	/** Get the session factory which created this session. */
 	@Getter(value = AccessLevel.PRIVATE, lazy = true)
 	private static final SessionFactory staticSessionFactory = initializeSessionFactory();
 }

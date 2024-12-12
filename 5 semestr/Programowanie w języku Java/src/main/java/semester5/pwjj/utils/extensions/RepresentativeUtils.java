@@ -19,7 +19,6 @@ import java.util.Optional;
 @ExtensionMethod({Objects.class, ArrayUtils.class})
 public class RepresentativeUtils {
 
-	/** Cached loggers. FOR INTERNAL PURPOSES ONLY! */
 	private final @NonNull Map<Class<?>, Logger> _CACHED_LOGGERS = new HashMap<>();
 
 	/**

@@ -27,6 +27,10 @@ public enum Messages {
 	public enum Error {
 		;
 
+		/** I18n key with value {@code dao.error.createEntityManagerFailed}. */
+		public static final @NonNull I18nProperty CREATE_ENTITY_MANAGER_FAILED =
+			new DAOI18nProperty("error.createEntityManagerFailed");
+
 		/** I18n key with value {@code dao.error.entityAlreadyExists}. */
 		public static final @NonNull I18nProperty ENTITY_ALREADY_EXISTS =
 			new DAOI18nProperty("error.entityAlreadyExists");
@@ -39,13 +43,18 @@ public enum Messages {
 		public static final @NonNull I18nProperty NOT_AN_ENTITY_TYPE_OR_REMOVED =
 			new DAOI18nProperty("error.notAnEntityTypeOrRemoved");
 
-		/** I18n key with value {@code dao.error.openSessionFailed}. */
-		public static final @NonNull I18nProperty OPEN_SESSION_FAILED =
-			new DAOI18nProperty("error.openSessionFailed");
-
 		/** I18n key with value {@code dao.error.unexpectedType}. */
 		public static final @NonNull I18nProperty UNEXPECTED_TYPE =
 			new DAOI18nProperty("error.unexpectedType");
+
+		/**
+		 * I18n value retriever for key {@code dao.error.createEntityManagerFailed}.
+		 * @param crudMethod CRUD method that failed
+		 * @return value of key {@code dao.error.createEntityManagerFailed}
+		 */
+		public static @NonNull String CREATE_ENTITY_MANAGER_FAILED(final @NonNull String crudMethod) {
+			return CREATE_ENTITY_MANAGER_FAILED.getMessage().safeFormat(crudMethod).traceNonNull(Error.class);
+		}
 
 		/**
 		 * I18n value retriever for key {@code dao.error.entityAlreadyExists}.
@@ -86,15 +95,6 @@ public enum Messages {
 		) {
 			return NOT_AN_ENTITY_TYPE_OR_REMOVED.getMessage().safeFormat(clazz.getSimpleName(), entity)
 				.traceNonNull(Error.class);
-		}
-
-		/**
-		 * I18n value retriever for key {@code dao.error.openSessionFailed}.
-		 * @param crudMethod CRUD method that failed
-		 * @return value of key {@code dao.error.openSessionFailed}
-		 */
-		public static @NonNull String OPEN_SESSION_FAILED(final @NonNull String crudMethod) {
-			return OPEN_SESSION_FAILED.getMessage().safeFormat(crudMethod).traceNonNull(Error.class);
 		}
 
 		/**

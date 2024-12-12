@@ -10,12 +10,12 @@
             <val val="{&quot;OptionalContainsCollection&quot;, &quot;DataFlowIssue&quot;, &quot;OptionalGetWithoutIsPresent&quot;}"/>
         </annotation>
     </item>
-    <item name='semester5.pwjj.dao.AbstractDAO java.util.Optional&lt;T&gt; execute(java.util.function.Consumer&lt;? super semester5.pwjj.utils.TransactionalSession&gt;, java.lang.String)'>
+    <item name='semester5.pwjj.dao.AbstractDAO java.util.Optional&lt;T&gt; execute(java.util.function.Consumer&lt;? super semester5.pwjj.utils.TransactionalEntityManager&gt;, java.lang.String)'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="&quot;ReturnOfNull&quot;"/>
         </annotation>
     </item>
-    <item name='semester5.pwjj.dao.AbstractDAO java.util.Optional&lt;T&gt; executeAndReturn(java.util.function.Function&lt;? super semester5.pwjj.utils.TransactionalSession,? extends T&gt;, java.lang.String)'>
+    <item name='semester5.pwjj.dao.AbstractDAO java.util.Optional&lt;T&gt; executeAndReturn(java.util.function.Function&lt;? super semester5.pwjj.utils.TransactionalEntityManager,? extends T&gt;, java.lang.String)'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="{&quot;OptionalAssignedToNull&quot;, &quot;ReturnOfNull&quot;}"/>
         </annotation>
@@ -48,11 +48,6 @@
     <item name='semester5.pwjj.dao.Messages.DAOI18nProperty DAOI18nProperty(java.lang.String)'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="&quot;StringConcatenation&quot;"/>
-        </annotation>
-    </item>
-    <item name='semester5.pwjj.dao.Messages.Error OPEN_SESSION_FAILED'>
-        <annotation name='java.lang.SuppressWarnings'>
-            <val val="&quot;DuplicateStringLiteralInspection&quot;"/>
         </annotation>
     </item>
 </root>

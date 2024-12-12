@@ -1,5 +1,7 @@
 package semester5.pwjj.utils;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceException;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -12,35 +14,33 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import semester5.pwjj.Representative;
 import semester5.pwjj.utils.extensions.ExceptionUtils;
 
 /** Class managing Hibernate session. */
 @Slf4j
 @ToString
 @ExtensionMethod(ExceptionUtils.class)
-public final class HibernateSession implements TransactionalSession, Representative {
+public final class HibernateEntityManager implements TransactionalEntityManager {
 
 	@Delegate(excludes = NotDelegated.class)
-	private final @NonNull Session session;
+	private final @NonNull EntityManager session;
 
 	/**
-	 * Creates {@link AutoCloseable} Hibernate session and starts transaction.
+	 * Creates {@link AutoCloseable} Hibernate entity manager and starts transaction.
 	 * @throws HibernateException if the `hibernate.cfg.xml` file is missing or invalid,
 	 *                            or opening {@link Session} fails.
 	 */
-	public HibernateSession() {
-		final @NonNull SessionFactory sessionFactory = getStaticSessionFactory();
+	public HibernateEntityManager() {
+		final @NonNull SessionFactory _sessionFactory = getSessionFactory();
 		log.debug("Opening session"); //NON-NLS
-		@Nullable Session _session = null;
+		@Nullable EntityManager entityManager = null;
 		try {
-			_session = sessionFactory.openSession();
+			entityManager = _sessionFactory.openSession();
 		} catch (final HibernateException ex) {
 			Messages.Error.OPEN_SESSION_FAILED(ex).warnAndThrow(ex);
 		}
-		session = _session;
+		session = entityManager;
 		log.debug("Session opened: {}", session); //NON-NLS
 		traceCtor();
 		beginTransactionInternal();
@@ -67,9 +67,9 @@ public final class HibernateSession implements TransactionalSession, Representat
 		log.debug("Session factory initialized: {}", _sessionFactory); //NON-NLS
 		log.debug("Adding a shutdown hook destroying the session factory"); //NON-NLS
 		try {
-			Runtime.getRuntime().addShutdownHook(new Thread(HibernateSession::shutdown));
+			Runtime.getRuntime().addShutdownHook(new Thread(HibernateEntityManager::shutdown));
 		} catch (final RuntimeException _) {
-			log.warn(Messages.Error.CANNOT_ADD_SHUTDOWN_HOOK("HibernateSession::shutdown")); //NON-NLS
+			log.warn(Messages.Error.CANNOT_ADD_SHUTDOWN_HOOK("HibernateEntityManager::shutdown")); //NON-NLS
 		}
 		log.debug("Shutdown hook destroying the session factory added"); //NON-NLS
 		return _sessionFactory;
@@ -77,18 +77,13 @@ public final class HibernateSession implements TransactionalSession, Representat
 
 	/** Closes session factory. */
 	private static void shutdown() {
-		log.debug("Closing session factory: {}", getStaticSessionFactory()); //NON-NLS
+		log.debug("Closing session factory: {}", getSessionFactory()); //NON-NLS
 		try {
-			getStaticSessionFactory().close();
+			getSessionFactory().close();
 		} catch (final HibernateException ex) {
 			log.warn(Messages.Error.CLOSE_SESSION_FACTORY_FAILED(ex));
 		}
-		log.debug("Session factory closed: {}", getStaticSessionFactory()); //NON-NLS
-	}
-
-	@Override
-	public SessionFactory getSessionFactory() {
-		return getStaticSessionFactory();
+		log.debug("Session factory closed: {}", getSessionFactory()); //NON-NLS
 	}
 
 	@Override
@@ -118,7 +113,7 @@ public final class HibernateSession implements TransactionalSession, Representat
 	/** Begins new transaction. */
 	private void beginTransactionInternal() {
 		log.debug("Beginning transaction: {}", session.getTransaction()); //NON-NLS
-		session.beginTransaction();
+		session.getTransaction().begin();
 		log.debug("New transaction began: {}", session.getTransaction()); //NON-NLS
 	}
 
@@ -136,9 +131,7 @@ public final class HibernateSession implements TransactionalSession, Representat
 	/** Holds signatures of methods that should be not delegated to {@code session} object. */
 	private interface NotDelegated {
 		//@formatter:off
-		@NonNull SessionFactory getSessionFactory();
-		@NonNull Transaction beginTransaction();
-		@NonNull Transaction getTransaction();
+		@NonNull EntityTransaction getTransaction();
 		boolean isJoinedToTransaction();
 		void joinTransaction();
 		void close();
@@ -147,5 +140,5 @@ public final class HibernateSession implements TransactionalSession, Representat
 
 	/** Get the session factory which created this session. */
 	@Getter(value = AccessLevel.PRIVATE, lazy = true)
-	private static final SessionFactory staticSessionFactory = initializeSessionFactory();
+	private static final SessionFactory sessionFactory = initializeSessionFactory();
 }

@@ -5,32 +5,27 @@
             <val val="&quot;ClassWithoutLogger&quot;"/>
         </annotation>
     </item>
-    <item name='semester5.pwjj.utils.HibernateSession'>
+    <item name='semester5.pwjj.utils.HibernateEntityManager'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="{&quot;OverlyComplexClass&quot;, &quot;serial&quot;}"/>
+            <val val="&quot;OverlyComplexClass&quot;"/>
         </annotation>
     </item>
-    <item name='semester5.pwjj.utils.HibernateSession HibernateSession()'>
+    <item name='semester5.pwjj.utils.HibernateEntityManager HibernateEntityManager()'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="{&quot;CallToSimpleGetterFromWithinClass&quot;, &quot;DataFlowIssue&quot;}"/>
         </annotation>
     </item>
-    <item name='semester5.pwjj.utils.HibernateSession org.hibernate.SessionFactory getSessionFactory()'>
-        <annotation name='java.lang.SuppressWarnings'>
-            <val val="&quot;CallToSimpleGetterFromWithinClass&quot;"/>
-        </annotation>
-    </item>
-    <item name='semester5.pwjj.utils.HibernateSession org.hibernate.SessionFactory initializeSessionFactory()'>
+    <item name='semester5.pwjj.utils.HibernateEntityManager org.hibernate.SessionFactory initializeSessionFactory()'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="{&quot;FeatureEnvy&quot;, &quot;DataFlowIssue&quot;}"/>
         </annotation>
     </item>
-    <item name='semester5.pwjj.utils.HibernateSession void shutdown()'>
+    <item name='semester5.pwjj.utils.HibernateEntityManager void shutdown()'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="&quot;CallToSimpleGetterFromWithinClass&quot;"/>
         </annotation>
     </item>
-    <item name='semester5.pwjj.utils.HibernateSession.NotDelegated'>
+    <item name='semester5.pwjj.utils.HibernateEntityManager.NotDelegated'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="{&quot;InterfaceNeverImplemented&quot;, &quot;unused&quot;}"/>
         </annotation>
@@ -38,11 +33,6 @@
     <item name='semester5.pwjj.utils.Messages'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="{&quot;PublicInnerClass&quot;, &quot;StaticMethodOnlyUsedInOneClass&quot;}"/>
-        </annotation>
-    </item>
-    <item name='semester5.pwjj.utils.Messages.Error OPEN_SESSION_FAILED'>
-        <annotation name='java.lang.SuppressWarnings'>
-            <val val="&quot;DuplicateStringLiteralInspection&quot;"/>
         </annotation>
     </item>
     <item name='semester5.pwjj.utils.Messages.UtilsI18nProperty'>
@@ -55,9 +45,9 @@
             <val val="&quot;StringConcatenation&quot;"/>
         </annotation>
     </item>
-    <item name='semester5.pwjj.utils.TransactionalSession'>
+    <item name='semester5.pwjj.utils.TransactionalEntityManager'>
         <annotation name='java.lang.SuppressWarnings'>
-            <val val="{&quot;MissingSerialAnnotation&quot;, &quot;InterfaceWithOnlyOneDirectInheritor&quot;}"/>
+            <val val="&quot;InterfaceWithOnlyOneDirectInheritor&quot;"/>
         </annotation>
     </item>
 </root>

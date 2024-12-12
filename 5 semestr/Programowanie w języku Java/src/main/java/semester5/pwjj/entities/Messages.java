@@ -2,8 +2,8 @@ package semester5.pwjj.entities;
 
 import lombok.experimental.ExtensionMethod;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import semester5.pwjj.utils.RepresentativeUtils;
-import semester5.pwjj.utils.StringUtils;
+import semester5.pwjj.utils.extensions.RepresentativeUtils;
+import semester5.pwjj.utils.extensions.StringUtils;
 import semester5.pwjj.utils.i18n.I18nProperty;
 import semester5.pwjj.utils.i18n.MessageProvider;
 

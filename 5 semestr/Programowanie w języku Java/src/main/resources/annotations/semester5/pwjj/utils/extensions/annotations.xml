@@ -1,0 +1,63 @@
+<!--suppress GrazieInspection, LongLine -->
+<root>
+    <item name='semester5.pwjj.utils.extensions.ArrayUtils'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;ClassWithoutLogger&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.extensions.ArrayUtils java.util.stream.Stream&lt;T&gt; skip(T[], long)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;MissingJavadoc&quot;, &quot;GrazieInspection&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.extensions.ArrayUtils java.util.stream.Stream&lt;T&gt; skip(T[], long) 1'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;StandardVariableNames&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.extensions.ExceptionUtils void warnAndThrow(java.lang.String, java.lang.Class&lt;T&gt;)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;CallToSystemExit&quot;, &quot;OverlyBroadCatchBlock&quot;, &quot;CheckedExceptionClass&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.extensions.Messages'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;PublicInnerClass&quot;, &quot;StaticMethodOnlyUsedInOneClass&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.extensions.Messages.UtilsExtensionsI18nProperty UtilsExtensionsI18nProperty(java.lang.String)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;StringConcatenation&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.extensions.NullableUtils'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;ClassWithoutLogger&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.extensions.RepresentativeUtils'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;ClassWithoutLogger&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.extensions.RepresentativeUtils T trace(T, java.lang.Class&lt;?&gt;, java.lang.String, java.lang.Integer)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;HardcodedLineSeparator&quot;, &quot;HardcodedFileSeparator&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.extensions.RepresentativeUtils _CACHED_LOGGERS'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;StaticCollection&quot;, &quot;CollectionWithoutInitialCapacity&quot;}"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.extensions.StreamUtils'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="&quot;ClassWithoutLogger&quot;"/>
+        </annotation>
+    </item>
+    <item name='semester5.pwjj.utils.extensions.StreamUtils java.lang.String joining(java.util.stream.Stream&lt;java.lang.String&gt;, java.lang.CharSequence, java.lang.CharSequence, java.lang.CharSequence)'>
+        <annotation name='java.lang.SuppressWarnings'>
+            <val val="{&quot;GrazieInspection&quot;, &quot;MissingJavadoc&quot;}"/>
+        </annotation>
+    </item>
+</root>

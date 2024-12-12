@@ -1,4 +1,4 @@
-package semester5.pwjj.utils;
+package semester5.pwjj.utils.extensions;
 
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;

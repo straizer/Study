@@ -4,8 +4,8 @@ import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import semester5.pwjj.utils.RepresentativeUtils;
-import semester5.pwjj.utils.StringUtils;
+import semester5.pwjj.utils.extensions.RepresentativeUtils;
+import semester5.pwjj.utils.extensions.StringUtils;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

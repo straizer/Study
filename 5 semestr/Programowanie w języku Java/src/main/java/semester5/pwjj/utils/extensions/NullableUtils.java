@@ -1,4 +1,4 @@
-package semester5.pwjj.utils;
+package semester5.pwjj.utils.extensions;
 
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;

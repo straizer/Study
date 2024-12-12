@@ -3,7 +3,7 @@ package semester5.pwjj.utils.i18n;
 import lombok.Data;
 import lombok.experimental.ExtensionMethod;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import semester5.pwjj.utils.RepresentativeUtils;
+import semester5.pwjj.utils.extensions.RepresentativeUtils;
 
 import java.util.Locale;
 

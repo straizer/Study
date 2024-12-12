@@ -1,4 +1,4 @@
-package semester5.pwjj.utils;
+package semester5.pwjj.utils.extensions;
 
 import lombok.experimental.ExtensionMethod;
 import org.assertj.core.api.Assertions;
@@ -26,6 +26,6 @@ final class StringUtilsTests extends TestsBase {
 	@Test
 	void invalidSafeFormatTest() {
 		Assertions.assertThat(TEMPLATE.safeFormat(StringUtils.EMPTY)).isEqualTo("%d");
-		messageProviderMock.verify(() -> MessageProvider.get(UTILS_ERROR_FORMATTING), times(1));
+		messageProviderMock.verify(() -> MessageProvider.get(UTILS_EXTENSIONS_ERROR_FORMATTING), times(1));
 	}
 }

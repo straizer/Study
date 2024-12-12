@@ -19,7 +19,7 @@ public class Main {
 
 	/**
 	 * Application entry point.
-	 * @param ignoredArgs console arguments
+	 * @param ignoredArgs console arguments (ignored)
 	 */
 	public void main(final @NonNull String @NonNull [] ignoredArgs) {
 		final @NonNull List<Shape> shapes = List.of(

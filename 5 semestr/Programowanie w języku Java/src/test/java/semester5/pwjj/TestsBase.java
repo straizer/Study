@@ -11,7 +11,7 @@ import semester5.pwjj.utils.i18n.MessageProvider;
 
 import java.lang.reflect.Field;
 
-/** Base class for all tests. */ // UNUSED TO REMOVE!!!!!!!!!!!!!!!!!!!!!!!!
+/** Base class for all tests. */
 public abstract class TestsBase {
 
 	protected static final @NonNull I18nProperty DAO_ERROR_SIDES_ARE_NULL
@@ -63,6 +63,10 @@ public abstract class TestsBase {
 
 	protected static MockedStatic<MessageProvider> messageProviderMock;
 
+	/**
+	 * Method to execute before all tests in each extending class.
+	 * @throws IllegalAccessException if {@link I18nProperty} in this class is inaccessible. It should never throw.
+	 */
 	@BeforeAll
 	static void globalBeforeAll() throws IllegalAccessException {
 		messageProviderMock = Mockito.mockStatic(MessageProvider.class);
@@ -77,11 +81,13 @@ public abstract class TestsBase {
 		}
 	}
 
+	/** Method to execute after all tests in each extending class. */
 	@AfterAll
 	static void globalAfterAll() {
 		messageProviderMock.close();
 	}
 
+	/** Method to execute after each test in each extending class. */
 	@AfterEach
 	void globalAfterEach() {
 		messageProviderMock.verifyNoMoreInteractions();

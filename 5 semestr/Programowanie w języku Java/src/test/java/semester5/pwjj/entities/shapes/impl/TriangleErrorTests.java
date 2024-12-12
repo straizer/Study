@@ -19,11 +19,13 @@ import static org.mockito.Mockito.times;
 @DisplayName("Triangle Error Tests")
 final class TriangleErrorTests extends ShapeErrorTestsBase {
 
+	/** Method to execute before all tests. */
 	@BeforeAll
 	static void beforeAll() {
 		emptyShape = new Triangle();
 	}
 
+	/** Method supplying {@link ParameterizedTest} with the same name. */
 	private static @NonNull Stream<Arguments> getPerimeterTriangleRuleNotFulfilledTest() {
 		return Stream.of(
 			Arguments.argumentSet("1 2 3", (ThrowingCallable) () -> new Triangle(1, 2, 3, Color.RED)),

@@ -32,8 +32,16 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 
 	private final @NonNull Class<T> handledClass;
 
+	/**
+	 * Supplies {@code function} with newly created {@link TransactionalSession} and executes it,
+	 * then perform {@link TransactionalSession#commitTransaction()}.
+	 * @param function   function to execute
+	 * @param methodName name of the calling method
+	 * @param <T>        type of {@code function} return value
+	 * @return {@link Optional} of {@code function} return value if function succeeds; null otherwise
+	 */
 	private static <T> @Nullable Optional<T> executeAndReturn(
-		final @NonNull Function<? super @NonNull TransactionalSession, ? extends @Nullable T> function,
+		final @NonNull Function<? super TransactionalSession, ? extends T> function,
 		final @NonNull String methodName
 	) {
 		final @NonNull Optional<T> result;
@@ -47,8 +55,15 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 		return result;
 	}
 
+	/**
+	 * Supplies {@code function} with newly created {@link TransactionalSession} and executes it,
+	 * then perform {@link TransactionalSession#commitTransaction()}.
+	 * @param function   function to execute
+	 * @param methodName name of the calling method
+	 * @return Empty {@link Optional} if function succeeds; null otherwise
+	 */
 	private static <T> @Nullable Optional<T> execute(
-		final @NonNull Consumer<? super @NonNull TransactionalSession> function, final @NonNull String methodName
+		final @NonNull Consumer<? super TransactionalSession> function, final @NonNull String methodName
 	) {
 		return executeAndReturn(session -> {
 				function.accept(session);
@@ -143,22 +158,48 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 		debugMessage("Removed from", id); //NON-NLS
 	}
 
+	/**
+	 * Prints a debug message in form of {@code {prefix} persistence entity of type <{handledClass}>: {entity}}.
+	 * @param prefix prefix to insert
+	 * @param entity entity to insert after calling {@link T#toString()}
+	 */
 	private void debugMessage(final @NonNull String prefix, final @NonNull T entity) {
 		debugMessageInternal(prefix, ": %s".safeFormat(entity)); //NON-NLS
 	}
 
+	/**
+	 * Prints a debug message in form of {@code {prefix} persistence entity of type <{handledClass}> with id <{id}>}.
+	 * @param prefix prefix to insert
+	 * @param id     id to insert
+	 */
 	private void debugMessage(final @NonNull String prefix, final int id) {
 		debugMessageInternal(prefix, " with id <%d>".safeFormat(id)); //NON-NLS
 	}
 
+	/**
+	 * Prints a debug message in form of {@code {prefix} persistence {infix} of type <{handledClass}>}.
+	 * @param prefix prefix to insert
+	 * @param infix  infix to insert
+	 */
 	private void debugMessage(final @NonNull String prefix, final @NonNull String infix) {
 		debugMessageInternal(prefix, infix, StringUtils.EMPTY); //NON-NLS
 	}
 
+	/**
+	 * Prints a debug message in form of {@code {prefix} persistence entity of type <{handledClass}>{suffix}}.
+	 * @param prefix prefix to insert
+	 * @param suffix suffix to insert
+	 */
 	private void debugMessageInternal(final @NonNull String prefix, final @NonNull String suffix) {
 		debugMessageInternal(prefix, "entity", suffix); //NON-NLS
 	}
 
+	/**
+	 * Prints a debug message in form of {@code {prefix} persistence {infix} of type <{handledClass}>{suffix}}.
+	 * @param prefix prefix to insert
+	 * @param infix  infix to insert
+	 * @param suffix suffix to insert
+	 */
 	private void debugMessageInternal(
 		final @NonNull String prefix, final @NonNull String infix, final @NonNull String suffix
 	) {

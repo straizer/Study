@@ -9,9 +9,7 @@ import semester5.pwjj.entities.shapes.Shape;
 @ToString
 public final class ShapeDAO extends AbstractDAO<Shape> {
 
-	/**
-	 * Creates {@link DAO} (Data Access Object) for {@link Shape}.
-	 */
+	/** Creates {@link DAO} (Data Access Object) for {@link Shape}. */
 	public ShapeDAO() {
 		super(Shape.class);
 		traceCtor();

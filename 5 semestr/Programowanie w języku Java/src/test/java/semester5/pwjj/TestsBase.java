@@ -4,6 +4,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.mockito.InOrder;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import semester5.pwjj.utils.i18n.I18nProperty;
@@ -61,7 +63,8 @@ public abstract class TestsBase {
 	protected static final @NonNull I18nProperty UTILS_EXTENSIONS_ERROR_FORMATTING
 		= semester5.pwjj.utils.extensions.Messages.Error.FORMATTING;
 
-	protected static MockedStatic<MessageProvider> messageProviderMock;
+	private static MockedStatic<MessageProvider> messageProviderMock;
+	private static InOrder messageProviderInOrder;
 
 	/**
 	 * Method to execute before all tests in each extending class.
@@ -79,6 +82,7 @@ public abstract class TestsBase {
 					.thenReturn(i18nProperty.getPropertyName());
 			}
 		}
+		messageProviderInOrder = Mockito.inOrder(MessageProvider.class);
 	}
 
 	/** Method to execute after all tests in each extending class. */
@@ -87,10 +91,20 @@ public abstract class TestsBase {
 		messageProviderMock.close();
 	}
 
+	protected static void verifyMessageProviderMockWasUsedFor(final @NonNull I18nProperty argument) {
+		messageProviderInOrder.verify(
+			messageProviderMock, () -> MessageProvider.get(argument), Mockito.times(1));
+	}
+
+	/** Method to execute before each test in each extending class. */
+	@BeforeEach
+	void globalBeforeEach() {
+		messageProviderMock.clearInvocations();
+	}
+
 	/** Method to execute after each test in each extending class. */
 	@AfterEach
 	void globalAfterEach() {
 		messageProviderMock.verifyNoMoreInteractions();
-		messageProviderMock.clearInvocations();
 	}
 }

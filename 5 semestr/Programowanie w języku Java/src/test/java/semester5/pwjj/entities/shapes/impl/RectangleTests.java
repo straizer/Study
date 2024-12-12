@@ -7,9 +7,6 @@ import org.junit.jupiter.api.Test;
 import semester5.pwjj.TestsBase;
 import semester5.pwjj.entities.Color;
 import semester5.pwjj.entities.shapes.Shape;
-import semester5.pwjj.utils.i18n.MessageProvider;
-
-import static org.mockito.Mockito.times;
 
 @DisplayName("Rectangle Tests")
 final class RectangleTests extends TestsBase {
@@ -38,8 +35,8 @@ final class RectangleTests extends TestsBase {
 	@Test
 	void toPrettyStringTest() {
 		Assertions.assertThat(uut.toPrettyString()).isEqualTo(ENTITIES_SHAPES_TO_STRING_SHAPE.getPropertyName());
-		messageProviderMock.verify(() -> MessageProvider.get(ENTITIES_SHAPES_NAME_RECTANGLE), times(1));
-		messageProviderMock.verify(() -> MessageProvider.get(ENTITIES_TO_STRING_COLOR), times(1));
-		messageProviderMock.verify(() -> MessageProvider.get(ENTITIES_SHAPES_TO_STRING_SHAPE), times(1));
+		verifyMessageProviderMockWasUsedFor(ENTITIES_SHAPES_NAME_RECTANGLE);
+		verifyMessageProviderMockWasUsedFor(ENTITIES_SHAPES_TO_STRING_SHAPE);
+		verifyMessageProviderMockWasUsedFor(ENTITIES_TO_STRING_COLOR);
 	}
 }

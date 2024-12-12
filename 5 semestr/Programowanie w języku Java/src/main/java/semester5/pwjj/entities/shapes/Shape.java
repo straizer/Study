@@ -16,6 +16,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import semester5.pwjj.Representative;
 import semester5.pwjj.entities.Color;
+import semester5.pwjj.utils.ExceptionUtils;
 import semester5.pwjj.utils.StreamUtils;
 import semester5.pwjj.utils.StringUtils;
 
@@ -34,16 +35,17 @@ import java.util.stream.DoubleStream;
 @ExtensionMethod({StringUtils.class, Arrays.class, Objects.class, StreamUtils.class, ExceptionUtils.class})
 public abstract class Shape implements Representative {
 
-	@Id
-	@GeneratedValue
-	private int id;
-
 	@ElementCollection
 	private final double @Nullable [] sides;
 
 	@Embedded
 	@Getter
 	private final @Nullable Color color;
+
+	@Id
+	@GeneratedValue
+	@ToString.Include(rank = 5)
+	private int id;
 
 	/**
 	 * Creates {@code Shape}.
@@ -54,9 +56,7 @@ public abstract class Shape implements Representative {
 	protected Shape(final double @NonNull [] sides, final @NonNull Color color) {
 		for (final double side : sides) {
 			if (side <= 0) {
-				final @NonNull String message = Messages.Error.SIDES_NOT_POSITIVE(getClassNameNls());
-				log.warn(message);
-				throw new IllegalArgumentException(message);
+				Messages.Error.SIDES_NOT_POSITIVE(getClassNameNls()).warnAndThrow(IllegalArgumentException.class);
 			}
 		}
 		this.sides = sides.clone();
@@ -96,10 +96,8 @@ public abstract class Shape implements Representative {
 	 * @throws IllegalStateException if {@code sides} are {@code null}.
 	 */
 	protected <T> @NonNull T mapSides(final @NonNull Function<? super DoubleStream, T> mapper) {
-			final @NonNull String message = Messages.Error.SIDES_ARE_NULL(getClassNameNls());
-			log.warn(message);
-			throw new IllegalStateException(message);
 		if (sides.isNull()) {
+			Messages.Error.SIDES_ARE_NULL(getClassNameNls()).warnAndThrow(IllegalStateException.class);
 		}
 		return mapper.apply(sides.stream());
 	}

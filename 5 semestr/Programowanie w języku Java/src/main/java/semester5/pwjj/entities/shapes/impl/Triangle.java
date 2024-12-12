@@ -5,18 +5,21 @@ import jakarta.persistence.Transient;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.ExtensionMethod;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import semester5.pwjj.entities.Color;
 import semester5.pwjj.entities.shapes.Messages;
 import semester5.pwjj.entities.shapes.Shape;
 import semester5.pwjj.utils.DoubleReducers;
+import semester5.pwjj.utils.ExceptionUtils;
 
 /** Class representing triangle. */
 @Slf4j
 @Entity
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ExtensionMethod(ExceptionUtils.class)
 public final class Triangle extends Shape {
 
 	/**
@@ -29,9 +32,7 @@ public final class Triangle extends Shape {
 	public Triangle(final double x, final double y, final double z, final @NonNull Color color) {
 		super(new double[]{x, y, z}, color);
 		if (x + y <= z || y + z <= x || x + z <= y) {
-			final @NonNull String message = Messages.Error.TRIANGLE_RULE();
-			log.warn(message);
-			throw new IllegalArgumentException(message);
+			Messages.Error.TRIANGLE_RULE().warnAndThrow(IllegalArgumentException.class);
 		}
 	}
 

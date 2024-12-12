@@ -14,15 +14,10 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import semester5.pwjj.Representative;
 
-import java.util.Objects;
-
 /** Class managing Hibernate session. */
 @Slf4j
 @ToString
-public final class HibernateSession implements AutoCloseable, Representative {
-
-	@Getter(value = AccessLevel.PRIVATE, lazy = true)
-	private static final SessionFactory sessionFactory = initializeSessionFactory();
+public final class HibernateSession implements TransactionalSession, Representative {
 
 	@Delegate(excludes = NotDelegated.class)
 	private final @NonNull Session session;
@@ -33,7 +28,7 @@ public final class HibernateSession implements AutoCloseable, Representative {
 	 *                            or opening {@link Session} fails.
 	 */
 	public HibernateSession() {
-		final SessionFactory _sessionFactory = getSessionFactory();
+		final SessionFactory _sessionFactory = getStaticSessionFactory();
 		log.debug("Opening session"); //NON-NLS
 		try {
 			session = _sessionFactory.openSession();
@@ -43,7 +38,7 @@ public final class HibernateSession implements AutoCloseable, Representative {
 		}
 		log.debug("Session opened: {}", session); //NON-NLS
 		traceCtor();
-		beginTransaction();
+		beginTransactionInternal();
 	}
 
 	/**
@@ -79,16 +74,20 @@ public final class HibernateSession implements AutoCloseable, Representative {
 
 	/** Closes session factory. */
 	private static void shutdown() {
-		log.debug("Closing session factory: {}", getSessionFactory()); //NON-NLS
+		log.debug("Closing session factory: {}", getStaticSessionFactory()); //NON-NLS
 		try {
-			Objects.requireNonNull(getSessionFactory()).close();
+			getStaticSessionFactory().close();
 		} catch (final HibernateException ex) {
 			log.warn(Messages.Error.CLOSE_SESSION_FACTORY_FAILED(ex));
 		}
-		log.debug("Session factory closed: {}", getSessionFactory()); //NON-NLS
+		log.debug("Session factory closed: {}", getStaticSessionFactory()); //NON-NLS
 	}
 
-	/** Commits the current transaction. */
+	@Override
+	public SessionFactory getSessionFactory() {
+		return getStaticSessionFactory();
+	}
+
 	public void commitTransaction() {
 		log.debug("Commiting transaction: {}", session.getTransaction()); //NON-NLS
 		try {
@@ -97,7 +96,7 @@ public final class HibernateSession implements AutoCloseable, Representative {
 			log.warn(Messages.Error.COMMIT_FAILED(ex));
 		}
 		log.debug("Transaction commited: {}", session.getTransaction()); //NON-NLS
-		beginTransaction();
+		beginTransactionInternal();
 	}
 
 	@Override
@@ -113,7 +112,7 @@ public final class HibernateSession implements AutoCloseable, Representative {
 	}
 
 	/** Begins new transaction. */
-	private void beginTransaction() {
+	private void beginTransactionInternal() {
 		log.debug("Beginning transaction: {}", session.getTransaction()); //NON-NLS
 		session.beginTransaction();
 		log.debug("New transaction began: {}", session.getTransaction()); //NON-NLS
@@ -132,11 +131,16 @@ public final class HibernateSession implements AutoCloseable, Representative {
 
 	/** Holds signatures of methods that should be not delegated to {@code session} object. */
 	private interface NotDelegated {
+		//@formatter:off
 		@NonNull SessionFactory getSessionFactory();
 		@NonNull Transaction beginTransaction();
 		@NonNull Transaction getTransaction();
 		boolean isJoinedToTransaction();
 		void joinTransaction();
 		void close();
+		//@formatter:on
 	}
+
+	@Getter(value = AccessLevel.PRIVATE, lazy = true)
+	private static final SessionFactory staticSessionFactory = initializeSessionFactory();
 }

@@ -7,14 +7,18 @@ import lombok.ToString;
 import lombok.experimental.ExtensionMethod;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.hibernate.HibernateException;
 import semester5.pwjj.Representative;
 import semester5.pwjj.utils.HibernateSession;
 import semester5.pwjj.utils.StringUtils;
+import semester5.pwjj.utils.TransactionalSession;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * {@link DAO} (Data Access Object) common implementation.
@@ -28,15 +32,38 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 
 	private final @NonNull Class<T> handledClass;
 
-	@Override
-	public void create(final @NonNull T entity) {
-		try (final HibernateSession session = new HibernateSession()) {
-			session.persist(entity);
+	private static <T> @Nullable Optional<T> executeAndReturn(
+		final @NonNull Function<? super @NonNull TransactionalSession, ? extends @Nullable T> function,
+		final @NonNull String methodName
+	) {
+		final @NonNull Optional<T> result;
+		try (final TransactionalSession session = new HibernateSession()) {
+			result = Optional.ofNullable(function.apply(session));
 			session.commitTransaction();
 		} catch (final HibernateException _) {
-			log.warn(Messages.Error.OPEN_SESSION_FAILED("create")); //NON-NLS
-			return;
+			log.warn(Messages.Error.OPEN_SESSION_FAILED(methodName)); //NON-NLS
+			return null;
+		}
+		return result;
+	}
+
+	private static <T> @Nullable Optional<T> execute(
+		final @NonNull Consumer<? super @NonNull TransactionalSession> function, final @NonNull String methodName
+	) {
+		return executeAndReturn(session -> {
+				function.accept(session);
+				return null;
+			},
+			methodName);
+	}
+
+	@Override
+	public void create(final @NonNull T entity) {
 		debugMessage("Saving in", entity); //NON-NLS
+		try {
+			if (execute(session -> session.persist(entity), "create").isNull()) { //NON-NLS
+				return;
+			}
 		} catch (final EntityExistsException _) {
 			log.warn(Messages.Error.ENTITY_ALREADY_EXISTS(handledClass, entity));
 			return;
@@ -49,14 +76,13 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 
 	@Override
 	public @NonNull Optional<T> read(final int id) {
-		final @NonNull Optional<T> entity;
-		try (final HibernateSession session = new HibernateSession()) {
-			entity = Optional.ofNullable(session.find(handledClass, id));
-			session.commitTransaction();
-		} catch (final HibernateException _) {
-			log.warn(Messages.Error.OPEN_SESSION_FAILED("read")); //NON-NLS
-			return Optional.empty();
 		debugMessage("Getting from", id); //NON-NLS
+		final @Nullable Optional<T> entity;
+		try {
+			entity = executeAndReturn(session -> session.find(handledClass, id), "read"); //NON-NLS
+			if (entity.isNull()) {
+				return Optional.empty();
+			}
 		} catch (final IllegalArgumentException _) {
 			log.warn(Messages.Error.NOT_AN_ENTITY_TYPE(handledClass, null));
 			return Optional.empty();
@@ -71,31 +97,30 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 
 	@Override
 	public @NonNull List<T> readAll() {
-		final @NonNull List<T> entities;
-		try (final HibernateSession session = new HibernateSession()) {
 		debugMessage("Getting from", "all entities"); //NON-NLS
+		final @Nullable Optional<List<T>> entitiesOptional;
+		entitiesOptional = executeAndReturn(session -> {
 			final CriteriaQuery<T> query = session.getCriteriaBuilder().createQuery(handledClass);
 			query.from(handledClass);
-			entities = session.createQuery(query).list();
-			session.commitTransaction();
-		} catch (final HibernateException _) {
-			log.warn(Messages.Error.OPEN_SESSION_FAILED("readAll")); //NON-NLS
+			return session.createQuery(query).list();
+		}, "readAll"); //NON-NLS
+		if (entitiesOptional.isNull()) {
 			return List.of();
 		}
+		final @NonNull List<T> entities = entitiesOptional.get();
 		debugMessage("Found in", "%s entities".safeFormat(entities.size())); //NON-NLS
 		return traceNonNull(entities);
 	}
 
 	@Override
 	public @NonNull Optional<T> update(final @NonNull T entity) {
-		final @NonNull Optional<T> updatedEntity;
-		try (final HibernateSession session = new HibernateSession()) {
-			updatedEntity = Optional.ofNullable(session.merge(entity));
-			session.commitTransaction();
-		} catch (final HibernateException _) {
-			log.warn(Messages.Error.OPEN_SESSION_FAILED("update")); //NON-NLS
-			return Optional.empty();
 		debugMessage("Updating in", entity); //NON-NLS
+		final @Nullable Optional<T> updatedEntity;
+		try {
+			updatedEntity = executeAndReturn(session -> session.merge(entity), "update"); //NON-NLS
+			if (updatedEntity.isNull()) {
+				return Optional.empty();
+			}
 		} catch (final IllegalArgumentException _) {
 			log.warn(Messages.Error.NOT_AN_ENTITY_TYPE_OR_REMOVED(handledClass, entity));
 			return Optional.empty();
@@ -106,13 +131,11 @@ public abstract class AbstractDAO<T extends Representative> implements DAO<T>, R
 
 	@Override
 	public void delete(final int id) {
-		try (final HibernateSession session = new HibernateSession()) {
-			session.remove(session.find(handledClass, id));
-			session.commitTransaction();
-		} catch (final HibernateException _) {
-			log.warn(Messages.Error.OPEN_SESSION_FAILED("delete")); //NON-NLS
-			return;
 		debugMessage("Removing from", id); //NON-NLS
+		try {
+			if (execute(session -> session.remove(session.find(handledClass, id)), "delete").isNull()) { //NON-NLS
+				return;
+			}
 		} catch (final IllegalArgumentException _) {
 			log.warn(Messages.Error.NOT_AN_ENTITY_TYPE(handledClass, null));
 			return;

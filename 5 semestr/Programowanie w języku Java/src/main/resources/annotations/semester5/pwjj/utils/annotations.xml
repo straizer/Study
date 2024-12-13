@@ -15,7 +15,7 @@
             <val val="{&quot;CallToSimpleGetterFromWithinClass&quot;, &quot;DataFlowIssue&quot;}"/>
         </annotation>
     </item>
-    <item name='semester5.pwjj.utils.HibernateEntityManager org.hibernate.SessionFactory initializeSessionFactory()'>
+    <item name='semester5.pwjj.utils.HibernateEntityManager org.hibernate.SessionFactory initializeEntityManagerFactory()'>
         <annotation name='java.lang.SuppressWarnings'>
             <val val="{&quot;FeatureEnvy&quot;, &quot;DataFlowIssue&quot;}"/>
         </annotation>

@@ -1,6 +1,7 @@
 package semester5.pwjj.utils;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceException;
 import lombok.AccessLevel;
@@ -12,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import semester5.pwjj.utils.extensions.ExceptionUtils;
@@ -24,34 +24,34 @@ import semester5.pwjj.utils.extensions.ExceptionUtils;
 public final class HibernateEntityManager implements TransactionalEntityManager {
 
 	@Delegate(excludes = NotDelegated.class)
-	private final @NonNull EntityManager session;
+	private final @NonNull EntityManager entityManager;
 
 	/**
 	 * Creates {@link AutoCloseable} Hibernate entity manager and starts transaction.
 	 * @throws HibernateException if the `hibernate.cfg.xml` file is missing or invalid,
-	 *                            or opening {@link Session} fails.
+	 *                            or creating {@link EntityManager} fails.
 	 */
 	public HibernateEntityManager() {
-		final @NonNull SessionFactory _sessionFactory = getSessionFactory();
-		log.debug("Opening session"); //NON-NLS
-		@Nullable EntityManager entityManager = null;
+		final @NonNull SessionFactory _sessionFactory = (SessionFactory) getStaticEntityManagerFactory();
+		log.debug("Creating entity manager"); //NON-NLS
+		@Nullable EntityManager _entityManager = null;
 		try {
-			entityManager = _sessionFactory.openSession();
+			_entityManager = _sessionFactory.openSession();
 		} catch (final HibernateException ex) {
 			Messages.Error.OPEN_SESSION_FAILED(ex).warnAndThrow(ex);
 		}
-		session = entityManager;
-		log.debug("Session opened: {}", session); //NON-NLS
+		entityManager = _entityManager;
+		log.debug("Entity manager created: {}", entityManager); //NON-NLS
 		traceCtor();
 		beginTransactionInternal();
 	}
 
 	/**
-	 * Initializes {@code sessionFactory}.
+	 * Initializes entity manager factory.
 	 * @throws HibernateException if the `hibernate.cfg.xml` file is missing or invalid.
 	 */
-	private static @NonNull SessionFactory initializeSessionFactory() {
-		log.debug("Initializing session factory"); //NON-NLS
+	private static @NonNull SessionFactory initializeEntityManagerFactory() {
+		log.debug("Initializing entity manager factory"); //NON-NLS
 		@Nullable Configuration configuration = null;
 		try {
 			configuration = new Configuration().configure();
@@ -64,68 +64,68 @@ public final class HibernateEntityManager implements TransactionalEntityManager 
 		} catch (final HibernateException ex) {
 			Messages.Error.INVALID_HIBERNATE_CONFIG().warnAndThrow(ex);
 		}
-		log.debug("Session factory initialized: {}", _sessionFactory); //NON-NLS
-		log.debug("Adding a shutdown hook destroying the session factory"); //NON-NLS
+		log.debug("Entity manager factory initialized: {}", _sessionFactory); //NON-NLS
+		log.debug("Adding a shutdown hook destroying entity manager factory"); //NON-NLS
 		try {
 			Runtime.getRuntime().addShutdownHook(new Thread(HibernateEntityManager::shutdown));
 		} catch (final RuntimeException _) {
 			log.warn(Messages.Error.CANNOT_ADD_SHUTDOWN_HOOK("HibernateEntityManager::shutdown")); //NON-NLS
 		}
-		log.debug("Shutdown hook destroying the session factory added"); //NON-NLS
+		log.debug("Shutdown hook destroying the entity manager factory added"); //NON-NLS
 		return _sessionFactory;
 	}
 
-	/** Closes session factory. */
+	/** Closes entity manager factory. */
 	private static void shutdown() {
-		log.debug("Closing session factory: {}", getSessionFactory()); //NON-NLS
+		log.debug("Closing entity manager factory: {}", getStaticEntityManagerFactory()); //NON-NLS
 		try {
-			getSessionFactory().close();
+			getStaticEntityManagerFactory().close();
 		} catch (final HibernateException ex) {
 			log.warn(Messages.Error.CLOSE_SESSION_FACTORY_FAILED(ex));
 		}
-		log.debug("Session factory closed: {}", getSessionFactory()); //NON-NLS
+		log.debug("Session entity manager closed: {}", getStaticEntityManagerFactory()); //NON-NLS
 	}
 
 	@Override
 	public void commitTransaction() {
-		log.debug("Commiting transaction: {}", session.getTransaction()); //NON-NLS
+		log.debug("Commiting transaction: {}", entityManager.getTransaction()); //NON-NLS
 		try {
-			session.getTransaction().commit();
+			entityManager.getTransaction().commit();
 		} catch (final RuntimeException ex) {
 			log.warn(Messages.Error.COMMIT_FAILED(ex));
 		}
-		log.debug("Transaction commited: {}", session.getTransaction()); //NON-NLS
+		log.debug("Transaction commited: {}", entityManager.getTransaction()); //NON-NLS
 		beginTransactionInternal();
 	}
 
 	@Override
 	public void close() {
-		log.debug("Closing session: {}", session); //NON-NLS
+		log.debug("Closing entity manager: {}", entityManager); //NON-NLS
 		rollbackTransaction();
 		try {
-			session.close();
+			entityManager.close();
 		} catch (final HibernateException ex) {
 			log.warn(Messages.Error.CLOSE_SESSION_FAILED(ex));
 		}
-		log.debug("Session closed: {}", session); //NON-NLS
+		log.debug("Entity manager closed: {}", entityManager); //NON-NLS
 	}
 
 	/** Begins new transaction. */
 	private void beginTransactionInternal() {
-		log.debug("Beginning transaction: {}", session.getTransaction()); //NON-NLS
-		session.getTransaction().begin();
-		log.debug("New transaction began: {}", session.getTransaction()); //NON-NLS
+		log.debug("Beginning transaction: {}", entityManager.getTransaction()); //NON-NLS
+		entityManager.getTransaction().begin();
+		log.debug("New transaction began: {}", entityManager.getTransaction()); //NON-NLS
 	}
 
 	/** Rolls back the current transaction. */
 	private void rollbackTransaction() {
-		log.debug("Rolling back transaction: {}", session.getTransaction()); //NON-NLS
+		log.debug("Rolling back transaction: {}", entityManager.getTransaction()); //NON-NLS
 		try {
-			session.getTransaction().rollback();
+			entityManager.getTransaction().rollback();
 		} catch (final PersistenceException ex) {
 			log.warn(Messages.Error.ROLLBACK_FAILED(ex));
 		}
-		log.debug("Transaction rolled back: {}", session.getTransaction()); //NON-NLS
+		log.debug("Transaction rolled back: {}", entityManager.getTransaction()); //NON-NLS
 	}
 
 	/** Holds signatures of methods that should be not delegated to {@code session} object. */
@@ -140,5 +140,5 @@ public final class HibernateEntityManager implements TransactionalEntityManager 
 
 	/** Get the session factory which created this session. */
 	@Getter(value = AccessLevel.PRIVATE, lazy = true)
-	private static final SessionFactory sessionFactory = initializeSessionFactory();
+	private static final EntityManagerFactory staticEntityManagerFactory = initializeEntityManagerFactory();
 }

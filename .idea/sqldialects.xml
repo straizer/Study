@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/c04a8150-6d7c-4acb-8ed2-a53eda378d9f/console.js" dialect="MongoDB" />
     <file url="file://$PROJECT_DIR$/5 semestr/Podstawy baz danych" dialect="OracleSqlPlus" />
     <file url="file://$PROJECT_DIR$/5 semestr/Podstawy baz danych/create_db.sql" dialect="OracleSqlPlus" />
   </component>

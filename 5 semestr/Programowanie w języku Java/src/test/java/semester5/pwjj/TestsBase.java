@@ -1,6 +1,8 @@
 package semester5.pwjj;
 
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.util.NullnessUtil;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,7 +15,8 @@ import semester5.pwjj.utils.i18n.MessageProvider;
 
 import java.lang.reflect.Field;
 
-/** Base class for all tests. */
+/** Base class for unit tests providing setup and utilities for consistent testing behavior. */
+@SuppressWarnings({"ClassWithTooManyFields", "unused"})
 public abstract class TestsBase {
 
 	protected static final @NonNull I18nProperty DAO_ERROR_CREATE_ENTITY_MANAGER_FAILED
@@ -59,16 +62,26 @@ public abstract class TestsBase {
 	protected static final @NonNull I18nProperty UTILS_ERROR_ROLLBACK_FAILED
 		= semester5.pwjj.utils.Messages.Error.ROLLBACK_FAILED;
 	protected static final @NonNull I18nProperty UTILS_EXTENSIONS_ERROR_EXCEPTION_INSTANTIATION_FAILED
-		= semester5.pwjj.utils.extensions.Messages.Error.EXCEPTION_INSTANTIATION_FAILED;
+		= semester5.pwjj.utils.extensions.Messages.Error.EXCEPTION_INITIALIZATION_FAILED;
 	protected static final @NonNull I18nProperty UTILS_EXTENSIONS_ERROR_FORMATTING
 		= semester5.pwjj.utils.extensions.Messages.Error.FORMATTING;
 
-	private static MockedStatic<MessageProvider> messageProviderMock;
-	private static InOrder messageProviderInOrder;
+	/**
+	 * A static mock object for the {@link MessageProvider} class, used for testing purposes.
+	 * This mock allows controlled manipulation and verification of interactions with the
+	 * {@link MessageProvider} within test cases.
+	 */
+	private static @MonotonicNonNull MockedStatic<MessageProvider> messageProviderMock;
 
 	/**
-	 * Method to execute before all tests in each extending class.
-	 * @throws IllegalAccessException if {@link I18nProperty} in this class is inaccessible. It should never throw.
+	 * This variable is statically shared across all tests to ensure consistent validation of
+	 * the sequence in which the {@code messageProviderMock} is invoked.
+	 */
+	private static @MonotonicNonNull InOrder messageProviderInOrder;
+
+	/**
+	 * Initializes mocking of the {@link MessageProvider} class and sets up behavior for translation retrieval.
+	 * @throws IllegalAccessException if reflection-based access to fields of {@code TestsBase} fails
 	 */
 	@BeforeAll
 	static void globalBeforeAll() throws IllegalAccessException {
@@ -76,7 +89,8 @@ public abstract class TestsBase {
 		for (final @NonNull Field field : TestsBase.class.getDeclaredFields()) {
 			if (field.getType().equals(I18nProperty.class)) {
 				field.setAccessible(true);
-				final @NonNull I18nProperty i18nProperty = (I18nProperty) field.get(null);
+				@SuppressWarnings("argument") final @NonNull I18nProperty i18nProperty =
+					(@NonNull I18nProperty) NullnessUtil.castNonNull(field.get(null));
 				messageProviderMock
 					.when(() -> MessageProvider.get(i18nProperty))
 					.thenReturn(i18nProperty.getPropertyName());
@@ -85,26 +99,37 @@ public abstract class TestsBase {
 		messageProviderInOrder = Mockito.inOrder(MessageProvider.class);
 	}
 
-	/** Method to execute after all tests in each extending class. */
+	/** Ensures that the mocked {@code messageProviderMock} is closed. */
 	@AfterAll
 	static void globalAfterAll() {
-		messageProviderMock.close();
+		//noinspection StaticVariableUsedBeforeInitialization
+		NullnessUtil.castNonNull(messageProviderMock).close();
 	}
 
+	/**
+	 * Verifies that the mock instance of the {@code MessageProvider} was invoked exactly once
+	 * for retrieving the translation of the specified {@link I18nProperty}.
+	 * @param argument the {@link I18nProperty} representing the message key for which
+	 *                 the {@code MessageProvider} mock should have been used
+	 */
 	protected static void verifyMessageProviderMockWasUsedFor(final @NonNull I18nProperty argument) {
-		messageProviderInOrder.verify(
-			messageProviderMock, () -> MessageProvider.get(argument), Mockito.times(1));
+		//noinspection StaticVariableUsedBeforeInitialization
+		NullnessUtil.castNonNull(messageProviderInOrder).verify(
+			NullnessUtil.castNonNull(messageProviderMock), () -> MessageProvider.get(argument), Mockito.times(1));
 	}
 
-	/** Method to execute before each test in each extending class. */
+	/**
+	 * Clears the recorded invocations of the {@code messageProviderMock} to ensure a clean state before
+	 * running the next test.
+	 */
 	@BeforeEach
 	void globalBeforeEach() {
-		messageProviderMock.clearInvocations();
+		NullnessUtil.castNonNull(messageProviderMock).clearInvocations();
 	}
 
-	/** Method to execute after each test in each extending class. */
+	/** Verifies that no unexpected interactions occurred with the {@code messageProviderMock}. */
 	@AfterEach
 	void globalAfterEach() {
-		messageProviderMock.verifyNoMoreInteractions();
+		NullnessUtil.castNonNull(messageProviderMock).verifyNoMoreInteractions();
 	}
 }

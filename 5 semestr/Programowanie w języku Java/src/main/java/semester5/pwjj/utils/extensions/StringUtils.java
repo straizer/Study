@@ -1,32 +1,64 @@
 package semester5.pwjj.utils.extensions;
 
+import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.IllegalFormatException;
+import java.util.Objects;
 
-/** Class containing {@link String} utils. */
+/**
+ * Utility class providing various helper methods and constants for common {@link String} operations.
+ * This class includes predefined string constants and methods to handle {@link String} formatting safely,
+ * ensuring robustness and reducing the risk of runtime exceptions.
+ */
 @Slf4j
 @UtilityClass
+@ExtensionMethod({ArrayUtils.class, Objects.class, NullableUtils.class})
 public class StringUtils {
 
-	/** Empty {@code String} literal. */
-	public final String EMPTY = "";
+	/**
+	 * A constant representing an empty {@link String} literal.
+	 * Used as a placeholder to signify a blank or default value.
+	 */
+	public final @NonNull String EMPTY = "";
 
 	/**
-	 * Wraps {@link String#formatted(Object...)} to never throw exception.
-	 * @param template template to fill
-	 * @param args     values to fill
-	 * @return filled {@code template} if success; {@code template} otherwise
+	 * A constant representing a {@link String} literal value "{@code null}".
+	 * Used as a placeholder or default value in scenarios where a {@code null} value needs to be explicitly
+	 * represented as a {@link String}.
 	 */
-	public @NonNull String safeFormat(final @NonNull String template, final @Nullable Object @Nullable ... args) {
+	public final @NonNull String NULL = "null"; //NON-NLS
+
+	/**
+	 * A constant value representing the {@link String} literal "{@code <unknown>}".
+	 * Used as a placeholder or default value in scenarios where the content is unknown or unspecified.
+	 */
+	public final @NonNull String UNKNOWN = "<unknown>"; //NON-NLS
+
+	/**
+	 * Safely formats a {@link String} using the specified format {@link String} and arguments.
+	 * If the provided arguments are {@code null}, the original format {@link String} is returned.
+	 * If a formatting error occurs (for example, due to an invalid format {@link String} or mismatched arguments),
+	 * the error is logged at the WARN level, and the original format {@link String} is returned.
+	 * @param format the format {@link String} to be used
+	 * @param args   the arguments referenced by the format specifiers in the format {@link String};
+	 *               null arguments are replaced with {@link #NULL}.
+	 *               If there are more arguments than format specifiers, the extra arguments are ignored.
+	 * @return the formatted {@link String} if formatting succeeds; the original {@code format} otherwise
+	 */
+	@SuppressWarnings("argument")
+	public @NonNull String safeFormat(final @NonNull String format, final @Nullable Object @Nullable ... args) {
+		if (Objects.isNull(args)) {
+			return format;
+		}
 		try {
-			return template.formatted(args);
+			return format.formatted(args.map(arg -> arg.requireNonNullElse(NULL)).toArray());
 		} catch (final IllegalFormatException ex) {
-			log.warn(Messages.Error.FORMATTING(template, args, ex));
-			return template;
+			log.warn(Messages.Error.FORMATTING(format, args, ex));
+			return format;
 		}
 	}
 }

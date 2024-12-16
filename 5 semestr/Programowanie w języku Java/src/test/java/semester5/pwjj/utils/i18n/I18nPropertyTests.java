@@ -8,7 +8,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Locale;
 
-@DisplayName("Message Provider Tests")
+@SuppressWarnings("ClassNamePrefixedWithPackageName")
+@DisplayName("I18n Property Tests")
 final class I18nPropertyTests extends I18nTestBase {
 
 	@DisplayName("get default translation")

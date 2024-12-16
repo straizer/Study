@@ -11,31 +11,34 @@ final class ColorTests extends TestsBase {
 	@DisplayName("red constant")
 	@Test
 	void redTest() {
+		//noinspection NumericCastThatLosesPrecision
 		Assertions.assertThat(Color.RED)
 			.hasFieldOrPropertyWithValue("red", (byte) 255)
 			.hasFieldOrPropertyWithValue("green", (byte) 0)
 			.hasFieldOrPropertyWithValue("blue", (byte) 0)
-			.hasFieldOrPropertyWithValue("alpha", (byte) 0);
+			.hasFieldOrPropertyWithValue("alpha", (byte) 255);
 	}
 
 	@DisplayName("green constant")
 	@Test
 	void greenTest() {
+		//noinspection NumericCastThatLosesPrecision
 		Assertions.assertThat(Color.GREEN)
 			.hasFieldOrPropertyWithValue("red", (byte) 0)
 			.hasFieldOrPropertyWithValue("green", (byte) 255)
 			.hasFieldOrPropertyWithValue("blue", (byte) 0)
-			.hasFieldOrPropertyWithValue("alpha", (byte) 0);
+			.hasFieldOrPropertyWithValue("alpha", (byte) 255);
 	}
 
 	@DisplayName("blue constant")
 	@Test
 	void blueTest() {
+		//noinspection NumericCastThatLosesPrecision
 		Assertions.assertThat(Color.BLUE)
 			.hasFieldOrPropertyWithValue("red", (byte) 0)
 			.hasFieldOrPropertyWithValue("green", (byte) 0)
 			.hasFieldOrPropertyWithValue("blue", (byte) 255)
-			.hasFieldOrPropertyWithValue("alpha", (byte) 0);
+			.hasFieldOrPropertyWithValue("alpha", (byte) 255);
 	}
 
 	@DisplayName("to pretty string")

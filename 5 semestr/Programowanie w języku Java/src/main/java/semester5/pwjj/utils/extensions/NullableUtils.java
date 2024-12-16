@@ -1,6 +1,5 @@
 package semester5.pwjj.utils.extensions;
 
-import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -8,21 +7,27 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import java.util.Optional;
 import java.util.function.Function;
 
-/** Class containing utils for handling {@link Nullable} values. */
+/**
+ * Utility class providing methods to simplify working with {@link Nullable} objects and to streamline
+ * interactions with functions that handle only {@link NonNull} input.
+ */
+@SuppressWarnings("ClassWithoutLogger")
 @UtilityClass
-@ExtensionMethod(RepresentativeUtils.class)
 public class NullableUtils {
 
 	/**
-	 * Applies {@code mapper} to {@code object} if {@code object} is not {@code null}.
-	 * @param object {@link Nullable} object to map
-	 * @param mapper mapper to apply
-	 * @param <T>    type of {@code object}
-	 * @param <R>    type of mapper return value
-	 * @return {@code object} mapped by {@code mapper} to some type {@code <T>} if {@code object} is not {@code null};
-	 * {@code null} otherwise
+	 * If the given {@code object} is not {@code null}, applies the provided {@code mapper} {@link Function}
+	 * to it and returns the result; otherwise, returns {@code null}.
+	 * @param object the input {@link Object} to be processed
+	 * @param mapper the {@link Function} to apply to the input {@code object}, if it's not {@code null}
+	 * @param <T>    the type of the input {@code object}
+	 * @param <R>    the type of the result of the {@code mapper}
+	 * @return a result of applying the {@code mapper} function to the input {@code object},
+	 * or {@code null} if the input {@code object} is {@code null}
 	 */
-	public <T, R> @Nullable R mapOrNull(@Nullable final T object, final @NonNull Function<T, R> mapper) {
-		return Optional.ofNullable(object).map(mapper).orElse(null).trace(NullableUtils.class);
+	public <@Nullable T, @Nullable R> @Nullable R mapOrNull(
+		final @Nullable T object, final @NonNull Function<? super @NonNull T, ? extends @Nullable R> mapper
+	) {
+		return Optional.ofNullable(object).map(mapper).orElse(null);
 	}
 }

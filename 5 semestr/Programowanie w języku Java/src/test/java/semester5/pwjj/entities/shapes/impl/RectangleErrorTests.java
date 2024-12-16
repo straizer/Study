@@ -13,7 +13,7 @@ import semester5.pwjj.entities.shapes.ShapeErrorTestsBase;
 @DisplayName("Rectangle Error Tests")
 final class RectangleErrorTests extends ShapeErrorTestsBase {
 
-	/** Method to execute before all tests. */
+	/** Method executed once before all tests. */
 	@BeforeAll
 	static void beforeAll() {
 		emptyShape = new Rectangle();

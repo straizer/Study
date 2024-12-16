@@ -3,6 +3,7 @@ package semester5.pwjj.utils.i18n;
 import org.assertj.core.api.Assertions;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.util.NullnessUtil;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -15,39 +16,72 @@ import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.ResourceBundle.Control;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-/** Base class for {@code utils.i18n} tests. */
+/** Abstract base class for i18n test setups and utilities. */
+@SuppressWarnings("ClassNamePrefixedWithPackageName")
 abstract class I18nTestBase {
 
+	/**
+	 * Represents an instance of {@link I18nProperty} that encapsulates an i18n key used for retrieving
+	 * internationalized messages.
+	 * This property is a constant with the key "{@code test.message}".
+	 */
 	protected static final @NonNull I18nProperty PROPERTY = I18nProperty.of("test.message");
 
+	/** Represents the Polish locale. */
 	private static final @NonNull Locale POLISH_LOCALE = Locale.of("pl");
+
+	/** Represents the English locale. */
 	private static final @NonNull Locale ENGLISH_LOCALE = Locale.ENGLISH;
 
+	/** A constant representing the Polish message used for testing purposes. */
+	@SuppressWarnings("SpellCheckingInspection")
 	private static final @NonNull String POLISH_MESSAGE = "testowa wiadomość";
+
+	/** A constant representing the English message used for testing purposes. */
 	private static final @NonNull String ENGLISH_MESSAGE = "test message";
 
-	/** Method to execute before all tests in each extending class. */
+	/**
+	 * Method executed once before all tests in each extending class.
+	 * The method ensures:
+	 * <ol>
+	 *     <li>Resource bundle caches are cleared before tests.</li>
+	 *     <li>Mocked Polish and English resource bundles are loaded using {@link ControlMock}.</li>
+	 * </ol>
+	 * @throws NoSuchFieldException   if the `{@code I18N_PATH}` field isn't present in the {@link MessageProvider}
+	 *                                class
+	 * @throws IllegalAccessException if the field access attempt fails due to access restrictions
+	 */
 	@BeforeAll
 	static void beforeAll() throws NoSuchFieldException, IllegalAccessException {
 		final @NonNull Field pathField = MessageProvider.class.getDeclaredField("I18N_PATH");
 		pathField.setAccessible(true);
-		final @NonNull Path path = (Path) pathField.get(null);
+		@SuppressWarnings("argument") final @NonNull Path path =
+			NullnessUtil.castNonNull((@Nullable Path) pathField.get(null));
 		ResourceBundle.clearCache();
 		ResourceBundle.getBundle(path.toString(), POLISH_LOCALE, new ControlMock());
 		ResourceBundle.getBundle(path.toString(), ENGLISH_LOCALE, new ControlMock());
 	}
 
-	/** Method to execute after all tests in each extending class. */
+	/**
+	 * Method executed once after all tests in each extending class.
+	 * Clears the cache of {@link ResourceBundle} to ensure no residual data persists between tests.
+	 */
 	@AfterAll
 	static void afterAll() {
 		ResourceBundle.clearCache();
 	}
 
-	/** Method supplying {@link org.junit.jupiter.params.ParameterizedTest} in each extending class. */
+	/**
+	 * Provides test arguments for parameterized tests with a custom locale and an expected message.
+	 * @return a {@link Stream} of {@link Arguments} where each argument consists of a locale
+	 * and its corresponding expected message.
+	 */
+	@SuppressWarnings("unused")
 	private static @NonNull Stream<Arguments> getCustomTest() {
 		return Stream.of(
 			Arguments.of(POLISH_LOCALE, POLISH_MESSAGE),
@@ -107,74 +141,96 @@ abstract class I18nTestBase {
 			.isEqualTo("<%s:%s>", Locale.ROOT, propertyName);
 	}
 
-	/** Method to execute after each test in each extending class. */
+	/**
+	 * Method executed after each test in each extending class.
+	 * Ensures the default locale is reset to {@link Locale#ROOT} to avoid
+	 * any locale-specific side effects between tests.
+	 */
 	@AfterEach
 	void afterEach() {
 		Locale.setDefault(Locale.ROOT);
 	}
 
-	/** {@link ResourceBundle} mock base to be extended with language-specific mocks. */
+	/**
+	 * A base class extending {@link ResourceBundle} to mock translations for specific properties.
+	 * This implementation provides a fixed mapping between a predefined property and its associated message.
+	 * It can be extended to create mocks for different languages or locales.
+	 */
 	private static class ResourceBundleMockBase extends ResourceBundle {
 
+		/** A mapping of property names to their corresponding mocked messages. */
 		private final @NonNull Map<String, String> map;
 
 		/**
-		 * Creates {@link ResourceBundle} mock base, which for {@code PROPERTY} is returning {@code message}.
-		 * @param message mocking message
+		 * Constructs a {@code ResourceBundleMockBase} instance that maps the {@code PROPERTY} to the provided message.
+		 * @param message the mocked message associated with the {@code PROPERTY}
 		 */
 		ResourceBundleMockBase(final @NonNull String message) {
 			map = Map.of(PROPERTY.getPropertyName(), message);
 		}
 
-		/** Required to avoid infinite looping when looking for a parent. */
+		/** This method is overridden to avoid infinite looping. */
 		@Override
 		protected void setParent(final @NonNull ResourceBundle parent) {
 		}
 
-		/** Method returning mocked message. */
+		@SuppressWarnings("override.return")
 		@Override
-		protected @NonNull Object handleGetObject(final @NonNull String key) {
+		protected @Nullable Object handleGetObject(final @NonNull String key) {
 			return map.get(key);
 		}
 
-		/** Method returning all translations. */
+		@SuppressWarnings("argument")
 		@Override
 		public @NonNull Enumeration<String> getKeys() {
 			return Collections.enumeration(map.keySet());
 		}
 	}
 
-	/** {@link ResourceBundle} mock for English language. */
+	/** A mock implementation of {@link ResourceBundle} specifically for the English language. */
 	private static class ResourceBundleMockEnglish extends ResourceBundleMockBase {
 
 		/**
-		 * Creates {@link ResourceBundle} mock for English language,
-		 * which for {@code PROPERTY} is returning {@code ENGLISH_MESSAGE}.
+		 * Constructs a {@code ResourceBundleMockEnglish} instance,
+		 * which mocks a {@link ResourceBundle} for the English language.
 		 */
 		ResourceBundleMockEnglish() {
 			super(ENGLISH_MESSAGE);
 		}
 	}
 
-	/** {@link ResourceBundle} mock for Polish language. */
+	/** A mock implementation of {@link ResourceBundle} specifically for the Polish language. */
 	private static class ResourceBundleMockPolish extends ResourceBundleMockBase {
 
 		/**
-		 * Creates {@link ResourceBundle} mock for Polish language,
-		 * which for {@code PROPERTY} is returning {@code POLISH_MESSAGE}.
+		 * Constructs a {@code ResourceBundleMockPolish} instance,
+		 * which mocks a {@link ResourceBundle} for the Polish language.
 		 */
 		ResourceBundleMockPolish() {
 			super(POLISH_MESSAGE);
 		}
 	}
 
-	/** {@link ResourceBundle.Control} allowing populating {@link ResourceBundle} cache with language-specific mocks. */
-	private static class ControlMock extends ResourceBundle.Control {
+	/** A mock implementation of {@link Control} that provides specific mock {@link ResourceBundle} instances. */
+	private static class ControlMock extends Control {
 
+		/** An English-specific mock {@link ResourceBundle} instance. */
 		private static final @NonNull ResourceBundle bundleEnglish = new ResourceBundleMockEnglish();
+
+		/** A Polish-specific mock {@link ResourceBundle} instance. */
 		private static final @NonNull ResourceBundle bundlePolish = new ResourceBundleMockPolish();
 
-		/** Method for retrieving {@link ResourceBundle} language-specific mocks. */
+		/**
+		 * Retrieves a language-specific {@link ResourceBundle} based on the provided {@code locale}.
+		 * @param baseName ignored
+		 * @param locale   the specified {@link Locale} for which a resource bundle is desired
+		 * @param format   ignored
+		 * @param loader   ignored
+		 * @param reload   ignored
+		 * @return the corresponding {@link ResourceBundle} for the specified {@code locale} if available;
+		 * {@code null} otherwise
+		 */
+		@SuppressWarnings("override.return")
 		@Override
 		public @Nullable ResourceBundle newBundle(
 			final @NonNull String baseName, final @NonNull Locale locale, final @NonNull String format,

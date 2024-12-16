@@ -12,11 +12,12 @@ import java.util.Locale;
 
 /**
  * Class containing i18n constants and methods for retrieving messages
- * for package {@code utils.extensions} in the current locale.
- * @implNote If different translation is required without changing default locale,
- * use {@link MessageProvider#get(I18nProperty i18nProperty, Locale locale)}
+ * for package {@code utils.extensions} in the current {@link Locale}.
+ * @implNote If different translation is required without changing default {@link Locale},
+ * use {@link MessageProvider#get(I18nProperty, Locale)}
  */
-@ExtensionMethod({StringUtils.class, RepresentativeUtils.class})
+@SuppressWarnings({"PublicInnerClass", "StaticMethodOnlyUsedInOneClass"})
+@ExtensionMethod({StringUtils.class, TraceableUtils.class})
 public enum Messages {
 	;
 
@@ -24,52 +25,57 @@ public enum Messages {
 	public enum Error {
 		;
 
-		/** I18n key with value {@code utils.extensions.error.exceptionInstantiationFailed}. */
-		public static final @NonNull I18nProperty EXCEPTION_INSTANTIATION_FAILED =
-			new UtilsExtensionsI18nProperty("error.exceptionInstantiationFailed");
+		/** I18n key with value {@code utils.extensions.error.exceptionInitializationFailed}. */
+		public static final @NonNull I18nProperty EXCEPTION_INITIALIZATION_FAILED =
+			new UtilsExtensionsI18nProperty("error.exceptionInitializationFailed");
 
 		/** I18n key with value {@code utils.extensions.error.formatting}. */
 		public static final @NonNull I18nProperty FORMATTING =
 			new UtilsExtensionsI18nProperty("error.formatting");
 
 		/**
-		 * I18n value retriever for key {@code utils.extensions.error.exceptionInstantiationFailed}.
-		 * @param clazz     related exception class
-		 * @param exception exception that was thrown
-		 * @return value of key {@code utils.extensions.error.exceptionInstantiationFailed}
+		 * I18n value retriever for key {@code utils.extensions.error.exceptionInitializationFailed}.
+		 * @param clazz     the related exception class
+		 * @param exception the exception that was thrown
+		 * @return the formatted value of key {@code utils.extensions.error.exceptionInitializationFailed}
 		 */
-		public static @NonNull String EXCEPTION_INSTANTIATION_FAILED(
-			final @NonNull Class<? extends Exception> clazz, final @NonNull Exception exception
+		public static @NonNull String EXCEPTION_INITIALIZATION_FAILED(
+			final @NonNull Class<? extends @NonNull Exception> clazz, final @NonNull Exception exception
 		) {
-			return EXCEPTION_INSTANTIATION_FAILED.getMessage().safeFormat(clazz.getSimpleName(), exception.getMessage())
-				.traceNonNull(Error.class);
+			return EXCEPTION_INITIALIZATION_FAILED.getMessage()
+				.safeFormat(clazz.getSimpleName(), exception.getMessage()).trace(Error.class);
 		}
 
 		/**
 		 * I18n value retriever for key {@code utils.extensions.error.formatting}.
-		 * @param template  template for which formatting failed
-		 * @param args      args for which formatting failed
-		 * @param exception exception that was thrown
-		 * @return value of key {@code utils.extensions.error.formatting}
+		 * @param template  the template for which formatting failed
+		 * @param args      the args for which formatting failed
+		 * @param exception the exception that was thrown
+		 * @return the formatted value of key {@code utils.extensions.error.formatting}
 		 */
 		public static @NonNull String FORMATTING(
 			final @NonNull String template, final @Nullable Object @Nullable [] args,
 			final @NonNull IllegalFormatException exception
 		) {
 			return FORMATTING.getMessage().safeFormat(template, Arrays.toString(args), exception.getMessage())
-				.traceNonNull(Error.class);
+				.trace(Error.class);
 		}
 	}
 
-
-	/** Class storing i18n property constants for package {@code utils.extensions}. */
+	/**
+	 * Utility class representing an i18n property specifically for the {@code utils.extensions} namespace.
+	 * This class extends the {@link I18nProperty} class, allowing for the creation of specialized property keys by
+	 * automatically prefixing them with "{@code utils.extensions.}".
+	 */
 	public static class UtilsExtensionsI18nProperty extends I18nProperty {
 
 		/**
-		 * Creates an object of type {@code I18nProperty}.
-		 * @param propertyName name of I18n property
+		 * Constructs an instance of {@code UtilsExtensionsI18nProperty} with a specific i18n property name.
+		 * Prepends the property name with "{@code utils.extensions.}" to create the full property key.
+		 * @param propertyName the name of the i18n property, which will be prefixed with "{@code utils.extensions.}"
 		 */
-		public UtilsExtensionsI18nProperty(@NonNull final String propertyName) {
+		@SuppressWarnings("StringConcatenation")
+		public UtilsExtensionsI18nProperty(final @NonNull String propertyName) {
 			super("utils.extensions." + propertyName); //NON-NLS
 		}
 	}

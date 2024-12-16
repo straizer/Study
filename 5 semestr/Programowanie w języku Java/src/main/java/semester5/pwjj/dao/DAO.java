@@ -1,49 +1,53 @@
 package semester5.pwjj.dao;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import semester5.pwjj.Representative;
+import semester5.pwjj.utils.Traceable;
 
 import java.util.List;
 import java.util.Optional;
 
 /**
- * Data Access Object interface.
- * @param <T> type of data that {@code DAO} handles
+ * A generic Data Access Object (DAO) interface providing standard operations
+ * for managing persistent entities of type {@link T}.
+ * @param <T> the type of objects that this DAO manages, which must extend {@link Traceable}.
  */
-public interface DAO<T extends Representative> {
+@SuppressWarnings({"ClassNamePrefixedWithPackageName", "InterfaceWithOnlyOneDirectInheritor", "unused"})
+public interface DAO<@NonNull T extends @NonNull Traceable> {
 
 	/**
-	 * Stores an object of type {@code T} in persistent storage.
-	 * @param entity object to store
+	 * Persists the specified entity in the persistent storage.
+	 * @param entity the object of type {@link T} to be saved
 	 */
 	void create(final @NonNull T entity);
 
 	/**
-	 * Retrieves an object of type {@code T} from persistent storage.
-	 * @param id object id to retrieve
-	 * @return persistent object
+	 * Retrieves an entity of type {@link T} by its identifier from persistent storage.
+	 * @param id the unique identifier of the entity to retrieve from storage
+	 * @return an {@link Optional} containing the persistent entity of type {@link T} if found;
+	 * otherwise, an empty {@link Optional}
 	 */
 	@NonNull
-	Optional<T> read(final int id);
+	Optional<@NonNull T> read(final int id);
 
 	/**
-	 * Retrieves all objects of type {@code T} from persistent storage.
-	 * @return list of persistent objects
+	 * Retrieves all entities of type {@link T} from persistent storage.
+	 * @return a {@link List} containing all persistent entities of type {@link T}
 	 */
 	@NonNull
-	List<T> readAll();
+	List<@NonNull T> readAll();
 
 	/**
-	 * Updates an object of type {@code T} in persistent storage.
-	 * @param entity object to store
-	 * @return persistent object
+	 * Updates the entity specified by its identifier in the persistent storage.
+	 * @param entity the entity of type {@link T} to be updated
+	 * @return an {@link Optional} containing the updated entity if the update was successful;
+	 * otherwise an empty {@link Optional} if the entity couldn't be updated
 	 */
 	@NonNull
-	Optional<T> update(final @NonNull T entity);
+	Optional<@NonNull T> update(final @NonNull T entity);
 
 	/**
-	 * Deletes an object of type {@code T} from persistent storage.
-	 * @param id object id to delete
+	 * Deletes an entity of type {@link T} by its identifier from the persistent storage.
+	 * @param id the unique identifier of the entity to delete from storage
 	 */
 	void delete(final int id);
 }

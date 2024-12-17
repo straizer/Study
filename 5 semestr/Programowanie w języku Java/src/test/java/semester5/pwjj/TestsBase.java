@@ -115,7 +115,7 @@ public abstract class TestsBase {
 	protected static void verifyMessageProviderMockWasUsedFor(final @NonNull I18nProperty argument) {
 		//noinspection StaticVariableUsedBeforeInitialization
 		NullnessUtil.castNonNull(messageProviderInOrder).verify(
-			NullnessUtil.castNonNull(messageProviderMock), () -> MessageProvider.get(argument), Mockito.times(1));
+			NullnessUtil.castNonNull(messageProviderMock), () -> MessageProvider.get(argument));
 	}
 
 	/**

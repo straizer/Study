@@ -37,6 +37,7 @@
         <postgres.version>42.7.4</postgres.version>
         <!--tests-->
         <junit.version>5.11.3</junit.version>
+        <junit-commons.version>1.11.3</junit-commons.version>
         <junit-pioneer.version>2.3.0</junit-pioneer.version>
         <assertj.version>3.26.3</assertj.version>
         <jacoco.version>0.8.12</jacoco.version>
@@ -90,7 +91,7 @@
         <!--tests-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
+            <artifactId>junit-jupiter</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
@@ -206,11 +207,11 @@
                 <configuration>
                     <excludes>
                         <exclude>${project.package.main}/Main.*</exclude>
-                        <exclude>${project.package.main}/Representative.*</exclude>
                         <exclude>${project.package.main}/**/Messages.*</exclude>
                         <exclude>${project.package.main}/**/Messages$*</exclude>
+                        <exclude>${project.package.main}/utils/extensions/ExceptionUtils.*</exclude>
                         <exclude>${project.package.main}/dao/**/*</exclude>
-                        <exclude>${project.package.main}/utils/HibernateSession.*</exclude>
+                        <exclude>${project.package.main}/utils/*EntityManager.*</exclude>
                     </excludes>
                 </configuration>
                 <executions>

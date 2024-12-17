@@ -82,6 +82,7 @@ public interface TransactionalEntityManager extends EntityManager, Traceable {
 	 * @throws UnsupportedOperationException always, with a message indicating that transactions are managed internally
 	 */
 	private void throwTransactionException() {
-		Messages.Error.TRANSACTIONS_HANDLED_INTERNALLY(getClass()).warnAndThrow(UnsupportedOperationException.class);
+		throw Messages.Error.TRANSACTIONS_HANDLED_INTERNALLY(getClass())
+			.warnAndReturn(UnsupportedOperationException.class);
 	}
 }

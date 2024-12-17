@@ -25,7 +25,7 @@ public class StreamUtils {
 	 * delimiter, and enclosed by the specified prefix and suffix
 	 */
 	public @NonNull String joining(
-		final @NonNull Stream<@Nullable String> stream, final @NonNull CharSequence delimiter,
+		final @NonNull Stream<@PolyNull String> stream, final @NonNull CharSequence delimiter,
 		final @NonNull CharSequence prefix, final @NonNull CharSequence suffix
 	) {
 		return stream.collect(Collectors.joining(delimiter, prefix, suffix));
@@ -42,7 +42,7 @@ public class StreamUtils {
 	 * delimiter, and enclosed by {@code [} and {@code ]}
 	 */
 	public @NonNull String joining(
-		final @NonNull Stream<@Nullable String> stream, final @NonNull CharSequence delimiter
+		final @NonNull Stream<@PolyNull String> stream, final @NonNull CharSequence delimiter
 	) {
 		return joining(stream, delimiter, "[", "]");
 	}

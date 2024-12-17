@@ -22,27 +22,27 @@ final class TriangleErrorTests extends ShapeErrorTestsBase {
 		emptyShape = new Triangle();
 	}
 
-	/** Method supplying {@link #getPerimeterTriangleRuleNotFulfilledTest(ThrowingCallable). */
-	private static @NonNull Stream<Arguments> getPerimeterTriangleRuleNotFulfilledTest() {
+	/** Method supplying {@link #constructorTriangleRuleNotFulfilledTest(ThrowingCallable). */
+	private static @NonNull Stream<Arguments> constructorTriangleRuleNotFulfilledTest() {
 		return Stream.of(
 			Arguments.argumentSet("1 2 3", (ThrowingCallable) () -> new Triangle(1, 2, 3, Color.RED)),
 			Arguments.argumentSet("2 3 1", (ThrowingCallable) () -> new Triangle(2, 3, 1, Color.RED)),
 			Arguments.argumentSet("3 1 2", (ThrowingCallable) () -> new Triangle(3, 1, 2, Color.RED)));
 	}
 
-	@DisplayName("non positive side length")
+	@DisplayName("constructor non positive side")
 	@Test
-	void getPerimeterNonPositiveSideTest() {
+	void constructorNonPositiveSideTest() {
 		throwsIllegalArgumentException(
 			() -> new Triangle(0, 1, 1, Color.RED), ENTITIES_SHAPES_ERROR_SIDES_NOT_POSITIVE.getPropertyName());
 		verifyMessageProviderMockWasUsedFor(ENTITIES_SHAPES_NAME_TRIANGLE);
 		verifyMessageProviderMockWasUsedFor(ENTITIES_SHAPES_ERROR_SIDES_NOT_POSITIVE);
 	}
 
-	@DisplayName("triangle rule isn't fulfilled")
+	@DisplayName("constructor triangle rule not fulfilled")
 	@ParameterizedTest
 	@MethodSource
-	void getPerimeterTriangleRuleNotFulfilledTest(final @NonNull ThrowingCallable callable) {
+	void constructorTriangleRuleNotFulfilledTest(final @NonNull ThrowingCallable callable) {
 		throwsIllegalArgumentException(callable, ENTITIES_SHAPES_ERROR_TRIANGLE_RULE.getPropertyName());
 		verifyMessageProviderMockWasUsedFor(ENTITIES_SHAPES_ERROR_TRIANGLE_RULE);
 	}

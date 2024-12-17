@@ -11,7 +11,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.ExtensionMethod;
-import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.initialization.qual.UnknownInitialization;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -42,7 +41,7 @@ import java.util.stream.Stream;
  * <p>
  * This class is a JPA {@link Entity}.
  */
-@Slf4j
+@SuppressWarnings("ClassWithoutLogger")
 @Entity
 @Inheritance
 @ToString
@@ -91,7 +90,8 @@ public abstract class Shape implements Traceable {
 	) {
 		for (final double side : sides) {
 			if (side <= 0) {
-				Messages.Error.SIDES_NOT_POSITIVE(getClassNameNls()).warnAndThrow(IllegalArgumentException.class);
+				throw Messages.Error.SIDES_NOT_POSITIVE(getClassNameNls())
+					.warnAndReturn(IllegalArgumentException.class);
 			}
 		}
 		this.sides = sides.clone();
@@ -140,7 +140,7 @@ public abstract class Shape implements Traceable {
 		final @NonNull Function<? super @NonNull DoubleStream, @PolyNull T> mapper
 	) {
 		if (Objects.isNull(sides)) {
-			Messages.Error.SIDES_ARE_NULL(getClassNameNls()).warnAndThrow(IllegalStateException.class);
+			throw Messages.Error.SIDES_ARE_NULL(getClassNameNls()).warnAndReturn(IllegalStateException.class);
 		}
 		return mapper.apply(sides.castNonNull().stream());
 	}

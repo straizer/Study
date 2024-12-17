@@ -25,4 +25,17 @@ final class StringUtilsTests extends TestsBase {
 		Assertions.assertThat(TEMPLATE.safeFormat(StringUtils.EMPTY)).isEqualTo("%d");
 		verifyMessageProviderMockWasUsedFor(UTILS_EXTENSIONS_ERROR_FORMATTING);
 	}
+
+	@DisplayName("safe format no arguments")
+	@Test
+	void safeFormatNoArgumentsTest() {
+		Assertions.assertThat(TEMPLATE.safeFormat()).isEqualTo("%d");
+	}
+
+	@DisplayName("safe format null arguments")
+	@Test
+	void safeFormatNullArgumentsTest() {
+		//noinspection DataFlowIssue
+		Assertions.assertThat(TEMPLATE.safeFormat((Object[]) null)).isEqualTo("%d");
+	}
 }

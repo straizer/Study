@@ -8,7 +8,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.InOrder;
-import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import semester5.pwjj.utils.i18n.I18nProperty;
 import semester5.pwjj.utils.i18n.MessageProvider;
@@ -71,6 +70,7 @@ public abstract class TestsBase {
 	 * This mock allows controlled manipulation and verification of interactions with the
 	 * {@link MessageProvider} within test cases.
 	 */
+	@SuppressWarnings("UseOfConcreteClass")
 	private static @MonotonicNonNull MockedStatic<MessageProvider> messageProviderMock;
 
 	/**
@@ -85,7 +85,6 @@ public abstract class TestsBase {
 	 */
 	@BeforeAll
 	static void globalBeforeAll() throws IllegalAccessException {
-		messageProviderMock = Mockito.mockStatic(MessageProvider.class);
 		for (final @NonNull Field field : TestsBase.class.getDeclaredFields()) {
 			if (field.getType().equals(I18nProperty.class)) {
 				field.setAccessible(true);
@@ -96,6 +95,7 @@ public abstract class TestsBase {
 					.thenReturn(i18nProperty.getPropertyName());
 			}
 		}
+		messageProviderMock = new MockedStatic<>(MessageProvider.class);
 		messageProviderInOrder = Mockito.inOrder(MessageProvider.class);
 	}
 
@@ -115,7 +115,7 @@ public abstract class TestsBase {
 	protected static void verifyMessageProviderMockWasUsedFor(final @NonNull I18nProperty argument) {
 		//noinspection StaticVariableUsedBeforeInitialization
 		NullnessUtil.castNonNull(messageProviderInOrder).verify(
-			NullnessUtil.castNonNull(messageProviderMock), () -> MessageProvider.get(argument));
+			NullnessUtil.castNonNull(messageProviderMock).getMockedStatic(), () -> MessageProvider.get(argument));
 	}
 
 	/**

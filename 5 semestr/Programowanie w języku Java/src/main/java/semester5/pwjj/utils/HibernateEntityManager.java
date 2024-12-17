@@ -12,7 +12,6 @@ import lombok.experimental.ExtensionMethod;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.util.NullnessUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -33,7 +32,7 @@ import semester5.pwjj.utils.extensions.TraceableUtils;
  */
 @Slf4j
 @ToString
-@ExtensionMethod({ExceptionUtils.class, NullnessUtil.class})
+@ExtensionMethod(ExceptionUtils.class)
 public final class HibernateEntityManager implements TransactionalEntityManager {
 
 	/**
@@ -71,14 +70,12 @@ public final class HibernateEntityManager implements TransactionalEntityManager 
 	public HibernateEntityManager() {
 		final @NonNull SessionFactory _sessionFactory = (SessionFactory) getStaticEntityManagerFactory();
 		log.debug("Creating entity manager"); //NON-NLS
-		@MonotonicNonNull EntityManager _entityManager = null;
 		try {
 			//noinspection HibernateResourceOpenedButNotSafelyClosed
-			_entityManager = _sessionFactory.openSession();
+			entityManager = _sessionFactory.openSession();
 		} catch (final HibernateException ex) {
-			Messages.Error.OPEN_SESSION_FAILED(ex).warnAndThrow(ex);
+			throw Messages.Error.OPEN_SESSION_FAILED(ex).warnAndReturn(ex);
 		}
-		entityManager = _entityManager.castNonNull();
 		log.debug("Entity manager created: {}", entityManager); //NON-NLS
 		//noinspection ThisEscapedInObjectConstruction
 		TraceableUtils.traceConstructor(this);
@@ -93,22 +90,22 @@ public final class HibernateEntityManager implements TransactionalEntityManager 
 	 */
 	private static @NonNull SessionFactory initializeEntityManagerFactory() {
 		log.debug("Initializing entity manager factory"); //NON-NLS
-		@MonotonicNonNull Configuration configuration = null;
+		final @MonotonicNonNull Configuration configuration;
 		try {
 			configuration = new Configuration().configure();
 		} catch (final HibernateException ex) {
-			Messages.Error.MISSING_HIBERNATE_CONFIG().warnAndThrow(ex);
+			throw Messages.Error.MISSING_HIBERNATE_CONFIG().warnAndReturn(ex);
 		}
-		@MonotonicNonNull SessionFactory sessionFactory = null;
+		final @MonotonicNonNull SessionFactory sessionFactory;
 		try {
 			//noinspection resource
-			sessionFactory = configuration.castNonNull().buildSessionFactory();
+			sessionFactory = configuration.buildSessionFactory();
 		} catch (final HibernateException ex) {
-			Messages.Error.INVALID_HIBERNATE_CONFIG().warnAndThrow(ex);
+			throw Messages.Error.INVALID_HIBERNATE_CONFIG().warnAndReturn(ex);
 		}
-		log.debug("Entity manager factory initialized: {}", sessionFactory.castNonNull()); //NON-NLS
+		log.debug("Entity manager factory initialized: {}", sessionFactory); //NON-NLS
 		addShutdownHook();
-		return sessionFactory.castNonNull();
+		return sessionFactory;
 	}
 
 	/**

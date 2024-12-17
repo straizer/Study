@@ -107,6 +107,7 @@ public class TraceableUtils {
 			methodName = Thread.currentThread().getStackTrace().skip(2)
 				.dropWhile(it -> it.getMethodName().equals("trace")).getFirst().getMethodName();
 		} catch (final SecurityException _) {
+			//noinspection DuplicateStringLiteralInspection
 			getLogger(TraceableUtils.class)
 				.trace("Unable to retrieve method name; falling back to {}", methodName); //NON-NLS
 		}
@@ -136,10 +137,10 @@ public class TraceableUtils {
 		final @UnknownInitialization @PolyNull T returnValue, final @NonNull Class<?> callingClass,
 		final @NonNull String methodName, final @Nullable Integer identityHashCode
 	) {
-		getLogger(callingClass)
-			.trace("{}@{}::{} -> {}",
-				callingClass.getSimpleName(), identityHashCode.requireNonNullElse("STATIC"), methodName,
-				getFormattedValue(returnValue));
+		//noinspection DuplicateStringLiteralInspection
+		getLogger(callingClass).trace(
+			"{}@{}::{} -> {}", callingClass.getSimpleName(), identityHashCode.requireNonNullElse("STATIC"),
+			methodName, getFormattedValue(returnValue));
 		return returnValue;
 	}
 

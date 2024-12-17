@@ -19,9 +19,9 @@ final class RectangleErrorTests extends ShapeErrorTestsBase {
 		emptyShape = new Rectangle();
 	}
 
-	@DisplayName("non positive side length")
+	@DisplayName("constructor non positive side")
 	@Test
-	void getPerimeterNonPositiveSideTest() {
+	void constructorNonPositiveSideTest() {
 		throwsIllegalArgumentException(
 			() -> new Rectangle(0, 1, Color.RED), ENTITIES_SHAPES_ERROR_SIDES_NOT_POSITIVE.getPropertyName());
 		verifyMessageProviderMockWasUsedFor(ENTITIES_SHAPES_NAME_RECTANGLE);

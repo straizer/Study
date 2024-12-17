@@ -51,7 +51,7 @@ public class StringUtils {
 	 */
 	@SuppressWarnings("argument")
 	public @NonNull String safeFormat(final @NonNull String format, final @Nullable Object @Nullable ... args) {
-		if (Objects.isNull(args)) {
+		if (Objects.isNull(args) || args.length == 0) {
 			return format;
 		}
 		try {

@@ -6,7 +6,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.ExtensionMethod;
-import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import semester5.pwjj.entities.Color;
 import semester5.pwjj.entities.shapes.Messages;
@@ -21,7 +20,7 @@ import semester5.pwjj.utils.extensions.ExceptionUtils;
  * Ensures that the side lengths are positive during instantiation and the properties of a valid triangle are satisfied,
  * such as adhering to the triangle inequality rule.
  */
-@Slf4j
+@SuppressWarnings("ClassWithoutLogger")
 @Entity
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -44,7 +43,7 @@ public final class Triangle extends Shape {
 	) {
 		super(new double[]{x, y, z}, color);
 		if (x + y <= z || y + z <= x || x + z <= y) {
-			Messages.Error.TRIANGLE_RULE().warnAndThrow(IllegalArgumentException.class);
+			throw Messages.Error.TRIANGLE_RULE().warnAndReturn(IllegalArgumentException.class);
 		}
 	}
 

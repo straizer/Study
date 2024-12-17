@@ -9,9 +9,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
-import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
+import semester5.pwjj.MockedStatic;
 import semester5.pwjj.TestsBase;
 
 import java.lang.reflect.Field;
@@ -112,9 +112,11 @@ final class TraceableUtilsTests extends TestsBase {
 		final @NonNull String methodName = StringUtils.UNKNOWN;
 		final int value = 123;
 		final int identity = 123;
-		try (final @NonNull MockedStatic<StreamUtils> streamUtilsMock = Mockito.mockStatic(StreamUtils.class)) {
+		//noinspection UseOfConcreteClass
+		try (final @NonNull MockedStatic<StreamUtils> streamUtilsMock = new MockedStatic<>(StreamUtils.class)) {
 			streamUtilsMock.when(() -> StreamUtils.getFirst(ArgumentMatchers.any())).thenThrow(SecurityException.class);
 			traceTest(() -> TraceableUtils.trace(value, getClass(), identity), value, value, identity, methodName);
+			streamUtilsMock.verify(() -> StreamUtils.getFirst(ArgumentMatchers.any()));
 		}
 		Mockito.verify(traceableUtilsLoggerMock)
 			.trace("Unable to retrieve method name; falling back to {}", methodName);

@@ -1,8 +1,11 @@
 package semester5.pwjj.utils.extensions;
 
 import org.assertj.core.api.Assertions;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.util.NullnessUtil;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,13 +21,16 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-@SuppressWarnings({"TestMethodWithoutAssertion", "ClassWithMultipleLoggers"})
+@SuppressWarnings("TestMethodWithoutAssertion")
 @DisplayName("Traceable Utils Tests")
 final class TraceableUtilsTests extends UtilsExtensionsTestsBase {
 
 	private static final @NonNull String STATIC_TRACED_IDENTITY = "STATIC";
-	private static final @NonNull Logger traceableUtilsLoggerMock = Mockito.mock(Logger.class);
+	private static final @NonNull String METHOD_NAME = "method_name";
 	private static final @NonNull Logger traceableUtilsTestsLoggerMock = Mockito.mock(Logger.class);
+
+	@SuppressWarnings("UseOfConcreteClass")
+	private static @MonotonicNonNull MockedStatic<ReflectionUtils> reflectionUtilsMock;
 
 	@SuppressWarnings({"dereference.of.nullable", "argument"})
 	@BeforeAll
@@ -33,20 +39,33 @@ final class TraceableUtilsTests extends UtilsExtensionsTestsBase {
 		final @NonNull Field field = TraceableUtils.class.getDeclaredField("CACHED_LOGGERS");
 		field.setAccessible(true);
 		//noinspection unchecked
-		final Map<@NonNull Class<?>, @NonNull Logger> cachedLoggers =
-			(Map<@NonNull Class<?>, @NonNull Logger>) field.get(null);
-		cachedLoggers.put(TraceableUtils.class, traceableUtilsLoggerMock);
-		cachedLoggers.put(TraceableUtilsTests.class, traceableUtilsTestsLoggerMock);
+		((Map<@NonNull Class<?>, @NonNull Logger>) field.get(null))
+			.put(TraceableUtilsTests.class, traceableUtilsTestsLoggerMock);
+		reflectionUtilsMock = new MockedStatic<>(ReflectionUtils.class);
+		reflectionUtilsMock.when(() -> ReflectionUtils.getCallingMethodName("trace")).thenReturn(METHOD_NAME);
+	}
+
+	@AfterAll
+	static void afterAll() {
+		//noinspection StaticVariableUsedBeforeInitialization
+		NullnessUtil.castNonNull(reflectionUtilsMock).close();
+	}
+
+	private static void verifyReflectionUtilsMockCalled() {
+		//noinspection StaticVariableUsedBeforeInitialization
+		NullnessUtil.castNonNull(reflectionUtilsMock).verify(() -> ReflectionUtils.getCallingMethodName("trace"));
 	}
 
 	@BeforeEach
 	void beforeEach() {
-		Mockito.clearInvocations(traceableUtilsLoggerMock, traceableUtilsTestsLoggerMock);
+		NullnessUtil.castNonNull(reflectionUtilsMock).clearInvocations();
+		Mockito.clearInvocations(traceableUtilsTestsLoggerMock);
 	}
 
 	@AfterEach
 	void afterEach() {
-		Mockito.verifyNoMoreInteractions(traceableUtilsLoggerMock, traceableUtilsTestsLoggerMock);
+		NullnessUtil.castNonNull(reflectionUtilsMock).verifyNoMoreInteractions();
+		Mockito.verifyNoMoreInteractions(traceableUtilsTestsLoggerMock);
 	}
 
 	@DisplayName("trace int")
@@ -99,34 +118,18 @@ final class TraceableUtilsTests extends UtilsExtensionsTestsBase {
 	@DisplayName("trace no method name")
 	@Test
 	void traceNoMethodNameTest() {
-		final @NonNull String methodName = "lambda$traceNoMethodNameTest";
 		final int value = 123;
 		final int identity = 123;
-		traceTest(() -> TraceableUtils.trace(value, getClass(), identity), value, value, identity, methodName);
-	}
-
-	@DisplayName("trace no method name security exception")
-	@Test
-	void traceNoMethodNameSecurityExceptionTest() {
-		final @NonNull String methodName = StringUtils.UNKNOWN;
-		final int value = 123;
-		final int identity = 123;
-		//noinspection UseOfConcreteClass
-		try (final @NonNull MockedStatic<StreamUtils> streamUtilsMock = new MockedStatic<>(StreamUtils.class)) {
-			streamUtilsMock.when(() -> StreamUtils.getFirst(ArgumentMatchers.any())).thenThrow(SecurityException.class);
-			traceTest(() -> TraceableUtils.trace(value, getClass(), identity), value, value, identity, methodName);
-			streamUtilsMock.verify(() -> StreamUtils.getFirst(ArgumentMatchers.any()));
-		}
-		Mockito.verify(traceableUtilsLoggerMock)
-			.trace("Unable to retrieve method name; falling back to {}", methodName);
+		traceTest(() -> TraceableUtils.trace(value, getClass(), identity), value, value, identity);
+		verifyReflectionUtilsMockCalled();
 	}
 
 	@DisplayName("trace no method name and identity hash code")
 	@Test
 	void traceNoMethodNameAndIdentityHashCodeTest() {
-		final @NonNull String methodName = "lambda$traceNoMethodNameAndIdentityHashCodeTest";
 		final int value = 123;
-		traceTest(() -> TraceableUtils.trace(value, getClass()), value, value, STATIC_TRACED_IDENTITY, methodName);
+		traceTest(() -> TraceableUtils.trace(value, getClass()), value, value, STATIC_TRACED_IDENTITY);
+		verifyReflectionUtilsMockCalled();
 	}
 
 	@DisplayName("trace constructor")
@@ -141,24 +144,22 @@ final class TraceableUtilsTests extends UtilsExtensionsTestsBase {
 		traceTest(value, expectedTracedValue, identity, identity);
 	}
 
-	@SuppressWarnings("return")
+	@SuppressWarnings({"return", "OverloadedMethodsWithSameNumberOfParameters"})
 	private void traceTest(
 		final @Nullable Object value, final @NonNull Object expectedTracedValue,
 		final @Nullable Integer identity, final @NonNull Object expectedTracedIdentity
 	) {
-		final @NonNull String methodName = "method_name";
-		traceTest(() -> TraceableUtils.trace(value, getClass(), methodName, identity),
-			value, expectedTracedValue, expectedTracedIdentity, methodName);
+		traceTest(() -> TraceableUtils.trace(value, getClass(), METHOD_NAME, identity),
+			value, expectedTracedValue, expectedTracedIdentity);
 	}
 
-	@SuppressWarnings("argument")
+	@SuppressWarnings({"argument", "OverloadedMethodsWithSameNumberOfParameters"})
 	private void traceTest(
 		final @NonNull Supplier<@Nullable Object> traceCall, final @Nullable Object value,
-		final @NonNull Object expectedTracedValue, final @NonNull Object expectedTracedIdentity,
-		final @NonNull String methodName
+		final @NonNull Object expectedTracedValue, final @NonNull Object expectedTracedIdentity
 	) {
 		Assertions.assertThat(traceCall.get()).isEqualTo(value);
-		traceTest(expectedTracedValue, expectedTracedIdentity, methodName);
+		traceTest(expectedTracedValue, expectedTracedIdentity, METHOD_NAME);
 	}
 
 	private void traceTest(

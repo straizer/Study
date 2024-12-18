@@ -3,12 +3,11 @@ package semester5.pwjj.utils;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import semester5.pwjj.TestsBase;
 
 import java.util.stream.DoubleStream;
 
 @DisplayName("Double Reducers Tests")
-final class DoubleReducersTests extends TestsBase {
+final class DoubleReducersTests extends UtilsTestsBase {
 
 	@DisplayName("multiplying")
 	@Test

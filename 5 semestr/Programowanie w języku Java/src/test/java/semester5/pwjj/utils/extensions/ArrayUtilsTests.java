@@ -5,11 +5,10 @@ import org.assertj.core.api.Assertions;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import semester5.pwjj.TestsBase;
 
 @DisplayName("Array Utils Tests")
 @ExtensionMethod(ArrayUtils.class)
-final class ArrayUtilsTests extends TestsBase {
+final class ArrayUtilsTests extends UtilsExtensionsTestsBase {
 
 	@SuppressWarnings("MismatchedReadAndWriteOfArray")
 	private static final @NonNull Integer @NonNull [] ARRAY = {0, 1, 2, 3};

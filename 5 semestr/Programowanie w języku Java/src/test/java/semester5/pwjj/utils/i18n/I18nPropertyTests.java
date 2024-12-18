@@ -10,7 +10,7 @@ import java.util.Locale;
 
 @SuppressWarnings("ClassNamePrefixedWithPackageName")
 @DisplayName("I18n Property Tests")
-final class I18nPropertyTests extends I18nTestBase {
+final class I18nPropertyTests extends UtilsI18nTestsBase {
 
 	@DisplayName("get default translation")
 	@Test

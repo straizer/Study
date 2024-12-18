@@ -15,7 +15,7 @@ import semester5.pwjj.utils.i18n.MessageProvider;
 import java.lang.reflect.Field;
 
 /** Base class for unit tests providing setup and utilities for consistent testing behavior. */
-@SuppressWarnings({"ClassWithTooManyFields", "unused"})
+@SuppressWarnings("unused")
 public abstract class TestsBase {
 
 	protected static final @NonNull I18nProperty DAO_ERROR_CREATE_ENTITY_MANAGER_FAILED
@@ -28,42 +28,6 @@ public abstract class TestsBase {
 		= semester5.pwjj.dao.Messages.Error.NOT_AN_ENTITY_TYPE_OR_REMOVED;
 	protected static final @NonNull I18nProperty DAO_ERROR_UNEXPECTED_TYPE
 		= semester5.pwjj.dao.Messages.Error.UNEXPECTED_TYPE;
-	protected static final @NonNull I18nProperty ENTITIES_SHAPES_ERROR_SIDES_ARE_NULL
-		= semester5.pwjj.entities.shapes.Messages.Error.SIDES_ARE_NULL;
-	protected static final @NonNull I18nProperty ENTITIES_SHAPES_ERROR_SIDES_NOT_POSITIVE
-		= semester5.pwjj.entities.shapes.Messages.Error.SIDES_NOT_POSITIVE;
-	protected static final @NonNull I18nProperty ENTITIES_SHAPES_ERROR_TRIANGLE_RULE
-		= semester5.pwjj.entities.shapes.Messages.Error.TRIANGLE_RULE;
-	protected static final @NonNull I18nProperty ENTITIES_SHAPES_NAME_RECTANGLE
-		= semester5.pwjj.entities.shapes.Messages.Name.RECTANGLE;
-	protected static final @NonNull I18nProperty ENTITIES_SHAPES_NAME_TRIANGLE
-		= semester5.pwjj.entities.shapes.Messages.Name.TRIANGLE;
-	protected static final @NonNull I18nProperty ENTITIES_SHAPES_TO_STRING_SHAPE
-		= semester5.pwjj.entities.shapes.Messages.ToString.SHAPE;
-	protected static final @NonNull I18nProperty ENTITIES_TO_STRING_COLOR
-		= semester5.pwjj.entities.Messages.ToString.COLOR;
-	protected static final @NonNull I18nProperty UTILS_ERROR_CANNOT_ADD_SHUTDOWN_HOOK
-		= semester5.pwjj.utils.Messages.Error.CANNOT_ADD_SHUTDOWN_HOOK;
-	protected static final @NonNull I18nProperty UTILS_ERROR_CLOSE_SESSION_FACTORY_FAILED
-		= semester5.pwjj.utils.Messages.Error.CLOSE_SESSION_FACTORY_FAILED;
-	protected static final @NonNull I18nProperty UTILS_ERROR_CLOSE_SESSION_FAILED
-		= semester5.pwjj.utils.Messages.Error.CLOSE_SESSION_FAILED;
-	protected static final @NonNull I18nProperty UTILS_ERROR_COMMIT_FAILED
-		= semester5.pwjj.utils.Messages.Error.COMMIT_FAILED;
-	protected static final @NonNull I18nProperty UTILS_ERROR_INVALID_HIBERNATE_CONFIG
-		= semester5.pwjj.utils.Messages.Error.INVALID_HIBERNATE_CONFIG;
-	protected static final @NonNull I18nProperty UTILS_ERROR_MISSING_HIBERNATE_CONFIG
-		= semester5.pwjj.utils.Messages.Error.MISSING_HIBERNATE_CONFIG;
-	protected static final @NonNull I18nProperty UTILS_ERROR_OPEN_SESSION_FAILED
-		= semester5.pwjj.utils.Messages.Error.OPEN_SESSION_FAILED;
-	protected static final @NonNull I18nProperty UTILS_ERROR_TRANSACTIONS_HANDLED_INTERNALLY
-		= semester5.pwjj.utils.Messages.Error.TRANSACTIONS_HANDLED_INTERNALLY;
-	protected static final @NonNull I18nProperty UTILS_ERROR_ROLLBACK_FAILED
-		= semester5.pwjj.utils.Messages.Error.ROLLBACK_FAILED;
-	protected static final @NonNull I18nProperty UTILS_EXTENSIONS_ERROR_EXCEPTION_INSTANTIATION_FAILED
-		= semester5.pwjj.utils.extensions.Messages.Error.EXCEPTION_INITIALIZATION_FAILED;
-	protected static final @NonNull I18nProperty UTILS_EXTENSIONS_ERROR_FORMATTING
-		= semester5.pwjj.utils.extensions.Messages.Error.FORMATTING;
 
 	/**
 	 * A static mock object for the {@link MessageProvider} class, used for testing purposes.
@@ -120,6 +84,7 @@ public abstract class TestsBase {
 			}
 		}
 	}
+
 
 	/**
 	 * Verifies that the mock instance of the {@code MessageProvider} was invoked exactly once

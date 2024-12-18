@@ -66,35 +66,6 @@ public enum Messages {
 		}
 	}
 
-	/** I18n keys and value retrievers for {@code entities.shapes.name} messages. */
-	public enum Name {
-		;
-
-		/** I18n key with value {@code entities.shapes.name.rectangle}. */
-		public static final @NonNull I18nProperty RECTANGLE = new EntitiesShapesI18nProperty("name.rectangle");
-
-		/** I18n key with value {@code entities.shapes.name.triangle}. */
-		public static final @NonNull I18nProperty TRIANGLE = new EntitiesShapesI18nProperty("name.triangle");
-
-		/**
-		 * I18n value retriever for key {@code entities.shapes.name.rectangle}.
-		 * @return the value of key {@code entities.shapes.name.rectangle}
-		 */
-		@SuppressWarnings("unused")
-		public static @NonNull String RECTANGLE() {
-			return RECTANGLE.getMessage().trace(Name.class);
-		}
-
-		/**
-		 * I18n value retriever for key {@code entities.shapes.name.triangle}.
-		 * @return the value of key {@code entities.shapes.name.triangle}
-		 */
-		@SuppressWarnings("unused")
-		public static @NonNull String TRIANGLE() {
-			return TRIANGLE.getMessage().trace(Name.class);
-		}
-	}
-
 	/** I18n keys and value retrievers for {@code entities.shapes.toString} messages. */
 	public enum ToString {
 		;

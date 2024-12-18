@@ -152,6 +152,7 @@ public abstract class Shape implements Traceable {
 	private @NonNull String getClassNameNls(@UnknownInitialization Shape this) {
 		//noinspection StringConcatenation
 		final @NonNull String propertyName = "name." + getClass().getSimpleName().toLowerCase(Locale.ENGLISH); //NON-NLS
-		return new Messages.EntitiesShapesI18nProperty(propertyName).getMessage();
+		return new semester5.pwjj.entities.shapes.impl.Messages.EntitiesShapesImplI18nProperty(propertyName)
+			.getMessage();
 	}
 }

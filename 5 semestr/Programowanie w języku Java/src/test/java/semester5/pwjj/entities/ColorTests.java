@@ -3,10 +3,9 @@ package semester5.pwjj.entities;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import semester5.pwjj.TestsBase;
 
 @DisplayName("Color Tests")
-final class ColorTests extends TestsBase {
+final class ColorTests extends EntitiesTestsBase {
 
 	@DisplayName("red constant")
 	@Test
@@ -44,7 +43,7 @@ final class ColorTests extends TestsBase {
 	@DisplayName("to pretty string")
 	@Test
 	void toPrettyStringTest() {
-		Assertions.assertThat(Color.RED.toPrettyString()).isEqualTo(ENTITIES_TO_STRING_COLOR.getPropertyName());
-		verifyMessageProviderMockWasUsedFor(ENTITIES_TO_STRING_COLOR);
+		Assertions.assertThat(Color.RED.toPrettyString()).isEqualTo(TO_STRING_COLOR.getPropertyName());
+		verifyMessageProviderMockWasUsedFor(TO_STRING_COLOR);
 	}
 }

@@ -7,11 +7,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import semester5.pwjj.ErrorTestsBase;
 import semester5.pwjj.entities.Color;
-import semester5.pwjj.entities.shapes.ShapeErrorTestsBase;
 
 @DisplayName("Rectangle Error Tests")
-final class RectangleErrorTests extends ShapeErrorTestsBase {
+final class RectangleErrorTests extends EntitiesShapesImplErrorTestsBase {
 
 	/** Method executed once before all tests. */
 	@BeforeAll
@@ -22,18 +22,18 @@ final class RectangleErrorTests extends ShapeErrorTestsBase {
 	@DisplayName("constructor non positive side")
 	@Test
 	void constructorNonPositiveSideTest() {
-		throwsIllegalArgumentException(
-			() -> new Rectangle(0, 1, Color.RED), ENTITIES_SHAPES_ERROR_SIDES_NOT_POSITIVE.getPropertyName());
-		verifyMessageProviderMockWasUsedFor(ENTITIES_SHAPES_NAME_RECTANGLE);
-		verifyMessageProviderMockWasUsedFor(ENTITIES_SHAPES_ERROR_SIDES_NOT_POSITIVE);
+		ErrorTestsBase.throwsIllegalArgumentException(
+			() -> new Rectangle(0, 1, Color.RED), ERROR_SIDES_NOT_POSITIVE.getPropertyName());
+		verifyMessageProviderMockWasUsedFor(NAME_RECTANGLE);
+		verifyMessageProviderMockWasUsedFor(ERROR_SIDES_NOT_POSITIVE);
 	}
 
 	@DisplayName("no sides")
 	@ParameterizedTest
 	@MethodSource
 	void noSidesTest(final @NonNull ThrowingCallable callable) {
-		throwsIllegalStateException(callable, ENTITIES_SHAPES_ERROR_SIDES_ARE_NULL.getPropertyName());
-		verifyMessageProviderMockWasUsedFor(ENTITIES_SHAPES_NAME_RECTANGLE);
-		verifyMessageProviderMockWasUsedFor(ENTITIES_SHAPES_ERROR_SIDES_ARE_NULL);
+		ErrorTestsBase.throwsIllegalStateException(callable, ERROR_SIDES_ARE_NULL.getPropertyName());
+		verifyMessageProviderMockWasUsedFor(NAME_RECTANGLE);
+		verifyMessageProviderMockWasUsedFor(ERROR_SIDES_ARE_NULL);
 	}
 }

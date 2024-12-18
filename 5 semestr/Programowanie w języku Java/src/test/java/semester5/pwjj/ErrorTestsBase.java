@@ -8,8 +8,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  * Abstract base class for handling error-related test assertions.
  * Provides methods to assert that specific exceptions are thrown with expected messages.
  */
-@SuppressWarnings("AbstractClassWithOnlyOneDirectInheritor")
-public abstract class ErrorTestsBase extends TestsBase {
+@SuppressWarnings("InterfaceWithOnlyOneDirectInheritor")
+public interface ErrorTestsBase {
 
 	/**
 	 * Asserts that the given {@code callable} throws an {@link IllegalArgumentException}
@@ -20,7 +20,7 @@ public abstract class ErrorTestsBase extends TestsBase {
 	 * @throws AssertionError if the {@link IllegalArgumentException} isn't thrown
 	 *                        or if the message of the {@link IllegalArgumentException} isn't equal to {@code message}
 	 */
-	protected static void throwsIllegalArgumentException(
+	static void throwsIllegalArgumentException(
 		final @NonNull ThrowingCallable callable, final @NonNull String message
 	) {
 		throwsException(callable, IllegalArgumentException.class, message);
@@ -35,7 +35,7 @@ public abstract class ErrorTestsBase extends TestsBase {
 	 * @throws AssertionError if the {@link IllegalStateException} isn't thrown
 	 *                        or if the message of the {@link IllegalStateException} isn't equal to {@code message}
 	 */
-	protected static void throwsIllegalStateException(
+	static void throwsIllegalStateException(
 		final @NonNull ThrowingCallable callable, final @NonNull String message
 	) {
 		throwsException(callable, IllegalStateException.class, message);

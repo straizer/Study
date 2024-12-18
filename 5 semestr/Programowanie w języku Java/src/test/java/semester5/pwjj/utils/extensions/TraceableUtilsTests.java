@@ -12,7 +12,6 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 import semester5.pwjj.MockedStatic;
-import semester5.pwjj.TestsBase;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -21,7 +20,7 @@ import java.util.function.Supplier;
 
 @SuppressWarnings({"TestMethodWithoutAssertion", "ClassWithMultipleLoggers"})
 @DisplayName("Traceable Utils Tests")
-final class TraceableUtilsTests extends TestsBase {
+final class TraceableUtilsTests extends UtilsExtensionsTestsBase {
 
 	private static final @NonNull String STATIC_TRACED_IDENTITY = "STATIC";
 	private static final @NonNull Logger traceableUtilsLoggerMock = Mockito.mock(Logger.class);

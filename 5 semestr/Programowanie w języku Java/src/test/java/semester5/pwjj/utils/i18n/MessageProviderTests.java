@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.Locale;
 
 @DisplayName("Message Provider Tests")
-final class MessageProviderTests extends I18nTestBase {
+final class MessageProviderTests extends UtilsI18nTestsBase {
 
 	@DisplayName("get default translation")
 	@Test

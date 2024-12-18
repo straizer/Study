@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 
 /** Abstract base class for i18n test setups and utilities. */
 @SuppressWarnings("ClassNamePrefixedWithPackageName")
-abstract class I18nTestBase {
+abstract class UtilsI18nTestsBase {
 
 	/**
 	 * Represents an instance of {@link I18nProperty} that encapsulates an i18n key used for retrieving

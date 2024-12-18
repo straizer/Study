@@ -5,7 +5,6 @@ import org.assertj.core.api.Assertions;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import semester5.pwjj.ErrorTestsBase;
 
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -13,7 +12,7 @@ import java.util.stream.Stream;
 @SuppressWarnings("TestMethodWithoutAssertion")
 @DisplayName("Stream Utils Tests")
 @ExtensionMethod(StreamUtils.class)
-final class StreamUtilsTests extends ErrorTestsBase {
+final class StreamUtilsTests extends UtilsExtensionsTestsBase {
 
 	private static final @NonNull String DELIMITER = ",";
 

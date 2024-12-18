@@ -80,23 +80,14 @@ public abstract class TestsBase {
 	private static @MonotonicNonNull InOrder messageProviderInOrder;
 
 	/**
-	 * Initializes mocking of the {@link MessageProvider} class and sets up behavior for translation retrieval.
+	 * Initializes mocking of the {@link MessageProvider} class.
 	 * @throws IllegalAccessException if reflection-based access to fields of {@code TestsBase} fails
 	 */
 	@BeforeAll
 	static void globalBeforeAll() throws IllegalAccessException {
-		for (final @NonNull Field field : TestsBase.class.getDeclaredFields()) {
-			if (field.getType().equals(I18nProperty.class)) {
-				field.setAccessible(true);
-				@SuppressWarnings("argument") final @NonNull I18nProperty i18nProperty =
-					(@NonNull I18nProperty) NullnessUtil.castNonNull(field.get(null));
-				messageProviderMock
-					.when(() -> MessageProvider.get(i18nProperty))
-					.thenReturn(i18nProperty.getPropertyName());
-			}
-		}
 		messageProviderMock = new MockedStatic<>(MessageProvider.class);
 		messageProviderInOrder = Mockito.inOrder(MessageProvider.class);
+		populateMessageProviderMock(TestsBase.class);
 	}
 
 	/** Ensures that the mocked {@code messageProviderMock} is closed. */
@@ -104,6 +95,30 @@ public abstract class TestsBase {
 	static void globalAfterAll() {
 		//noinspection StaticVariableUsedBeforeInitialization
 		NullnessUtil.castNonNull(messageProviderMock).close();
+	}
+
+	/**
+	 * Populates the mocked {@link MessageProvider} for the specified {@code TestsBase} subclass.
+	 * It configures the mock behavior such that whenever {@link MessageProvider#get(I18nProperty)}
+	 * is invoked with an identified {@link I18nProperty} field, it returns the property name
+	 * of that {@link I18nProperty}.
+	 * @param clazz the {@link Class} object representing a subclass of {@code TestsBase},
+	 *              whose {@link I18nProperty} fields will be used to set up the mock behavior
+	 * @throws IllegalAccessException if the field access operations via reflection fail
+	 */
+	protected static void populateMessageProviderMock(
+		final @NonNull Class<? extends @NonNull TestsBase> clazz
+	) throws IllegalAccessException {
+		for (final @NonNull Field field : clazz.getDeclaredFields()) {
+			if (field.getType().equals(I18nProperty.class)) {
+				field.setAccessible(true);
+				@SuppressWarnings("argument") final @NonNull I18nProperty i18nProperty =
+					(@NonNull I18nProperty) NullnessUtil.castNonNull(field.get(null));
+				NullnessUtil.castNonNull(messageProviderMock)
+					.when(() -> MessageProvider.get(i18nProperty))
+					.thenReturn(i18nProperty.getPropertyName());
+			}
+		}
 	}
 
 	/**

@@ -28,13 +28,13 @@ public enum Messages {
 		public static final @NonNull I18nProperty CANNOT_ADD_SHUTDOWN_HOOK =
 			new UtilsI18nProperty("error.cannotAddShutdownHook");
 
-		/** I18n key with value {@code utils.error.closeSessionFactoryFailed}. */
-		public static final @NonNull I18nProperty CLOSE_SESSION_FACTORY_FAILED =
-			new UtilsI18nProperty("error.closeSessionFactoryFailed");
+		/** I18n key with value {@code utils.error.closeEntityManagerFactoryFailed}. */
+		public static final @NonNull I18nProperty CLOSE_ENTITY_MANAGER_FACTORY_FAILED =
+			new UtilsI18nProperty("error.closeEntityManagerFactoryFailed");
 
-		/** I18n key with value {@code utils.error.closeSessionFailed}. */
-		public static final @NonNull I18nProperty CLOSE_SESSION_FAILED =
-			new UtilsI18nProperty("error.closeSessionFailed");
+		/** I18n key with value {@code utils.error.closeEntityManagerFailed}. */
+		public static final @NonNull I18nProperty CLOSE_ENTITY_MANAGER_FAILED =
+			new UtilsI18nProperty("error.closeEntityManagerFailed");
 
 		/** I18n key with value {@code utils.error.commitFailed}. */
 		public static final @NonNull I18nProperty COMMIT_FAILED =
@@ -48,9 +48,9 @@ public enum Messages {
 		public static final @NonNull I18nProperty MISSING_HIBERNATE_CONFIG =
 			new UtilsI18nProperty("error.missingHibernateConfig");
 
-		/** I18n key with value {@code utils.error.openSessionFailed}. */
-		public static final @NonNull I18nProperty OPEN_SESSION_FAILED =
-			new UtilsI18nProperty("error.openSessionFailed");
+		/** I18n key with value {@code utils.error.openEntityManagerFailed}. */
+		public static final @NonNull I18nProperty OPEN_ENTITY_MANAGER_FAILED =
+			new UtilsI18nProperty("error.openEntityManagerFailed");
 
 		/** I18n key with value {@code utils.error.transactionsHandledInternally}. */
 		public static final @NonNull I18nProperty TRANSACTIONS_HANDLED_INTERNALLY =
@@ -70,21 +70,22 @@ public enum Messages {
 		}
 
 		/**
-		 * I18n value retriever for key {@code utils.error.closeSessionFactoryFailed}.
+		 * I18n value retriever for key {@code utils.error.closeEntityManagerFactoryFailed}.
 		 * @param exception the exception that was thrown
-		 * @return the formatted value of key {@code utils.error.closeSessionFactoryFailed}
+		 * @return the formatted value of key {@code utils.error.closeEntityManagerFactoryFailed}
 		 */
-		public static @NonNull String CLOSE_SESSION_FACTORY_FAILED(final @NonNull Exception exception) {
-			return CLOSE_SESSION_FACTORY_FAILED.getMessage().safeFormat(exception.getMessage()).trace(Error.class);
+		public static @NonNull String CLOSE_ENTITY_MANAGER_FACTORY_FAILED(final @NonNull Exception exception) {
+			return CLOSE_ENTITY_MANAGER_FACTORY_FAILED.getMessage().safeFormat(exception.getMessage())
+				.trace(Error.class);
 		}
 
 		/**
-		 * I18n value retriever for key {@code utils.error.closeSessionFailed}.
+		 * I18n value retriever for key {@code utils.error.closeEntityManagerFailed}.
 		 * @param exception the exception that was thrown
-		 * @return the formatted value of key {@code utils.error.closeSessionFailed}
+		 * @return the formatted value of key {@code utils.error.closeEntityManagerFailed}
 		 */
-		public static @NonNull String CLOSE_SESSION_FAILED(final @NonNull Exception exception) {
-			return CLOSE_SESSION_FAILED.getMessage().safeFormat(exception.getMessage()).trace(Error.class);
+		public static @NonNull String CLOSE_ENTITY_MANAGER_FAILED(final @NonNull Exception exception) {
+			return CLOSE_ENTITY_MANAGER_FAILED.getMessage().safeFormat(exception.getMessage()).trace(Error.class);
 		}
 
 		/**
@@ -113,12 +114,12 @@ public enum Messages {
 		}
 
 		/**
-		 * I18n value retriever for key {@code utils.error.openSessionFailed}.
+		 * I18n value retriever for key {@code utils.error.openEntityManagerFailed}.
 		 * @param exception the exception that was thrown
-		 * @return the formatted value of key {@code utils.error.openSessionFailed}
+		 * @return the formatted value of key {@code utils.error.openEntityManagerFailed}
 		 */
-		public static @NonNull String OPEN_SESSION_FAILED(final @NonNull Exception exception) {
-			return OPEN_SESSION_FAILED.getMessage().safeFormat(exception.getMessage()).trace(Error.class);
+		public static @NonNull String OPEN_ENTITY_MANAGER_FAILED(final @NonNull Exception exception) {
+			return OPEN_ENTITY_MANAGER_FAILED.getMessage().safeFormat(exception.getMessage()).trace(Error.class);
 		}
 
 		/**

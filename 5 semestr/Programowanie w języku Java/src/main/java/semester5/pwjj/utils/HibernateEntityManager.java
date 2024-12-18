@@ -74,7 +74,7 @@ public final class HibernateEntityManager implements TransactionalEntityManager 
 			//noinspection HibernateResourceOpenedButNotSafelyClosed
 			entityManager = _sessionFactory.openSession();
 		} catch (final HibernateException ex) {
-			throw Messages.Error.OPEN_SESSION_FAILED(ex).warnAndReturn(ex);
+			throw Messages.Error.OPEN_ENTITY_MANAGER_FAILED(ex).warnAndReturn(ex);
 		}
 		log.debug("Entity manager created: {}", entityManager); //NON-NLS
 		//noinspection ThisEscapedInObjectConstruction
@@ -133,7 +133,7 @@ public final class HibernateEntityManager implements TransactionalEntityManager 
 		try {
 			getStaticEntityManagerFactory().close();
 		} catch (final HibernateException ex) {
-			log.warn(Messages.Error.CLOSE_SESSION_FACTORY_FAILED(ex));
+			log.warn(Messages.Error.CLOSE_ENTITY_MANAGER_FACTORY_FAILED(ex));
 		}
 		log.debug("Session entity manager closed: {}", getStaticEntityManagerFactory()); //NON-NLS
 	}
@@ -157,7 +157,7 @@ public final class HibernateEntityManager implements TransactionalEntityManager 
 		try {
 			entityManager.close();
 		} catch (final HibernateException ex) {
-			log.warn(Messages.Error.CLOSE_SESSION_FAILED(ex));
+			log.warn(Messages.Error.CLOSE_ENTITY_MANAGER_FAILED(ex));
 		}
 		log.debug("Entity manager closed: {}", entityManager); //NON-NLS
 	}

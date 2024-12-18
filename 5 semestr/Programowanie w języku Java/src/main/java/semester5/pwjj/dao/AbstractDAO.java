@@ -12,6 +12,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import semester5.pwjj.utils.HibernateEntityManager;
 import semester5.pwjj.utils.Traceable;
 import semester5.pwjj.utils.TransactionalEntityManager;
+import semester5.pwjj.utils.extensions.ReflectionUtils;
 import semester5.pwjj.utils.extensions.StringUtils;
 
 import java.util.List;
@@ -38,15 +39,13 @@ public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> impleme
 	/**
 	 * Supplies {@code function} with newly created {@link TransactionalEntityManager} and executes it,
 	 * then perform {@link TransactionalEntityManager#commitTransaction()}.
-	 * @param function   function to execute
-	 * @param methodName name of the calling method
-	 * @param <T>        type of {@code function} return value
+	 * @param function function to execute
+	 * @param <T>      type of {@code function} return value
 	 * @return {@link Optional} of {@code function} return value if function succeeds; null otherwise
 	 */
 	@SuppressWarnings("annotations.on.use")
 	private static <@Nullable T> @Nullable Optional<@NonNull T> executeAndReturn(
-		final @NonNull Function<? super @NonNull TransactionalEntityManager, ? extends @Nullable T> function,
-		final @NonNull String methodName
+		final @NonNull Function<? super @NonNull TransactionalEntityManager, ? extends @Nullable T> function
 	) {
 		final @NonNull Optional<@NonNull T> result;
 		try (final @NonNull TransactionalEntityManager entityManager = new HibernateEntityManager()) {
@@ -55,7 +54,8 @@ public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> impleme
 		} catch (final EntityExistsException | IllegalArgumentException ex) {
 			throw ex;
 		} catch (final PersistenceException _) {
-			log.warn(Messages.Error.CREATE_ENTITY_MANAGER_FAILED(methodName));
+			log.warn(Messages.Error.CREATE_ENTITY_MANAGER_FAILED(
+				ReflectionUtils.getCallingMethodName("executeAndReturn", "execute"))); //NON-NLS
 			//noinspection OptionalAssignedToNull,ReturnOfNull
 			return null;
 		}
@@ -65,19 +65,17 @@ public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> impleme
 	/**
 	 * Supplies {@code function} with newly created {@link TransactionalEntityManager} and executes it,
 	 * then perform {@link TransactionalEntityManager#commitTransaction()}.
-	 * @param function   function to execute
-	 * @param methodName name of the calling method
+	 * @param function function to execute
 	 * @return Empty {@link Optional} if function succeeds; null otherwise
 	 */
 	@SuppressWarnings("annotations.on.use")
 	private static <@Nullable T> @Nullable Optional<@NonNull T> execute(
-		final @NonNull Consumer<? super @NonNull TransactionalEntityManager> function, final @NonNull String methodName
+		final @NonNull Consumer<? super @NonNull TransactionalEntityManager> function
 	) {
 		return executeAndReturn(entityManager -> {
-				function.accept(entityManager);
-				return null;
-			},
-			methodName);
+			function.accept(entityManager);
+			return null;
+		});
 	}
 
 	@Override
@@ -85,7 +83,7 @@ public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> impleme
 		debugMessageWithObject("Saving in", entity); //NON-NLS
 		try {
 			final @Nullable Optional<@NonNull T> result = execute(
-				entityManager -> entityManager.persist(entity), "create"); //NON-NLS
+				entityManager -> entityManager.persist(entity));
 			if (Objects.isNull(result)) { //NON-NLS
 				return;
 			}
@@ -104,7 +102,7 @@ public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> impleme
 		debugMessageWithPrefixGettingFrom(id);
 		final @Nullable Optional<@NonNull T> entity;
 		try {
-			entity = executeAndReturn(entityManager -> entityManager.find(handledClass, id), "read"); //NON-NLS
+			entity = executeAndReturn(entityManager -> entityManager.find(handledClass, id));
 			if (Objects.isNull(entity)) {
 				return Optional.empty();
 			}
@@ -129,7 +127,7 @@ public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> impleme
 			final CriteriaQuery<@NonNull T> query = entityManager.getCriteriaBuilder().createQuery(handledClass);
 			query.from(handledClass);
 			return entityManager.createQuery(query).getResultList();
-		}, "readAll"); //NON-NLS
+		});
 		if (Objects.isNull(entitiesOptional)) {
 			return List.of();
 		}
@@ -144,7 +142,7 @@ public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> impleme
 		debugMessageWithObject("Updating in", entity); //NON-NLS
 		final @Nullable Optional<@NonNull T> updatedEntity;
 		try {
-			updatedEntity = executeAndReturn(entityManager -> entityManager.merge(entity), "update"); //NON-NLS
+			updatedEntity = executeAndReturn(entityManager -> entityManager.merge(entity));
 			if (Objects.isNull(updatedEntity)) {
 				return Optional.empty();
 			}
@@ -161,9 +159,8 @@ public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> impleme
 	public void delete(final int id) {
 		debugMessageWithId("Removing from", id); //NON-NLS
 		try {
-			final @Nullable Optional<@NonNull T> result = execute(
-				entityManager -> entityManager.remove(entityManager.find(handledClass, id)),
-				"delete"); //NON-NLS
+			final @Nullable Optional<@NonNull T> result =
+				execute(entityManager -> entityManager.remove(entityManager.find(handledClass, id)));
 			if (Objects.isNull(result)) {
 				return;
 			}

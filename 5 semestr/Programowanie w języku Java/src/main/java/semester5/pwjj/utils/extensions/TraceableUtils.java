@@ -102,16 +102,9 @@ public class TraceableUtils {
 	public <@Nullable T> @PolyNull T trace(
 		final @PolyNull T returnValue, final @NonNull Class<?> callingClass, final @Nullable Integer identityHashCode
 	) {
-		@NonNull String methodName = StringUtils.UNKNOWN;
-		try {
-			methodName = Thread.currentThread().getStackTrace().skip(2)
-				.dropWhile(it -> it.getMethodName().equals("trace")).getFirst().getMethodName();
-		} catch (final SecurityException _) {
-			//noinspection DuplicateStringLiteralInspection
-			getLogger(TraceableUtils.class)
-				.trace("Unable to retrieve method name; falling back to {}", methodName); //NON-NLS
-		}
-		return trace(returnValue, callingClass, methodName, identityHashCode);
+		//noinspection DuplicateStringLiteralInspection
+		return trace(
+			returnValue, callingClass, ReflectionUtils.getCallingMethodName("trace"), identityHashCode); //NON-NLS
 	}
 
 	/**

@@ -45,4 +45,16 @@ public class ArrayUtils {
 	) {
 		return array.stream().map(mapper);
 	}
+
+	/**
+	 * Checks whether a specified element is present in the given array.
+	 * @param array   the array to search for the specified element
+	 * @param element the element to find in the array
+	 * @param <T>     the type of the {@code element} and the elements in the array
+	 * @return {@code true} if the array contains the specified element; otherwise {@code false}
+	 */
+	@SuppressWarnings("argument")
+	public <@Nullable T> boolean contains(final @PolyNull T @NonNull [] array, final @Nullable T element) {
+		return array.asList().contains(element);
+	}
 }

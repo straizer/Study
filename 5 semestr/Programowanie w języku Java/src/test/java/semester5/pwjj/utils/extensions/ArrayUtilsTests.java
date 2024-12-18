@@ -36,4 +36,23 @@ final class ArrayUtilsTests extends UtilsExtensionsTestsBase {
 	void mapToNullableTest() {
 		Assertions.assertThat(ARRAY.map(it -> it % 2 == 0 ? it : null)).containsExactly(0, null, 2, null);
 	}
+
+	@DisplayName("contains true")
+	@Test
+	void containsTrueTest() {
+		Assertions.assertThat(ARRAY.contains(0)).isTrue();
+	}
+
+	@DisplayName("contains false")
+	@Test
+	void containsFalseTest() {
+		Assertions.assertThat(ARRAY.contains(-1)).isFalse();
+	}
+
+	@DisplayName("contains null")
+	@Test
+	void containsNullTest() {
+		//noinspection DataFlowIssue
+		Assertions.assertThat(ARRAY.contains(null)).isFalse();
+	}
 }

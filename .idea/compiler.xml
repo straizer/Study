@@ -31,7 +31,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_STRING" value="-AsuppressWarnings=type.anno.before.modifier,type.arguments.not.inferred" />
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="PwJJ" options="" />
+      <module name="PwJJ" options="-AsuppressWarnings=type.anno.before.modifier,type.arguments.not.inferred" />
     </option>
   </component>
 </project>

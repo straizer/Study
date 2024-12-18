@@ -8,13 +8,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import semester5.pwjj.ErrorTestsBase;
 import semester5.pwjj.entities.Color;
-import semester5.pwjj.entities.shapes.ShapeErrorTestsBase;
 
 import java.util.stream.Stream;
 
 @DisplayName("Triangle Error Tests")
-final class TriangleErrorTests extends ShapeErrorTestsBase {
+final class TriangleErrorTests extends EntitiesShapesImplErrorTestsBase {
 
 	/** Method executed once before all tests. */
 	@BeforeAll
@@ -33,26 +33,26 @@ final class TriangleErrorTests extends ShapeErrorTestsBase {
 	@DisplayName("constructor non positive side")
 	@Test
 	void constructorNonPositiveSideTest() {
-		throwsIllegalArgumentException(
-			() -> new Triangle(0, 1, 1, Color.RED), ENTITIES_SHAPES_ERROR_SIDES_NOT_POSITIVE.getPropertyName());
-		verifyMessageProviderMockWasUsedFor(ENTITIES_SHAPES_NAME_TRIANGLE);
-		verifyMessageProviderMockWasUsedFor(ENTITIES_SHAPES_ERROR_SIDES_NOT_POSITIVE);
+		ErrorTestsBase.throwsIllegalArgumentException(
+			() -> new Triangle(0, 1, 1, Color.RED), ERROR_SIDES_NOT_POSITIVE.getPropertyName());
+		verifyMessageProviderMockWasUsedFor(NAME_TRIANGLE);
+		verifyMessageProviderMockWasUsedFor(ERROR_SIDES_NOT_POSITIVE);
 	}
 
 	@DisplayName("constructor triangle rule not fulfilled")
 	@ParameterizedTest
 	@MethodSource
 	void constructorTriangleRuleNotFulfilledTest(final @NonNull ThrowingCallable callable) {
-		throwsIllegalArgumentException(callable, ENTITIES_SHAPES_ERROR_TRIANGLE_RULE.getPropertyName());
-		verifyMessageProviderMockWasUsedFor(ENTITIES_SHAPES_ERROR_TRIANGLE_RULE);
+		ErrorTestsBase.throwsIllegalArgumentException(callable, ERROR_TRIANGLE_RULE.getPropertyName());
+		verifyMessageProviderMockWasUsedFor(ERROR_TRIANGLE_RULE);
 	}
 
 	@DisplayName("no sides")
 	@ParameterizedTest
 	@MethodSource
 	void noSidesTest(final @NonNull ThrowingCallable callable) {
-		throwsIllegalStateException(callable, ENTITIES_SHAPES_ERROR_SIDES_ARE_NULL.getPropertyName());
-		verifyMessageProviderMockWasUsedFor(ENTITIES_SHAPES_NAME_TRIANGLE);
-		verifyMessageProviderMockWasUsedFor(ENTITIES_SHAPES_ERROR_SIDES_ARE_NULL);
+		ErrorTestsBase.throwsIllegalStateException(callable, ERROR_SIDES_ARE_NULL.getPropertyName());
+		verifyMessageProviderMockWasUsedFor(NAME_TRIANGLE);
+		verifyMessageProviderMockWasUsedFor(ERROR_SIDES_ARE_NULL);
 	}
 }

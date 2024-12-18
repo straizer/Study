@@ -1,15 +1,16 @@
-package semester5.pwjj.entities.shapes;
+package semester5.pwjj.entities.shapes.impl;
 
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.junit.jupiter.params.provider.Arguments;
 import semester5.pwjj.ErrorTestsBase;
+import semester5.pwjj.entities.shapes.Shape;
 
 import java.util.stream.Stream;
 
-/** Base class for all {@link Shape} error tests. */
-public abstract class ShapeErrorTestsBase extends ErrorTestsBase {
+/** Abstract base class for {@code entities.shapes.impl} error test setups and utilities. */
+public abstract class EntitiesShapesImplErrorTestsBase extends EntitiesShapesImplTestsBase implements ErrorTestsBase {
 
 	protected static @MonotonicNonNull Shape emptyShape;
 

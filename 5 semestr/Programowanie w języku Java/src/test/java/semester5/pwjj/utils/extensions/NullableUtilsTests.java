@@ -8,13 +8,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import semester5.pwjj.TestsBase;
 
 import java.util.stream.Stream;
 
 @DisplayName("Nullable Utils Tests")
 @ExtensionMethod(NullableUtils.class)
-final class NullableUtilsTests extends TestsBase {
+final class NullableUtilsTests extends UtilsExtensionsTestsBase {
 
 	/** Method supplying {@link #mapOrNullTest(String, Integer). */
 	@SuppressWarnings("argument")

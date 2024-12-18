@@ -4,12 +4,11 @@ import org.assertj.core.api.Assertions;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import semester5.pwjj.TestsBase;
 import semester5.pwjj.entities.Color;
 import semester5.pwjj.entities.shapes.Shape;
 
 @DisplayName("Triangle Tests")
-final class TriangleTests extends TestsBase {
+final class TriangleTests extends EntitiesShapesImplTestsBase {
 
 	private static final @NonNull Shape uut = new Triangle(3.0, 4.0, 5.0, Color.RED);
 
@@ -34,9 +33,9 @@ final class TriangleTests extends TestsBase {
 	@DisplayName("to pretty string")
 	@Test
 	void toPrettyStringTest() {
-		Assertions.assertThat(uut.toPrettyString()).isEqualTo(ENTITIES_SHAPES_TO_STRING_SHAPE.getPropertyName());
-		verifyMessageProviderMockWasUsedFor(ENTITIES_SHAPES_NAME_TRIANGLE);
-		verifyMessageProviderMockWasUsedFor(ENTITIES_SHAPES_TO_STRING_SHAPE);
-		verifyMessageProviderMockWasUsedFor(ENTITIES_TO_STRING_COLOR);
+		Assertions.assertThat(uut.toPrettyString()).isEqualTo(TO_STRING_SHAPE.getPropertyName());
+		verifyMessageProviderMockWasUsedFor(NAME_TRIANGLE);
+		verifyMessageProviderMockWasUsedFor(TO_STRING_SHAPE);
+		verifyMessageProviderMockWasUsedFor(TO_STRING_COLOR);
 	}
 }

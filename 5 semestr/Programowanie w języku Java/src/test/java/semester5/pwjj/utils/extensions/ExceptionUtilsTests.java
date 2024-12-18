@@ -7,14 +7,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import semester5.pwjj.TestsBase;
 
 import java.util.stream.Stream;
 
 @SuppressWarnings("TestMethodWithoutAssertion")
 @DisplayName("Exception Utils Tests")
 @ExtensionMethod(ExceptionUtils.class)
-final class ExceptionUtilsTests extends TestsBase {
+final class ExceptionUtilsTests extends UtilsExtensionsTestsBase {
 
 	private static final @NonNull String MESSAGE = "message";
 

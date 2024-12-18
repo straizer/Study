@@ -5,11 +5,10 @@ import org.assertj.core.api.Assertions;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import semester5.pwjj.TestsBase;
 
 @DisplayName("String Utils Tests")
 @ExtensionMethod(StringUtils.class)
-final class StringUtilsTests extends TestsBase {
+final class StringUtilsTests extends UtilsExtensionsTestsBase {
 
 	private static final @NonNull String TEMPLATE = "%d";
 
@@ -23,7 +22,7 @@ final class StringUtilsTests extends TestsBase {
 	@Test
 	void invalidSafeFormatTest() {
 		Assertions.assertThat(TEMPLATE.safeFormat(StringUtils.EMPTY)).isEqualTo("%d");
-		verifyMessageProviderMockWasUsedFor(UTILS_EXTENSIONS_ERROR_FORMATTING);
+		verifyMessageProviderMockWasUsedFor(ERROR_FORMATTING);
 	}
 
 	@DisplayName("safe format no arguments")

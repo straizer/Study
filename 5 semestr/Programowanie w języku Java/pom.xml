@@ -28,20 +28,18 @@
 
         <!--QOL-->
         <lombok.version>1.18.36</lombok.version>
-        <checker.version>3.48.2</checker.version>
+        <checker.version>3.48.4</checker.version>
         <!--logging-->
-        <slf4j.version>2.0.16</slf4j.version>
-        <logback.version>1.5.12</logback.version>
+        <slf4j.version>2.1.0-alpha1</slf4j.version>
+        <logback.version>1.5.16</logback.version>
         <!--database-->
         <hibernate.version>7.0.0.Beta3</hibernate.version>
-        <postgres.version>42.7.4</postgres.version>
+        <postgres.version>42.7.5</postgres.version>
         <!--tests-->
-        <junit.version>5.11.3</junit.version>
-        <junit-commons.version>1.11.3</junit-commons.version>
+        <junit.version>5.11.4</junit.version>
         <junit-pioneer.version>2.3.0</junit-pioneer.version>
-        <assertj.version>3.26.3</assertj.version>
-        <jacoco.version>0.8.12</jacoco.version>
-        <mockito.version>5.14.2</mockito.version>
+        <assertj.version>3.27.2</assertj.version>
+        <mockito.version>5.15.2</mockito.version>
     </properties>
 
     <dependencies>
@@ -211,7 +209,7 @@
                         <exclude>${project.package.main}/**/Messages$*</exclude>
                         <exclude>${project.package.main}/utils/extensions/ExceptionUtils.*</exclude>
                         <exclude>${project.package.main}/dao/**/*</exclude>
-                        <exclude>${project.package.main}/utils/*EntityManager.*</exclude>
+                        <exclude>${project.package.main}/utils/persistence/*</exclude>
                     </excludes>
                 </configuration>
                 <executions>

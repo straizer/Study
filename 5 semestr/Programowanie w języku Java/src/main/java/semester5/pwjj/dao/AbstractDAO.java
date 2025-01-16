@@ -9,11 +9,11 @@ import lombok.experimental.ExtensionMethod;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import semester5.pwjj.utils.HibernateEntityManager;
 import semester5.pwjj.utils.Traceable;
-import semester5.pwjj.utils.TransactionalEntityManager;
 import semester5.pwjj.utils.extensions.ReflectionUtils;
 import semester5.pwjj.utils.extensions.StringUtils;
+import semester5.pwjj.utils.persistence.HibernateEntityManager;
+import semester5.pwjj.utils.persistence.TransactionalEntityManager;
 
 import java.util.List;
 import java.util.Objects;

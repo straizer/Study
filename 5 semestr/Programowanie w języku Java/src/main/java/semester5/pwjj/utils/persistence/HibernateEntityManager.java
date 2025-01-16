@@ -1,4 +1,4 @@
-package semester5.pwjj.utils;
+package semester5.pwjj.utils.persistence;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;

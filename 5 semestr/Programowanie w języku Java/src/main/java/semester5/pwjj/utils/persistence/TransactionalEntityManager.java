@@ -1,9 +1,10 @@
-package semester5.pwjj.utils;
+package semester5.pwjj.utils.persistence;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import lombok.experimental.ExtensionMethod;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import semester5.pwjj.utils.Traceable;
 import semester5.pwjj.utils.extensions.ExceptionUtils;
 
 /**

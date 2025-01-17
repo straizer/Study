@@ -22,8 +22,8 @@ public abstract class UtilsPersistenceTestsBase extends UtilsTestsBase {
 		= Messages.Error.INVALID_HIBERNATE_CONFIG;
 	protected static final @NonNull I18nProperty ERROR_MISSING_DATABASE_PASSWORD
 		= Messages.Error.MISSING_DATABASE_PASSWORD;
-	protected static final @NonNull I18nProperty ERROR_MISSING_DATABASE_USER
-		= Messages.Error.MISSING_DATABASE_USER;
+	protected static final @NonNull I18nProperty ERROR_MISSING_DATABASE_USERNAME
+		= Messages.Error.MISSING_DATABASE_USERNAME;
 	protected static final @NonNull I18nProperty ERROR_MISSING_HIBERNATE_CONFIG
 		= Messages.Error.MISSING_HIBERNATE_CONFIG;
 	protected static final @NonNull I18nProperty ERROR_OPEN_ENTITY_MANAGER_FAILED

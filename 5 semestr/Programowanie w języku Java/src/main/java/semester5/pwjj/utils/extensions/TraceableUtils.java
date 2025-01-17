@@ -50,7 +50,6 @@ public class TraceableUtils {
 	 * @param instance the instance whose constructor is logged
 	 * @param <T>      the type of the {@code instance}
 	 */
-	@SuppressWarnings("argument")
 	public <T> void traceConstructor(final @UnknownInitialization T instance) {
 		trace(instance, instance.getClass(), "<ctor>", instance.identityHashCode()); //NON-NLS
 	}

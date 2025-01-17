@@ -37,4 +37,10 @@ final class StringUtilsTests extends UtilsExtensionsTestsBase {
 		//noinspection DataFlowIssue
 		Assertions.assertThat(TEMPLATE.safeFormat((Object[]) null)).isEqualTo("%d");
 	}
+
+	@DisplayName("obfuscate")
+	@Test
+	void obfuscateTest() {
+		Assertions.assertThat(TEMPLATE.obfuscate()).isEqualTo("**");
+	}
 }

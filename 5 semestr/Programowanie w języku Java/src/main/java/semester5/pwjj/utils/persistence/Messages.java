@@ -15,7 +15,7 @@ import java.util.Locale;
  * @implNote If different translation is required without changing default {@link Locale},
  * use {@link MessageProvider#get(I18nProperty, Locale)}
  */
-@SuppressWarnings({"PublicInnerClass", "StaticMethodOnlyUsedInOneClass"})
+@SuppressWarnings({"PublicInnerClass", "StaticMethodOnlyUsedInOneClass", "ClassWithTooManyFields"})
 @ExtensionMethod({StringUtils.class, TraceableUtils.class})
 public enum Messages {
 	;
@@ -43,6 +43,14 @@ public enum Messages {
 		/** I18n key with value {@code utils.persistence.error.invalidHibernateConfig}. */
 		public static final @NonNull I18nProperty INVALID_HIBERNATE_CONFIG =
 			new UtilsI18nProperty("error.invalidHibernateConfig");
+
+		/** I18n key with value {@code utils.persistence.error.missingDatabasePassword}. */
+		public static final @NonNull I18nProperty MISSING_DATABASE_PASSWORD =
+			new UtilsI18nProperty("error.missingDatabasePassword");
+
+		/** I18n key with value {@code utils.persistence.error.missingDatabaseUser}. */
+		public static final @NonNull I18nProperty MISSING_DATABASE_USER =
+			new UtilsI18nProperty("error.missingDatabaseUser");
 
 		/** I18n key with value {@code utils.persistence.error.missingHibernateConfig}. */
 		public static final @NonNull I18nProperty MISSING_HIBERNATE_CONFIG =
@@ -103,6 +111,22 @@ public enum Messages {
 		 */
 		public static @NonNull String INVALID_HIBERNATE_CONFIG() {
 			return INVALID_HIBERNATE_CONFIG.getMessage().trace(Error.class);
+		}
+
+		/**
+		 * I18n value retriever for key {@code utils.persistence.error.missingDatabasePassword}.
+		 * @return the value of key {@code utils.persistence.error.missingDatabasePassword}
+		 */
+		public static @NonNull String MISSING_DATABASE_PASSWORD() {
+			return MISSING_DATABASE_PASSWORD.getMessage().trace(Error.class);
+		}
+
+		/**
+		 * I18n value retriever for key {@code utils.persistence.error.missingDatabaseUser}.
+		 * @return the value of key {@code utils.persistence.error.missingDatabaseUser}
+		 */
+		public static @NonNull String MISSING_DATABASE_USER() {
+			return MISSING_DATABASE_USER.getMessage().trace(Error.class);
 		}
 
 		/**

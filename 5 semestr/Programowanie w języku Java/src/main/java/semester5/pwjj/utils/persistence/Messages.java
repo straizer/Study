@@ -48,9 +48,9 @@ public enum Messages {
 		public static final @NonNull I18nProperty MISSING_DATABASE_PASSWORD =
 			new UtilsI18nProperty("error.missingDatabasePassword");
 
-		/** I18n key with value {@code utils.persistence.error.missingDatabaseUser}. */
-		public static final @NonNull I18nProperty MISSING_DATABASE_USER =
-			new UtilsI18nProperty("error.missingDatabaseUser");
+		/** I18n key with value {@code utils.persistence.error.missingDatabaseUsername}. */
+		public static final @NonNull I18nProperty MISSING_DATABASE_USERNAME =
+			new UtilsI18nProperty("error.missingDatabaseUsername");
 
 		/** I18n key with value {@code utils.persistence.error.missingHibernateConfig}. */
 		public static final @NonNull I18nProperty MISSING_HIBERNATE_CONFIG =
@@ -122,11 +122,11 @@ public enum Messages {
 		}
 
 		/**
-		 * I18n value retriever for key {@code utils.persistence.error.missingDatabaseUser}.
-		 * @return the value of key {@code utils.persistence.error.missingDatabaseUser}
+		 * I18n value retriever for key {@code utils.persistence.error.missingDatabaseUsername}.
+		 * @return the value of key {@code utils.persistence.error.missingDatabaseUsername}
 		 */
-		public static @NonNull String MISSING_DATABASE_USER() {
-			return MISSING_DATABASE_USER.getMessage().trace(Error.class);
+		public static @NonNull String MISSING_DATABASE_USERNAME() {
+			return MISSING_DATABASE_USERNAME.getMessage().trace(Error.class);
 		}
 
 		/**

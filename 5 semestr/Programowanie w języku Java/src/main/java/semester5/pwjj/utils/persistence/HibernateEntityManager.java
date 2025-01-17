@@ -15,6 +15,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import semester5.pwjj.utils.EnvProperties;
 import semester5.pwjj.utils.extensions.ExceptionUtils;
 import semester5.pwjj.utils.extensions.TraceableUtils;
 
@@ -88,6 +89,7 @@ public final class HibernateEntityManager implements TransactionalEntityManager 
 	 * @return a {@link SessionFactory} instance, configured and ready for use
 	 * @throws HibernateException if the {@code hibernate.cfg.xml} file is missing or invalid
 	 */
+	@SuppressWarnings("FeatureEnvy")
 	private static @NonNull SessionFactory initializeEntityManagerFactory() {
 		log.debug("Initializing entity manager factory"); //NON-NLS
 		final @MonotonicNonNull Configuration configuration;
@@ -96,6 +98,11 @@ public final class HibernateEntityManager implements TransactionalEntityManager 
 		} catch (final HibernateException ex) {
 			throw Messages.Error.MISSING_HIBERNATE_CONFIG().warnAndReturn(ex);
 		}
+		configuration.setCredentials(
+			EnvProperties.get(
+				"DATABASE_USER", Messages.Error.MISSING_DATABASE_USER(), HibernateException.class), //NON-NLS
+			EnvProperties.get(
+				"DATABASE_PASSWORD", Messages.Error.MISSING_DATABASE_PASSWORD(), HibernateException.class)); //NON-NLS
 		final @MonotonicNonNull SessionFactory sessionFactory;
 		try {
 			//noinspection resource

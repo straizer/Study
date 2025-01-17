@@ -14,7 +14,7 @@ import java.util.Locale;
 public abstract class I18nProperty {
 
 	/** The property name representing an i18n key used for retrieving translations. */
-	private final String propertyName;
+	String propertyName;
 
 	/**
 	 * Creates a new instance of {@code I18nProperty} with the specified {@code propertyName}.

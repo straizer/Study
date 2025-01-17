@@ -156,7 +156,7 @@ abstract class UtilsI18nTestsBase {
 	private static class ResourceBundleMockBase extends ResourceBundle {
 
 		/** A mapping of property names to their corresponding mocked messages. */
-		private final Map<String, String> map;
+		Map<String, String> map;
 
 		/**
 		 * Constructs a {@code ResourceBundleMockBase} instance that maps the {@code PROPERTY} to the provided message.

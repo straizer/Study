@@ -33,7 +33,7 @@ import java.util.function.Function;
 public abstract class AbstractDAO<T extends Traceable> implements DAO<T>, Traceable {
 
 	/** Represents the class type, which must extend {@link Traceable}, of the objects to be managed. */
-	private final Class<T> handledClass;
+	Class<T> handledClass;
 
 	/**
 	 * Supplies {@code function} with newly created {@link TransactionalEntityManager} and executes it,

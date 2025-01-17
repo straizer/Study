@@ -11,7 +11,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.ExtensionMethod;
+import lombok.experimental.NonFinal;
 import org.checkerframework.checker.initialization.qual.UnknownInitialization;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.checker.nullness.qual.PolyNull;
 import org.checkerframework.checker.nullness.util.NullnessUtil;
@@ -55,7 +57,7 @@ public abstract class Shape implements Traceable {
 	 * Supports cases where the {@code sides} array may be {@code null}.
 	 */
 	@ElementCollection
-	private final double @Nullable [] sides;
+	double @Nullable [] sides;
 
 	/**
 	 * Represents the {@link Color} of the {@code Shape}.
@@ -65,7 +67,8 @@ public abstract class Shape implements Traceable {
 	@SuppressWarnings("UseOfConcreteClass")
 	@Embedded
 	@Getter
-	private final @Nullable Color color;
+	@Nullable
+	Color color;
 
 	/**
 	 * Represents the unique identifier for an entity in the database.
@@ -75,7 +78,8 @@ public abstract class Shape implements Traceable {
 	@Id
 	@GeneratedValue
 	@ToString.Include(rank = 5)
-	private int id;
+	@NonFinal
+	int id;
 
 	/**
 	 * Creates a {@code Shape} object with specified {@code sides} and {@link Color}.
@@ -84,7 +88,7 @@ public abstract class Shape implements Traceable {
 	 * @param color the {@link Color} of the {@code Shape}
 	 * @throws IllegalArgumentException if any side length is less than or equal to zero
 	 */
-	protected Shape(final double[] sides, @SuppressWarnings("UseOfConcreteClass") final Color color) {
+	protected Shape(final double[] sides, @SuppressWarnings("UseOfConcreteClass") final @NonNull Color color) {
 		for (final double side : sides) {
 			if (side <= 0) {
 				throw Messages.Error.SIDES_NOT_POSITIVE(getClassNameNls())

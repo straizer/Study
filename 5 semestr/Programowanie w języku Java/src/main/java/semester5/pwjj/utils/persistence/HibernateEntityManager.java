@@ -58,7 +58,7 @@ public final class HibernateEntityManager implements TransactionalEntityManager 
 	 * It acts as the central interface for managing persistent entities within a persistence context.
 	 */
 	@Delegate(excludes = NotDelegated.class)
-	private final EntityManager entityManager;
+	EntityManager entityManager;
 
 	/**
 	 * Constructs a new instance of {@code HibernateEntityManager}.

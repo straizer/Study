@@ -18,7 +18,7 @@ public final class MockedStatic<T> implements AutoCloseable {
 	 * mocking behavior in a controlled way.
 	 */
 	@Delegate
-	private final org.mockito.MockedStatic<T> mockedStatic;
+	org.mockito.MockedStatic<T> mockedStatic;
 
 	/**
 	 * Constructs a new instance of {@code MockedStatic} for managing static mocking behavior

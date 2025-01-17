@@ -57,7 +57,7 @@ public final class Color implements Traceable {
 	 * A value of {@code 0} represents no intensity, while {@code 255} represents full intensity.
 	 * This field is immutable and forms part of the overall color definition.
 	 */
-	private final byte red;
+	byte red;
 
 	/**
 	 * Represents the intensity of the green color channel in the RGBA format.
@@ -65,7 +65,7 @@ public final class Color implements Traceable {
 	 * A value of {@code 0} represents no intensity, while {@code 255} represents full intensity.
 	 * This field is immutable and forms part of the overall color definition.
 	 */
-	private final byte green;
+	byte green;
 
 	/**
 	 * Represents the intensity of the blue color channel in the RGBA format.
@@ -73,7 +73,7 @@ public final class Color implements Traceable {
 	 * A value of {@code 0} represents no intensity, while {@code 255} represents full intensity.
 	 * This field is immutable and forms part of the overall color definition.
 	 */
-	private final byte blue;
+	byte blue;
 
 	/**
 	 * Represents the alpha (transparency) channel in the RGBA color model.
@@ -81,7 +81,7 @@ public final class Color implements Traceable {
 	 * A value of {@code 0} indicates full transparency, while {@code 255} represents full opacity.
 	 * This field is immutable and defines the transparency level of a color.
 	 */
-	private final byte alpha;
+	byte alpha;
 
 	/**
 	 * Constructs a new {@code Color} object with the specified red, green and blue byte values.

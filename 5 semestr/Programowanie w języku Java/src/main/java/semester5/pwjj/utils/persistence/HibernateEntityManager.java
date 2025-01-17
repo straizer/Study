@@ -31,6 +31,7 @@ import semester5.pwjj.utils.extensions.TraceableUtils;
  * {@link #joinTransaction()}, and {@link #isJoinedToTransaction()}, are disabled and shouldn't be used directly.
  * Closing the entity manager performs a rollback on the current transaction if necessary.
  */
+@SuppressWarnings({"override.param", "override.return"})
 @Slf4j
 @ToString
 @ExtensionMethod(ExceptionUtils.class)
@@ -44,7 +45,7 @@ public final class HibernateEntityManager implements TransactionalEntityManager 
 	 * The initialization logic for this {@link EntityManagerFactory} is encapsulated by the
 	 * {@link #initializeEntityManagerFactory()} method.
 	 */
-	@Getter(value = AccessLevel.PRIVATE, lazy = true)
+	@Getter(value = AccessLevel.PRIVATE, lazy = true, onMethod_ = @SuppressWarnings("return"))
 	private static final EntityManagerFactory staticEntityManagerFactory = initializeEntityManagerFactory();
 
 	/**

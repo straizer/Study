@@ -1,5 +1,6 @@
 package semester5.pwjj.utils.extensions;
 
+import lombok.Cleanup;
 import org.assertj.core.api.Assertions;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.junit.jupiter.api.DisplayName;
@@ -27,10 +28,9 @@ final class ReflectionUtilsTests extends UtilsExtensionsTestsBase {
 	@Test
 	void getCallingMethodNameThrowingTest() {
 		//noinspection UseOfConcreteClass
-		try (final @NonNull MockedStatic<StreamUtils> streamUtilsMock = new MockedStatic<>(StreamUtils.class)) {
-			streamUtilsMock.when(() -> StreamUtils.getFirst(ArgumentMatchers.any())).thenThrow(SecurityException.class);
-			Assertions.assertThat(ReflectionUtils.getCallingMethodName()).isEqualTo(StringUtils.UNKNOWN);
-			streamUtilsMock.verify(() -> StreamUtils.getFirst(ArgumentMatchers.any()));
-		}
+		@Cleanup final @NonNull MockedStatic<StreamUtils> streamUtilsMock = new MockedStatic<>(StreamUtils.class);
+		streamUtilsMock.when(() -> StreamUtils.getFirst(ArgumentMatchers.any())).thenThrow(SecurityException.class);
+		Assertions.assertThat(ReflectionUtils.getCallingMethodName()).isEqualTo(StringUtils.UNKNOWN);
+		streamUtilsMock.verify(() -> StreamUtils.getFirst(ArgumentMatchers.any()));
 	}
 }

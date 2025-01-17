@@ -100,9 +100,9 @@ public final class HibernateEntityManager implements TransactionalEntityManager 
 		}
 		configuration.setCredentials(
 			EnvProperties.get(
-				"DATABASE_USERNAME", Messages.Error.MISSING_DATABASE_USERNAME(), HibernateException.class), //NON-NLS
+				"DATABASE_USERNAME", Messages.Error::MISSING_DATABASE_USERNAME, HibernateException.class), //NON-NLS
 			EnvProperties.get(
-				"DATABASE_PASSWORD", Messages.Error.MISSING_DATABASE_PASSWORD(), HibernateException.class)); //NON-NLS
+				"DATABASE_PASSWORD", Messages.Error::MISSING_DATABASE_PASSWORD, HibernateException.class)); //NON-NLS
 		final @MonotonicNonNull SessionFactory sessionFactory;
 		try {
 			//noinspection resource

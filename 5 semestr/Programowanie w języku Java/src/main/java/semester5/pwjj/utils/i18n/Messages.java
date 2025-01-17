@@ -1,7 +1,6 @@
 package semester5.pwjj.utils.i18n;
 
 import lombok.experimental.ExtensionMethod;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import semester5.pwjj.utils.extensions.StringUtils;
 import semester5.pwjj.utils.extensions.TraceableUtils;
 
@@ -24,8 +23,7 @@ public enum Messages {
 		;
 
 		/** I18n key with value {@code utils.i18n.error.translationNotFound}. */
-		public static final @NonNull I18nProperty TRANSLATION_NOT_FOUND =
-			new UtilsI18nI18nProperty("error.translationNotFound");
+		public static final I18nProperty TRANSLATION_NOT_FOUND = new UtilsI18nI18nProperty("error.translationNotFound");
 
 		/**
 		 * I18n value retriever for key {@code utils.i18n.error.translationNotFound}.
@@ -33,9 +31,7 @@ public enum Messages {
 		 * @param messageName the message name for which translation can't be found
 		 * @return the formatted value of key {@code utils.i18n.error.translationNotFound}
 		 */
-		public static @NonNull String TRANSLATION_NOT_FOUND(
-			final @NonNull Locale locale, final @NonNull String messageName
-		) {
+		public static String TRANSLATION_NOT_FOUND(final Locale locale, final String messageName) {
 			return TRANSLATION_NOT_FOUND.getMessage().safeFormat(locale, messageName).trace(Error.class);
 		}
 	}
@@ -53,7 +49,7 @@ public enum Messages {
 		 * @param propertyName the name of the i18n property, which will be prefixed with "{@code utils.i18n.}"
 		 */
 		@SuppressWarnings("StringConcatenation")
-		public UtilsI18nI18nProperty(final @NonNull String propertyName) {
+		public UtilsI18nI18nProperty(final String propertyName) {
 			super("utils.i18n." + propertyName); //NON-NLS
 		}
 	}

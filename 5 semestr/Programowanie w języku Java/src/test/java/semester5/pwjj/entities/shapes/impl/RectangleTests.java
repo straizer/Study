@@ -1,7 +1,6 @@
 package semester5.pwjj.entities.shapes.impl;
 
 import org.assertj.core.api.Assertions;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import semester5.pwjj.entities.Color;
@@ -10,7 +9,7 @@ import semester5.pwjj.entities.shapes.Shape;
 @DisplayName("Rectangle Tests")
 final class RectangleTests extends EntitiesShapesImplTestsBase {
 
-	private static final @NonNull Shape uut = new Rectangle(1.0, 2.0, Color.RED);
+	private static final Shape uut = new Rectangle(1.0, 2.0, Color.RED);
 
 	@DisplayName("read perimeter")
 	@Test

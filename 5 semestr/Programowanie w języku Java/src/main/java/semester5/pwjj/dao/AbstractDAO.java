@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.ExtensionMethod;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import semester5.pwjj.utils.Traceable;
 import semester5.pwjj.utils.extensions.ReflectionUtils;
@@ -31,10 +30,10 @@ import java.util.function.Function;
 @ToString
 @RequiredArgsConstructor
 @ExtensionMethod(StringUtils.class)
-public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> implements DAO<@NonNull T>, Traceable {
+public abstract class AbstractDAO<T extends Traceable> implements DAO<T>, Traceable {
 
 	/** Represents the class type, which must extend {@link Traceable}, of the objects to be managed. */
-	private final @NonNull Class<@NonNull T> handledClass;
+	private final Class<T> handledClass;
 
 	/**
 	 * Supplies {@code function} with newly created {@link TransactionalEntityManager} and executes it,
@@ -44,11 +43,11 @@ public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> impleme
 	 * @return an {@link Optional} of {@code function} return value if function succeeds; null otherwise
 	 */
 	@SuppressWarnings("annotations.on.use")
-	private static <@Nullable T> @Nullable Optional<@NonNull T> executeAndReturn(
-		final @NonNull Function<? super @NonNull TransactionalEntityManager, ? extends @Nullable T> function
+	private static <@Nullable T> @Nullable Optional<T> executeAndReturn(
+		final Function<? super TransactionalEntityManager, ? extends @Nullable T> function
 	) {
-		final @NonNull Optional<@NonNull T> result;
-		try (final @NonNull TransactionalEntityManager entityManager = new HibernateEntityManager()) {
+		final Optional<T> result;
+		try (final TransactionalEntityManager entityManager = new HibernateEntityManager()) {
 			result = Optional.ofNullable(function.apply(entityManager));
 			entityManager.commitTransaction();
 		} catch (final EntityExistsException | IllegalArgumentException ex) {
@@ -69,8 +68,8 @@ public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> impleme
 	 * @return an empty {@link Optional} if function succeeds; null otherwise
 	 */
 	@SuppressWarnings("annotations.on.use")
-	private static <@Nullable T> @Nullable Optional<@NonNull T> execute(
-		final @NonNull Consumer<? super @NonNull TransactionalEntityManager> function
+	private static <@Nullable T> @Nullable Optional<T> execute(
+		final Consumer<? super TransactionalEntityManager> function
 	) {
 		return executeAndReturn(entityManager -> {
 			function.accept(entityManager);
@@ -79,10 +78,10 @@ public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> impleme
 	}
 
 	@Override
-	public void create(final @NonNull T entity) {
+	public void create(final T entity) {
 		debugMessageWithObject("Saving in", entity); //NON-NLS
 		try {
-			final @Nullable Optional<@NonNull T> result = execute(
+			final @Nullable Optional<T> result = execute(
 				entityManager -> entityManager.persist(entity));
 			if (Objects.isNull(result)) { //NON-NLS
 				return;
@@ -98,9 +97,9 @@ public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> impleme
 	}
 
 	@Override
-	public @NonNull Optional<@NonNull T> read(final int id) {
+	public Optional<T> read(final int id) {
 		debugMessageWithPrefixGettingFrom(id);
-		final @Nullable Optional<@NonNull T> entity;
+		final @Nullable Optional<T> entity;
 		try {
 			entity = executeAndReturn(entityManager -> entityManager.find(handledClass, id));
 			if (Objects.isNull(entity)) {
@@ -119,12 +118,12 @@ public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> impleme
 	}
 
 	@Override
-	public @NonNull List<@NonNull T> readAll() {
+	public List<T> readAll() {
 		debugMessageWithPrefixGettingFrom("all entities"); //NON-NLS
 		//noinspection OptionalContainsCollection
-		final @Nullable Optional<List<@NonNull T>> entitiesOptional;
+		final @Nullable Optional<List<T>> entitiesOptional;
 		entitiesOptional = executeAndReturn(entityManager -> {
-			final CriteriaQuery<@NonNull T> query = entityManager.getCriteriaBuilder().createQuery(handledClass);
+			final CriteriaQuery<T> query = entityManager.getCriteriaBuilder().createQuery(handledClass);
 			query.from(handledClass);
 			return entityManager.createQuery(query).getResultList();
 		});
@@ -132,15 +131,15 @@ public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> impleme
 			return List.of();
 		}
 		//noinspection OptionalGetWithoutIsPresent
-		final @NonNull List<@NonNull T> entities = entitiesOptional.get();
+		final List<T> entities = entitiesOptional.get();
 		debugMessageWithPrefixFoundIn("%s entities".safeFormat(entities.size())); //NON-NLS
 		return trace(entities);
 	}
 
 	@Override
-	public @NonNull Optional<@NonNull T> update(final @NonNull T entity) {
+	public Optional<T> update(final T entity) {
 		debugMessageWithObject("Updating in", entity); //NON-NLS
-		final @Nullable Optional<@NonNull T> updatedEntity;
+		final @Nullable Optional<T> updatedEntity;
 		try {
 			updatedEntity = executeAndReturn(entityManager -> entityManager.merge(entity));
 			if (Objects.isNull(updatedEntity)) {
@@ -159,7 +158,7 @@ public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> impleme
 	public void delete(final int id) {
 		debugMessageWithId("Removing from", id); //NON-NLS
 		try {
-			final @Nullable Optional<@NonNull T> result =
+			final @Nullable Optional<T> result =
 				execute(entityManager -> entityManager.remove(entityManager.find(handledClass, id)));
 			if (Objects.isNull(result)) {
 				return;
@@ -186,15 +185,14 @@ public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> impleme
 	 * If no type is matched, logs warning and treats {@code object} as in {@link Traceable} case.
 	 * @param object object to print (correct formating is used depending on its type)
 	 */
-	private void debugMessageWithPrefixFoundIn(final @NonNull Object object) {
-		final @NonNull String prefix = "Found in"; //NON-NLS
+	private void debugMessageWithPrefixFoundIn(final Object object) {
+		final String prefix = "Found in"; //NON-NLS
 		switch (object) {
 			case final Traceable r -> debugMessageWithObject(prefix, r);
 			case final String s -> debugMessageWithInfix(prefix, s);
 			default -> {
 				log.warn(
-					Messages.Error.UNEXPECTED_TYPE(
-						object.getClass().getSimpleName(), Traceable.class, String.class));
+					Messages.Error.UNEXPECTED_TYPE(object.getClass().getSimpleName(), Traceable.class, String.class));
 				debugMessageWithObject(prefix, object);
 			}
 		}
@@ -216,8 +214,8 @@ public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> impleme
 	 * and treats it as in {@link String} case.
 	 * @param object object to print (correct formating is used depending on its type)
 	 */
-	private void debugMessageWithPrefixGettingFrom(final @NonNull Object object) {
-		final @NonNull String prefix = "Getting from"; //NON-NLS
+	private void debugMessageWithPrefixGettingFrom(final Object object) {
+		final String prefix = "Getting from"; //NON-NLS
 		switch (object) {
 			case final Integer i -> debugMessageWithObject(prefix, i);
 			case final String s -> debugMessageWithInfix(prefix, s);
@@ -234,7 +232,7 @@ public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> impleme
 	 * @param prefix prefix to insert
 	 * @param entity entity to insert after calling {@link T#toString()}
 	 */
-	private void debugMessageWithObject(final @NonNull String prefix, final @NonNull Object entity) {
+	private void debugMessageWithObject(final String prefix, final Object entity) {
 		debugMessage(prefix, ": %s".safeFormat(entity)); //NON-NLS
 	}
 
@@ -243,7 +241,7 @@ public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> impleme
 	 * @param prefix prefix to insert
 	 * @param id     id to insert
 	 */
-	private void debugMessageWithId(final @NonNull String prefix, final int id) {
+	private void debugMessageWithId(final String prefix, final int id) {
 		debugMessage(prefix, " with id <%d>".safeFormat(id)); //NON-NLS
 	}
 
@@ -252,7 +250,7 @@ public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> impleme
 	 * @param prefix prefix to insert
 	 * @param infix  infix to insert
 	 */
-	private void debugMessageWithInfix(final @NonNull String prefix, final @NonNull String infix) {
+	private void debugMessageWithInfix(final String prefix, final String infix) {
 		debugMessage(prefix, infix, StringUtils.EMPTY);
 	}
 
@@ -261,7 +259,7 @@ public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> impleme
 	 * @param prefix prefix to insert
 	 * @param suffix suffix to insert
 	 */
-	private void debugMessage(final @NonNull String prefix, final @NonNull String suffix) {
+	private void debugMessage(final String prefix, final String suffix) {
 		debugMessage(prefix, "entity", suffix); //NON-NLS
 	}
 
@@ -271,7 +269,7 @@ public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> impleme
 	 * @param infix  infix to insert
 	 * @param suffix suffix to insert
 	 */
-	private void debugMessage(final @NonNull String prefix, final @NonNull String infix, final @NonNull String suffix) {
+	private void debugMessage(final String prefix, final String infix, final String suffix) {
 		log.debug("{} persistence {} of type <{}>{}", prefix, infix, handledClass, suffix); //NON-NLS
 	}
 }

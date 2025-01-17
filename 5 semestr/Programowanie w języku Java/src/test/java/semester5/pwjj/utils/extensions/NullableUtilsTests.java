@@ -2,7 +2,6 @@ package semester5.pwjj.utils.extensions;
 
 import lombok.experimental.ExtensionMethod;
 import org.assertj.core.api.Assertions;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,7 +16,7 @@ final class NullableUtilsTests extends UtilsExtensionsTestsBase {
 
 	/** Method supplying {@link #mapOrNullTest(String, Integer). */
 	@SuppressWarnings("argument")
-	private static @NonNull Stream<Arguments> mapOrNullTest() {
+	private static Stream<Arguments> mapOrNullTest() {
 		return Stream.of(
 			Arguments.argumentSet("null object", null, null),
 			Arguments.argumentSet("non null object", StringUtils.EMPTY, 0));

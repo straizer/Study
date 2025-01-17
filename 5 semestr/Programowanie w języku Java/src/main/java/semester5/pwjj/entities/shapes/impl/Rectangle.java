@@ -5,7 +5,6 @@ import jakarta.persistence.Transient;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import semester5.pwjj.entities.Color;
 import semester5.pwjj.entities.shapes.Shape;
 import semester5.pwjj.utils.DoubleReducers;
@@ -30,9 +29,7 @@ public final class Rectangle extends Shape {
 	 * @param color the {@link Color} of the {@code Rectangle}
 	 * @throws IllegalArgumentException if any side length is less than or equal to zero
 	 */
-	public Rectangle(
-		final double x, final double y, @SuppressWarnings("UseOfConcreteClass") final @NonNull Color color
-	) {
+	public Rectangle(final double x, final double y, @SuppressWarnings("UseOfConcreteClass") final Color color) {
 		super(new double[]{x, y}, color);
 	}
 

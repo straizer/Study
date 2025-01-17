@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.ExtensionMethod;
 import org.checkerframework.checker.initialization.qual.UnknownInitialization;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.checker.nullness.qual.PolyNull;
 import org.checkerframework.checker.nullness.util.NullnessUtil;
@@ -85,9 +84,7 @@ public abstract class Shape implements Traceable {
 	 * @param color the {@link Color} of the {@code Shape}
 	 * @throws IllegalArgumentException if any side length is less than or equal to zero
 	 */
-	protected Shape(
-		final double @NonNull [] sides, @SuppressWarnings("UseOfConcreteClass") final @NonNull Color color
-	) {
+	protected Shape(final double[] sides, @SuppressWarnings("UseOfConcreteClass") final Color color) {
 		for (final double side : sides) {
 			if (side <= 0) {
 				throw Messages.Error.SIDES_NOT_POSITIVE(getClassNameNls())
@@ -104,7 +101,7 @@ public abstract class Shape implements Traceable {
 	 * Converts the object into a well-formatted, human-readable, i18nized {@link String} representation.
 	 * @return a {@link String} representing the {@code Shape} object
 	 */
-	public @NonNull String toPrettyString() {
+	public String toPrettyString() {
 		return trace(Messages.ToString.SHAPE(id, getClassNameNls(), getPerimeter(), getArea(), color,
 			mapSides(stream -> stream.mapToObj(it -> "%.2f".safeFormat(it)).joining("; ")))); //NON-NLS
 	}
@@ -136,9 +133,7 @@ public abstract class Shape implements Traceable {
 	 * @return a result of applying the {@code mapper} function to the {@link Stream} of {@code sides}
 	 * @throws IllegalStateException if the {@code sides} are {@code null}
 	 */
-	protected <@Nullable T> @PolyNull T mapSides(
-		final @NonNull Function<? super @NonNull DoubleStream, @PolyNull T> mapper
-	) {
+	protected <@Nullable T> @PolyNull T mapSides(final Function<? super DoubleStream, @PolyNull T> mapper) {
 		if (Objects.isNull(sides)) {
 			throw Messages.Error.SIDES_ARE_NULL(getClassNameNls()).warnAndReturn(IllegalStateException.class);
 		}
@@ -149,9 +144,9 @@ public abstract class Shape implements Traceable {
 	 * Retrieves the i18nized class name based on the class' simple name and a predefined naming convention.
 	 * @return a i18nized {@link String} representation of the class name.
 	 */
-	private @NonNull String getClassNameNls(@UnknownInitialization Shape this) {
+	private String getClassNameNls(@UnknownInitialization Shape this) {
 		//noinspection StringConcatenation
-		final @NonNull String propertyName = "name." + getClass().getSimpleName().toLowerCase(Locale.ENGLISH); //NON-NLS
+		final String propertyName = "name." + getClass().getSimpleName().toLowerCase(Locale.ENGLISH); //NON-NLS
 		return new semester5.pwjj.entities.shapes.impl.Messages.EntitiesShapesImplI18nProperty(propertyName)
 			.getMessage();
 	}

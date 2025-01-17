@@ -1,7 +1,6 @@
 package semester5.pwjj.entities.shapes;
 
 import lombok.experimental.ExtensionMethod;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import semester5.pwjj.entities.Color;
 import semester5.pwjj.utils.extensions.NullableUtils;
@@ -28,23 +27,20 @@ public enum Messages {
 		;
 
 		/** I18n key with value {@code entities.shapes.error.sidesAreNull}. */
-		public static final @NonNull I18nProperty SIDES_ARE_NULL =
-			new EntitiesShapesI18nProperty("error.sidesAreNull");
+		public static final I18nProperty SIDES_ARE_NULL = new EntitiesShapesI18nProperty("error.sidesAreNull");
 
 		/** I18n key with value {@code entities.shapes.error.sidesNotPositive}. */
-		public static final @NonNull I18nProperty SIDES_NOT_POSITIVE =
-			new EntitiesShapesI18nProperty("error.sidesNotPositive");
+		public static final I18nProperty SIDES_NOT_POSITIVE = new EntitiesShapesI18nProperty("error.sidesNotPositive");
 
 		/** I18n key with value {@code entities.shapes.error.triangleRule}. */
-		public static final @NonNull I18nProperty TRIANGLE_RULE =
-			new EntitiesShapesI18nProperty("error.triangleRule");
+		public static final I18nProperty TRIANGLE_RULE = new EntitiesShapesI18nProperty("error.triangleRule");
 
 		/**
 		 * I18n value retriever for key {@code entities.shapes.error.sidesAreNull}.
 		 * @param shapeName the name of the {@link Shape}
 		 * @return the formatted value of key {@code entities.shapes.error.sidesAreNull}
 		 */
-		public static @NonNull String SIDES_ARE_NULL(final @NonNull String shapeName) {
+		public static String SIDES_ARE_NULL(final String shapeName) {
 			return SIDES_ARE_NULL.getMessage().safeFormat(shapeName).trace(Error.class);
 		}
 
@@ -53,7 +49,7 @@ public enum Messages {
 		 * @param shapeName the name of the {@link Shape}
 		 * @return the formatted value of key {@code entities.shapes.error.sidesNotPositive}
 		 */
-		public static @NonNull String SIDES_NOT_POSITIVE(final @NonNull String shapeName) {
+		public static String SIDES_NOT_POSITIVE(final String shapeName) {
 			return SIDES_NOT_POSITIVE.getMessage().safeFormat(shapeName).trace(Error.class);
 		}
 
@@ -61,7 +57,7 @@ public enum Messages {
 		 * I18n value retriever for key {@code entities.shapes.error.triangleRule}.
 		 * @return the value of key {@code entities.shapes.error.triangleRule}
 		 */
-		public static @NonNull String TRIANGLE_RULE() {
+		public static String TRIANGLE_RULE() {
 			return TRIANGLE_RULE.getMessage().trace(Error.class);
 		}
 	}
@@ -71,7 +67,7 @@ public enum Messages {
 		;
 
 		/** I18n key with value {@code entities.shapes.toString.shape}. */
-		public static final @NonNull I18nProperty SHAPE = new EntitiesShapesI18nProperty("toString.shape");
+		public static final I18nProperty SHAPE = new EntitiesShapesI18nProperty("toString.shape");
 
 		/**
 		 * I18n value retriever for key {@code entities.shapes.toString.shape}.
@@ -84,7 +80,7 @@ public enum Messages {
 		 * @return the formatted value of key {@code entities.shapes.toString.shape}
 		 */
 		@SuppressWarnings("MethodWithTooManyParameters")
-		public static @NonNull String SHAPE(
+		public static String SHAPE(
 			final int id, final @Nullable String shapeName, final double perimeter, final double area,
 			@SuppressWarnings("UseOfConcreteClass") final @Nullable Color color, final @Nullable String sides
 		) {
@@ -107,7 +103,7 @@ public enum Messages {
 		 * @param propertyName the name of the i18n property, which will be prefixed with "{@code entities.shapes.}"
 		 */
 		@SuppressWarnings("StringConcatenation")
-		public EntitiesShapesI18nProperty(final @NonNull String propertyName) {
+		public EntitiesShapesI18nProperty(final String propertyName) {
 			super("entities.shapes." + propertyName); //NON-NLS
 		}
 	}

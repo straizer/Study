@@ -3,7 +3,6 @@ package semester5.pwjj.utils.extensions;
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 import org.checkerframework.checker.initialization.qual.UnknownInitialization;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.checker.nullness.qual.PolyNull;
 import org.slf4j.Logger;
@@ -34,7 +33,7 @@ public class TraceableUtils {
 	 * concurrent access in multithreaded environments.
 	 */
 	@SuppressWarnings("StaticCollection")
-	private final @NonNull Map<@NonNull Class<?>, @NonNull Logger> CACHED_LOGGERS = new ConcurrentHashMap<>(10);
+	private final Map<Class<?>, Logger> CACHED_LOGGERS = new ConcurrentHashMap<>(10);
 
 	/**
 	 * Logs at the TRACE level message using the {@link Logger} named after this {@code instance}'s class.
@@ -52,7 +51,7 @@ public class TraceableUtils {
 	 * @param <T>      the type of the {@code instance}
 	 */
 	@SuppressWarnings("argument")
-	public <@NonNull T> void traceConstructor(final @UnknownInitialization @NonNull T instance) {
+	public <T> void traceConstructor(final @UnknownInitialization T instance) {
 		trace(instance, instance.getClass(), "<ctor>", instance.identityHashCode()); //NON-NLS
 	}
 
@@ -74,7 +73,7 @@ public class TraceableUtils {
 	 * @param <T>          the type of the {@code returnValue}
 	 * @return the {@code returnValue}
 	 */
-	public <@Nullable T> @PolyNull T trace(final @PolyNull T returnValue, final @NonNull Class<?> callingClass) {
+	public <@Nullable T> @PolyNull T trace(final @PolyNull T returnValue, final Class<?> callingClass) {
 		return trace(returnValue, callingClass, null);
 	}
 
@@ -100,7 +99,7 @@ public class TraceableUtils {
 	 */
 	@SuppressWarnings("return")
 	public <@Nullable T> @PolyNull T trace(
-		final @PolyNull T returnValue, final @NonNull Class<?> callingClass, final @Nullable Integer identityHashCode
+		final @PolyNull T returnValue, final Class<?> callingClass, final @Nullable Integer identityHashCode
 	) {
 		//noinspection DuplicateStringLiteralInspection
 		return trace(
@@ -127,8 +126,8 @@ public class TraceableUtils {
 	 */
 	@SuppressWarnings("argument")
 	public <@Nullable T> @UnknownInitialization @PolyNull T trace(
-		final @UnknownInitialization @PolyNull T returnValue, final @NonNull Class<?> callingClass,
-		final @NonNull String methodName, final @Nullable Integer identityHashCode
+		final @UnknownInitialization @PolyNull T returnValue, final Class<?> callingClass,
+		final String methodName, final @Nullable Integer identityHashCode
 	) {
 		//noinspection DuplicateStringLiteralInspection
 		getLogger(callingClass).trace(
@@ -144,7 +143,7 @@ public class TraceableUtils {
 	 * @param clazz the {@link Class} for which the {@link Logger} is requested
 	 * @return a {@link Logger} instance associated with the specified {@code clazz}
 	 */
-	private @NonNull Logger getLogger(final @NonNull Class<?> clazz) {
+	private Logger getLogger(final Class<?> clazz) {
 		return CACHED_LOGGERS.computeIfAbsent(clazz, LoggerFactory::getLogger);
 	}
 
@@ -163,13 +162,13 @@ public class TraceableUtils {
 	 * @param <T>   the type of {@code value}
 	 * @return a formatted value
 	 */
-	private <@Nullable T> @UnknownInitialization @NonNull Object getFormattedValue(
+	private <@Nullable T> @UnknownInitialization Object getFormattedValue(
 		final @UnknownInitialization @Nullable T value
 	) {
 		return switch (value) {
-			case final @NonNull String s -> //noinspection HardcodedLineSeparator,HardcodedFileSeparator
+			case final String s -> //noinspection HardcodedLineSeparator,HardcodedFileSeparator
 				s.replace("\n", "\\n"); //NON-NLS
-			case final @NonNull Optional<?> o -> o.isPresent() ? o.get() : StringUtils.NULL;
+			case final Optional<?> o -> o.isPresent() ? o.get() : StringUtils.NULL;
 			case null -> StringUtils.NULL;
 			default -> value;
 		};

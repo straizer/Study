@@ -1,6 +1,5 @@
 package semester5.pwjj.dao;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
 import semester5.pwjj.utils.Traceable;
 
 import java.util.List;
@@ -12,13 +11,13 @@ import java.util.Optional;
  * @param <T> the type of objects that this DAO manages, which must extend {@link Traceable}.
  */
 @SuppressWarnings({"ClassNamePrefixedWithPackageName", "InterfaceWithOnlyOneDirectInheritor", "unused"})
-public interface DAO<@NonNull T extends @NonNull Traceable> {
+public interface DAO<T extends Traceable> {
 
 	/**
 	 * Persists the specified entity in the persistent storage.
 	 * @param entity the object of type {@link T} to be saved
 	 */
-	void create(final @NonNull T entity);
+	void create(final T entity);
 
 	/**
 	 * Retrieves an entity of type {@link T} by its identifier from persistent storage.
@@ -26,15 +25,13 @@ public interface DAO<@NonNull T extends @NonNull Traceable> {
 	 * @return an {@link Optional} containing the persistent entity of type {@link T} if found;
 	 * otherwise, an empty {@link Optional}
 	 */
-	@NonNull
-	Optional<@NonNull T> read(final int id);
+	Optional<T> read(final int id);
 
 	/**
 	 * Retrieves all entities of type {@link T} from persistent storage.
 	 * @return a {@link List} containing all persistent entities of type {@link T}
 	 */
-	@NonNull
-	List<@NonNull T> readAll();
+	List<T> readAll();
 
 	/**
 	 * Updates the entity specified by its identifier in the persistent storage.
@@ -42,8 +39,7 @@ public interface DAO<@NonNull T extends @NonNull Traceable> {
 	 * @return an {@link Optional} containing the updated entity if the update was successful;
 	 * otherwise an empty {@link Optional} if the entity couldn't be updated
 	 */
-	@NonNull
-	Optional<@NonNull T> update(final @NonNull T entity);
+	Optional<T> update(final T entity);
 
 	/**
 	 * Deletes an entity of type {@link T} by its identifier from the persistent storage.

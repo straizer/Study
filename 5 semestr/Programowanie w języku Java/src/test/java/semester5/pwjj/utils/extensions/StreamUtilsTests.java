@@ -2,7 +2,6 @@ package semester5.pwjj.utils.extensions;
 
 import lombok.experimental.ExtensionMethod;
 import org.assertj.core.api.Assertions;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,9 +13,9 @@ import java.util.stream.Stream;
 @ExtensionMethod(StreamUtils.class)
 final class StreamUtilsTests extends UtilsExtensionsTestsBase {
 
-	private static final @NonNull String DELIMITER = ",";
+	private static final String DELIMITER = ",";
 
-	private static final @NonNull Supplier<Stream<String>> STRING_STREAM_SUPPLIER = () -> Stream.of("a", "b", "c");
+	private static final Supplier<Stream<String>> STRING_STREAM_SUPPLIER = () -> Stream.of("a", "b", "c");
 
 	@DisplayName("joining")
 	@Test

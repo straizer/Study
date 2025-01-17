@@ -1,7 +1,6 @@
 package semester5.pwjj.utils;
 
 import lombok.experimental.ExtensionMethod;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import semester5.pwjj.utils.extensions.StringUtils;
 import semester5.pwjj.utils.extensions.TraceableUtils;
 import semester5.pwjj.utils.i18n.I18nProperty;
@@ -25,20 +24,20 @@ public enum Messages {
 		;
 
 		/** I18n key with value {@code utils.error.noFileFound}. */
-		public static final @NonNull I18nProperty NO_FILE_FOUND = new UtilsI18nProperty("error.noFileFound");
+		public static final I18nProperty NO_FILE_FOUND = new UtilsI18nProperty("error.noFileFound");
 
 		/** I18n key with value {@code utils.error.noReadAccess}. */
-		public static final @NonNull I18nProperty NO_READ_ACCESS = new UtilsI18nProperty("error.noReadAccess");
+		public static final I18nProperty NO_READ_ACCESS = new UtilsI18nProperty("error.noReadAccess");
 
 		/** I18n key with value {@code utils.error.readingFailed}. */
-		public static final @NonNull I18nProperty READING_FAILED = new UtilsI18nProperty("error.readingFailed");
+		public static final I18nProperty READING_FAILED = new UtilsI18nProperty("error.readingFailed");
 
 		/**
 		 * I18n value retriever for key {@code utils.error.noFileFound}.
 		 * @param filename name of the file
 		 * @return the formatted value of key {@code utils.error.noFileFound}
 		 */
-		public static @NonNull String NO_FILE_FOUND(final @NonNull String filename) {
+		public static String NO_FILE_FOUND(final String filename) {
 			return NO_FILE_FOUND.getMessage().safeFormat(filename).trace(Error.class);
 		}
 
@@ -47,7 +46,7 @@ public enum Messages {
 		 * @param filename name of the file
 		 * @return the formatted value of key {@code utils.error.noReadAccess}
 		 */
-		public static @NonNull String NO_READ_ACCESS(final @NonNull String filename) {
+		public static String NO_READ_ACCESS(final String filename) {
 			return NO_READ_ACCESS.getMessage().safeFormat(filename).trace(Error.class);
 		}
 
@@ -57,9 +56,7 @@ public enum Messages {
 		 * @param exception the exception that was thrown
 		 * @return the formatted value of key {@code utils.error.readingFailed}
 		 */
-		public static @NonNull String READING_FAILED(
-			final @NonNull String filename, final @NonNull Exception exception
-		) {
+		public static String READING_FAILED(final String filename, final Exception exception) {
 			return READING_FAILED.getMessage().safeFormat(filename, exception.getMessage()).trace(Error.class);
 		}
 	}
@@ -78,7 +75,7 @@ public enum Messages {
 		 * @param propertyName the name of the i18n property, which will be prefixed with "{@code utils.}"
 		 */
 		@SuppressWarnings("StringConcatenation")
-		public UtilsI18nProperty(final @NonNull String propertyName) {
+		public UtilsI18nProperty(final String propertyName) {
 			super("utils." + propertyName); //NON-NLS
 		}
 	}

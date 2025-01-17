@@ -2,7 +2,6 @@ package semester5.pwjj.utils.extensions;
 
 import lombok.experimental.ExtensionMethod;
 import org.assertj.core.api.Assertions;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +10,7 @@ import org.junit.jupiter.api.Test;
 final class ArrayUtilsTests extends UtilsExtensionsTestsBase {
 
 	@SuppressWarnings("MismatchedReadAndWriteOfArray")
-	private static final @NonNull Integer @NonNull [] ARRAY = {0, 1, 2, 3};
+	private static final Integer[] ARRAY = {0, 1, 2, 3};
 
 	@DisplayName("skip less than length")
 	@Test

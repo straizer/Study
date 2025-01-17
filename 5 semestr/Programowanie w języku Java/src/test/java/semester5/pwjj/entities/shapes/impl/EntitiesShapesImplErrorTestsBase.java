@@ -2,7 +2,6 @@ package semester5.pwjj.entities.shapes.impl;
 
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.junit.jupiter.params.provider.Arguments;
 import semester5.pwjj.ErrorTestsBase;
 import semester5.pwjj.entities.shapes.Shape;
@@ -16,7 +15,7 @@ public abstract class EntitiesShapesImplErrorTestsBase extends EntitiesShapesImp
 
 	/** Method supplying {@link org.junit.jupiter.params.ParameterizedTest} in each extending class. */
 	@SuppressWarnings({"unused", "methodref.receiver.bound"})
-	private static @NonNull Stream<Arguments> noSidesTest() {
+	private static Stream<Arguments> noSidesTest() {
 		//noinspection StaticVariableUsedBeforeInitialization
 		return Stream.of(
 			Arguments.argumentSet("call getPerimeter()", (ThrowingCallable) emptyShape::getPerimeter),

@@ -1,6 +1,5 @@
 package semester5.pwjj.entities;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.junit.jupiter.api.BeforeAll;
 import semester5.pwjj.TestsBase;
 import semester5.pwjj.utils.i18n.I18nProperty;
@@ -9,7 +8,7 @@ import semester5.pwjj.utils.i18n.I18nProperty;
 @SuppressWarnings("ClassNamePrefixedWithPackageName")
 public abstract class EntitiesTestsBase extends TestsBase {
 
-	protected static final @NonNull I18nProperty TO_STRING_COLOR = Messages.ToString.COLOR;
+	protected static final I18nProperty TO_STRING_COLOR = Messages.ToString.COLOR;
 
 	/** Method executed once before all tests in each extending class. */
 	@BeforeAll

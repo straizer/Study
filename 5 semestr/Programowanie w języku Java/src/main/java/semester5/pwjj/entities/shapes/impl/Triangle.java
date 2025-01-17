@@ -6,7 +6,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.ExtensionMethod;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import semester5.pwjj.entities.Color;
 import semester5.pwjj.entities.shapes.Messages;
 import semester5.pwjj.entities.shapes.Shape;
@@ -38,8 +37,7 @@ public final class Triangle extends Shape {
 	 *                                  or if the side lengths don't satisfy the triangle inequality rule
 	 */
 	public Triangle(
-		final double x, final double y, final double z,
-		@SuppressWarnings("UseOfConcreteClass") final @NonNull Color color
+		final double x, final double y, final double z, @SuppressWarnings("UseOfConcreteClass") final Color color
 	) {
 		super(new double[]{x, y, z}, color);
 		if (x + y <= z || y + z <= x || x + z <= y) {

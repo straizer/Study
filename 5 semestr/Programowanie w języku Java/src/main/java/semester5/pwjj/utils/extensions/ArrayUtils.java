@@ -2,7 +2,6 @@ package semester5.pwjj.utils.extensions;
 
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.checker.nullness.qual.PolyNull;
 
@@ -26,8 +25,8 @@ public class ArrayUtils {
 	 * @return a {@link Stream} starting from the (n+1)-th element of the array
 	 * @throws IllegalArgumentException if {@code n} is negative
 	 */
-	public <@Nullable T> @NonNull Stream<@PolyNull T> skip(
-		final @PolyNull T @NonNull [] array, @SuppressWarnings("StandardVariableNames") final long n) {
+	public <@Nullable T> Stream<@PolyNull T> skip(
+		final @PolyNull T[] array, @SuppressWarnings("StandardVariableNames") final long n) {
 		return array.stream().skip(n);
 	}
 
@@ -40,8 +39,8 @@ public class ArrayUtils {
 	 * @param <R>    the type of elements in the resulting {@link Stream}
 	 * @return a {@link Stream} consisting of the transformed elements
 	 */
-	public <@Nullable T, @Nullable R> @NonNull Stream<@Nullable R> map(
-		final @PolyNull T @NonNull [] array, final @NonNull Function<? super @PolyNull T, ? extends @Nullable R> mapper
+	public <@Nullable T, @Nullable R> Stream<@Nullable R> map(
+		final @PolyNull T[] array, final Function<? super @PolyNull T, ? extends @Nullable R> mapper
 	) {
 		return array.stream().map(mapper);
 	}
@@ -54,7 +53,7 @@ public class ArrayUtils {
 	 * @return {@code true} if the array contains the specified element; otherwise {@code false}
 	 */
 	@SuppressWarnings("argument")
-	public <@Nullable T> boolean contains(final @PolyNull T @NonNull [] array, final @Nullable T element) {
+	public <@Nullable T> boolean contains(final @PolyNull T[] array, final @Nullable T element) {
 		return array.asList().contains(element);
 	}
 }

@@ -2,6 +2,7 @@ package semester5.pwjj.utils.extensions;
 
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
+import org.checkerframework.checker.initialization.qual.Initialized;
 import org.checkerframework.checker.initialization.qual.UnknownInitialization;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.checker.nullness.qual.PolyNull;
@@ -22,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @SuppressWarnings("ClassWithoutLogger")
 @UtilityClass
-@ExtensionMethod({Objects.class, ArrayUtils.class, StreamUtils.class, System.class})
+@ExtensionMethod({ArrayUtils.class, StreamUtils.class, System.class})
 public class TraceableUtils {
 
 	/**
@@ -34,6 +35,10 @@ public class TraceableUtils {
 	 */
 	@SuppressWarnings("StaticCollection")
 	private final Map<Class<?>, Logger> CACHED_LOGGERS = new ConcurrentHashMap<>(10);
+
+	/** The array of method names to skip while determining the calling method's name. */
+	@SuppressWarnings("DuplicateStringLiteralInspection")
+	private final String[] skippedNames = {"trace"}; //NON-NLS
 
 	/**
 	 * Logs at the TRACE level message using the {@link Logger} named after this {@code instance}'s class.
@@ -79,6 +84,32 @@ public class TraceableUtils {
 	/**
 	 * Logs at the TRACE level message using a {@link Logger} named after the specified {@code callingClass}.
 	 * The logged message format is<br>
+	 * {@code {class}@STATIC::{method} -> {value}}, where:
+	 * <ul>
+	 *     <li>{@code class}: the simple name of {@code callingClass}.</li>
+	 *     <li>{@code method}: the first method name on the stack trace, which isn't '{@code trace}'.</li>
+	 *     <li>{@code value}: the formatted {@code returnValue}.</li>
+	 * </ul>
+	 * The method then returns the {@code returnValue}.
+	 * <p>
+	 * If the method name can't be retrieved due to security restrictions,
+	 * a {@link StringUtils#UNKNOWN} is logged instead.
+	 * @param returnValue  the value to log and return
+	 * @param callingClass the {@link Class} for which the {@link Logger} is retrieved
+	 * @param obfuscate    the {@code boolean} indicating if value should be obfuscated
+	 * @param <T>          the type of the {@code returnValue}
+	 * @return the {@code returnValue}
+	 */
+	@SuppressWarnings({"BooleanParameter", "return"})
+	public <@Nullable T> @PolyNull T trace(
+		final @PolyNull T returnValue, final Class<?> callingClass, final boolean obfuscate
+	) {
+		return trace(returnValue, callingClass, ReflectionUtils.getCallingMethodName(skippedNames), null, obfuscate);
+	}
+
+	/**
+	 * Logs at the TRACE level message using a {@link Logger} named after the specified {@code callingClass}.
+	 * The logged message format is<br>
 	 * {@code {class}@{address}::{method} -> {value}}, where:
 	 * <ul>
 	 *     <li>{@code class}: the simple name of {@code callingClass}.</li>
@@ -100,9 +131,7 @@ public class TraceableUtils {
 	public <@Nullable T> @PolyNull T trace(
 		final @PolyNull T returnValue, final Class<?> callingClass, final @Nullable Integer identityHashCode
 	) {
-		//noinspection DuplicateStringLiteralInspection
-		return trace(
-			returnValue, callingClass, ReflectionUtils.getCallingMethodName("trace"), identityHashCode); //NON-NLS
+		return trace(returnValue, callingClass, ReflectionUtils.getCallingMethodName(skippedNames), identityHashCode);
 	}
 
 	/**
@@ -128,10 +157,37 @@ public class TraceableUtils {
 		final @UnknownInitialization @PolyNull T returnValue, final Class<?> callingClass,
 		final String methodName, final @Nullable Integer identityHashCode
 	) {
+		return trace(returnValue, callingClass, methodName, identityHashCode, false);
+	}
+
+	/**
+	 * Logs at the TRACE level message using a {@link Logger} named after the specified {@code callingClass}.
+	 * The logged message format is<br>
+	 * {@code {class}@{address}::{method} -> {value}}, where:
+	 * <ul>
+	 *     <li>{@code class}: the simple name of {@code callingClass}.</li>
+	 *     <li>{@code address}: the {@code identityHashCode} if provided; otherwise `{@code STATIC}`.</li>
+	 *     <li>{@code method}: the specified {@code methodName}.</li>
+	 *     <li>{@code value}: the formatted {@code returnValue}.</li>
+	 * </ul>
+	 * The method then returns the {@code returnValue}.
+	 * @param returnValue      the value to log and return
+	 * @param callingClass     the {@link Class} for which the {@link Logger} is retrieved
+	 * @param methodName       the name of the method generating the log entry
+	 * @param identityHashCode the identity hash code of the object to associate with the log entry
+	 * @param obfuscate        the {@code boolean} indicating if value should be obfuscated
+	 * @param <T>              the type of the {@code returnValue}
+	 * @return the {@code returnValue}
+	 */
+	@SuppressWarnings("argument")
+	private <@Nullable T> @UnknownInitialization @PolyNull T trace(
+		final @UnknownInitialization @PolyNull T returnValue, final Class<?> callingClass,
+		final String methodName, final @Nullable Integer identityHashCode, final boolean obfuscate
+	) {
 		//noinspection DuplicateStringLiteralInspection
 		getLogger(callingClass).trace(
-			"{}@{}::{} -> {}", callingClass.getSimpleName(), identityHashCode.requireNonNullElse("STATIC"),
-			methodName, getFormattedValue(returnValue));
+			"{}@{}::{} -> {}", callingClass.getSimpleName(), Objects.requireNonNullElse(identityHashCode, "STATIC"),
+			methodName, getFormattedValue(returnValue, obfuscate));
 		return returnValue;
 	}
 
@@ -162,14 +218,15 @@ public class TraceableUtils {
 	 * @return a formatted value
 	 */
 	private <@Nullable T> @UnknownInitialization Object getFormattedValue(
-		final @UnknownInitialization @Nullable T value
+		final @UnknownInitialization @Nullable T value, final boolean obfuscate
 	) {
-		return switch (value) {
+		@SuppressWarnings("assignment") final @Initialized Object result = switch (value) {
 			case final String s -> //noinspection HardcodedLineSeparator,HardcodedFileSeparator
-				s.replace("\n", "\\n"); //NON-NLS
+				s.replace("\r", "\\r").replace("\n", "\\n"); //NON-NLS
 			case final Optional<?> o -> o.isPresent() ? o.get() : StringUtils.NULL;
 			case null -> StringUtils.NULL;
 			default -> value;
 		};
+		return obfuscate ? StringUtils.obfuscate(result.toString()) : result;
 	}
 }

@@ -130,6 +130,22 @@ final class TraceableUtilsTests extends UtilsExtensionsTestsBase {
 		verifyReflectionUtilsMockCalled();
 	}
 
+	@DisplayName("trace obfuscated no method name and identity hash code")
+	@Test
+	void traceObfuscatedNoMethodNameAndIdentityHashCodeTest() {
+		final int value = 123;
+		traceTest(() -> TraceableUtils.trace(value, getClass(), true), value, "***", STATIC_TRACED_IDENTITY);
+		verifyReflectionUtilsMockCalled();
+	}
+
+	@DisplayName("trace not obfuscated no method name and identity hash code")
+	@Test
+	void traceNotObfuscatedNoMethodNameAndIdentityHashCodeTest() {
+		final int value = 123;
+		traceTest(() -> TraceableUtils.trace(value, getClass(), false), value, value, STATIC_TRACED_IDENTITY);
+		verifyReflectionUtilsMockCalled();
+	}
+
 	@DisplayName("trace constructor")
 	@Test
 	void traceConstructorTest() {

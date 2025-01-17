@@ -1,9 +1,11 @@
 package semester5.pwjj.utils;
 
+import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import semester5.pwjj.utils.extensions.ExceptionUtils;
 import semester5.pwjj.utils.extensions.StringUtils;
 
 import java.io.FileInputStream;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 @SuppressWarnings("GrazieInspection")
 @Slf4j
 @UtilityClass
+@ExtensionMethod(ExceptionUtils.class)
 public class EnvProperties {
 
 	/**
@@ -59,6 +62,27 @@ public class EnvProperties {
 	}
 
 	/**
+	 * Retrieves the value associated with the given {@code key} from the {@code .env} properties file.
+	 * If the key isn't found, an exception of the specified type is thrown with the provided error message.
+	 * @param key            the {@link String} key whose associated value is to be returned
+	 * @param errorMessage   the error message to be used if the key isn't found
+	 * @param exceptionClass the class of the exception to be thrown if the key isn't found
+	 * @param <T>            the type of the exception that may be thrown
+	 * @return the value associated with {@code key}, if present
+	 * @throws T if the key isn't found
+	 */
+	@SuppressWarnings("CheckedExceptionClass")
+	public <@NonNull T extends @NonNull Exception> @NonNull String get(
+		final @NonNull String key, final @NonNull String errorMessage, final @NonNull Class<@NonNull T> exceptionClass
+	) throws T {
+		final @Nullable String value = get(key);
+		if (Objects.isNull(value)) {
+			throw errorMessage.warnAndReturn(exceptionClass);
+		}
+		return value;
+	}
+
+	/**
 	 * Converts the loaded properties into a formatted {@link String}, with sensitive values obfuscated.
 	 * Each key-value pair is represented as a string, and entries are joined by line separators.
 	 * @return a {@link String} representation of the properties, with passwords obfuscated
@@ -78,7 +102,7 @@ public class EnvProperties {
 	private Map.@NonNull Entry<@NonNull Object, @NonNull Object> obfuscatePasswords(
 		final Map.@NonNull Entry<@NonNull Object, @NonNull Object> entry
 	) {
-		final String key = (String) entry.getKey();
+		final @NonNull String key = (String) entry.getKey();
 		return key.toLowerCase(Locale.ROOT).contains("password") //NON-NLS
 			? Map.entry(key, StringUtils.obfuscate((CharSequence) entry.getValue()))
 			: entry;

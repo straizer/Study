@@ -41,7 +41,7 @@ public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> impleme
 	 * then perform {@link TransactionalEntityManager#commitTransaction()}.
 	 * @param function function to execute
 	 * @param <T>      type of {@code function} return value
-	 * @return {@link Optional} of {@code function} return value if function succeeds; null otherwise
+	 * @return an {@link Optional} of {@code function} return value if function succeeds; null otherwise
 	 */
 	@SuppressWarnings("annotations.on.use")
 	private static <@Nullable T> @Nullable Optional<@NonNull T> executeAndReturn(
@@ -66,7 +66,7 @@ public abstract class AbstractDAO<@NonNull T extends @NonNull Traceable> impleme
 	 * Supplies {@code function} with newly created {@link TransactionalEntityManager} and executes it,
 	 * then perform {@link TransactionalEntityManager#commitTransaction()}.
 	 * @param function function to execute
-	 * @return Empty {@link Optional} if function succeeds; null otherwise
+	 * @return an empty {@link Optional} if function succeeds; null otherwise
 	 */
 	@SuppressWarnings("annotations.on.use")
 	private static <@Nullable T> @Nullable Optional<@NonNull T> execute(

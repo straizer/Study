@@ -61,4 +61,14 @@ public class StringUtils {
 			return format;
 		}
 	}
+
+	/**
+	 * Obfuscates the given {@code value} by replacing all characters with asterisks ({@code *}).
+	 * The length of the returned {@link CharSequence} matches the length of the input, preserving its structure.
+	 * @param value the {@link CharSequence} to be obfuscated
+	 * @return a {@link CharSequence} of the same length as {@code value}, consisting only of asterisks ({@code *})
+	 */
+	public @NonNull CharSequence obfuscate(final @NonNull CharSequence value) {
+		return "*".repeat(value.length());
+	}
 }

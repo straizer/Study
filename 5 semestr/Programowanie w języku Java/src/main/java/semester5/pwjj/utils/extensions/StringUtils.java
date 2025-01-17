@@ -3,7 +3,6 @@ package semester5.pwjj.utils.extensions;
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.IllegalFormatException;
@@ -23,20 +22,20 @@ public class StringUtils {
 	 * A constant representing an empty {@link String} literal.
 	 * Used as a placeholder to signify a blank or default value.
 	 */
-	public final @NonNull String EMPTY = "";
+	public final String EMPTY = "";
 
 	/**
 	 * A constant representing a {@link String} literal value "{@code null}".
 	 * Used as a placeholder or default value in scenarios where a {@code null} value needs to be explicitly
 	 * represented as a {@link String}.
 	 */
-	public final @NonNull String NULL = "null"; //NON-NLS
+	public final String NULL = "null"; //NON-NLS
 
 	/**
 	 * A constant value representing the {@link String} literal "{@code <unknown>}".
 	 * Used as a placeholder or default value in scenarios where the content is unknown or unspecified.
 	 */
-	public final @NonNull String UNKNOWN = "<unknown>"; //NON-NLS
+	public final String UNKNOWN = "<unknown>"; //NON-NLS
 
 	/**
 	 * Safely formats a {@link String} using the specified format {@link String} and arguments.
@@ -50,7 +49,7 @@ public class StringUtils {
 	 * @return the formatted {@link String} if formatting succeeds; the original {@code format} otherwise
 	 */
 	@SuppressWarnings("argument")
-	public @NonNull String safeFormat(final @NonNull String format, final @Nullable Object @Nullable ... args) {
+	public String safeFormat(final String format, final @Nullable Object @Nullable ... args) {
 		if (Objects.isNull(args) || args.length == 0) {
 			return format;
 		}
@@ -68,7 +67,7 @@ public class StringUtils {
 	 * @param value the {@link CharSequence} to be obfuscated
 	 * @return a {@link CharSequence} of the same length as {@code value}, consisting only of asterisks ({@code *})
 	 */
-	public @NonNull CharSequence obfuscate(final @NonNull CharSequence value) {
+	public CharSequence obfuscate(final CharSequence value) {
 		return "*".repeat(value.length());
 	}
 }

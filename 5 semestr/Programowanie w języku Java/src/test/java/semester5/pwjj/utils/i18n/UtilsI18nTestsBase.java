@@ -30,20 +30,20 @@ abstract class UtilsI18nTestsBase {
 	 * internationalized messages.
 	 * This property is a constant with the key "{@code test.message}".
 	 */
-	protected static final @NonNull I18nProperty PROPERTY = I18nProperty.of("test.message");
+	protected static final I18nProperty PROPERTY = I18nProperty.of("test.message");
 
 	/** Represents the Polish locale. */
-	private static final @NonNull Locale POLISH_LOCALE = Locale.of("pl");
+	private static final Locale POLISH_LOCALE = Locale.of("pl");
 
 	/** Represents the English locale. */
-	private static final @NonNull Locale ENGLISH_LOCALE = Locale.ENGLISH;
+	private static final Locale ENGLISH_LOCALE = Locale.ENGLISH;
 
 	/** A constant representing the Polish message used for testing purposes. */
 	@SuppressWarnings("SpellCheckingInspection")
-	private static final @NonNull String POLISH_MESSAGE = "testowa wiadomość";
+	private static final String POLISH_MESSAGE = "testowa wiadomość";
 
 	/** A constant representing the English message used for testing purposes. */
-	private static final @NonNull String ENGLISH_MESSAGE = "test message";
+	private static final String ENGLISH_MESSAGE = "test message";
 
 	/**
 	 * Method executed once before all tests in each extending class.
@@ -58,10 +58,9 @@ abstract class UtilsI18nTestsBase {
 	 */
 	@BeforeAll
 	static void beforeAll() throws NoSuchFieldException, IllegalAccessException {
-		final @NonNull Field pathField = MessageProvider.class.getDeclaredField("I18N_PATH");
+		final Field pathField = MessageProvider.class.getDeclaredField("I18N_PATH");
 		pathField.setAccessible(true);
-		@SuppressWarnings("argument") final @NonNull Path path =
-			NullnessUtil.castNonNull((@Nullable Path) pathField.get(null));
+		@SuppressWarnings("argument") final Path path = NullnessUtil.castNonNull((@Nullable Path) pathField.get(null));
 		ResourceBundle.clearCache();
 		ResourceBundle.getBundle(path.toString(), POLISH_LOCALE, new ControlMock());
 		ResourceBundle.getBundle(path.toString(), ENGLISH_LOCALE, new ControlMock());
@@ -82,7 +81,7 @@ abstract class UtilsI18nTestsBase {
 	 * and its corresponding expected message.
 	 */
 	@SuppressWarnings("unused")
-	private static @NonNull Stream<Arguments> getCustomTest() {
+	private static Stream<Arguments> getCustomTest() {
 		return Stream.of(
 			Arguments.of(POLISH_LOCALE, POLISH_MESSAGE),
 			Arguments.of(ENGLISH_LOCALE, ENGLISH_MESSAGE));
@@ -93,7 +92,7 @@ abstract class UtilsI18nTestsBase {
 	 * is producing {@code ENGLISH_MESSAGE}.
 	 * @param function function that's applied with {@code PROPERTY} and expected to produce {@code ENGLISH_MESSAGE}
 	 */
-	protected static void getDefaultTest(final @NonNull Function<? super I18nProperty, String> function) {
+	protected static void getDefaultTest(final Function<? super I18nProperty, String> function) {
 		Locale.setDefault(ENGLISH_LOCALE);
 		Assertions.assertThat(function.apply(PROPERTY)).isEqualTo(ENGLISH_MESSAGE);
 	}
@@ -107,8 +106,8 @@ abstract class UtilsI18nTestsBase {
 	 * @param expected expected return of {@code function} when applied with {@code PROPERTY} and {@code locale}
 	 */
 	protected static void getCustomTest(
-		final @NonNull BiFunction<? super I18nProperty, ? super Locale, String> function,
-		final @NonNull Locale locale, final @NonNull String expected
+		final BiFunction<? super I18nProperty, ? super Locale, String> function,
+		final Locale locale, final String expected
 	) {
 		Assertions.assertThat(function.apply(PROPERTY, locale)).isEqualTo(expected);
 	}
@@ -119,9 +118,7 @@ abstract class UtilsI18nTestsBase {
 	 * @param function function that's applied with {@code PROPERTY}
 	 *                 and expected to produce {@link String} indicating missing translation
 	 */
-	protected static void nonExistingTranslationLanguageTest(
-		final @NonNull Function<? super I18nProperty, String> function
-	) {
+	protected static void nonExistingTranslationLanguageTest(final Function<? super I18nProperty, String> function) {
 		Locale.setDefault(Locale.FRENCH);
 		Assertions.assertThat(function.apply(PROPERTY))
 			.isEqualTo("<%s:%s>", Locale.getDefault(), PROPERTY.getPropertyName());
@@ -134,9 +131,9 @@ abstract class UtilsI18nTestsBase {
 	 *                 and expected to produce {@link String} indicating missing translation
 	 */
 	protected static void nonExistingTranslationPropertyTest(
-		final @NonNull Function<? super I18nProperty, String> function
+		final Function<? super I18nProperty, String> function
 	) {
-		final @NonNull String propertyName = "test.missing";
+		final String propertyName = "test.missing";
 		Assertions.assertThat(function.apply(I18nProperty.of(propertyName)))
 			.isEqualTo("<%s:%s>", Locale.ROOT, propertyName);
 	}
@@ -159,19 +156,19 @@ abstract class UtilsI18nTestsBase {
 	private static class ResourceBundleMockBase extends ResourceBundle {
 
 		/** A mapping of property names to their corresponding mocked messages. */
-		private final @NonNull Map<String, String> map;
+		private final Map<String, String> map;
 
 		/**
 		 * Constructs a {@code ResourceBundleMockBase} instance that maps the {@code PROPERTY} to the provided message.
 		 * @param message the mocked message associated with the {@code PROPERTY}
 		 */
-		ResourceBundleMockBase(final @NonNull String message) {
+		ResourceBundleMockBase(final String message) {
 			map = Map.of(PROPERTY.getPropertyName(), message);
 		}
 
 		/** This method is overridden to avoid infinite looping. */
 		@Override
-		protected void setParent(final @NonNull ResourceBundle parent) {
+		protected void setParent(final ResourceBundle parent) {
 		}
 
 		@SuppressWarnings("override.return")
@@ -215,10 +212,10 @@ abstract class UtilsI18nTestsBase {
 	private static class ControlMock extends Control {
 
 		/** An English-specific mock {@link ResourceBundle} instance. */
-		private static final @NonNull ResourceBundle bundleEnglish = new ResourceBundleMockEnglish();
+		private static final ResourceBundle bundleEnglish = new ResourceBundleMockEnglish();
 
 		/** A Polish-specific mock {@link ResourceBundle} instance. */
-		private static final @NonNull ResourceBundle bundlePolish = new ResourceBundleMockPolish();
+		private static final ResourceBundle bundlePolish = new ResourceBundleMockPolish();
 
 		/**
 		 * Retrieves a language-specific {@link ResourceBundle} based on the provided {@code locale}.
@@ -233,8 +230,8 @@ abstract class UtilsI18nTestsBase {
 		@SuppressWarnings("override.return")
 		@Override
 		public @Nullable ResourceBundle newBundle(
-			final @NonNull String baseName, final @NonNull Locale locale, final @NonNull String format,
-			final @NonNull ClassLoader loader, final boolean reload
+			final String baseName, final Locale locale, final String format,
+			final ClassLoader loader, final boolean reload
 		) {
 			if (locale.equals(POLISH_LOCALE)) {
 				return bundlePolish;

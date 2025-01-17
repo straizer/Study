@@ -1,7 +1,6 @@
 package semester5.pwjj.utils.extensions;
 
 import lombok.experimental.ExtensionMethod;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import semester5.pwjj.utils.i18n.I18nProperty;
 import semester5.pwjj.utils.i18n.MessageProvider;
@@ -26,11 +25,11 @@ public enum Messages {
 		;
 
 		/** I18n key with value {@code utils.extensions.error.exceptionInitializationFailed}. */
-		public static final @NonNull I18nProperty EXCEPTION_INITIALIZATION_FAILED =
+		public static final I18nProperty EXCEPTION_INITIALIZATION_FAILED =
 			new UtilsExtensionsI18nProperty("error.exceptionInitializationFailed");
 
 		/** I18n key with value {@code utils.extensions.error.formatting}. */
-		public static final @NonNull I18nProperty FORMATTING =
+		public static final I18nProperty FORMATTING =
 			new UtilsExtensionsI18nProperty("error.formatting");
 
 		/**
@@ -39,8 +38,8 @@ public enum Messages {
 		 * @param exception the exception that was thrown
 		 * @return the formatted value of key {@code utils.extensions.error.exceptionInitializationFailed}
 		 */
-		public static @NonNull String EXCEPTION_INITIALIZATION_FAILED(
-			final @NonNull Class<? extends @NonNull Exception> clazz, final @NonNull Exception exception
+		public static String EXCEPTION_INITIALIZATION_FAILED(
+			final Class<? extends Exception> clazz, final Exception exception
 		) {
 			return EXCEPTION_INITIALIZATION_FAILED.getMessage()
 				.safeFormat(clazz.getSimpleName(), exception.getMessage()).trace(Error.class);
@@ -53,9 +52,8 @@ public enum Messages {
 		 * @param exception the exception that was thrown
 		 * @return the formatted value of key {@code utils.extensions.error.formatting}
 		 */
-		public static @NonNull String FORMATTING(
-			final @NonNull String template, final @Nullable Object @Nullable [] args,
-			final @NonNull IllegalFormatException exception
+		public static String FORMATTING(
+			final String template, final @Nullable Object @Nullable [] args, final IllegalFormatException exception
 		) {
 			return FORMATTING.getMessage().safeFormat(template, Arrays.toString(args), exception.getMessage())
 				.trace(Error.class);
@@ -75,7 +73,7 @@ public enum Messages {
 		 * @param propertyName the name of the i18n property, which will be prefixed with "{@code utils.extensions.}"
 		 */
 		@SuppressWarnings("StringConcatenation")
-		public UtilsExtensionsI18nProperty(final @NonNull String propertyName) {
+		public UtilsExtensionsI18nProperty(final String propertyName) {
 			super("utils.extensions." + propertyName); //NON-NLS
 		}
 	}

@@ -1,7 +1,6 @@
 package semester5.pwjj.utils;
 
 import lombok.experimental.UtilityClass;
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.function.DoubleBinaryOperator;
 
@@ -20,5 +19,5 @@ public class DoubleReducers {
 	 * This operator takes two input arguments and produces a single {@code double} result by multiplying the inputs.
 	 * @see DoubleBinaryOperator
 	 */
-	public final @NonNull DoubleBinaryOperator MULTIPLYING = (x, y) -> x * y;
+	public final DoubleBinaryOperator MULTIPLYING = (x, y) -> x * y;
 }

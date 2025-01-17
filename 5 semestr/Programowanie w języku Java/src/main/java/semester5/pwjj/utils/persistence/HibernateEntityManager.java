@@ -11,7 +11,6 @@ import lombok.experimental.Delegate;
 import lombok.experimental.ExtensionMethod;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -59,7 +58,7 @@ public final class HibernateEntityManager implements TransactionalEntityManager 
 	 * It acts as the central interface for managing persistent entities within a persistence context.
 	 */
 	@Delegate(excludes = NotDelegated.class)
-	private final @NonNull EntityManager entityManager;
+	private final EntityManager entityManager;
 
 	/**
 	 * Constructs a new instance of {@code HibernateEntityManager}.
@@ -70,7 +69,7 @@ public final class HibernateEntityManager implements TransactionalEntityManager 
 	 */
 	@SuppressWarnings({"CallToSimpleGetterFromWithinClass", "argument"})
 	public HibernateEntityManager() {
-		final @NonNull SessionFactory _sessionFactory = (SessionFactory) getStaticEntityManagerFactory();
+		final SessionFactory _sessionFactory = (SessionFactory) getStaticEntityManagerFactory();
 		log.debug("Creating entity manager"); //NON-NLS
 		try {
 			//noinspection HibernateResourceOpenedButNotSafelyClosed
@@ -91,7 +90,7 @@ public final class HibernateEntityManager implements TransactionalEntityManager 
 	 * @throws HibernateException if the {@code hibernate.cfg.xml} file is missing or invalid
 	 */
 	@SuppressWarnings("FeatureEnvy")
-	private static @NonNull SessionFactory initializeEntityManagerFactory() {
+	private static SessionFactory initializeEntityManagerFactory() {
 		log.debug("Initializing entity manager factory"); //NON-NLS
 		final @MonotonicNonNull Configuration configuration;
 		try {
@@ -196,7 +195,7 @@ public final class HibernateEntityManager implements TransactionalEntityManager 
 	@SuppressWarnings({"InterfaceNeverImplemented", "unused"})
 	private interface NotDelegated {
 		//@formatter:off
-		@NonNull EntityTransaction getTransaction();
+		EntityTransaction getTransaction();
 		boolean isJoinedToTransaction();
 		void joinTransaction();
 		void close();

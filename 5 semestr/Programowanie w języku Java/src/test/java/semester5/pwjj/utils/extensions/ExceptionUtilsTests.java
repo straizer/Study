@@ -2,7 +2,6 @@ package semester5.pwjj.utils.extensions;
 
 import lombok.experimental.ExtensionMethod;
 import org.assertj.core.api.Assertions;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -15,10 +14,10 @@ import java.util.stream.Stream;
 @ExtensionMethod(ExceptionUtils.class)
 final class ExceptionUtilsTests extends UtilsExtensionsTestsBase {
 
-	private static final @NonNull String MESSAGE = "message";
+	private static final String MESSAGE = "message";
 
 	/** Method supplying {@link #warnAndReturnTest(Exception). */
-	private static @NonNull Stream<Arguments> warnAndReturnTest() {
+	private static Stream<Arguments> warnAndReturnTest() {
 		return Stream.of(
 			Arguments.argumentSet("existing exception", MESSAGE.warnAndReturn(new Exception(MESSAGE))),
 			Arguments.argumentSet("new exception", MESSAGE.warnAndReturn(Exception.class)));
@@ -27,7 +26,7 @@ final class ExceptionUtilsTests extends UtilsExtensionsTestsBase {
 	@DisplayName("warn and return")
 	@ParameterizedTest
 	@MethodSource
-	void warnAndReturnTest(final @NonNull Exception exception) {
+	void warnAndReturnTest(final Exception exception) {
 		Assertions.assertThat(exception).isInstanceOf(Exception.class).hasMessage(MESSAGE);
 	}
 }

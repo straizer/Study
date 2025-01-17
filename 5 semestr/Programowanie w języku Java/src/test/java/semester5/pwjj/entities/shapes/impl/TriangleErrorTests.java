@@ -1,7 +1,6 @@
 package semester5.pwjj.entities.shapes.impl;
 
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +22,7 @@ final class TriangleErrorTests extends EntitiesShapesImplErrorTestsBase {
 	}
 
 	/** Method supplying {@link #constructorTriangleRuleNotFulfilledTest(ThrowingCallable). */
-	private static @NonNull Stream<Arguments> constructorTriangleRuleNotFulfilledTest() {
+	private static Stream<Arguments> constructorTriangleRuleNotFulfilledTest() {
 		return Stream.of(
 			Arguments.argumentSet("1 2 3", (ThrowingCallable) () -> new Triangle(1, 2, 3, Color.RED)),
 			Arguments.argumentSet("2 3 1", (ThrowingCallable) () -> new Triangle(2, 3, 1, Color.RED)),
@@ -42,7 +41,7 @@ final class TriangleErrorTests extends EntitiesShapesImplErrorTestsBase {
 	@DisplayName("constructor triangle rule not fulfilled")
 	@ParameterizedTest
 	@MethodSource
-	void constructorTriangleRuleNotFulfilledTest(final @NonNull ThrowingCallable callable) {
+	void constructorTriangleRuleNotFulfilledTest(final ThrowingCallable callable) {
 		ErrorTestsBase.throwsIllegalArgumentException(callable, ERROR_TRIANGLE_RULE.getPropertyName());
 		verifyMessageProviderMockWasUsedFor(ERROR_TRIANGLE_RULE);
 	}
@@ -50,7 +49,7 @@ final class TriangleErrorTests extends EntitiesShapesImplErrorTestsBase {
 	@DisplayName("no sides")
 	@ParameterizedTest
 	@MethodSource
-	void noSidesTest(final @NonNull ThrowingCallable callable) {
+	void noSidesTest(final ThrowingCallable callable) {
 		ErrorTestsBase.throwsIllegalStateException(callable, ERROR_SIDES_ARE_NULL.getPropertyName());
 		verifyMessageProviderMockWasUsedFor(NAME_TRIANGLE);
 		verifyMessageProviderMockWasUsedFor(ERROR_SIDES_ARE_NULL);

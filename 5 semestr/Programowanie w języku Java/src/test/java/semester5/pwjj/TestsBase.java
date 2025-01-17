@@ -1,7 +1,6 @@
 package semester5.pwjj;
 
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.util.NullnessUtil;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -18,15 +17,15 @@ import java.lang.reflect.Field;
 @SuppressWarnings("unused")
 public abstract class TestsBase {
 
-	protected static final @NonNull I18nProperty DAO_ERROR_CREATE_ENTITY_MANAGER_FAILED
+	protected static final I18nProperty DAO_ERROR_CREATE_ENTITY_MANAGER_FAILED
 		= semester5.pwjj.dao.Messages.Error.CREATE_ENTITY_MANAGER_FAILED;
-	protected static final @NonNull I18nProperty DAO_ERROR_SIDES_ARE_NULL
+	protected static final I18nProperty DAO_ERROR_SIDES_ARE_NULL
 		= semester5.pwjj.dao.Messages.Error.ENTITY_ALREADY_EXISTS;
-	protected static final @NonNull I18nProperty DAO_ERROR_NOT_AN_ENTITY_TYPE
+	protected static final I18nProperty DAO_ERROR_NOT_AN_ENTITY_TYPE
 		= semester5.pwjj.dao.Messages.Error.NOT_AN_ENTITY_TYPE;
-	protected static final @NonNull I18nProperty DAO_ERROR_NOT_AN_ENTITY_TYPE_OR_REMOVED
+	protected static final I18nProperty DAO_ERROR_NOT_AN_ENTITY_TYPE_OR_REMOVED
 		= semester5.pwjj.dao.Messages.Error.NOT_AN_ENTITY_TYPE_OR_REMOVED;
-	protected static final @NonNull I18nProperty DAO_ERROR_UNEXPECTED_TYPE
+	protected static final I18nProperty DAO_ERROR_UNEXPECTED_TYPE
 		= semester5.pwjj.dao.Messages.Error.UNEXPECTED_TYPE;
 
 	/**
@@ -71,13 +70,13 @@ public abstract class TestsBase {
 	 * @throws IllegalAccessException if the field access operations via reflection fail
 	 */
 	protected static void populateMessageProviderMock(
-		final @NonNull Class<? extends @NonNull TestsBase> clazz
+		final Class<? extends TestsBase> clazz
 	) throws IllegalAccessException {
-		for (final @NonNull Field field : clazz.getDeclaredFields()) {
+		for (final Field field : clazz.getDeclaredFields()) {
 			if (field.getType().equals(I18nProperty.class)) {
 				field.setAccessible(true);
-				@SuppressWarnings("argument") final @NonNull I18nProperty i18nProperty =
-					(@NonNull I18nProperty) NullnessUtil.castNonNull(field.get(null));
+				@SuppressWarnings("argument") final I18nProperty i18nProperty =
+					(I18nProperty) NullnessUtil.castNonNull(field.get(null));
 				NullnessUtil.castNonNull(messageProviderMock)
 					.when(() -> MessageProvider.get(i18nProperty))
 					.thenReturn(i18nProperty.getPropertyName());
@@ -92,7 +91,7 @@ public abstract class TestsBase {
 	 * @param argument the {@link I18nProperty} representing the message key for which
 	 *                 the {@code MessageProvider} mock should have been used
 	 */
-	protected static void verifyMessageProviderMockWasUsedFor(final @NonNull I18nProperty argument) {
+	protected static void verifyMessageProviderMockWasUsedFor(final I18nProperty argument) {
 		//noinspection StaticVariableUsedBeforeInitialization
 		NullnessUtil.castNonNull(messageProviderInOrder).verify(
 			NullnessUtil.castNonNull(messageProviderMock).getMockedStatic(), () -> MessageProvider.get(argument));

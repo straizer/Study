@@ -6,7 +6,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import semester5.pwjj.utils.Traceable;
 
 /**
@@ -36,21 +35,21 @@ public final class Color implements Traceable {
 	 * the green and blue channels set to minimum intensity, and the alpha channel set to maximum opacity.
 	 */
 	@SuppressWarnings("UseOfConcreteClass")
-	public static final @NonNull Color RED = new Color(BYTE_MAX, BYTE_MIN, BYTE_MIN);
+	public static final Color RED = new Color(BYTE_MAX, BYTE_MIN, BYTE_MIN);
 
 	/**
 	 * Represents the predefined {@code GREEN} color constant, with its green channel set to maximum intensity,
 	 * the red and blue channels set to minimum intensity, and the alpha channel set to maximum opacity.
 	 */
 	@SuppressWarnings("UseOfConcreteClass")
-	public static final @NonNull Color GREEN = new Color(BYTE_MIN, BYTE_MAX, BYTE_MIN);
+	public static final Color GREEN = new Color(BYTE_MIN, BYTE_MAX, BYTE_MIN);
 
 	/**
 	 * Represents the predefined {@code BLUE} color constant, with its blue channel set to maximum intensity,
 	 * the red and green channels set to minimum intensity, and the alpha channel set to maximum opacity.
 	 */
 	@SuppressWarnings("UseOfConcreteClass")
-	public static final @NonNull Color BLUE = new Color(BYTE_MIN, BYTE_MIN, BYTE_MAX);
+	public static final Color BLUE = new Color(BYTE_MIN, BYTE_MIN, BYTE_MAX);
 
 	/**
 	 * Represents the intensity of the red color channel in the RGBA format.
@@ -99,7 +98,7 @@ public final class Color implements Traceable {
 	 * Converts the object into a well-formatted, human-readable, i18nized {@link String} representation.
 	 * @return a {@link String} representing the {@code Color} object
 	 */
-	public @NonNull String toPrettyString() {
+	public String toPrettyString() {
 		return trace(Messages.ToString.COLOR(
 			Byte.toUnsignedInt(red),
 			Byte.toUnsignedInt(green),

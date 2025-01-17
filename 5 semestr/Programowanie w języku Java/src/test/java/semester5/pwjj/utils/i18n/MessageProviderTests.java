@@ -1,6 +1,5 @@
 package semester5.pwjj.utils.i18n;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +19,7 @@ final class MessageProviderTests extends UtilsI18nTestsBase {
 	@DisplayName("get custom translation")
 	@ParameterizedTest(name = "[{index}] {0}")
 	@MethodSource
-	void getCustomTest(final @NonNull Locale locale, final @NonNull String expected) {
+	void getCustomTest(final Locale locale, final String expected) {
 		getCustomTest(MessageProvider::get, locale, expected);
 	}
 

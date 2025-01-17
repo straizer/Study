@@ -2,7 +2,6 @@ package semester5.pwjj;
 
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * Abstract base class for handling error-related test assertions.
@@ -20,9 +19,7 @@ public interface ErrorTestsBase {
 	 * @throws AssertionError if the {@link IllegalArgumentException} isn't thrown
 	 *                        or if the message of the {@link IllegalArgumentException} isn't equal to {@code message}
 	 */
-	static void throwsIllegalArgumentException(
-		final @NonNull ThrowingCallable callable, final @NonNull String message
-	) {
+	static void throwsIllegalArgumentException(final ThrowingCallable callable, final String message) {
 		throwsException(callable, IllegalArgumentException.class, message);
 	}
 
@@ -35,9 +32,7 @@ public interface ErrorTestsBase {
 	 * @throws AssertionError if the {@link IllegalStateException} isn't thrown
 	 *                        or if the message of the {@link IllegalStateException} isn't equal to {@code message}
 	 */
-	static void throwsIllegalStateException(
-		final @NonNull ThrowingCallable callable, final @NonNull String message
-	) {
+	static void throwsIllegalStateException(final ThrowingCallable callable, final String message) {
 		throwsException(callable, IllegalStateException.class, message);
 	}
 
@@ -51,8 +46,7 @@ public interface ErrorTestsBase {
 	 *                        or if the message of the {@code exception} isn't equal to {@code message}
 	 */
 	private static void throwsException(
-		final @NonNull ThrowingCallable callable, final @NonNull Class<? extends Throwable> exception,
-		final @NonNull String message
+		final ThrowingCallable callable, final Class<? extends Throwable> exception, final String message
 	) {
 		Assertions.assertThatThrownBy(callable).isInstanceOf(exception).hasMessage(message);
 	}

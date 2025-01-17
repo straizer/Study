@@ -1,7 +1,6 @@
 package semester5.pwjj.entities;
 
 import lombok.experimental.ExtensionMethod;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import semester5.pwjj.utils.extensions.StringUtils;
 import semester5.pwjj.utils.extensions.TraceableUtils;
 import semester5.pwjj.utils.i18n.I18nProperty;
@@ -25,7 +24,7 @@ public enum Messages {
 		;
 
 		/** I18n key with value {@code entities.toString.color}. */
-		public static final @NonNull I18nProperty COLOR = new EntitiesI18nProperty("toString.color");
+		public static final I18nProperty COLOR = new EntitiesI18nProperty("toString.color");
 
 		/**
 		 * I18n value retriever for key {@code entities.toString.color}.
@@ -35,7 +34,7 @@ public enum Messages {
 		 * @param alpha the value of transparency in range [0-255]
 		 * @return the formatted value of key {@code entities.toString.color}
 		 */
-		public static @NonNull String COLOR(final int red, final int green, final int blue, final int alpha) {
+		public static String COLOR(final int red, final int green, final int blue, final int alpha) {
 			return COLOR.getMessage().safeFormat(red, green, blue, alpha).trace(ToString.class);
 		}
 	}
@@ -54,7 +53,7 @@ public enum Messages {
 		 * @param propertyName the name of the i18n property, which will be prefixed with "{@code entities.}"
 		 */
 		@SuppressWarnings("StringConcatenation")
-		public EntitiesI18nProperty(final @NonNull String propertyName) {
+		public EntitiesI18nProperty(final String propertyName) {
 			super("entities." + propertyName); //NON-NLS
 		}
 	}

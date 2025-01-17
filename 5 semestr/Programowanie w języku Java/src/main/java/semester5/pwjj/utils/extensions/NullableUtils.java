@@ -27,7 +27,7 @@ public class NullableUtils {
 	 * or {@code null} if the input {@code object} is {@code null}
 	 */
 	public <@Nullable T, @Nullable R> @Nullable R mapOrNull(
-		final @Nullable T object, final @NonNull Function<? super @NonNull T, ? extends @PolyNull R> mapper
+		final @Nullable T object, final Function<? super T, ? extends @PolyNull R> mapper
 	) {
 		return Optional.ofNullable(object).map(mapper).orElse(null);
 	}

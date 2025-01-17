@@ -1,7 +1,6 @@
 package semester5.pwjj.utils.extensions;
 
 import lombok.experimental.UtilityClass;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.checker.nullness.qual.PolyNull;
 
@@ -24,9 +23,9 @@ public class StreamUtils {
 	 * @return a {@link String} resulting from the concatenation of the {@code stream} elements, separated by the given
 	 * delimiter, and enclosed by the specified prefix and suffix
 	 */
-	public @NonNull String joining(
-		final @NonNull Stream<@PolyNull String> stream, final @NonNull CharSequence delimiter,
-		final @NonNull CharSequence prefix, final @NonNull CharSequence suffix
+	public String joining(
+		final Stream<@PolyNull String> stream, final CharSequence delimiter,
+		final CharSequence prefix, final CharSequence suffix
 	) {
 		return stream.collect(Collectors.joining(delimiter, prefix, suffix));
 	}
@@ -41,9 +40,7 @@ public class StreamUtils {
 	 * @return a {@link String} resulting from the concatenation of the {@code stream} elements, separated by the given
 	 * delimiter, and enclosed by {@code [} and {@code ]}
 	 */
-	public @NonNull String joining(
-		final @NonNull Stream<@PolyNull String> stream, final @NonNull CharSequence delimiter
-	) {
+	public String joining(final Stream<@PolyNull String> stream, final CharSequence delimiter) {
 		return joining(stream, delimiter, "[", "]");
 	}
 
@@ -54,7 +51,7 @@ public class StreamUtils {
 	 * @param <T>    the type of elements in the {@code stream}
 	 * @return the first element of the provided {@code stream}, or {@code null} if the {@code stream} is empty
 	 */
-	public <@Nullable T> @PolyNull T getFirst(final @NonNull Stream<@PolyNull T> stream) {
+	public <@Nullable T> @PolyNull T getFirst(final Stream<@PolyNull T> stream) {
 		return stream.toList().getFirst();
 	}
 }

@@ -1,7 +1,6 @@
 package semester5.pwjj.dao.impl;
 
 import lombok.ToString;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import semester5.pwjj.dao.AbstractDAO;
 import semester5.pwjj.entities.shapes.Shape;
 import semester5.pwjj.utils.extensions.TraceableUtils;
@@ -13,7 +12,7 @@ import semester5.pwjj.utils.extensions.TraceableUtils;
  */
 @SuppressWarnings("ClassWithoutLogger")
 @ToString
-public final class ShapeDAO extends AbstractDAO<@NonNull Shape> {
+public final class ShapeDAO extends AbstractDAO<Shape> {
 
 	/**
 	 * Constructs a new instance of the {@code ShapeDAO}.

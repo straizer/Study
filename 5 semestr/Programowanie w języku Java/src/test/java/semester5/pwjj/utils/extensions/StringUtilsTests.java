@@ -2,7 +2,6 @@ package semester5.pwjj.utils.extensions;
 
 import lombok.experimental.ExtensionMethod;
 import org.assertj.core.api.Assertions;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +9,7 @@ import org.junit.jupiter.api.Test;
 @ExtensionMethod(StringUtils.class)
 final class StringUtilsTests extends UtilsExtensionsTestsBase {
 
-	private static final @NonNull String TEMPLATE = "%d";
+	private static final String TEMPLATE = "%d";
 
 	@DisplayName("valid safe format")
 	@Test

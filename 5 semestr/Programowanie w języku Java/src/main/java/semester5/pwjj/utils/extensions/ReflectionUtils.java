@@ -3,7 +3,6 @@ package semester5.pwjj.utils.extensions;
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 /** Utility class providing reflection-related operations and utilities. */
 @Slf4j
@@ -18,7 +17,7 @@ public class ReflectionUtils {
 	 * @param skippedNames the array of method names to skip while determining the calling method's name
 	 * @return a name of the calling method, or the {@link StringUtils#UNKNOWN} if retrieval fails
 	 */
-	public @NonNull String getCallingMethodName(final @NonNull String @NonNull ... skippedNames) {
+	public String getCallingMethodName(final String... skippedNames) {
 		try {
 			return Thread.currentThread().getStackTrace().skip(2)
 				.dropWhile(it -> skippedNames.contains(it.getMethodName())).getFirst().getMethodName();

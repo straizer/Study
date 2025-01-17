@@ -2,7 +2,6 @@ package semester5.pwjj.utils.i18n;
 
 import lombok.Data;
 import lombok.experimental.ExtensionMethod;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import semester5.pwjj.utils.extensions.TraceableUtils;
 
 import java.util.Locale;
@@ -15,15 +14,15 @@ import java.util.Locale;
 public abstract class I18nProperty {
 
 	/** The property name representing an i18n key used for retrieving translations. */
-	private final @NonNull String propertyName;
+	private final String propertyName;
 
 	/**
 	 * Creates a new instance of {@code I18nProperty} with the specified {@code propertyName}.
 	 * @param propertyName the name of the i18n property
 	 * @return a new instance of {@code I18nProperty} associated with the given property name
 	 */
-	public static @NonNull I18nProperty of(final @NonNull String propertyName) {
-		final @NonNull I18nProperty instance = new I18nProperty(propertyName) {
+	public static I18nProperty of(final String propertyName) {
+		final I18nProperty instance = new I18nProperty(propertyName) {
 		};
 		return instance.trace(I18nProperty.class);
 	}
@@ -34,7 +33,7 @@ public abstract class I18nProperty {
 	 * indicating the absence of the translation.
 	 * @return a translated {@link String} for the default {@link Locale}
 	 */
-	public @NonNull String getMessage() {
+	public String getMessage() {
 		return MessageProvider.get(this);
 	}
 
@@ -45,7 +44,7 @@ public abstract class I18nProperty {
 	 * @param locale the {@link Locale} in which the translation is required
 	 * @return a translated {@link String} for the given {@code locale}
 	 */
-	public @NonNull String getMessage(final @NonNull Locale locale) {
+	public String getMessage(final Locale locale) {
 		return MessageProvider.get(this, locale);
 	}
 }

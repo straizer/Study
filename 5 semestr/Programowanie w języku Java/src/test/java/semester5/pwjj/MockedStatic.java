@@ -2,7 +2,6 @@ package semester5.pwjj;
 
 import lombok.Getter;
 import lombok.experimental.Delegate;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.mockito.Mockito;
 
 /**
@@ -19,14 +18,14 @@ public final class MockedStatic<T> implements AutoCloseable {
 	 * mocking behavior in a controlled way.
 	 */
 	@Delegate
-	private final org.mockito.@NonNull MockedStatic<T> mockedStatic;
+	private final org.mockito.MockedStatic<T> mockedStatic;
 
 	/**
 	 * Constructs a new instance of {@code MockedStatic} for managing static mocking behavior
 	 * of the specified class using Mockito's {@link org.mockito.MockedStatic}.
 	 * @param mockedClass the {@link Class} object representing the class for which static methods are to be mocked
 	 */
-	public MockedStatic(final @NonNull Class<T> mockedClass) {
+	public MockedStatic(final Class<T> mockedClass) {
 		mockedStatic = Mockito.mockStatic(mockedClass);
 	}
 

@@ -1,7 +1,6 @@
 package semester5.pwjj.entities.shapes.impl;
 
 import lombok.experimental.ExtensionMethod;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import semester5.pwjj.utils.extensions.TraceableUtils;
 import semester5.pwjj.utils.i18n.I18nProperty;
 import semester5.pwjj.utils.i18n.MessageProvider;
@@ -24,17 +23,17 @@ public enum Messages {
 		;
 
 		/** I18n key with value {@code entities.shapes.impl.name.rectangle}. */
-		public static final @NonNull I18nProperty RECTANGLE = new EntitiesShapesImplI18nProperty("name.rectangle");
+		public static final I18nProperty RECTANGLE = new EntitiesShapesImplI18nProperty("name.rectangle");
 
 		/** I18n key with value {@code entities.shapes.impl.name.triangle}. */
-		public static final @NonNull I18nProperty TRIANGLE = new EntitiesShapesImplI18nProperty("name.triangle");
+		public static final I18nProperty TRIANGLE = new EntitiesShapesImplI18nProperty("name.triangle");
 
 		/**
 		 * I18n value retriever for key {@code entities.shapes.impl.name.rectangle}.
 		 * @return the value of key {@code entities.shapes.impl.name.rectangle}
 		 */
 		@SuppressWarnings("unused")
-		public static @NonNull String RECTANGLE() {
+		public static String RECTANGLE() {
 			return RECTANGLE.getMessage().trace(Name.class);
 		}
 
@@ -43,7 +42,7 @@ public enum Messages {
 		 * @return the value of key {@code entities.shapes.impl.name.triangle}
 		 */
 		@SuppressWarnings("unused")
-		public static @NonNull String TRIANGLE() {
+		public static String TRIANGLE() {
 			return TRIANGLE.getMessage().trace(Name.class);
 		}
 	}
@@ -62,7 +61,7 @@ public enum Messages {
 		 *                     "{@code entities.shapes.impl.}"
 		 */
 		@SuppressWarnings("StringConcatenation")
-		public EntitiesShapesImplI18nProperty(final @NonNull String propertyName) {
+		public EntitiesShapesImplI18nProperty(final String propertyName) {
 			super("entities.shapes.impl." + propertyName); //NON-NLS
 		}
 	}

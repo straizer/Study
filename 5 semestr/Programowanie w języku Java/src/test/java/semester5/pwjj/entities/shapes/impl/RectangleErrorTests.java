@@ -1,7 +1,6 @@
 package semester5.pwjj.entities.shapes.impl;
 
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +30,7 @@ final class RectangleErrorTests extends EntitiesShapesImplErrorTestsBase {
 	@DisplayName("no sides")
 	@ParameterizedTest
 	@MethodSource
-	void noSidesTest(final @NonNull ThrowingCallable callable) {
+	void noSidesTest(final ThrowingCallable callable) {
 		ErrorTestsBase.throwsIllegalStateException(callable, ERROR_SIDES_ARE_NULL.getPropertyName());
 		verifyMessageProviderMockWasUsedFor(NAME_RECTANGLE);
 		verifyMessageProviderMockWasUsedFor(ERROR_SIDES_ARE_NULL);

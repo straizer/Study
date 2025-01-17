@@ -3,7 +3,6 @@ package semester5.pwjj.utils;
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import semester5.pwjj.utils.extensions.ExceptionUtils;
 import semester5.pwjj.utils.extensions.StringUtils;
@@ -28,13 +27,13 @@ public class EnvProperties {
 	 * The name of the {@code .env} properties file to be loaded.
 	 * This file is expected to be present in the application's working directory.
 	 */
-	private final @NonNull String FILENAME = ".env";
+	private final String FILENAME = ".env";
 
 	/**
 	 * A {@link Properties} object containing key-value pairs loaded from the {@code .env} properties file.
 	 */
 	@SuppressWarnings("StaticCollection")
-	private final @NonNull Properties PROPERTIES = new Properties();
+	private final Properties PROPERTIES = new Properties();
 
 	static {
 		log.debug("Loading properties from a file '{}'", FILENAME); //NON-NLS
@@ -57,7 +56,7 @@ public class EnvProperties {
 	 * @param key the {@link String} key whose associated value is to be returned
 	 * @return the value associated with {@code key}, or {@code null} if the key isn't found
 	 */
-	public @Nullable String get(final @NonNull String key) {
+	public @Nullable String get(final String key) {
 		return PROPERTIES.getProperty(key);
 	}
 
@@ -72,8 +71,8 @@ public class EnvProperties {
 	 * @throws T if the key isn't found
 	 */
 	@SuppressWarnings("CheckedExceptionClass")
-	public <@NonNull T extends @NonNull Exception> @NonNull String get(
-		final @NonNull String key, final @NonNull String errorMessage, final @NonNull Class<@NonNull T> exceptionClass
+	public <T extends Exception> String get(
+		final String key, final String errorMessage, final Class<T> exceptionClass
 	) throws T {
 		final @Nullable String value = get(key);
 		if (Objects.isNull(value)) {
@@ -87,7 +86,7 @@ public class EnvProperties {
 	 * Each key-value pair is represented as a string, and entries are joined by line separators.
 	 * @return a {@link String} representation of the properties, with passwords obfuscated
 	 */
-	private @NonNull String stringifyProperties() {
+	private String stringifyProperties() {
 		return PROPERTIES.entrySet().stream().map(EnvProperties::obfuscatePasswords).map(Objects::toString)
 			.collect(Collectors.joining(System.lineSeparator()));
 	}
@@ -99,10 +98,8 @@ public class EnvProperties {
 	 * @return a new {@link Map.Entry} with the same key and an obfuscated value if the key contains {@code "password"};
 	 * the original entry otherwise
 	 */
-	private Map.@NonNull Entry<@NonNull Object, @NonNull Object> obfuscatePasswords(
-		final Map.@NonNull Entry<@NonNull Object, @NonNull Object> entry
-	) {
-		final @NonNull String key = (String) entry.getKey();
+	private Map.Entry<Object, Object> obfuscatePasswords(final Map.Entry<Object, Object> entry) {
+		final String key = (String) entry.getKey();
 		return key.toLowerCase(Locale.ROOT).contains("password") //NON-NLS
 			? Map.entry(key, StringUtils.obfuscate((CharSequence) entry.getValue()))
 			: entry;

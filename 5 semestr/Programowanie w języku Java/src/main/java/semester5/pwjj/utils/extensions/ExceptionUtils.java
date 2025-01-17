@@ -3,7 +3,6 @@ package semester5.pwjj.utils.extensions;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 /** Utility class providing methods for handling exceptions and logging messages. */
 @Slf4j
@@ -22,9 +21,7 @@ public class ExceptionUtils {
 	 * @return a newly created {@link Exception} of type {@link T} with the provided {@code message}
 	 */
 	@SuppressWarnings("CheckedExceptionClass")
-	public <@NonNull T extends @NonNull Exception> @NonNull T warnAndReturn(
-		final @NonNull String message, final @NonNull Class<@NonNull T> exceptionClass
-	) {
+	public <T extends Exception> T warnAndReturn(final String message, final Class<T> exceptionClass) {
 		@MonotonicNonNull T exception = null;
 		try {
 			exception = exceptionClass.getConstructor(String.class).newInstance(message);
@@ -44,9 +41,7 @@ public class ExceptionUtils {
 	 * @return the supplied {@code exception}
 	 */
 	@SuppressWarnings("CheckedExceptionClass")
-	public <@NonNull T extends @NonNull Exception> @NonNull T warnAndReturn(
-		final @NonNull String message, final @NonNull T exception
-	) {
+	public <T extends Exception> T warnAndReturn(final String message, final T exception) {
 		log.warn(message);
 		return exception;
 	}

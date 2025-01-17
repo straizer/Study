@@ -81,7 +81,7 @@ public abstract class AbstractDAO<T extends Traceable> implements DAO<T>, Tracea
 	public void create(final T entity) {
 		debugMessageWithObject("Saving in", entity); //NON-NLS
 		try {
-			final @Nullable Optional<T> result = execute(
+			final @Nullable Optional<@Nullable T> result = execute(
 				entityManager -> entityManager.persist(entity));
 			if (Objects.isNull(result)) { //NON-NLS
 				return;
@@ -121,8 +121,7 @@ public abstract class AbstractDAO<T extends Traceable> implements DAO<T>, Tracea
 	public List<T> readAll() {
 		debugMessageWithPrefixGettingFrom("all entities"); //NON-NLS
 		//noinspection OptionalContainsCollection
-		final @Nullable Optional<List<T>> entitiesOptional;
-		entitiesOptional = executeAndReturn(entityManager -> {
+		final @Nullable Optional<@Nullable List<T>> entitiesOptional = executeAndReturn(entityManager -> {
 			final CriteriaQuery<T> query = entityManager.getCriteriaBuilder().createQuery(handledClass);
 			query.from(handledClass);
 			return entityManager.createQuery(query).getResultList();
@@ -158,8 +157,8 @@ public abstract class AbstractDAO<T extends Traceable> implements DAO<T>, Tracea
 	public void delete(final int id) {
 		debugMessageWithId("Removing from", id); //NON-NLS
 		try {
-			final @Nullable Optional<T> result =
-				execute(entityManager -> entityManager.remove(entityManager.find(handledClass, id)));
+			final @Nullable Optional<@Nullable T> result = execute(entityManager ->
+				entityManager.remove(entityManager.find(handledClass, id)));
 			if (Objects.isNull(result)) {
 				return;
 			}

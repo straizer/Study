@@ -89,7 +89,6 @@ public final class HibernateEntityManager implements TransactionalEntityManager 
 	 * @return a {@link SessionFactory} instance, configured and ready for use
 	 * @throws HibernateException if the {@code hibernate.cfg.xml} file is missing or invalid
 	 */
-	@SuppressWarnings("FeatureEnvy")
 	private static SessionFactory initializeEntityManagerFactory() {
 		log.debug("Initializing entity manager factory"); //NON-NLS
 		final @MonotonicNonNull Configuration configuration;

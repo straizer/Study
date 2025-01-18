@@ -6,7 +6,7 @@ import semester5.pwjj.utils.i18n.I18nProperty;
 
 
 /** Abstract base class for {@code utils.persistence} test setups and utilities. */
-@SuppressWarnings({"unused", "AbstractClassNeverImplemented", "ClassWithTooManyFields"})
+@SuppressWarnings("ClassWithTooManyFields")
 public abstract class UtilsPersistenceTestsBase extends UtilsTestsBase {
 
 	protected static final I18nProperty ERROR_CANNOT_ADD_SHUTDOWN_HOOK

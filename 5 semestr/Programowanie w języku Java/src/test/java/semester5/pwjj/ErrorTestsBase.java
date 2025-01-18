@@ -45,7 +45,7 @@ public interface ErrorTestsBase {
 	 * @throws AssertionError if the {@code exception} isn't thrown
 	 *                        or if the message of the {@code exception} isn't equal to {@code message}
 	 */
-	private static void throwsException(
+	static void throwsException(
 		final ThrowingCallable callable, final Class<? extends Throwable> exception, final String message
 	) {
 		Assertions.assertThatThrownBy(callable).isInstanceOf(exception).hasMessage(message);

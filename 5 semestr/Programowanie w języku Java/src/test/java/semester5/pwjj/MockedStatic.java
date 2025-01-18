@@ -13,10 +13,7 @@ import org.mockito.Mockito;
 @Getter
 public final class MockedStatic<T> implements AutoCloseable {
 
-	/**
-	 * A delegated mock instance of {@link org.mockito.MockedStatic}, intended for managing static
-	 * mocking behavior in a controlled way.
-	 */
+	/** A delegated instance of {@link org.mockito.MockedStatic}, intended for managing static mocking behavior. */
 	@Delegate
 	org.mockito.MockedStatic<T> mockedStatic;
 

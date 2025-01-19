@@ -211,6 +211,7 @@
                         <exclude>${project.package.main}/**/Messages$*</exclude>
                         <exclude>${project.package.main}/utils/EnvProperties.*</exclude>
                         <exclude>${project.package.main}/utils/extensions/ExceptionUtils.*</exclude>
+                        <exclude>${project.package.main}/utils/persistence/*</exclude>
                         <exclude>${project.package.main}/dao/**/*</exclude>
                     </excludes>
                 </configuration>

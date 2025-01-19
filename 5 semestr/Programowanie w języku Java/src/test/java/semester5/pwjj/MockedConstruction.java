@@ -108,10 +108,13 @@ public final class MockedConstruction<T> implements AutoCloseable {
 	@Override
 	public void close() {
 		if (isStarted) {
-			if (noIllegalStateExceptionThrown) {
-				Mockito.verifyNoMoreInteractions(getMockedInstance());
+			try {
+				if (noIllegalStateExceptionThrown) {
+					Mockito.verifyNoMoreInteractions(getMockedInstance());
+				}
+			} finally {
+				mockedConstruction.close();
 			}
-			mockedConstruction.close();
 		}
 	}
 

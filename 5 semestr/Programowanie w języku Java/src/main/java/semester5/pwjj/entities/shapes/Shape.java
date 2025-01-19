@@ -16,7 +16,6 @@ import org.checkerframework.checker.initialization.qual.UnknownInitialization;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.checker.nullness.qual.PolyNull;
-import org.checkerframework.checker.nullness.util.NullnessUtil;
 import semester5.pwjj.entities.Color;
 import semester5.pwjj.utils.Traceable;
 import semester5.pwjj.utils.extensions.ExceptionUtils;
@@ -47,7 +46,7 @@ import java.util.stream.Stream;
 @Inheritance
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
-@ExtensionMethod({StringUtils.class, Arrays.class, StreamUtils.class, ExceptionUtils.class, NullnessUtil.class})
+@ExtensionMethod({StringUtils.class, Arrays.class, StreamUtils.class, ExceptionUtils.class})
 public abstract class Shape implements Traceable {
 
 	/**
@@ -141,7 +140,7 @@ public abstract class Shape implements Traceable {
 		if (Objects.isNull(sides)) {
 			throw Messages.Error.SIDES_ARE_NULL(getClassNameNls()).warnAndReturn(IllegalStateException.class);
 		}
-		return mapper.apply(sides.castNonNull().stream());
+		return mapper.apply(sides.stream());
 	}
 
 	/**

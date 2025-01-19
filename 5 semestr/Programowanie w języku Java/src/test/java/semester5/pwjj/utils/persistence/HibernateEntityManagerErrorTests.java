@@ -12,7 +12,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.mockito.ArgumentMatchers;
 import org.mockito.MockedStatic.Verification;
 import org.mockito.Mockito;
@@ -24,6 +27,7 @@ import semester5.pwjj.utils.EnvProperties;
 import java.util.function.UnaryOperator;
 
 @DisplayName("Hibernate Entity Manager Error Tests")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 final class HibernateEntityManagerErrorTests extends UtilsPersistenceTestsBase implements ErrorTestsBase {
 
 	private static final Verification gettingDatabaseUsername = () -> EnvProperties.get("DATABASE_USERNAME");
@@ -54,7 +58,7 @@ final class HibernateEntityManagerErrorTests extends UtilsPersistenceTestsBase i
 		final UnaryOperator<MockedConstruction<Configuration>> mockedConfigurationModifier, final Runnable test
 	) {
 		//noinspection UseOfConcreteClass
-		final MockedConstruction<Configuration> mockedConfiguration =
+		@Cleanup final MockedConstruction<Configuration> mockedConfiguration =
 			mockedConfigurationModifier.apply(getPartialMockedConfiguration()).startMocking();
 		test.run();
 		mockedConfiguration.verify().configure();
@@ -77,6 +81,7 @@ final class HibernateEntityManagerErrorTests extends UtilsPersistenceTestsBase i
 
 	@DisplayName("missing Hibernate config")
 	@Test
+	@Order(1)
 	void missingHibernateConfigTest() {
 		//noinspection UseOfConcreteClass
 		@Cleanup final MockedConstruction<Configuration> mockedConfiguration =
@@ -92,6 +97,7 @@ final class HibernateEntityManagerErrorTests extends UtilsPersistenceTestsBase i
 	@SuppressWarnings("argument")
 	@DisplayName("missing database username")
 	@Test
+	@Order(1)
 	void missingDatabaseUsernameTest() {
 		//noinspection UseOfConcreteClass
 		NullnessUtil.castNonNull(envPropertiesMock).when(gettingDatabaseUsername).thenReturn(null);
@@ -104,6 +110,7 @@ final class HibernateEntityManagerErrorTests extends UtilsPersistenceTestsBase i
 	@SuppressWarnings("argument")
 	@DisplayName("missing database password")
 	@Test
+	@Order(1)
 	void missingDatabasePasswordTest() {
 		NullnessUtil.castNonNull(envPropertiesMock).when(gettingDatabasePassword).thenReturn(null);
 		throwsHibernateException(HibernateEntityManager::new, ERROR_MISSING_DATABASE_PASSWORD.getPropertyName());
@@ -113,16 +120,17 @@ final class HibernateEntityManagerErrorTests extends UtilsPersistenceTestsBase i
 		verifyMessageProviderMockWasUsedFor(ERROR_MISSING_DATABASE_PASSWORD);
 	}
 
+	@SuppressWarnings("TestMethodWithoutAssertion")
 	@DisplayName("invalid hibernate config")
 	@Test
+	@Order(1)
 	void invalidHibernateConfigTest() {
-		runTestsUsingMockedConfiguration(mockedConfiguration -> mockedConfiguration
-				.when_thenThrow(Configuration::buildSessionFactory,
-					new HibernateException(ERROR_INVALID_HIBERNATE_CONFIG.getPropertyName())),
-			() -> {
-				throwsHibernateException(HibernateEntityManager::new, ERROR_INVALID_HIBERNATE_CONFIG.getPropertyName());
-				verifyMessageProviderMockWasUsedFor(ERROR_INVALID_HIBERNATE_CONFIG);
-			});
+		runTestsUsingMockedConfiguration(
+			mc -> mc.when_thenThrow(Configuration::buildSessionFactory,
+				new HibernateException(ERROR_INVALID_HIBERNATE_CONFIG.getPropertyName())),
+			() -> throwsHibernateException(HibernateEntityManager::new,
+				ERROR_INVALID_HIBERNATE_CONFIG.getPropertyName()));
+		verifyMessageProviderMockWasUsedFor(ERROR_INVALID_HIBERNATE_CONFIG);
 	}
 
 	@DisplayName("open entity manager failed")
@@ -133,15 +141,13 @@ final class HibernateEntityManagerErrorTests extends UtilsPersistenceTestsBase i
 		Mockito.when(sessionFactoryMock.openSession())
 			.thenThrow(new HibernateException(ERROR_OPEN_ENTITY_MANAGER_FAILED.getPropertyName()));
 		//noinspection OverlyLongLambda
-		runTestsUsingMockedConfiguration(mockedConfiguration -> mockedConfiguration
-				.when_thenReturn(Configuration::buildSessionFactory, sessionFactoryMock),
-			() -> {
-				throwsHibernateException(HibernateEntityManager::new,
-					ERROR_OPEN_ENTITY_MANAGER_FAILED.getPropertyName());
-				//noinspection HibernateResourceOpenedButNotSafelyClosed
-				Mockito.verify(sessionFactoryMock).openSession();
-				Mockito.verifyNoMoreInteractions(sessionFactoryMock);
-				verifyMessageProviderMockWasUsedFor(ERROR_OPEN_ENTITY_MANAGER_FAILED);
-			});
+		runTestsUsingMockedConfiguration(
+			mc -> mc.when_thenReturn(Configuration::buildSessionFactory, sessionFactoryMock),
+			() -> throwsHibernateException(HibernateEntityManager::new,
+				ERROR_OPEN_ENTITY_MANAGER_FAILED.getPropertyName()));
+		//noinspection HibernateResourceOpenedButNotSafelyClosed
+		Mockito.verify(sessionFactoryMock).openSession();
+		Mockito.verifyNoMoreInteractions(sessionFactoryMock);
+		verifyMessageProviderMockWasUsedFor(ERROR_OPEN_ENTITY_MANAGER_FAILED);
 	}
 }

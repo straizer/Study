@@ -1,6 +1,9 @@
 package semester5.pwjj.utils.persistence;
 
+import org.hibernate.cfg.Configuration;
 import org.junit.jupiter.api.BeforeAll;
+import org.mockito.ArgumentMatchers;
+import semester5.pwjj.MockedConstruction;
 import semester5.pwjj.utils.UtilsTestsBase;
 import semester5.pwjj.utils.i18n.I18nProperty;
 
@@ -36,5 +39,14 @@ public abstract class UtilsPersistenceTestsBase extends UtilsTestsBase {
 	@BeforeAll
 	static void utilsPersistenceBeforeAll() throws IllegalAccessException {
 		populateMessageProviderMock(UtilsPersistenceTestsBase.class);
+	}
+
+	@SuppressWarnings("UseOfConcreteClass")
+	protected static MockedConstruction<Configuration> getPartialMockedConfiguration() {
+		//noinspection resource
+		return new MockedConstruction<>(Configuration.class)
+			.when_thenReturnSelf(Configuration::configure)
+			.when_thenReturnSelf(configuration ->
+				configuration.setCredentials(ArgumentMatchers.anyString(), ArgumentMatchers.anyString()));
 	}
 }

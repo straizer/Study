@@ -97,6 +97,7 @@ public final class HibernateEntityManager implements TransactionalEntityManager 
 		} catch (final HibernateException ex) {
 			throw Messages.Error.MISSING_HIBERNATE_CONFIG().warnAndReturn(ex);
 		}
+		//noinspection DuplicateStringLiteralInspection
 		configuration.setCredentials(
 			EnvProperties.get(
 				"DATABASE_USERNAME", Messages.Error::MISSING_DATABASE_USERNAME, HibernateException.class), //NON-NLS
@@ -170,9 +171,10 @@ public final class HibernateEntityManager implements TransactionalEntityManager 
 
 	/** Initiates a new transaction using the {@code entityManager}. */
 	private void beginTransactionInternal() {
-		log.debug("Beginning transaction: {}", entityManager.getTransaction()); //NON-NLS
-		entityManager.getTransaction().begin();
-		log.debug("New transaction began: {}", entityManager.getTransaction()); //NON-NLS
+		final EntityTransaction transaction = entityManager.getTransaction();
+		log.debug("Beginning transaction: {}", transaction); //NON-NLS
+		transaction.begin();
+		log.debug("New transaction began: {}", transaction); //NON-NLS
 	}
 
 	/**

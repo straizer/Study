@@ -1,5 +1,3 @@
--- noinspection SqlResolveForFile @ any/"dbms_output"
-
 SET SERVEROUTPUT ON
 DECLARE
     input              NUMBER(2) NOT NULL := &x;

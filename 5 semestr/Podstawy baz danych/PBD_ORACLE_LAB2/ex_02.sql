@@ -1,5 +1,3 @@
--- noinspection SqlResolveForFile @ any/"dbms_output"
-
 SET SERVEROUTPUT ON
 BEGIN
     FOR reader IN (SELECT imie, nazwisko, miasto FROM czytelnik ORDER BY nazwisko DESC)

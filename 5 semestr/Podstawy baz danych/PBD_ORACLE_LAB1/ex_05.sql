@@ -1,7 +1,4 @@
--- noinspection SqlMissingColumnAliasesForFile
-
 -- v1: using CTE
--- noinspection SqlMissingColumnAliases
 WITH count_per_genre AS (SELECT id_gat, COUNT(*) AS count
                          FROM wypozyczenia
                                   NATURAL JOIN ksiazka

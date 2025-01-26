@@ -1,5 +1,3 @@
--- noinspection SqlResolveForFile @ any/"dbms_output"
-
 SET SERVEROUTPUT ON
 ALTER SESSION SET nls_language = 'english';
 DECLARE

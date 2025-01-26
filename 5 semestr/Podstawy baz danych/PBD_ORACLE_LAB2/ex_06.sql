@@ -1,5 +1,3 @@
--- noinspection SqlResolveForFile
-
 SET SERVEROUTPUT ON
 DECLARE
     CURSOR książki IS

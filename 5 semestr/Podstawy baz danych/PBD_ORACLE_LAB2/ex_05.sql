@@ -1,7 +1,4 @@
--- noinspection SqlResolveForFile @ any/"dbms_output"
-
 SET SERVEROUTPUT ON
--- noinspection SqlMissingColumnAliases
 DECLARE
     "NAZWA FORMATU" format.f_nazwa%TYPE;
     ilość           NUMBER;

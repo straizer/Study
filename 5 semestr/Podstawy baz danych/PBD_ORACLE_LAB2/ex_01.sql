@@ -1,5 +1,3 @@
--- noinspection SqlResolveForFile @ any/"dbms_output"
-
 SET SERVEROUTPUT ON
 DECLARE
     TYPE author_type IS RECORD
@@ -21,11 +19,10 @@ DECLARE
                              'imie=' || author.imie || ',' || 'kraj=' || author.kraj);
     END;
 BEGIN
+    dbms_output.put_line('USING RECORD');
     IF NOT authors%ISOPEN THEN
         OPEN authors;
     END IF;
-    -- noinspection GrazieInspection
-    dbms_output.put_line('USING RECORD');
     LOOP
         FETCH authors INTO author1;
         EXIT WHEN authors%NOTFOUND;
@@ -35,11 +32,11 @@ BEGIN
         CLOSE authors;
     END IF;
 
+    -- noinspection SpellCheckingInspection
+    dbms_output.put_line('USING ROWTYPE');
     IF NOT authors%ISOPEN THEN
         OPEN authors;
     END IF;
-    -- noinspection SpellCheckingInspection
-    dbms_output.put_line('USING ROWTYPE');
     LOOP
         FETCH authors INTO author2;
         EXIT WHEN authors%NOTFOUND;
@@ -49,7 +46,6 @@ BEGIN
         CLOSE authors;
     END IF;
 
-    -- noinspection GrazieInspection
     dbms_output.put_line('USING FOR LOOP');
     FOR author3 IN authors
         LOOP

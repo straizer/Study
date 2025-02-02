@@ -1,0 +1,71 @@
+services:
+
+  source-db:
+    build:
+      context: .
+      dockerfile: database.Dockerfile
+    container_name: source-db
+    restart: always
+    volumes:
+      - ./data:/var/lib/mysql:rw
+    healthcheck:
+      test: [ "CMD", "mysql", "-uroot", "-pexample", "--execute", "SHOW DATABASES;" ]
+      start_period: 10s
+      start_interval: 5s
+      interval: 30s
+      timeout: 3s
+      retries: 10
+
+  destination-db:
+    build:
+      context: .
+      dockerfile: database.Dockerfile
+    container_name: destination-db
+    restart: always
+    healthcheck:
+      test: [ "CMD", "mysql", "-uroot", "-pexample", "--execute", "SHOW DATABASES;" ]
+      start_period: 10s
+      start_interval: 5s
+      interval: 30s
+      timeout: 3s
+      retries: 10
+
+  adminer:
+    image: adminer:latest
+    container_name: adminer
+    restart: always
+    environment:
+      ADMINER_DESIGN: galkaev
+    ports:
+      - "80:8080"
+    depends_on:
+      source-db:
+        condition: service_healthy
+      destination-db:
+        condition: service_healthy
+
+  populate-app:
+    build:
+      context: .
+      dockerfile: python-populate.Dockerfile
+    container_name: populate-app
+    restart: no
+    depends_on:
+      source-db:
+        condition: service_healthy
+
+  copy-app:
+    build:
+      context: .
+      dockerfile: python-copy.Dockerfile
+    container_name: copy-app
+    restart: no
+    volumes:
+      - ./times.txt:/app/times.txt
+    depends_on:
+      source-db:
+        condition: service_healthy
+      destination-db:
+        condition: service_healthy
+      populate-app:
+        condition: service_completed_successfully

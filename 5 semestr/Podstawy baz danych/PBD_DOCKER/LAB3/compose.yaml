@@ -1,0 +1,46 @@
+services:
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - ./data:/data/db
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      start_period: 15s
+      start_interval: 15s
+      interval: 5s
+      timeout: 5s
+      retries: 100
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: always
+    ports:
+      - 80:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+      ME_CONFIG_BASICAUTH: false
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  app:
+    image: mongo_flask
+    container_name: flask-app
+    build:
+      context: .
+    volumes:
+      - ./app.py:/app/app.py:r
+    ports:
+      - 5000:5000
+    depends_on:
+      mongo:
+        condition: service_healthy

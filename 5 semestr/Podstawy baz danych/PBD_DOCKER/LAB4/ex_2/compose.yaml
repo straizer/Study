@@ -1,0 +1,46 @@
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: app.Dockerfile
+    container_name: app
+    volumes:
+      - ./app.py:/app/app.py:r
+    ports:
+      - "80:5000"
+
+  mongo1:
+    build:
+      context: .
+      dockerfile: db.Dockerfile
+    container_name: mongo1
+    volumes:
+      - "mongo1_data:/data/db"
+      - "mongo1_config:/data/configdb"
+
+  mongo2:
+    build:
+      context: .
+      dockerfile: db.Dockerfile
+    container_name: mongo2
+    volumes:
+      - "mongo2_data:/data/db"
+      - "mongo2_config:/data/configdb"
+
+  mongo3:
+    build:
+      context: .
+      dockerfile: db.Dockerfile
+    container_name: mongo3
+    volumes:
+      - "mongo3_data:/data/db"
+      - "mongo3_config:/data/configdb"
+
+volumes:
+  mongo1_data:
+  mongo2_data:
+  mongo3_data:
+  mongo1_config:
+  mongo2_config:
+  mongo3_config:

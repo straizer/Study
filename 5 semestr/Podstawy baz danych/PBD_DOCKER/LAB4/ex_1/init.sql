@@ -1,0 +1,159 @@
+CREATE TABLE IF NOT EXISTS `100records`
+(
+    id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(16)  NOT NULL,
+    last_name  VARCHAR(16)  NOT NULL,
+    address    VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `200records`
+(
+    id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(16)  NOT NULL,
+    last_name  VARCHAR(16)  NOT NULL,
+    address    VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `300records`
+(
+    id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(16)  NOT NULL,
+    last_name  VARCHAR(16)  NOT NULL,
+    address    VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `400records`
+(
+    id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(16)  NOT NULL,
+    last_name  VARCHAR(16)  NOT NULL,
+    address    VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `500records`
+(
+    id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(16)  NOT NULL,
+    last_name  VARCHAR(16)  NOT NULL,
+    address    VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `600records`
+(
+    id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(16)  NOT NULL,
+    last_name  VARCHAR(16)  NOT NULL,
+    address    VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `700records`
+(
+    id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(16)  NOT NULL,
+    last_name  VARCHAR(16)  NOT NULL,
+    address    VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `800records`
+(
+    id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(16)  NOT NULL,
+    last_name  VARCHAR(16)  NOT NULL,
+    address    VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `900records`
+(
+    id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(16)  NOT NULL,
+    last_name  VARCHAR(16)  NOT NULL,
+    address    VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `1000records`
+(
+    id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(16)  NOT NULL,
+    last_name  VARCHAR(16)  NOT NULL,
+    address    VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `1100records`
+(
+    id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(16)  NOT NULL,
+    last_name  VARCHAR(16)  NOT NULL,
+    address    VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `1200records`
+(
+    id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(16)  NOT NULL,
+    last_name  VARCHAR(16)  NOT NULL,
+    address    VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `1300records`
+(
+    id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(16)  NOT NULL,
+    last_name  VARCHAR(16)  NOT NULL,
+    address    VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `1400records`
+(
+    id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(16)  NOT NULL,
+    last_name  VARCHAR(16)  NOT NULL,
+    address    VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `1500records`
+(
+    id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(16)  NOT NULL,
+    last_name  VARCHAR(16)  NOT NULL,
+    address    VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `1600records`
+(
+    id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(16)  NOT NULL,
+    last_name  VARCHAR(16)  NOT NULL,
+    address    VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `1700records`
+(
+    id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(16)  NOT NULL,
+    last_name  VARCHAR(16)  NOT NULL,
+    address    VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `1800records`
+(
+    id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(16)  NOT NULL,
+    last_name  VARCHAR(16)  NOT NULL,
+    address    VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `1900records`
+(
+    id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(16)  NOT NULL,
+    last_name  VARCHAR(16)  NOT NULL,
+    address    VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `2000records`
+(
+    id         INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(16)  NOT NULL,
+    last_name  VARCHAR(16)  NOT NULL,
+    address    VARCHAR(128) NOT NULL
+);

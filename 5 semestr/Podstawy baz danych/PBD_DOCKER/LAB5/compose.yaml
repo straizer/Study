@@ -1,0 +1,106 @@
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: app.Dockerfile
+    container_name: app
+    volumes:
+      - ./app.py:/app/app.py:r
+    ports:
+      - "80:5000"
+    depends_on:
+      router1:
+        condition: service_healthy
+      router2:
+        condition: service_healthy
+
+  config1:
+    build:
+      context: .
+      dockerfile: config.Dockerfile
+    container_name: config1
+  #    volumes:
+  #      - "config1_data:/data/db"
+  #      - "config1_config:/data/configdb"
+
+  config2:
+    build:
+      context: .
+      dockerfile: config.Dockerfile
+    container_name: config2
+  #    volumes:
+  #      - "config2_data:/data/db"
+  #      - "config2_config:/data/configdb"
+
+  sharda1:
+    build:
+      context: .
+      dockerfile: sharda.Dockerfile
+    container_name: sharda1
+  #    volumes:
+  #      - "sharda1_data:/data/db"
+  #      - "sharda1_config:/data/configdb"
+
+  sharda2:
+    build:
+      context: .
+      dockerfile: sharda.Dockerfile
+    container_name: sharda2
+  #    volumes:
+  #      - "sharda2_data:/data/db"
+  #      - "sharda2_config:/data/configdb"
+
+  shardb1:
+    build:
+      context: .
+      dockerfile: shardb.Dockerfile
+    container_name: shardb1
+  #    volumes:
+  #      - "shardb1_data:/data/db"
+  #      - "shardb1_config:/data/configdb"
+
+  shardb2:
+    build:
+      context: .
+      dockerfile: shardb.Dockerfile
+    container_name: shardb2
+  #    volumes:
+  #      - "shardb2_data:/data/db"
+  #      - "shardb2_config:/data/configdb"
+
+  router1:
+    build:
+      context: .
+      dockerfile: router.Dockerfile
+    container_name: router1
+  #    volumes:
+  #      - "router1_data:/data/db"
+  #      - "router1_config:/data/configdb"
+
+  router2:
+    build:
+      context: .
+      dockerfile: router.Dockerfile
+    container_name: router2
+#    volumes:
+#      - "router2_data:/data/db"
+#      - "router2_config:/data/configdb"
+
+#volumes:
+#  config1_data:
+#  config1_config:
+#  config2_data:
+#  config2_config:
+#  sharda1_data:
+#  sharda1_config:
+#  sharda2_data:
+#  sharda2_config:
+#  shardb1_data:
+#  shardb1_config:
+#  shardb2_data:
+#  shardb2_config:
+#  router1_data:
+#  router1_config:
+#  router2_data:
+#  router2_config:

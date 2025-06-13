@@ -1,0 +1,14 @@
+<!--suppress GrazieInspection, LongLine -->
+<configuration scan="true">
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %green(%d{yyyy-MM-dd}) %magenta(%d{HH:mm:ss.SSS}) [%-8thread] %yellow(%-5level) %cyan(%-36logger{36}) %highlight(%msg%n)
+            </pattern>
+        </encoder>
+    </appender>
+    <root level="error">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

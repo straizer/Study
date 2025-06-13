@@ -1,0 +1,27 @@
+<!--suppress GrazieInspection, LongLine -->
+<configuration scan="true">
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %green(%d{yyyy-MM-dd}) %magenta(%d{HH:mm:ss.SSS}) [%-8thread] %yellow(%-5level) %cyan(%-40logger{40}) %highlight(%msg%n)
+            </pattern>
+        </encoder>
+    </appender>
+    <appender name="jsonConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <jsonGeneratorDecorator class="net.logstash.logback.decorate.CompositeJsonGeneratorDecorator">
+                <decorator class="net.logstash.logback.decorate.PrettyPrintingJsonGeneratorDecorator"/>
+                <decorator class="net.logstash.logback.mask.MaskingJsonGeneratorDecorator">
+                    <defaultMask>*******</defaultMask>
+                    <path>password</path>
+                </decorator>
+            </jsonGeneratorDecorator>
+        </encoder>
+    </appender>
+    <root level="trace">
+        <appender-ref ref="jsonConsoleAppender"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+    <logger name="org" level="info"/>
+</configuration>

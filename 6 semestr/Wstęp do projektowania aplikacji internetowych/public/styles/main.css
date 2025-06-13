@@ -1,0 +1,27 @@
+* {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    margin: 0;
+    padding: 0;
+}
+
+div {
+    font-size: 24px;
+}
+
+h1 {
+    font-size: 50px;
+}
+
+button {
+    background-color: blue;
+    color: rgba(255, 255, 255, 0.766);
+}
+
+/*
+    nie ma w '*'
+    domyślne dla tagu -> body -> kolejne tagi -> custom dla tagu
+
+    jest w '*'
+ */

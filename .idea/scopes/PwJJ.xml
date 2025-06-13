@@ -1,3 +1,0 @@
-<component name="DependencyValidationManager">
-  <scope name="PwJJ" pattern="test[PwJJ]:*..*||src[PwJJ]:*..*" />
-</component>

@@ -1,0 +1,8 @@
+name: name
+
+services:
+  app:
+    build: .
+    restart: on-failure
+    environment:
+      DOMAIN: prod

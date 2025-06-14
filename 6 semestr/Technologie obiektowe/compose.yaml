@@ -1,0 +1,8 @@
+name: to_project
+
+services:
+  app:
+    build: .
+    restart: on-failure
+    environment:
+      DOMAIN: prod

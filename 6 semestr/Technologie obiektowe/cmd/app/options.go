@@ -6,4 +6,5 @@ import (
 
 type Options struct {
 	options.BaseOptions
+	Port int
 }

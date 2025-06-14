@@ -43,12 +43,9 @@ func (h *ReservationHandler) Add(c *gin.Context) {
 	}
 	start, _ := time.Parse(time.RFC3339, req.StartTime)
 	end, _ := time.Parse(time.RFC3339, req.EndTime)
-	invitees := make([]string, len(req.InviteeIDs))
-	for i, id := range req.InviteeIDs {
-		invitees[i] = id
-	}
-	res := model.NewReservation(req.ID, req.RoomID, req.OrganizerID, req.Title, req.Description, invitees, start, end)
-	if err := h.usecase.Add(&res); err != nil {
+	reservation := model.NewReservation(
+		req.ID, req.RoomID, req.OrganizerID, req.Title, req.Description, req.InviteeIDs, start, end)
+	if err := h.usecase.Add(&reservation); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -62,17 +59,13 @@ func (h *ReservationHandler) Get(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
 	}
-	invitees := make([]string, len((*reservation).InviteeIDs))
-	for i, uid := range (*reservation).InviteeIDs {
-		invitees[i] = uid
-	}
 	response := reservationDTO{
 		ID:          (*reservation).ID,
 		RoomID:      (*reservation).RoomID,
 		OrganizerID: (*reservation).OrganizerID,
 		Title:       (*reservation).Title,
 		Description: (*reservation).Description,
-		InviteeIDs:  invitees,
+		InviteeIDs:  (*reservation).InviteeIDs,
 		StartTime:   (*reservation).StartTime.Format(time.RFC3339),
 		EndTime:     (*reservation).EndTime.Format(time.RFC3339),
 	}
@@ -83,17 +76,13 @@ func (h *ReservationHandler) List(c *gin.Context) {
 	reservations := h.usecase.List()
 	response := make([]reservationDTO, len(reservations))
 	for i, reservation := range reservations {
-		invitees := make([]string, len(reservation.InviteeIDs))
-		for j, uid := range reservation.InviteeIDs {
-			invitees[j] = uid
-		}
 		response[i] = reservationDTO{
 			ID:          reservation.ID,
 			RoomID:      reservation.RoomID,
 			OrganizerID: reservation.OrganizerID,
 			Title:       reservation.Title,
 			Description: reservation.Description,
-			InviteeIDs:  invitees,
+			InviteeIDs:  reservation.InviteeIDs,
 			StartTime:   reservation.StartTime.Format(time.RFC3339),
 			EndTime:     reservation.EndTime.Format(time.RFC3339),
 		}
@@ -108,17 +97,13 @@ func (h *ReservationHandler) Remove(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
 	}
-	invitees := make([]string, len((*reservation).InviteeIDs))
-	for i, uid := range (*reservation).InviteeIDs {
-		invitees[i] = uid
-	}
 	response := reservationDTO{
 		ID:          (*reservation).ID,
 		RoomID:      (*reservation).RoomID,
 		OrganizerID: (*reservation).OrganizerID,
 		Title:       (*reservation).Title,
 		Description: (*reservation).Description,
-		InviteeIDs:  invitees,
+		InviteeIDs:  (*reservation).InviteeIDs,
 		StartTime:   (*reservation).StartTime.Format(time.RFC3339),
 		EndTime:     (*reservation).EndTime.Format(time.RFC3339),
 	}

@@ -3,6 +3,6 @@ package roomsorting
 type SortingType string
 
 const (
-	SortByCapacity SortingType = "capacity"
-	SortByFloor    SortingType = "floor"
+	ByCapacity SortingType = "capacity"
+	ByFloor    SortingType = "floor"
 )

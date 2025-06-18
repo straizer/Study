@@ -7,9 +7,9 @@ import (
 )
 
 type dependencies struct {
-	roomHandler        *http.RoomHandler
-	userHandler        *http.UserHandler
-	reservationHandler *http.ReservationHandler
+	userHttpInterface        *http.UserHttpInterface
+	roomHttpInterface        *http.RoomHttpInterface
+	reservationHttpInterface *http.ReservationHttpInterface
 }
 
 func NewDependencies(_ *Options) *dependencies {
@@ -21,10 +21,9 @@ func NewDependencies(_ *Options) *dependencies {
 	roomUsecase := usecase.NewRoomUsecase(roomRepository)
 	reservationUsecase := usecase.NewReservationUsecase(reservationRepository, userUsecase, roomUsecase)
 
-	userHandler := http.NewUserHandler(userUsecase)
-	roomHandler := http.NewRoomHandler(roomUsecase)
-	reservationHandler := http.NewReservationHandler(reservationUsecase)
+	userHttpInterface := http.NewUserHttpInterface(userUsecase)
+	roomHttpInterface := http.NewRoomHttpInterface(roomUsecase)
+	reservationHttpInterface := http.NewReservationHttpInterface(reservationUsecase)
 
-	// return &dependencies{reservationHandler, roomHandler, userHandler}
-	return &dependencies{roomHandler, userHandler, reservationHandler}
+	return &dependencies{userHttpInterface, roomHttpInterface, reservationHttpInterface}
 }

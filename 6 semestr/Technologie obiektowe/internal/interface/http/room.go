@@ -16,7 +16,7 @@ type roomUsecase interface {
 	Remove(string) (**model.Room, error)
 }
 
-type RoomHandler struct {
+type RoomHttpInterface struct {
 	usecase roomUsecase
 }
 
@@ -27,11 +27,11 @@ type roomDTO struct {
 	Floor    int    `json:"floor"`
 }
 
-func NewRoomHandler(usecase roomUsecase) *RoomHandler {
-	return &RoomHandler{usecase}
+func NewRoomHttpInterface(usecase roomUsecase) *RoomHttpInterface {
+	return &RoomHttpInterface{usecase}
 }
 
-func (h *RoomHandler) Add(c *gin.Context) {
+func (h *RoomHttpInterface) Add(c *gin.Context) {
 	var req roomDTO
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -42,7 +42,7 @@ func (h *RoomHandler) Add(c *gin.Context) {
 	c.Status(http.StatusCreated)
 }
 
-func (h *RoomHandler) Get(c *gin.Context) {
+func (h *RoomHttpInterface) Get(c *gin.Context) {
 	id := c.Param("id")
 	room, err := h.usecase.Get(id)
 	if err != nil {
@@ -53,7 +53,7 @@ func (h *RoomHandler) Get(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-func (h *RoomHandler) List(c *gin.Context) {
+func (h *RoomHttpInterface) List(c *gin.Context) {
 	rooms := h.usecase.List(roomsorting.SortingType(c.Query("sort")))
 	resp := make([]roomDTO, len(rooms))
 	for i, room := range rooms {
@@ -62,7 +62,7 @@ func (h *RoomHandler) List(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
-func (h *RoomHandler) Remove(c *gin.Context) {
+func (h *RoomHttpInterface) Remove(c *gin.Context) {
 	id := c.Param("id")
 	room, err := h.usecase.Remove(id)
 	if err != nil {

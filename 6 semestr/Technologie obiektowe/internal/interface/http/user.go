@@ -15,7 +15,7 @@ type userUsecase interface {
 	Remove(string) (**model.User, error)
 }
 
-type UserHandler struct {
+type UserHttpInterface struct {
 	usecase userUsecase
 }
 
@@ -25,11 +25,11 @@ type userDTO struct {
 	Email string `json:"email"`
 }
 
-func NewUserHandler(usecase userUsecase) *UserHandler {
-	return &UserHandler{usecase}
+func NewUserHttpInterface(usecase userUsecase) *UserHttpInterface {
+	return &UserHttpInterface{usecase}
 }
 
-func (h *UserHandler) Add(c *gin.Context) {
+func (h *UserHttpInterface) Add(c *gin.Context) {
 	var req userDTO
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -40,7 +40,7 @@ func (h *UserHandler) Add(c *gin.Context) {
 	c.Status(http.StatusCreated)
 }
 
-func (h *UserHandler) Get(c *gin.Context) {
+func (h *UserHttpInterface) Get(c *gin.Context) {
 	id := c.Param("id")
 	user, err := h.usecase.Get(id)
 	if err != nil {
@@ -51,7 +51,7 @@ func (h *UserHandler) Get(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-func (h *UserHandler) List(c *gin.Context) {
+func (h *UserHttpInterface) List(c *gin.Context) {
 	users := h.usecase.List()
 	response := make([]userDTO, len(users))
 	for i, user := range users {
@@ -60,7 +60,7 @@ func (h *UserHandler) List(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-func (h *UserHandler) Remove(c *gin.Context) {
+func (h *UserHttpInterface) Remove(c *gin.Context) {
 	id := c.Param("id")
 	user, err := h.usecase.Remove(id)
 	if err != nil {

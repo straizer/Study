@@ -5,7 +5,7 @@ import (
 	"to/internal/domain/roomsorting"
 )
 
-type RoomSortStrategy interface {
+type roomSortStrategy interface {
 	Sort([]*model.Room) []*model.Room
 }
 
@@ -19,12 +19,12 @@ func NewRoomUsecase(repository repository[*model.Room]) *roomUsecase {
 
 func (uc *roomUsecase) List(sortOption roomsorting.SortingType) []*model.Room {
 	rooms := uc.usecase.List()
-	var sorter RoomSortStrategy
+	var sorter roomSortStrategy
 	switch sortOption {
-	case roomsorting.SortByCapacity:
-		sorter = &roomsorting.ByCapacity{}
-	case roomsorting.SortByFloor:
-		sorter = &roomsorting.ByFloor{}
+	case roomsorting.ByCapacity:
+		sorter = &roomsorting.SortByCapacity{}
+	case roomsorting.ByFloor:
+		sorter = &roomsorting.SortByFloor{}
 	default:
 		sorter = nil
 	}

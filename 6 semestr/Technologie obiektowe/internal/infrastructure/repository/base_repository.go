@@ -8,7 +8,7 @@ import (
 )
 
 type repository[T model.Identifiable] struct {
-	mu       sync.RWMutex
+	mutex    sync.RWMutex
 	entities map[string]T
 }
 
@@ -17,14 +17,14 @@ func newRepository[T model.Identifiable]() *repository[T] {
 }
 
 func (r *repository[T]) Save(entity T) {
-	r.mu.Lock()
-	defer r.mu.Unlock()
+	r.mutex.Lock()
+	defer r.mutex.Unlock()
 	r.entities[entity.GetID()] = entity
 }
 
 func (r *repository[T]) FindAll() []T {
-	r.mu.RLock()
-	defer r.mu.RUnlock()
+	r.mutex.RLock()
+	defer r.mutex.RUnlock()
 	var list []T
 	for _, entity := range r.entities {
 		list = append(list, entity)
@@ -33,8 +33,8 @@ func (r *repository[T]) FindAll() []T {
 }
 
 func (r *repository[T]) FindByID(id string) (T, error) {
-	r.mu.RLock()
-	defer r.mu.RUnlock()
+	r.mutex.RLock()
+	defer r.mutex.RUnlock()
 	entity, ok := r.entities[id]
 	if !ok {
 		var empty T
@@ -44,7 +44,7 @@ func (r *repository[T]) FindByID(id string) (T, error) {
 }
 
 func (r *repository[T]) Delete(id string) {
-	r.mu.Lock()
-	defer r.mu.Unlock()
+	r.mutex.Lock()
+	defer r.mutex.Unlock()
 	delete(r.entities, id)
 }

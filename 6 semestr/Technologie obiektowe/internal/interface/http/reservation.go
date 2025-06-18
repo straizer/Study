@@ -16,7 +16,7 @@ type reservationUsecase interface {
 	Remove(string) (**model.Reservation, error)
 }
 
-type ReservationHandler struct {
+type ReservationHttpInterface struct {
 	usecase reservationUsecase
 }
 
@@ -31,11 +31,11 @@ type reservationDTO struct {
 	EndTime     string   `json:"end_time"`
 }
 
-func NewReservationHandler(usecase reservationUsecase) *ReservationHandler {
-	return &ReservationHandler{usecase}
+func NewReservationHttpInterface(usecase reservationUsecase) *ReservationHttpInterface {
+	return &ReservationHttpInterface{usecase}
 }
 
-func (h *ReservationHandler) Add(c *gin.Context) {
+func (h *ReservationHttpInterface) Add(c *gin.Context) {
 	var req reservationDTO
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -52,7 +52,7 @@ func (h *ReservationHandler) Add(c *gin.Context) {
 	c.Status(http.StatusCreated)
 }
 
-func (h *ReservationHandler) Get(c *gin.Context) {
+func (h *ReservationHttpInterface) Get(c *gin.Context) {
 	id := c.Param("id")
 	reservation, err := h.usecase.Get(id)
 	if err != nil {
@@ -72,7 +72,7 @@ func (h *ReservationHandler) Get(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-func (h *ReservationHandler) List(c *gin.Context) {
+func (h *ReservationHttpInterface) List(c *gin.Context) {
 	reservations := h.usecase.List()
 	response := make([]reservationDTO, len(reservations))
 	for i, reservation := range reservations {
@@ -90,7 +90,7 @@ func (h *ReservationHandler) List(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-func (h *ReservationHandler) Remove(c *gin.Context) {
+func (h *ReservationHttpInterface) Remove(c *gin.Context) {
 	id := c.Param("id")
 	reservation, err := h.usecase.Remove(id)
 	if err != nil {

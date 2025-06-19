@@ -109,3 +109,13 @@ input::placeholder {
     color:   #9ca3af;
     opacity: 1;
 }
+
+footer {
+    background: transparent;
+    bottom:     0;
+    color:      #504f4f;
+    padding:    20px 0;
+    position:   fixed;
+    text-align: center;
+    width:      100%;
+}

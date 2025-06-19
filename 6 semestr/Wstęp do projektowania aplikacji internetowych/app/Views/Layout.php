@@ -22,9 +22,10 @@ class Layout
 			<title>Login</title>
 		</head>
 		<body id="login-page">
-		<div>
-			<?php echo $content; ?>
-		</div>
+		<?php echo $content; ?>
+		<footer>
+			<p>© 2025 HealthSync. All rights reserved.</p>
+		</footer>
 		</body>
 		</html>
 		<?php

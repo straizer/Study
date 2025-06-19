@@ -22,6 +22,10 @@ class View
 
 		extract($variables);
 
+		ob_start();
 		include $this->viewPath;
+		$content = ob_get_clean();
+
+		Layout::render($content);
 	}
 }

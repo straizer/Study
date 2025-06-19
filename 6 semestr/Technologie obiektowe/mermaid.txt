@@ -1,0 +1,262 @@
+---
+config:
+  class:
+    hideEmptyMembersBox: true
+---
+classDiagram
+direction TB
+    class ReservationEventType {
+	    + RESERVATION_CREATED: ReservationEventType
+	    + RESERVATION_CANCELLED: ReservationEventType
+    }
+    class ReservationEvent {
+	    + Title: String
+	    + Type: ReservationEventType
+    }
+    class Observer {
+	    + GetID() : String
+	    + Notify(ReservationEvent)
+    }
+    class Subject {
+	    + Register(Observer)
+	    + Deregister(Observer)
+	    + NotifyAll(ReservationEventType)
+    }
+    class Identifiable {
+	    + GetID() : String
+    }
+    class User {
+	    + ID: String
+	    + Name: String
+	    + Email: String
+	    + GetID() : String
+	    + Notify(ReservationEvent)
+    }
+    class Room {
+	    + ID: String
+	    + Name: String
+	    + Capacity: Int
+	    + Floor: Int
+	    + GetID() : String
+    }
+    class Reservation {
+	    + ID: String
+	    + RoomID: String
+	    + Title: String
+	    + Description: String
+	    + OrganizerID: String
+	    + InviteeIDs: []String
+	    + StartTime: Date
+	    + EndTime: Date
+	    - observerList: []Observer
+	    + GetID() : String
+	    + Register(Observer)
+	    + Deregister(Observer)
+	    + NotifyAll(ReservationEventType)
+    }
+    class SortingType {
+	    + BY_CAPACITY: SortingType
+	    + BY_FLOOR: SortingType
+    }
+    class SortByCapacity {
+	    + Sort([]Room) : []Room
+    }
+    class SortByFloor {
+	    + Sort([]Room) : []Room
+    }
+    class BaseRepository~Identifiable~ {
+	    - Mutex: Mutex
+	    - Entities map[String]Identifiable
+	    + Save(Identifiable)
+	    + FindAll() : []Identifiable
+	    + FindByID(String) : Identifiable
+	    + Delete(String)
+    }
+    class UserRepository {
+    }
+    class RoomRepository {
+    }
+    class ReservationRepository {
+    }
+    class Repository~Identifiable~ {
+	    + Save(Identifiable)
+	    + FindAll() : []Identifiable
+	    + FindByID(String) : Identifiable
+	    + Delete(String)
+    }
+    class BaseUsecase~Identifiable~ {
+	    - repository: Repository~Identifiable~
+	    + Add(Identifiable)
+	    + List() : []Identifiable
+	    + Get(String) : Identifiable
+	    + Remove(String)
+    }
+    class UserUsecase {
+    }
+    class RoomSortStrategy {
+	    + Sort([]Room) : []Room
+    }
+    class RoomUsecase {
+	    + List(SortingType) : []Room
+    }
+    class ReservationUsecase {
+	    + Add(Reservation)
+	    + Remove(String) : Reservation
+    }
+    class Usecase~Identifiable~ {
+	    + Add(Identifiable)
+	    + List() : []Identifiable
+	    + Get(String) : Identifiable
+	    + Remove(String) : Identifiable
+    }
+    class DTO {
+    }
+    class BaseHttpInterface~Identifiable, DTO~ {
+	    - Usecase: Usecase~Identifiable~
+	    - DtoToEntity: DTO-~Identifiable
+	    - EntityToDto: Identifiable-~DTO
+	    - UsecaseAddOverride: RequestContext,Identifiable-~void
+	    - UsecaseGetOverride: RequestContext-~Identifiable
+	    - UsecaseListOverride: RequestContext-~[]Identifiable
+	    - UsecaseRemoveOverride: RequestContext-~Identifiable
+	    + Add(RequestContext) : ResponseContext
+	    + List(RequestContext) : ResponseContext
+	    + Get(RequestContext) : ResponseContext
+	    + Remove(RequestContext) : ResponseContext
+    }
+    class UserDTO {
+	    + ID: String
+	    + Name: String
+	    + Email: String
+    }
+    class UserHttpInterface {
+    }
+    class RoomUsecaseAdapterInterface {
+	    + List(SortingType) : []Room
+    }
+    class RoomUsecaseAdapter {
+	    + List() : []Room
+    }
+    class RoomDTO {
+	    + ID: String
+	    + Name: String
+	    + Capacity: Int
+	    + Floor: Int
+    }
+    class RoomHttpInterface {
+    }
+    class ReservationDTO {
+	    + ID: String
+	    + RoomID: String
+	    + Title: String
+	    + Description: String
+	    + OrganizerID: String
+	    + InviteeIDs: []String
+	    + StartTime: Date
+	    + EndTime: Date
+    }
+    class ReservationHttpInterface {
+    }
+
+	<<Enumeration>> ReservationEventType
+	<<Interface>> Observer
+	<<Interface>> Subject
+	<<Interface>> Identifiable
+	<<Entity>> User
+	<<Entity>> Room
+	<<Entity>> Reservation
+	<<Enumeration>> SortingType
+	<<Repository>> BaseRepository
+	<<Repository>> UserRepository
+	<<Repository>> RoomRepository
+	<<Repository>> ReservationRepository
+	<<Interface>> Repository
+	<<Interface>> RoomSortStrategy
+	<<Interface>> Usecase
+	<<Interface>> DTO
+	<<DTO>> UserDTO
+	<<Interface>> RoomUsecaseAdapterInterface
+	<<DTO>> RoomDTO
+	<<DTO>> ReservationDTO
+
+    ReservationEvent ..> ReservationEventType : uses
+    Observer ..> ReservationEvent : uses
+    Subject ..> Observer : uses
+    Subject ..> ReservationEventType : uses
+    User ..> ReservationEvent : uses
+    Identifiable <|.. User
+    Observer <|.. User
+    Identifiable <|.. Room
+    Reservation ..> ReservationEventType : uses
+    Identifiable <|.. Reservation
+    Subject <|.. Reservation
+    Reservation o-- "*" Observer : notifies
+    SortByCapacity ..> Room : sorts
+    SortByFloor ..> Room : sorts
+    BaseRepository o-- "*" Identifiable : stores
+    BaseRepository <|-- UserRepository
+    Repository <|.. UserRepository
+    UserRepository o-- "*" User : stores
+    BaseRepository <|-- RoomRepository
+    Repository <|.. RoomRepository
+    RoomRepository o-- "*" Room : stores
+    BaseRepository <|-- ReservationRepository
+    Repository <|.. ReservationRepository
+    ReservationRepository o-- "*" Reservation : stores
+    Repository <|.. BaseRepository
+    Repository ..> Identifiable : uses
+    BaseUsecase ..> Repository : uses
+    BaseUsecase ..> Identifiable : uses
+    BaseUsecase <|-- UserUsecase
+    Usecase <|.. UserUsecase
+    UserUsecase ..> UserRepository : uses
+    UserUsecase ..> User : processes
+    RoomSortStrategy ..> Room : sorts
+    RoomSortStrategy <|-- SortByCapacity
+    RoomSortStrategy <|-- SortByFloor
+    RoomUsecaseAdapterInterface <|.. RoomUsecase
+    RoomUsecase ..> RoomRepository : uses
+    RoomUsecase ..> Room : processes
+    RoomUsecase ..> RoomSortStrategy : uses
+    RoomUsecase ..> SortingType : uses
+    BaseUsecase <|-- ReservationUsecase
+    Usecase <|.. ReservationUsecase
+    ReservationUsecase ..> ReservationRepository : uses
+    ReservationUsecase ..> UserUsecase : uses
+    ReservationUsecase ..> RoomUsecase : uses
+    ReservationUsecase ..> User : uses
+    ReservationUsecase ..> Room : uses
+    ReservationUsecase ..> Reservation : processes
+    ReservationUsecase ..> Observer : registers
+    ReservationUsecase ..> ReservationEventType : uses
+    Usecase <|.. BaseUsecase
+    Usecase ..> Identifiable : uses
+    BaseHttpInterface ..> Usecase : uses
+    BaseHttpInterface ..> Identifiable : uses
+    BaseHttpInterface ..> DTO : uses
+    DTO <|.. UserDTO
+    BaseHttpInterface <|-- UserHttpInterface
+    UserHttpInterface ..> UserUsecase : uses
+    UserHttpInterface ..> User : processes
+    UserHttpInterface ..> UserDTO : uses
+    UserHttpInterface --() RequestContext : HTTP request<br>(User)
+    UserHttpInterface --() ResponseContext : HTTP response<br>(User)
+    RoomUsecaseAdapterInterface ..> SortingType : uses
+    RoomUsecaseAdapterInterface ..> Room : processes
+    Usecase <|.. RoomUsecaseAdapter
+    BaseUsecase <-- RoomUsecaseAdapter
+    RoomUsecaseAdapter <-- RoomUsecaseAdapterInterface : delegates
+    DTO <|.. RoomDTO
+    BaseHttpInterface <|-- RoomHttpInterface
+    RoomHttpInterface ..> RoomUsecaseAdapter : uses
+    RoomHttpInterface ..> Room : processes
+    RoomHttpInterface ..> RoomDTO : uses
+    RoomHttpInterface --() RequestContext : HTTP request<br>(Room)
+    RoomHttpInterface --() ResponseContext : HTTP response<br>(Room)
+    DTO <|.. ReservationDTO
+    BaseHttpInterface <|-- ReservationHttpInterface
+    ReservationHttpInterface ..> ReservationUsecase : uses
+    ReservationHttpInterface ..> Reservation : processes
+    ReservationHttpInterface ..> ReservationDTO : uses
+    ReservationHttpInterface --() RequestContext : HTTP request<br>(Reservation)
+    ReservationHttpInterface --() ResponseContext : HTTP response<br>(Reservation)

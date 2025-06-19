@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"errors"
 	"fmt"
+	"time"
 
 	"to/internal/domain/model"
 	"to/internal/domain/observer"
@@ -22,7 +22,10 @@ func NewReservationUsecase(
 
 func (s *reservationUsecase) Add(reservation *model.Reservation) error {
 	if reservation.StartTime.After(reservation.EndTime) {
-		return errors.New("start time must be before end time")
+		return fmt.Errorf("start time must be before end time")
+	}
+	if reservation.StartTime.Before(time.Now()) {
+		return fmt.Errorf("start time must be in the future")
 	}
 	_, err := s.roomUsecase.Get(reservation.RoomID)
 	if err != nil {
@@ -40,7 +43,9 @@ func (s *reservationUsecase) Add(reservation *model.Reservation) error {
 		}
 		reservation.Register(*invitee)
 	}
-	s.usecase.Add(reservation)
+	if err = s.usecase.Add(reservation); err != nil {
+		return fmt.Errorf("failed to add reservation: %w", err)
+	}
 	reservation.NotifyAll(observer.ReservationCreated)
 	return nil
 }
@@ -51,5 +56,5 @@ func (s *reservationUsecase) Remove(id string) (**model.Reservation, error) {
 		return nil, fmt.Errorf("reservation not found: %w", err)
 	}
 	(*reservation).NotifyAll(observer.ReservationCancelled)
-	return reservation, err
+	return reservation, nil
 }

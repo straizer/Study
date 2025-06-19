@@ -1,22 +1,19 @@
 package http
 
 import (
-	"net/http"
-
-	"github.com/gin-gonic/gin"
-
 	"to/internal/domain/model"
+	"to/pkg/utils"
 )
 
 type userUsecase interface {
-	Add(*model.User)
+	Add(*model.User) error
 	Get(string) (**model.User, error)
-	List() []*model.User
+	List() ([]*model.User, error)
 	Remove(string) (**model.User, error)
 }
 
 type UserHttpInterface struct {
-	usecase userUsecase
+	httpInterface[*model.User, userDTO]
 }
 
 type userDTO struct {
@@ -26,47 +23,15 @@ type userDTO struct {
 }
 
 func NewUserHttpInterface(usecase userUsecase) *UserHttpInterface {
-	return &UserHttpInterface{usecase}
-}
-
-func (h *UserHttpInterface) Add(c *gin.Context) {
-	var req userDTO
-	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
+	return &UserHttpInterface{
+		httpInterface[*model.User, userDTO]{
+			usecase: usecase,
+			dtoToEntity: func(dto userDTO) (*model.User, error) {
+				return utils.Ptr(model.NewUser(dto.ID, dto.Name, dto.Email)), nil
+			},
+			entityToDto: func(entity *model.User) userDTO {
+				return userDTO{entity.ID, entity.Name, entity.Email}
+			},
+		},
 	}
-	user := model.NewUser(req.ID, req.Name, req.Email)
-	h.usecase.Add(&user)
-	c.Status(http.StatusCreated)
-}
-
-func (h *UserHttpInterface) Get(c *gin.Context) {
-	id := c.Param("id")
-	user, err := h.usecase.Get(id)
-	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
-		return
-	}
-	response := userDTO{(*user).ID, (*user).Name, (*user).Email}
-	c.JSON(http.StatusOK, response)
-}
-
-func (h *UserHttpInterface) List(c *gin.Context) {
-	users := h.usecase.List()
-	response := make([]userDTO, len(users))
-	for i, user := range users {
-		response[i] = userDTO{user.ID, user.Name, user.Email}
-	}
-	c.JSON(http.StatusOK, response)
-}
-
-func (h *UserHttpInterface) Remove(c *gin.Context) {
-	id := c.Param("id")
-	user, err := h.usecase.Remove(id)
-	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
-		return
-	}
-	response := userDTO{(*user).ID, (*user).Name, (*user).Email}
-	c.JSON(http.StatusOK, response)
 }

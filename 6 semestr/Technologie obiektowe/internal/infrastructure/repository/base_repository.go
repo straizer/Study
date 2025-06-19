@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"errors"
+	"fmt"
 	"sync"
 
 	"to/internal/domain/model"
@@ -38,7 +38,7 @@ func (r *repository[T]) FindByID(id string) (T, error) {
 	entity, ok := r.entities[id]
 	if !ok {
 		var empty T
-		return empty, errors.New("entity not found")
+		return empty, fmt.Errorf("entity not found")
 	}
 	return entity, nil
 }

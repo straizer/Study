@@ -5,13 +5,6 @@ import (
 	"to/pkg/utils"
 )
 
-type userUsecase interface {
-	Add(*model.User) error
-	Get(string) (**model.User, error)
-	List() ([]*model.User, error)
-	Remove(string) (**model.User, error)
-}
-
 type UserHttpInterface struct {
 	httpInterface[*model.User, userDTO]
 }
@@ -22,7 +15,7 @@ type userDTO struct {
 	Email string `json:"email"`
 }
 
-func NewUserHttpInterface(usecase userUsecase) *UserHttpInterface {
+func NewUserHttpInterface(usecase usecase[*model.User]) *UserHttpInterface {
 	return &UserHttpInterface{
 		httpInterface[*model.User, userDTO]{
 			usecase: usecase,

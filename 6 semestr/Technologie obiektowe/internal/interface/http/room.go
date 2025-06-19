@@ -8,7 +8,7 @@ import (
 	"to/pkg/utils"
 )
 
-type roomUsecase interface {
+type roomUsecaseAdapterInterface interface {
 	Add(*model.Room) error
 	Get(string) (**model.Room, error)
 	List(roomsorting.SortingType) ([]*model.Room, error)
@@ -20,11 +20,11 @@ type RoomHttpInterface struct {
 }
 
 type roomUsecaseAdapter struct {
-	roomUsecase
+	roomUsecaseAdapterInterface
 }
 
 func (a *roomUsecaseAdapter) List() ([]*model.Room, error) {
-	return a.roomUsecase.List("")
+	return a.roomUsecaseAdapterInterface.List("")
 }
 
 type roomDTO struct {
@@ -34,7 +34,7 @@ type roomDTO struct {
 	Floor    int    `json:"floor"`
 }
 
-func NewRoomHttpInterface(usecase roomUsecase) *RoomHttpInterface {
+func NewRoomHttpInterface(usecase roomUsecaseAdapterInterface) *RoomHttpInterface {
 	return &RoomHttpInterface{
 		httpInterface[*model.Room, roomDTO]{
 			usecase: &roomUsecaseAdapter{usecase},

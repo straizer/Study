@@ -8,13 +8,6 @@ import (
 	"to/pkg/utils"
 )
 
-type reservationUsecase interface {
-	Add(*model.Reservation) error
-	Get(string) (**model.Reservation, error)
-	List() ([]*model.Reservation, error)
-	Remove(string) (**model.Reservation, error)
-}
-
 type ReservationHttpInterface struct {
 	httpInterface[*model.Reservation, reservationDTO]
 }
@@ -30,7 +23,7 @@ type reservationDTO struct {
 	EndTime     string   `json:"end_time"`
 }
 
-func NewReservationHttpInterface(usecase reservationUsecase) *ReservationHttpInterface {
+func NewReservationHttpInterface(usecase usecase[*model.Reservation]) *ReservationHttpInterface {
 	return &ReservationHttpInterface{
 		httpInterface[*model.Reservation, reservationDTO]{
 			usecase: usecase,

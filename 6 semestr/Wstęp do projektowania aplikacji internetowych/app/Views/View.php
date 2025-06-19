@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App;
+namespace App\Views;
 
 use RuntimeException;
 
@@ -11,7 +11,7 @@ class View
 
 	public function __construct(string $view)
 	{
-		$this->viewPath = __DIR__ . '/../public/views/' . $view . '.php';
+		$this->viewPath = __DIR__ . '/' . $view . '.php';
 	}
 
 	public function render(array $variables = []): void

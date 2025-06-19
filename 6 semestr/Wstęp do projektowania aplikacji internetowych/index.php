@@ -7,12 +7,10 @@ use App\Router;
 
 $router = new Router();
 
-// Define routes
 $router->get('/', function() {
-    echo 'Home Page';
+	echo 'Home Page';
 });
 
 $router->get('/login', [App\Controllers\Auth\LoginController::class, 'index']);
 
-// Run the router
 $router->run();

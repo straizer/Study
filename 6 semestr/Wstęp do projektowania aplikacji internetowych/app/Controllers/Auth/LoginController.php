@@ -9,6 +9,6 @@ class LoginController extends Controller
 {
 	public function index(): void
 	{
-		$this->render('login');
+		$this->render('Auth/LoginView');
 	}
 }

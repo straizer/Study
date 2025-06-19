@@ -17,8 +17,16 @@ type usecase[T model.Identifiable] struct {
 	repository repository[T]
 }
 
-func (uc *usecase[T]) Add(entity T) {
+func (uc *usecase[T]) Add(entity T) error {
+	_, err := uc.repository.FindByID(entity.GetID())
+	if err == nil {
+		return fmt.Errorf("entity of type <%T> with ID <%s> already exists", entity, entity.GetID())
+	}
+	if err.Error() != "entity not found" {
+		return fmt.Errorf("failed to verify entity doesn't exist: %w", err)
+	}
 	uc.repository.Save(entity)
+	return nil
 }
 
 func (uc *usecase[T]) Get(entityID string) (*T, error) {
@@ -29,8 +37,8 @@ func (uc *usecase[T]) Get(entityID string) (*T, error) {
 	return &entity, nil
 }
 
-func (uc *usecase[T]) List() []T {
-	return uc.repository.FindAll()
+func (uc *usecase[T]) List() ([]T, error) {
+	return uc.repository.FindAll(), nil
 }
 
 func (uc *usecase[T]) Remove(userID string) (*T, error) {

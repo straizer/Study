@@ -1,23 +1,22 @@
 package http
 
 import (
-	"net/http"
+	"fmt"
 	"time"
 
-	"github.com/gin-gonic/gin"
-
 	"to/internal/domain/model"
+	"to/pkg/utils"
 )
 
 type reservationUsecase interface {
 	Add(*model.Reservation) error
 	Get(string) (**model.Reservation, error)
-	List() []*model.Reservation
+	List() ([]*model.Reservation, error)
 	Remove(string) (**model.Reservation, error)
 }
 
 type ReservationHttpInterface struct {
-	usecase reservationUsecase
+	httpInterface[*model.Reservation, reservationDTO]
 }
 
 type reservationDTO struct {
@@ -32,80 +31,32 @@ type reservationDTO struct {
 }
 
 func NewReservationHttpInterface(usecase reservationUsecase) *ReservationHttpInterface {
-	return &ReservationHttpInterface{usecase}
+	return &ReservationHttpInterface{
+		httpInterface[*model.Reservation, reservationDTO]{
+			usecase: usecase,
+			dtoToEntity: func(dto reservationDTO) (*model.Reservation, error) {
+				startTime, err := time.Parse(time.RFC3339, dto.StartTime)
+				if err != nil {
+					return nil, getInvalidFormatError("startTime time", dto.StartTime, time.RFC3339, err)
+				}
+				endTime, err := time.Parse(time.RFC3339, dto.EndTime)
+				if err != nil {
+					return nil, getInvalidFormatError("end time", dto.StartTime, time.RFC3339, err)
+				}
+				return utils.Ptr(model.NewReservation(
+					dto.ID, dto.RoomID, dto.OrganizerID, dto.Title, dto.Description, dto.InviteeIDs, startTime, endTime,
+				)), nil
+			},
+			entityToDto: func(entity *model.Reservation) reservationDTO {
+				return reservationDTO{
+					entity.ID, entity.RoomID, entity.OrganizerID, entity.InviteeIDs, entity.Title,
+					entity.Description, entity.StartTime.Format(time.RFC3339), entity.EndTime.Format(time.RFC3339),
+				}
+			},
+		},
+	}
 }
 
-func (h *ReservationHttpInterface) Add(c *gin.Context) {
-	var req reservationDTO
-	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	start, _ := time.Parse(time.RFC3339, req.StartTime)
-	end, _ := time.Parse(time.RFC3339, req.EndTime)
-	reservation := model.NewReservation(
-		req.ID, req.RoomID, req.OrganizerID, req.Title, req.Description, req.InviteeIDs, start, end)
-	if err := h.usecase.Add(&reservation); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	c.Status(http.StatusCreated)
-}
-
-func (h *ReservationHttpInterface) Get(c *gin.Context) {
-	id := c.Param("id")
-	reservation, err := h.usecase.Get(id)
-	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
-		return
-	}
-	response := reservationDTO{
-		ID:          (*reservation).ID,
-		RoomID:      (*reservation).RoomID,
-		OrganizerID: (*reservation).OrganizerID,
-		Title:       (*reservation).Title,
-		Description: (*reservation).Description,
-		InviteeIDs:  (*reservation).InviteeIDs,
-		StartTime:   (*reservation).StartTime.Format(time.RFC3339),
-		EndTime:     (*reservation).EndTime.Format(time.RFC3339),
-	}
-	c.JSON(http.StatusOK, response)
-}
-
-func (h *ReservationHttpInterface) List(c *gin.Context) {
-	reservations := h.usecase.List()
-	response := make([]reservationDTO, len(reservations))
-	for i, reservation := range reservations {
-		response[i] = reservationDTO{
-			ID:          reservation.ID,
-			RoomID:      reservation.RoomID,
-			OrganizerID: reservation.OrganizerID,
-			Title:       reservation.Title,
-			Description: reservation.Description,
-			InviteeIDs:  reservation.InviteeIDs,
-			StartTime:   reservation.StartTime.Format(time.RFC3339),
-			EndTime:     reservation.EndTime.Format(time.RFC3339),
-		}
-	}
-	c.JSON(http.StatusOK, response)
-}
-
-func (h *ReservationHttpInterface) Remove(c *gin.Context) {
-	id := c.Param("id")
-	reservation, err := h.usecase.Remove(id)
-	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
-		return
-	}
-	response := reservationDTO{
-		ID:          (*reservation).ID,
-		RoomID:      (*reservation).RoomID,
-		OrganizerID: (*reservation).OrganizerID,
-		Title:       (*reservation).Title,
-		Description: (*reservation).Description,
-		InviteeIDs:  (*reservation).InviteeIDs,
-		StartTime:   (*reservation).StartTime.Format(time.RFC3339),
-		EndTime:     (*reservation).EndTime.Format(time.RFC3339),
-	}
-	c.JSON(http.StatusOK, response)
+func getInvalidFormatError(propertyName, actual, expected string, err error) error {
+	return fmt.Errorf("invalid %s format <%s>, expected <%s>: %w", propertyName, actual, expected, err)
 }

@@ -1,27 +1,111 @@
 * {
-    font-family: "Montserrat", sans-serif;
+    box-sizing:          border-box;
+    font-family:         Montserrat, sans-serif;
     font-optical-sizing: auto;
-    font-style: normal;
-    margin: 0;
-    padding: 0;
+    font-style:          normal;
+    margin:              0;
+    padding:             0;
+    text-decoration:     none;
 }
 
-div {
-    font-size: 24px;
+html, body {
+    height: 100%;
+    width:  100%;
+}
+
+body {
+    align-items:     center;
+    background:      linear-gradient(to right, #88beeb, #fff);
+    display:         flex;
+    justify-content: center;
+    line-height:     1.6;
 }
 
 h1 {
-    font-size: 50px;
+    color:          #2563eb;
+    font-size:      50px;
+    font-weight:    600;
+    letter-spacing: -1px;
+    margin-bottom:  20px;
+    text-align:     center;
+}
+
+div {
+    background:    #fff;
+    border-radius: 8px;
+    box-shadow:    none;
+    font-size:     24px;
+    max-width:     400px;
+    padding:       30px;
+    width:         100%;
+}
+
+form {
+    display:        flex;
+    flex-direction: column;
+    gap:            15px;
+    width:          100%;
 }
 
 button {
-    background-color: blue;
-    color: rgba(255, 255, 255, 0.766);
+    align-items:      center;
+    background-color: #2563eb;
+    border:           none;
+    border-radius:    4px;
+    box-shadow:       none;
+    color:            #fff;
+    cursor:           pointer;
+    display:          flex;
+    font-weight:      500;
+    gap:              8px;
+    justify-content:  center;
+    margin-top:       10px;
+    outline:          none;
+    padding:          12px 20px;
+    text-shadow:      none;
+    transition:       all 0.3s ease;
+    width:            100%;
 }
 
-/*
-    nie ma w '*'
-    domyślne dla tagu -> body -> kolejne tagi -> custom dla tagu
+button:hover {
+    background-color: #1d4ed8;
+    box-shadow:       none;
+}
 
-    jest w '*'
- */
+button:active {
+    background-color: #1e40af;
+    box-shadow:       none;
+    transform:        translateY(0);
+}
+
+i {
+    font-size: 16px;
+}
+
+input {
+    background-color: #f9fafb;
+    border:           1px solid #ddd;
+    border-radius:    4px;
+    box-sizing:       border-box;
+    color:            #333;
+    font-size:        16px;
+    padding:          12px 15px;
+    transition:       all 0.3s ease;
+    width:            100%;
+}
+
+input:focus {
+    background-color: #fff;
+    border-color:     #2563eb;
+    box-shadow:       none;
+    outline:          none;
+}
+
+input:hover {
+    border-color: #bbb;
+}
+
+input::placeholder {
+    color:   #9ca3af;
+    opacity: 1;
+}

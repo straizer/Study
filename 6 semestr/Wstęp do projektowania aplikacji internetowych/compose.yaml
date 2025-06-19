@@ -1,28 +1,32 @@
 services:
-  web:
+  server:
     build:
       context: .
       dockerfile: docker/nginx/Dockerfile
     ports:
       - "8080:80"
     volumes:
-      - .:/app/
-  
-  db:
-    build:
-      context: .
-      dockerfile: docker/db/Dockerfile
-    ports:
-      - "5433:5432"
-    volumes:
-      - pg-data:/var/lib/postgresql/data
-  
+      - .:/app
+    depends_on:
+      - php
+
   php:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
     volumes:
       - .:/app
+    depends_on:
+      - db
+
+  db:
+    build:
+      context: .
+      dockerfile: docker/db/Dockerfile
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres:/var/lib/postgresql/data
 
 volumes:
-  pg-data:
+  postgres:

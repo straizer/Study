@@ -22,6 +22,12 @@ class Layout
 			<title>Login</title>
 		</head>
 		<body id="login-page">
+		<header>
+			<div class="header-content">
+				<img class="logo" src="/public/assets/logo.svg" alt="HealthSync Logo">
+				<span>HealthSync</span>
+			</div>
+		</header>
 		<?php echo $content; ?>
 		<footer>
 			<p>© 2025 HealthSync. All rights reserved.</p>

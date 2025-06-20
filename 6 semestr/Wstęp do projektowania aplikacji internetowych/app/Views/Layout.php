@@ -25,7 +25,7 @@ class Layout
 			<link rel="icon" href="/public/assets/logo.svg">
 			<title>HealthSync - <?php echo $title; ?></title>
 		</head>
-		<body>
+		<body class="<?php echo strtolower(str_replace(' ', '-', $title)); ?>-page">
 		<header>
 			<div class="header-content">
 				<div class="header-left">

@@ -3,17 +3,16 @@ declare(strict_types=1);
 
 namespace App\Controllers\Auth;
 
-use App\Controllers\Controller;
 use App\Database;
 use App\Models\Auth;
 use App\Models\Session;
 use RuntimeException;
 
-class SignupController extends Controller
+class SignupController extends AuthController
 {
 	public function index(): void
 	{
-		Auth::requireGuest();
+		parent::index();
 		$this->render('Sign up', 'Auth/SignupView');
 	}
 

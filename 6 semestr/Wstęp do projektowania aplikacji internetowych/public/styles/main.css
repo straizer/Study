@@ -86,6 +86,30 @@ label {
     text-align: center;
 }
 
+.error-message {
+    background-color: #fee2e2;
+    border:           1px solid #ef4444;
+    border-radius:    4px;
+    color:            #b91c1c;
+    font-size:        14px;
+    margin-bottom:    15px;
+    padding:          10px;
+    text-align:       left;
+    width:            100%;
+}
+
+.info-message {
+    background-color: #e0f2fe;
+    border:           1px solid #0ea5e9;
+    border-radius:    4px;
+    color:            #0369a1;
+    font-size:        14px;
+    margin-bottom:    15px;
+    padding:          10px;
+    text-align:       left;
+    width:            100%;
+}
+
 form {
     display:        flex;
     flex-direction: column;

@@ -22,7 +22,6 @@ class TestController extends Controller
 			$result = ['status' => 'error', 'message' => 'Database connection failed: ' . $exception->getMessage()];
 		}
 
-		// Display the result
 		echo '<pre>';
 		print_r($result);
 		echo '</pre>';

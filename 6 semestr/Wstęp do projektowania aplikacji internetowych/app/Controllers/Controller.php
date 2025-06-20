@@ -7,6 +7,8 @@ use App\Views\View;
 
 abstract class Controller
 {
+	abstract public function index(): void;
+
 	protected function render(string $title, string $view, array $variables = []): void
 	{
 		$view_object = new View($title, $view);

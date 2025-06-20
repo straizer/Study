@@ -11,13 +11,8 @@ class TestController extends Controller
 	public function index(): void
 	{
 		try {
-			$connection = Database::getConnection();
-			$result = ['status' => 'success', 'message' => 'Database connection successful'];
-
-			$query = 'SELECT current_database() as db_name, current_user as user_name';
-			$data = Database::query($query);
-			$result['data'] = $data;
-
+			$data = Database::query('SELECT current_database() as db_name, current_user as user_name');
+			$result = ['status' => 'success', 'message' => 'Database connection successful', 'data' => $data];
 		} catch (PDOException $exception) {
 			$result = ['status' => 'error', 'message' => 'Database connection failed: ' . $exception->getMessage()];
 		}

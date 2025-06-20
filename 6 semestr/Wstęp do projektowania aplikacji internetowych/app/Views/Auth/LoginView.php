@@ -3,10 +3,21 @@ declare(strict_types=1);
 
 ?>
 <div>
-	<h1>LOGIN</h1>
+	<img class="logo" src="/public/assets/logo.svg" alt="HealthSync Logo">
+	<h1>Welcome Back</h1>
+	<p class="subtitle">Sign in to continue to HealthSync</p>
 	<form>
-		<input placeholder="email" type="email">
-		<input placeholder="password" type="password">
-		<button type="submit"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
+		<div class="form-group">
+			<label for="email">Email</label>
+			<input id="email" placeholder="name@example.com" type="email">
+		</div>
+		<div class="form-group">
+			<label for="password">Password</label>
+			<input id="password" placeholder="••••••••" type="password">
+		</div>
+		<div class="form-group">
+			<button type="submit"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
+		</div>
 	</form>
+	<p class="signup-text">Don't have an account? <a href="/signup">Sign up</a></p>
 </div>

@@ -26,7 +26,7 @@ $connected_apps = $connected_apps ?? [];
 		<h3>Connected Apps</h3>
 		<div class="connect-cards-container">
 			<?php foreach ($connected_apps as $app): ?>
-				<button class="connect-card" onclick="window.location.href='/'">
+				<button class="connect-card" onclick="window.location.href='<?php echo $app->getName() === 'Google Fit' ? '/oauth/google' : '/'; ?>'">
 					<p><?php echo htmlspecialchars($app->getName()); ?></p>
 					<h3 class="status-<?php echo $app->getStatus() === AppStatus::Connected ? 'connected' : 'not-connected'; ?>">
 						<?php echo htmlspecialchars($app->getStatus()->value); ?>

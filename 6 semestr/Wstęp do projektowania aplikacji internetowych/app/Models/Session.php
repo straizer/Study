@@ -10,7 +10,7 @@ use RuntimeException;
 
 class Session
 {
-	private static int $expirationMinutes = 1;
+	private static int $expirationMinutes = 10;
 
 	public static function create(string $userId): string
 	{
@@ -29,7 +29,7 @@ class Session
 				'expires' => time() + (self::$expirationMinutes * 60),
 				'path' => '/',
 				'httponly' => true,
-				'samesite' => 'Strict',
+				'samesite' => 'Lax',
 			]);
 
 			return $token;
@@ -65,7 +65,7 @@ class Session
 			'expires' => time() - 3600,
 			'path' => '/',
 			'httponly' => true,
-			'samesite' => 'Strict',
+			'samesite' => 'Lax', // Changed from Strict to Lax to be consistent with the session cookie
 		]);
 	}
 

@@ -30,4 +30,24 @@ $user = $user ?? null;
 			<i class="fa-solid fa-fire fit-icon" style="color: #ffa500;"></i>
 		</div>
 	</div>
+	<div class="connect-cards">
+		<h3>Connected Apps</h3>
+		<div class="connect-cards-container">
+			<div class="connect-card">
+				<p>Fitbit</p>
+				<h3>Connected</h3>
+				<i class="fa-solid fa-ring fit-icon" style="color: #00b894;"></i>
+			</div>
+			<div class="connect-card">
+				<p>Apple Health</p>
+				<h3>Connected</h3>
+				<i class="fa-brands fa-apple fit-icon" style="color: #636e72;"></i>
+			</div>
+			<div class="connect-card">
+				<p>Google Fit</p>
+				<h3>Connected</h3>
+				<i class="fa-brands fa-google fit-icon" style="color: #4285f4;"></i>
+			</div>
+		</div>
+	</div>
 </div>

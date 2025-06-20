@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 $errors = $errors ?? [];
 $email = $email ?? '';
-$userExists = $userExists ?? false;
+$user_exists = $user_exists ?? false;
 ?>
 <div>
 	<img class="logo" src="/public/assets/logo.svg" alt="HealthSync Logo">
@@ -18,7 +18,7 @@ $userExists = $userExists ?? false;
 		</div>
 	<?php endif; ?>
 
-	<?php if ($userExists): ?>
+	<?php if ($user_exists): ?>
 		<div class="info-message">
 			<p>User already has an account. Did you mean to <a href="/login">sign in</a>?</p>
 		</div>

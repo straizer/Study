@@ -3,10 +3,13 @@ declare(strict_types=1);
 
 namespace App\Views;
 
+use App\Models\Auth;
+
 class Layout
 {
 	public static function render(string $title, string $content): void
 	{
+		$user = Auth::user();
 		?>
 		<!DOCTYPE html>
 		<html lang="en">
@@ -25,8 +28,15 @@ class Layout
 		<body>
 		<header>
 			<div class="header-content">
-				<img class="logo" src="/public/assets/logo.svg" alt="HealthSync Logo">
-				<span>HealthSync</span>
+				<div class="header-left">
+					<img class="logo" src="/public/assets/logo.svg" alt="HealthSync Logo">
+					<span>HealthSync</span>
+				</div>
+				<?php if ($user): ?>
+					<div class="header-right">
+						<a href="/logout" class="logout-button"><i class="fa-solid fa-sign-out-alt"></i> Logout</a>
+					</div>
+				<?php endif; ?>
 			</div>
 		</header>
 		<?php echo $content; ?>

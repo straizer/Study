@@ -49,7 +49,7 @@ class SignupController extends AuthController
 
 		if (!empty($result)) {
 			$this->render('Sign up', 'Auth/SignupView', [
-				'userExists' => true,
+				'user_exists' => true,
 				'email' => $email,
 			]);
 			return;

@@ -5,10 +5,10 @@ namespace App\Controllers\Auth;
 
 use App\Controllers\Controller;
 
-class LoginController extends Controller
+class SignupController extends Controller
 {
 	public function index(): void
 	{
-		$this->render('Login', 'Auth/LoginView');
+		$this->render('Sign up', 'Auth/SignupView');
 	}
 }

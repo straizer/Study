@@ -7,9 +7,9 @@ use App\Views\View;
 
 abstract class Controller
 {
-	protected function render(string $view, array $variables = []): void
+	protected function render(string $title, string $view, array $variables = []): void
 	{
-		$view_object = new View($view);
+		$view_object = new View($title, $view);
 		$view_object->render($variables);
 	}
 }

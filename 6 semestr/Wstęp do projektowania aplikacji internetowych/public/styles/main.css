@@ -384,6 +384,14 @@ footer {
     text-align: left;
 }
 
+.connect-card h3.status-connected {
+    color: #2aad17;
+}
+
+.connect-card h3.status-not-connected {
+    color: #ef4444;
+}
+
 .connect-card p {
     color:      #666;
     font-size:  14px;

@@ -24,12 +24,18 @@ html, body {
 }
 
 body {
-    align-items:     center;
+    align-items:     flex-start;
     background:      linear-gradient(to right, #88beeb, #fff);
     display:         flex;
-    justify-content: center;
+    justify-content: flex-start;
     line-height:     1.6;
     padding-top:     80px;
+}
+
+body.sign-in-page,
+body.sign-up-page {
+    align-items:     center;
+    justify-content: center;
 }
 
 h1 {
@@ -254,4 +260,30 @@ footer {
     position:   fixed;
     text-align: center;
     width:      100%;
+}
+
+.home-content {
+    align-items:   flex-start;
+    align-self:    flex-start;
+    background:    transparent;
+    border-radius: 0;
+    box-shadow:    none;
+    margin:        20px auto 0;
+    max-width:     1200px;
+    padding:       0 20px;
+    text-align:    left;
+    width:         100%;
+}
+
+.home-content h1 {
+    color:         #333;
+    margin-bottom: 10px;
+    text-align:    left;
+}
+
+.health-overview {
+    color:      #666;
+    font-size:  18px;
+    margin-top: 0;
+    text-align: left;
 }

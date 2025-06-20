@@ -4,8 +4,7 @@ declare(strict_types=1);
 $user = $user ?? null;
 ?>
 
-<div>
-	<h1>Welcome to HealthSync</h1>
-	<p>You are logged in as: <?php echo htmlspecialchars($user['email']); ?></p>
-	<p><a href="/logout">Logout</a></p>
+<div class="home-content">
+	<h1>Welcome back, <?php echo htmlspecialchars($user['email']); ?></h1>
+	<p class="health-overview">Here's your health overview for today</p>
 </div>

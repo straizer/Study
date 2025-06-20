@@ -16,6 +16,9 @@ $router->post('/login/authenticate', [App\Controllers\Auth\LoginController::clas
 $router->get('/signup', [App\Controllers\Auth\SignupController::class, 'index']);
 $router->post('/signup/register', [App\Controllers\Auth\SignupController::class, 'register']);
 
+$router->get('/oauth/google', [App\Controllers\OAuthController::class, 'googleAuth']);
+$router->get('/oauth/google/callback', [App\Controllers\OAuthController::class, 'googleCallback']);
+
 $router->get('/logout', function() {
 	Auth::logout();
 	Auth::requireAuth();

@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Controllers\Auth;
 
 use App\Database;
-use App\Models\Auth;
 use App\Models\Session;
 use RuntimeException;
 
@@ -58,7 +57,8 @@ class LoginController extends AuthController
 
 		try {
 			Session::create($user['id']);
-			Auth::requireGuest();
+			header('Location: /');
+			exit;
 		} catch (RuntimeException $exception) {
 			$this->render('Sign in', 'Auth/LoginView', [
 				'errors' => ['Login failed: ' . $exception->getMessage()],

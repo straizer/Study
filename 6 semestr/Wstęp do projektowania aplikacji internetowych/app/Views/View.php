@@ -7,10 +7,12 @@ use RuntimeException;
 
 class View
 {
+	private string $title;
 	private string $viewPath;
 
-	public function __construct(string $view)
+	public function __construct(string $title, string $view)
 	{
+		$this->title = $title;
 		$this->viewPath = __DIR__ . '/' . $view . '.php';
 	}
 
@@ -26,6 +28,6 @@ class View
 		include $this->viewPath;
 		$content = ob_get_clean();
 
-		Layout::render($content);
+		Layout::render($this->title, $content);
 	}
 }

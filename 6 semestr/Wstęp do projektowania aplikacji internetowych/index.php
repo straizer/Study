@@ -12,5 +12,6 @@ $router->get('/', function() {
 });
 
 $router->get('/login', [App\Controllers\Auth\LoginController::class, 'index']);
+$router->get('/signup', [App\Controllers\Auth\SignupController::class, 'index']);
 
 $router->run();

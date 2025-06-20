@@ -5,7 +5,7 @@ namespace App\Views;
 
 class Layout
 {
-	public static function render(string $content): void
+	public static function render(string $title, string $content): void
 	{
 		?>
 		<!DOCTYPE html>
@@ -19,9 +19,10 @@ class Layout
 			      rel="stylesheet">
 			<script crossorigin src="https://kit.fontawesome.com/8fd9367667.js"></script>
 			<link href="/public/styles/main.css" rel="stylesheet">
-			<title>Login</title>
+			<link rel="icon" href="/public/assets/logo.svg">
+			<title>HealthSync - <?php echo $title; ?></title>
 		</head>
-		<body id="login-page">
+		<body>
 		<header>
 			<div class="header-content">
 				<img class="logo" src="/public/assets/logo.svg" alt="HealthSync Logo">

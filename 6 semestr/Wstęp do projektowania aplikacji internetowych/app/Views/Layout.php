@@ -43,6 +43,7 @@ class Layout
 		<footer>
 			<p>© 2025 HealthSync. All rights reserved.</p>
 		</footer>
+		<script src="/public/scripts/card-hover.js"></script>
 		</body>
 		</html>
 		<?php

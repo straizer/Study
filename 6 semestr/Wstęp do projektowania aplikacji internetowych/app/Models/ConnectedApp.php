@@ -6,11 +6,11 @@ namespace App\Models;
 class ConnectedApp
 {
 	private string $name;
-	private string $status;
+	private AppStatus $status;
 	private string $icon;
 	private string $iconColor;
 
-	public function __construct(string $name, string $status, string $icon, string $iconColor)
+	public function __construct(string $name, AppStatus $status, string $icon, string $iconColor)
 	{
 		$this->name = $name;
 		$this->status = $status;
@@ -21,9 +21,9 @@ class ConnectedApp
 	public static function getAll(): array
 	{
 		return [
-			new self('Fitbit', 'Connected', 'fa-solid fa-ring', '#00b894'),
-			new self('Apple Health', 'Connected', 'fa-brands fa-apple', '#636e72'),
-			new self('Google Fit', 'Connected', 'fa-brands fa-google', '#4285f4'),
+			new self('Fitbit', AppStatus::NotConnected, 'fa-solid fa-ring', '#00b894'),
+			new self('Apple Health', AppStatus::NotConnected, 'fa-brands fa-apple', '#636e72'),
+			new self('Google Fit', AppStatus::NotConnected, 'fa-brands fa-google', '#4285f4'),
 		];
 	}
 
@@ -32,7 +32,7 @@ class ConnectedApp
 		return $this->name;
 	}
 
-	public function getStatus(): string
+	public function getStatus(): AppStatus
 	{
 		return $this->status;
 	}

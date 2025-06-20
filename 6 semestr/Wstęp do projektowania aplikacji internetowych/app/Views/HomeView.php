@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use App\Models\AppStatus;
+
 $user = $user ?? null;
 $health_metrics = $health_metrics ?? [];
 $connected_apps = $connected_apps ?? [];
@@ -26,7 +28,9 @@ $connected_apps = $connected_apps ?? [];
 			<?php foreach ($connected_apps as $app): ?>
 				<div class="connect-card">
 					<p><?php echo htmlspecialchars($app->getName()); ?></p>
-					<h3><?php echo htmlspecialchars($app->getStatus()); ?></h3>
+					<h3 class="status-<?php echo $app->getStatus() === AppStatus::Connected ? 'connected' : 'not-connected'; ?>">
+						<?php echo htmlspecialchars($app->getStatus()->value); ?>
+					</h3>
 					<i class="<?php echo htmlspecialchars($app->getIcon()); ?> fit-icon"
 					   style="color: <?php echo htmlspecialchars($app->getIconColor()); ?>;"></i>
 				</div>

@@ -5,11 +5,15 @@ namespace App\Controllers\Auth;
 
 use App\Controllers\Controller;
 use App\Database;
+use App\Models\Auth;
+use App\Models\Session;
+use RuntimeException;
 
 class LoginController extends Controller
 {
 	public function index(): void
 	{
+		Auth::requireGuest();
 		$this->render('Sign in', 'Auth/LoginView');
 	}
 
@@ -53,7 +57,15 @@ class LoginController extends Controller
 			return;
 		}
 
-		header('Location: /');
-		exit;
+		try {
+			Session::create($user['id']);
+			Auth::requireGuest();
+		} catch (RuntimeException $exception) {
+			$this->render('Sign in', 'Auth/LoginView', [
+				'errors' => ['Login failed: ' . $exception->getMessage()],
+				'email' => $email,
+			]);
+			return;
+		}
 	}
 }

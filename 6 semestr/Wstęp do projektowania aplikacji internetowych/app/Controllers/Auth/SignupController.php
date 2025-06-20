@@ -5,11 +5,15 @@ namespace App\Controllers\Auth;
 
 use App\Controllers\Controller;
 use App\Database;
+use App\Models\Auth;
+use App\Models\Session;
+use RuntimeException;
 
 class SignupController extends Controller
 {
 	public function index(): void
 	{
+		Auth::requireGuest();
 		$this->render('Sign up', 'Auth/SignupView');
 	}
 
@@ -17,7 +21,7 @@ class SignupController extends Controller
 	{
 		$email = $_POST['email'] ?? '';
 		$password = $_POST['password'] ?? '';
-		$repeatPassword = $_POST['repeat_password'] ?? '';
+		$repeat_password = $_POST['repeat_password'] ?? '';
 
 		$errors = [];
 
@@ -25,10 +29,10 @@ class SignupController extends Controller
 			$errors[] = 'Invalid email format';
 		}
 
-		if (empty($password) || empty($repeatPassword)) {
+		if (empty($password) || empty($repeat_password)) {
 			$errors[] = 'Both password fields must be filled';
 		} else {
-			if ($password !== $repeatPassword) {
+			if ($password !== $repeat_password) {
 				$errors[] = 'Passwords do not match';
 			}
 
@@ -53,15 +57,33 @@ class SignupController extends Controller
 			return;
 		}
 
-		$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+		$hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-		$insertQuery = 'INSERT INTO users (email, password) VALUES (:email, :password)';
-		Database::execute($insertQuery, [
+		$insert_query = 'INSERT INTO users (email, password) VALUES (:email, :password) RETURNING id';
+		$result = Database::query($insert_query, [
 			':email' => $email,
-			':password' => $hashedPassword,
+			':password' => $hashed_password,
 		]);
 
-		header('Location: /');
-		exit;
+		if (empty($result)) {
+			$this->render('Sign up', 'Auth/SignupView', [
+				'errors' => ['Registration failed: Could not create user'],
+				'email' => $email,
+			]);
+			return;
+		}
+
+		$user_id = $result[0]['id'];
+
+		try {
+			Session::create($user_id);
+			Auth::requireGuest();
+		} catch (RuntimeException $exception) {
+			$this->render('Sign up', 'Auth/SignupView', [
+				'errors' => ['Registration completed but login failed: ' . $exception->getMessage()],
+				'email' => $email,
+			]);
+			return;
+		}
 	}
 }

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Services\GoogleFitService;
+
 class HealthMetric
 {
 	private string $name;
@@ -20,6 +22,20 @@ class HealthMetric
 
 	public static function getAll(): array
 	{
+		$googleFitService = new GoogleFitService();
+
+		// Check if the user has connected to Google Fit
+		if ($googleFitService->isConnected()) {
+			// Get real data from Google Fit
+			return [
+				new self('Steps Today', $googleFitService->getStepsToday(), 'fa-solid fa-shoe-prints', '#0000ff'),
+				new self('Hearth Rate', $googleFitService->getHeartRate(), 'fa-solid fa-heart-pulse', '#ff0000'),
+				new self('Sleep', $googleFitService->getSleepDuration(), 'fa-solid fa-moon', '#800080'),
+				new self('Calories Burnt', $googleFitService->getCaloriesBurnt(), 'fa-solid fa-fire', '#ffa500'),
+			];
+		}
+
+		// Fallback to hardcoded values if not connected
 		return [
 			new self('Steps Today', '8,439', 'fa-solid fa-shoe-prints', '#0000ff'),
 			new self('Hearth Rate', '72 BPM', 'fa-solid fa-heart-pulse', '#ff0000'),

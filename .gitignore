@@ -5,8 +5,9 @@
 # Node.js
 node_modules/
 
-# Intellij
-.idea
+# JetBrains
+.idea/
+!/.idea/
 
 # Maven
 target/

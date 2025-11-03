@@ -1,0 +1,17 @@
+sync:
+  defaults:
+    mode: two-way-resolved
+    ignore:
+      vcs: true
+      paths:
+        - bin
+        - obj
+  dev-sync:
+    alpha: .
+    beta: docker://dev_container/home/dev/workspace
+    configurationBeta: # container side only
+      permissions:
+        defaultOwner: "dev"     # or "id:1000"
+        defaultGroup: "dev"     # or "id:1000"
+        defaultFileMode: 0644   # rw-r--r--
+        defaultDirectoryMode: 0755

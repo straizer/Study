@@ -3,7 +3,7 @@ services:
     image: devcontainer-cpp
     build:
       context: .
-      dockerfile: ../../Dockerfile
+      dockerfile: Dockerfile
     container_name: dev_container
     ports:
       - "127.0.0.1:2222:22"

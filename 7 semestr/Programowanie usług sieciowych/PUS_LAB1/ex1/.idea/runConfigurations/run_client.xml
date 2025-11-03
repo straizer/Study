@@ -1,7 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="run-client" type="CLionNativeAppRunConfigurationType" PROGRAM_PARAMS="127.0.0.1 8000" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="workspace" TARGET_NAME="run-client" CONFIG_NAME="run-client" version="1" RUN_PATH="$PROJECT_DIR$/bin/client">
-    <method v="2">
-      <option name="RunConfigurationTask" enabled="true" run_configuration_name="build-debug" run_configuration_type="MAKEFILE_TARGET_RUN_CONFIGURATION" />
-    </method>
-  </configuration>
-</component>

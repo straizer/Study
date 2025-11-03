@@ -1,4 +1,4 @@
-package semester6.to;
+package template;
 
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;

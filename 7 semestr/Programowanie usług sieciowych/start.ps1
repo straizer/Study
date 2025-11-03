@@ -28,7 +28,7 @@ if (-not $mutagenExe)
 }
 
 # clean previous session
-& $mutagenExe project terminate *> $null
+& $mutagenExe project terminate *> $null | Out-Null
 
 # 2. run docker compose
 Write-Host "Running: compose up --build --force-recreate --no-log-prefix --remove-orphans --quiet-pull -V --wait"

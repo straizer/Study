@@ -8,8 +8,11 @@ sync:
         - obj
         - .idea/*
         - "!.idea/runConfigurations"
+        - "src/**"        # ignore everything under src
+        - "!src/**/"      # re-include directories so traversal works
+        - "!src/**/*.*"   # include only files that have a dot
   dev-sync:
-    alpha: .
+    alpha: {{ALPHA}}
     beta: docker://dev_container/home/dev/workspace
     configurationBeta: # container side only
       permissions:

@@ -27,8 +27,6 @@ if (-not $mutagenExe)
     throw "Failed to obtain mutagen path."
 }
 
-Write-Host "Using mutagen at: $mutagenExe"
-
 # clean previous session
 & $mutagenExe project terminate *> $null
 

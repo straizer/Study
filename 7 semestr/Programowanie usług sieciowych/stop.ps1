@@ -16,8 +16,6 @@ if (-not $mutagenExe)
     throw "Failed to obtain mutagen path."
 }
 
-Write-Host "Using mutagen at: $mutagenExe"
-
 # 2. stop mutagen project
 Write-Host "Running: mutagen project terminate"
 & $mutagenExe project terminate

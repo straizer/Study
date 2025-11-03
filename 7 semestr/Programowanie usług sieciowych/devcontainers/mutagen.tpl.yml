@@ -13,7 +13,7 @@ sync:
         - "!src/**/*.*"   # include only files that have a dot
   dev-sync:
     alpha: {{ALPHA}}
-    beta: docker://dev_container/home/dev/workspace
+    beta: docker://{{LANGUAGE}}/home/dev/workspace
     configurationBeta: # container side only
       permissions:
         defaultOwner: "dev"     # or "id:1000"

@@ -1,0 +1,8 @@
+services:
+  cpp:
+    image: devcontainer-cpp
+    build:
+      target: cpp
+    container_name: cpp
+    ports:
+      - "127.0.0.1:2222:22"

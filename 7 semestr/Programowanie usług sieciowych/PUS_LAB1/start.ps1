@@ -25,6 +25,3 @@ docker compose up --build --force-recreate --no-log-prefix --remove-orphans --qu
 # 3. start mutagen project
 Write-Host "Running: mutagen project start"
 & $mutagenExe project start
-
-Write-Host "Running: mutagen sync list"
-& $mutagenExe sync list

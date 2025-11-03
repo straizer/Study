@@ -22,6 +22,6 @@ Write-Host "Using mutagen at: $mutagenExe"
 Write-Host "Running: mutagen project terminate"
 & $mutagenExe project terminate
 
-# 3. stop docker compose stack
+# 3. stop docker compose
 Write-Host "Running: docker compose down -v --remove-orphans"
 docker compose down -v --remove-orphans

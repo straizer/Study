@@ -6,6 +6,8 @@ sync:
       paths:
         - bin
         - obj
+        - .idea/*
+        - "!.idea/runConfigurations"
   dev-sync:
     alpha: .
     beta: docker://dev_container/home/dev/workspace

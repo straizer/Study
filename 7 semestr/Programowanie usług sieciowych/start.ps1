@@ -27,9 +27,6 @@ if (-not $mutagenExe)
     throw "Failed to obtain mutagen path."
 }
 
-# clean previous session
-& $mutagenExe project terminate *> $null | Out-Null
-
 # 2. run docker compose
 Write-Host "Running: compose up --build --force-recreate --no-log-prefix --remove-orphans --quiet-pull -V --wait"
 docker compose up --build --force-recreate --no-log-prefix --remove-orphans --quiet-pull -V --wait

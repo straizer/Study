@@ -1,0 +1,71 @@
+#file: noinspection GrazieInspection,AiaStyle
+Checks: |
+  *
+  -llvmlibc-restrict-system-libc-headers
+  -misc-include-cleaner
+  -llvm-header-guard
+#  -clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling
+#  -bugprone-easily-swappable-parameters
+WarningsAsErrors: '*'
+HeaderFilterRegex: '.*'
+
+CheckOptions:
+  # ===== Types =====
+  - key: readability-identifier-naming.TypeCase
+    value: CamelCase
+  - key: readability-identifier-naming.StructCase
+    value: CamelCase
+  - key: readability-identifier-naming.UnionCase
+    value: CamelCase
+  - key: readability-identifier-naming.EnumCase
+    value: CamelCase
+  - key: readability-identifier-naming.TypedefCase
+    value: CamelCase
+  - key: readability-identifier-naming.TypeAliasCase
+    value: CamelCase
+
+  # ===== Functions =====
+  - key: readability-identifier-naming.FunctionCase
+    value: camelBack
+  - key: readability-identifier-naming.IgnoreMainLikeFunctions
+    value: 'true'
+
+  # ===== Variables =====
+  - key: readability-identifier-naming.VariableCase
+    value: lower_case
+  - key: readability-identifier-naming.GlobalVariableCase
+    value: lower_case
+  - key: readability-identifier-naming.StaticVariableCase
+    value: lower_case
+  - key: readability-identifier-naming.LocalVariableCase
+    value: lower_case
+  - key: readability-identifier-naming.ParameterCase
+    value: lower_case
+  - key: readability-identifier-length.MinimumParameterNameLength
+    value: 2
+
+  # ===== Fields =====
+  - key: readability-identifier-naming.MemberCase
+    value: lower_case
+  - key: readability-identifier-naming.StructMemberCase
+    value: lower_case
+  - key: readability-identifier-naming.UnionMemberCase
+    value: lower_case
+
+  # ===== Consts =====
+  - key: readability-identifier-naming.ConstantCase
+    value: lower_case
+  - key: readability-identifier-naming.GlobalConstantCase
+    value: UPPER_CASE
+  - key: readability-identifier-naming.StaticConstantCase
+    value: UPPER_CASE
+  - key: readability-identifier-naming.LocalConstantCase
+    value: lower_case
+  - key: readability-identifier-naming.MemberConstantCase
+    value: lower_case
+  - key: readability-identifier-naming.EnumConstantCase
+    value: UPPER_CASE
+
+  # ===== Macros =====
+  - key: readability-identifier-naming.MacroDefinitionCase
+    value: UPPER_CASE

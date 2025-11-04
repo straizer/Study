@@ -1,120 +1,82 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/socket.h> /* socket() */
-#include <netinet/in.h> /* struct sockaddr_in */
-#include <arpa/inet.h>  /* inet_ntop() */
-#include <unistd.h>     /* close() */
 #include <string.h>
 #include <time.h>
-#include <errno.h>
+#include <unistd.h>
 
-int main(int argc, char** argv) {
+#include "ipv4.h"
+#include "network.h"
 
-    /* Deskryptory dla gniazda nasluchujacego i polaczonego: */
-    int             listenfd, connfd;
+enum {
+    BUFFER_SIZE = 256,
+};
 
-    int             retval; /* Wartosc zwracana przez funkcje. */
-
-    /* Gniazdowe struktury adresowe (dla klienta i serwera): */
-    struct          sockaddr_in client_addr, server_addr;
-
-    /* Rozmiar struktur w bajtach: */
-    socklen_t       client_addr_len, server_addr_len;
-
-    /* Bufor wykorzystywany przez write() i read(): */
-    char            buff[256];
-
-    /* Bufor dla adresu IP klienta w postaci kropkowo-dziesietnej: */
-    char            addr_buff[256];
-
-    time_t          rawtime;
-    struct tm*      timeinfo;
-
-
+int main(const int argc, const char* const* const argv) {
     if (argc != 2) {
-        fprintf(stderr, "Invocation: %s <PORT>\n", argv[0]);
-        exit(EXIT_FAILURE);
+        (void)fprintf(stderr, "Invocation: %s <PORT>\n", argv[0]);
+        exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
+    const in_port_t server_port = getPort(argv[1]);
 
-    /* Utworzenie gniazda dla protokolu TCP: */
-    listenfd = socket(PF_INET, SOCK_STREAM, 0);
-    if (listenfd == -1) {
-        perror("socket()");
-        exit(EXIT_FAILURE);
-    }
+    const int32_t server_socket = startTCPServer(server_port, 2);
+    printf("Server is listening for incoming connection\n");
 
-    /* Wyzerowanie struktury adresowej serwera: */
-    memset(&server_addr, 0, sizeof(server_addr));
-    /* Domena komunikacyjna (rodzina protokolow): */
-    server_addr.sin_family          =       AF_INET;
-    /* Adres nieokreslony (ang. wildcard address): */
-    server_addr.sin_addr.s_addr     =       htonl(INADDR_ANY);
-    /* Numer portu: */
-    server_addr.sin_port            =       htons(atoi(argv[1]));
-    /* Rozmiar struktury adresowej serwera w bajtach: */
-    server_addr_len                 =       sizeof(server_addr);
+    // Create a client address struct
+    struct sockaddr_in client_address = {0};
+    socklen_t client_address_length = sizeof(client_address);
 
-    /* Powiazanie "nazwy" (adresu IP i numeru portu) z gniazdem: */
-    if (bind(listenfd, (struct sockaddr*) &server_addr, server_addr_len) == -1) {
-        perror("bind()");
-        exit(EXIT_FAILURE);
-    }
-
-    /* Przeksztalcenie gniazda w gniazdo nasluchujace: */
-    if (listen(listenfd, 2) == -1) {
-        perror("listen()");
-        exit(EXIT_FAILURE);
-    }
-
-    fprintf(stdout, "Server is listening for incoming connection...\n");
-
-    /* Funkcja pobiera polaczenie z kolejki polaczen oczekujacych na zaakceptowanie
-     * i zwraca deskryptor dla gniazda polaczonego: */
-    client_addr_len = sizeof(client_addr);
-    connfd = accept(listenfd, (struct sockaddr*)&client_addr, &client_addr_len);
-    if (connfd == -1) {
+    // Wait for the incoming connection and return a new socket file descriptor for communicating with a client
+    const int32_t client_socket = accept(server_socket, (struct sockaddr*)&client_address, &client_address_length);
+    if (client_socket == -1) {
         perror("accept()");
-        exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
-    fprintf(
-        stdout, "TCP connection accepted from %s:%d\n",
-        inet_ntop(AF_INET, &client_addr.sin_addr, addr_buff, sizeof(addr_buff)),
-        ntohs(client_addr.sin_port)
-    );
+    char client_ip[BUFFER_SIZE];
+    socketAddressToString(client_address, client_ip);
+    printf("TCP connection accepted from %s\n", client_ip);
 
-    sleep(6);
+    printf("Sending current date and time\n");
 
-    fprintf(stdout, "Sending current date and time...\n");
+    // Get the current system time and convert it to a human-readable local time structure
+    time_t raw_time = 0;
+    (void)time(&raw_time);
+    struct tm time_info;
+    localtime_r(&raw_time, &time_info);
 
-    sleep(2);
-    /* Zapisanie w buforze aktualnego czasu: */
-    time(&rawtime);
-    timeinfo = localtime(&rawtime);
-    strftime(buff, sizeof(buff), "%Y-%m-%d %H:%M:%S %Z", timeinfo);
-
-    /* Wyslanie aktualnego czasu do klienta: */
-    retval = write(connfd, buff, strlen(buff));
-
-    /* Funkcja oczekuje na segment TCP (od klienta) z ustawiona flaga FIN: */
-    retval = read(connfd, buff, sizeof(buff));
-    if (retval == 0) {
-        sleep(4);
-        fprintf(stdout, "Connection terminated by client "
-                "(received FIN, entering CLOSE_WAIT state on connected socked)...\n");
+    // Format the time information into a text string
+    char buffer[BUFFER_SIZE];
+    if (strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S %Z", &time_info) == 0) {
+        (void)fprintf(stderr, "Buffer size exceeded");
+        exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
-    sleep(12);
+    // Sends the buffer to the connected client through the client socket
+    if (write(client_socket, buffer, strlen(buffer)) == -1) {
+        perror("write()");
+        exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
+    }
 
-    fprintf(stdout, "Closing connected socket (sending FIN to client)...\n");
-    close(connfd);
+    // If read returns 0, the client has closed the connection (sent FIN)
+    const ssize_t bytes_read = read(client_socket, buffer, sizeof(buffer));
+    if (bytes_read == -1) {
+        perror("read()");
+        exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
+    }
+    if (bytes_read > 0) {
+        (void)fprintf(stderr, "Unexpected bytes received from %s:%d\n", client_ip, ntohs(client_address.sin_port));
+        exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
+    }
 
-    sleep(5);
+    printf("Connection terminated by the client (received FIN, entering CLOSE_WAIT state)\n");
 
-    fprintf(stdout, "Closing listening socket and terminating server...\n");
-    close(listenfd);
+    // Send a FIN to close the client connection
+    printf("Shutting down client connection (sending FIN)\n");
+    closeConnection(client_socket);
 
-    sleep(3);
+    // Close listening socket
+    printf("Closing listening socket and terminating server\n");
+    close(server_socket);
 
-    exit(EXIT_SUCCESS);
+    exit(EXIT_SUCCESS);  // NOLINT(concurrency-mt-unsafe)
 }

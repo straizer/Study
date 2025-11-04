@@ -6,7 +6,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 RUN apt-get upgrade -y
 RUN apt-get install -y --no-install-recommends openssh-server
-RUN rm -rf /var/lib/apt/lists/*
 
 # user
 RUN useradd -m dev
@@ -33,3 +32,7 @@ RUN mkdir -p /opt
 RUN curl -fSL https://download.jetbrains.com/cpp/CLion-2025.2.4.tar.gz | tar -xz -C /opt
 RUN ln -s /opt/clion-* /opt/clion
 RUN su - dev -c "/opt/clion/bin/remote-dev-server.sh registerBackendLocationForGateway"
+
+# CLI tools
+RUN apt-get install -y --no-install-recommends binutils-gold clang-format clang-tidy
+RUN rm -rf /var/lib/apt/lists/*

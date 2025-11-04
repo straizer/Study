@@ -71,16 +71,37 @@ function Get-InstalledMutagenVersion
     return $null
 }
 
-# main
-$latest = Get-LatestMutagenInfo
-$latestTag = $latest.Tag.TrimStart("v")   # e.g. "0.18.1"
-$latestUrl = $latest.Url
-
+# ----------------- main -----------------
 $currentExe = Get-MutagenExePath -InstallDir $InstallDir -MutagenExeName $MutagenExeName
-
+$installed = $null
 if ($currentExe)
 {
     $installed = Get-InstalledMutagenVersion -Exe $currentExe
+}
+
+# Try to query GitHub. If it fails and we already have mutagen, just return it.
+try
+{
+    $latest = Get-LatestMutagenInfo
+    $latestTag = $latest.Tag.TrimStart("v")   # e.g. "0.18.1"
+    $latestUrl = $latest.Url
+}
+catch
+{
+    if ($currentExe)
+    {
+        Write-Host "mutagen already installed at $currentExe; skipping online version check (no network?)."
+        $currentExe
+        return
+    }
+    else
+    {
+        throw "Cannot reach GitHub to download Mutagen and no local mutagen is installed. Check your network."
+    }
+}
+
+if ($currentExe)
+{
     if ($installed -and $installed -eq $latestTag)
     {
         Write-Host "mutagen $installed already installed at $currentExe"

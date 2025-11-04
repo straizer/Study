@@ -23,13 +23,56 @@ try
     }
 
     # 2. run docker compose
-    Write-Host "Running: compose up --build --force-recreate --no-log-prefix --remove-orphans --quiet-pull -V --wait $Language"
-    docker compose up --build --force-recreate --no-log-prefix --remove-orphans --quiet-pull -V --wait $Language
+    $online = $false
+    try
+    {
+        $test = Test-NetConnection -ComputerName "mcr.microsoft.com" -Port 443 -WarningAction SilentlyContinue -ErrorAction SilentlyContinue
+        if ($test -and $test.TcpTestSucceeded)
+        {
+            $online = $true
+        }
+    }
+    catch
+    {
+    }
+
+    # check if image exists locally
+    $imageName = "devcontainer-$Language"
+    $imageExists = $false
+    try
+    {
+        docker image inspect $imageName *> $null
+        $imageExists = $true
+    }
+    catch
+    {
+    }
+
+    if ($online)
+    {
+        Write-Host "Online: building and starting containers..." -ForegroundColor Green
+        $cmd = "docker compose up --build --force-recreate --no-log-prefix --remove-orphans --quiet-pull -V --wait $Language"
+        Write-Host $cmd -ForegroundColor Blue
+        Invoke-Expression $cmd
+    }
+    else
+    {
+        if (-not $imageExists)
+        {
+            throw "Offline and image '$imageName' not present. Build it once while online first."
+        }
+
+        Write-Host "Offline: using existing image '$imageName' without rebuild." -ForegroundColor Red
+        $cmd = "docker compose up --no-build --force-recreate --no-log-prefix --remove-orphans --quiet-pull -V --wait $Language"
+        Write-Host $cmd -ForegroundColor Blue
+        Invoke-Expression $cmd
+    }
 
     # 3. start mutagen project
     (Get-Content mutagen.tpl.yml) -replace '{{LANGUAGE}}', $Language -replace '{{ALPHA}}', "../$Project" | Set-Content mutagen.yml
-    Write-Host "Running: mutagen project start"
-    & $mutagenExe project start
+    $cmd = "$mutagenExe project start"
+    Write-Host $cmd -ForegroundColor Blue
+    Invoke-Expression $cmd
 }
 finally
 {

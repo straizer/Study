@@ -12,12 +12,14 @@ try
     }
 
     # 2. stop mutagen project
-    Write-Host "Running: mutagen project terminate"
-    & $mutagenExe project terminate
+    $cmd = "$mutagenExe project terminate"
+    Write-Host $cmd -ForegroundColor Blue
+    Invoke-Expression $cmd
 
     # 3. stop docker compose
-    Write-Host "Running: docker compose down -v --remove-orphans"
-    docker compose down -v --remove-orphans
+    $cmd = "docker compose down -v --remove-orphans"
+    Write-Host $cmd -ForegroundColor Blue
+    Invoke-Expression $cmd
 
     # 4. clear temporary file
     Remove-Item mutagen.yml -ErrorAction SilentlyContinue

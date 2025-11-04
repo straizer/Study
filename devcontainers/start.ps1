@@ -28,7 +28,7 @@ try
 
     # 3. start mutagen project
     (Get-Content mutagen.tpl.yml) -replace '{{LANGUAGE}}', $Language -replace '{{ALPHA}}', "../$Project" | Set-Content mutagen.yml
-    Write-Host "Running: mutagen project start (langauge=$Language alpha=$Project)"
+    Write-Host "Running: mutagen project start"
     & $mutagenExe project start
 }
 finally

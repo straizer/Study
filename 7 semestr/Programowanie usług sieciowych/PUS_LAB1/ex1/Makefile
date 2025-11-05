@@ -97,7 +97,7 @@ ifneq ($(LINT),0) # Without it, Clion used `clang-format` or `clang-tidy` as a c
 	echo "Formatting $<."
 	clang-format -i $<
 	echo "Linting $<."
-#	clang-tidy --quiet $< -- -x c -std=$(CSTD) $(filter -I% -D%,$(CPPFLAGS) $(CFLAGS)) 2>/dev/null
+	clang-tidy --quiet $< -- -x c -std=$(CSTD) $(filter -I% -D%,$(CPPFLAGS) $(CFLAGS)) 2>/dev/null
 endif
 	echo "Compiling $<."
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@

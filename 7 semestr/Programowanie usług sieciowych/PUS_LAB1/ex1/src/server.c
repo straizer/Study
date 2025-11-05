@@ -42,7 +42,7 @@ int main(const int argc, const char* const* const argv) {
     time_t raw_time = 0;
     (void)time(&raw_time);
     struct tm time_info;
-    localtime_r(&raw_time, &time_info);
+    (void)localtime_r(&raw_time, &time_info);
 
     // Format the time information into a text string
     char buffer[BUFFER_SIZE];

@@ -9,7 +9,7 @@ enum {
 };
 
 in_port_t getPort(const char* const port_string) {
-    char* end = NULL;
+    char *end = nullptr;
     const uint64_t port_raw = strtoul(port_string, &end, 10);
     if (*end != '\0') {
         (void)fprintf(stderr, "Missing trailing \\0");

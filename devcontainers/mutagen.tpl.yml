@@ -11,9 +11,27 @@ sync:
         - "src/**"        # ignore everything under src
         - "!src/**/"      # re-include directories so traversal works
         - "!src/**/*.*"   # include only files that have a dot
-  dev-sync:
+  project:
     alpha: {{ALPHA}}
     beta: docker://{{LANGUAGE}}/home/dev/workspace
+    configurationBeta: # container side only
+      permissions:
+        defaultOwner: "dev"     # or "id:1000"
+        defaultGroup: "dev"     # or "id:1000"
+        defaultFileMode: 0644   # rw-r--r--
+        defaultDirectoryMode: 0755
+  codeStyles:
+    alpha: ../.idea/codeStyles
+    beta: docker://{{LANGUAGE}}/home/dev/workspace/.idea/codeStyles
+    configurationBeta: # container side only
+      permissions:
+        defaultOwner: "dev"     # or "id:1000"
+        defaultGroup: "dev"     # or "id:1000"
+        defaultFileMode: 0644   # rw-r--r--
+        defaultDirectoryMode: 0755
+  inspectionProfiles:
+    alpha: ../.idea/inspectionProfiles
+    beta: docker://{{LANGUAGE}}/home/dev/workspace/.idea/inspectionProfiles
     configurationBeta: # container side only
       permissions:
         defaultOwner: "dev"     # or "id:1000"

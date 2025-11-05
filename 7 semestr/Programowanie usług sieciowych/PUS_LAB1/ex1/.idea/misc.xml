@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MakefileSettings">
+    <option name="linkedExternalProjectsSettings">
+      <MakefileProjectSettings>
+        <option name="buildTarget" value="debug" />
+        <option name="switches" value="LINT=0" />
+      </MakefileProjectSettings>
+    </option>
+  </component>
+</project>

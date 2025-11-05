@@ -173,7 +173,5 @@ clean:
 	$(RM) $(ALL_BINS) $(ALL_OBJS) $(DEPS) $(MODE_FILE) $(OBJ_DIR)/*.dwo $(BIN_DIR)/*.map
 	echo "Clean complete."
 
-all: debug
-
 # Phony targets
 .PHONY: release debug run-client run-server clean

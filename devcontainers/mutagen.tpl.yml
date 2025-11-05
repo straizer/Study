@@ -7,7 +7,8 @@ sync:
         - bin
         - obj
         - .idea/*
-        - "!.idea/runConfigurations"
+        - "!.idea/runConfigurations/"
+        - "!.idea/misc.xml"
         - "src/**"        # ignore everything under src
         - "!src/**/"      # re-include directories so traversal works
         - "!src/**/*.*"   # include only files that have a dot

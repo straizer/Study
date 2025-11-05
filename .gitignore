@@ -9,6 +9,7 @@ node_modules/
 **/.idea/*
 !/.idea/
 !**/.idea/runConfigurations/
+!**/.idea/misc.xml
 
 # Maven
 target/

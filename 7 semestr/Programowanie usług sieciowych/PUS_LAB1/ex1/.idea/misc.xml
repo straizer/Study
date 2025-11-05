@@ -4,8 +4,16 @@
     <option name="linkedExternalProjectsSettings">
       <MakefileProjectSettings>
         <option name="buildTarget" value="debug" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+          </set>
+        </option>
         <option name="switches" value="LINT=0" />
+        <option name="version" value="2" />
       </MakefileProjectSettings>
     </option>
   </component>
+  <component name="MakefileWorkspace" PROJECT_DIR="$PROJECT_DIR$" />
 </project>

@@ -75,13 +75,13 @@ int32_t connectToServerViaTCP(const struct in_addr server_address, const in_port
     return tcp_socket;
 }
 
-void socketAddressToString(const struct sockaddr_in socket_addres, char* const out) {
+void socketAddressToString(const struct sockaddr_in socket_address, char* const out) {
     char result[BUFFER_SIZE];
-    if (inet_ntop(AF_INET, &socket_addres.sin_addr, result, BUFFER_SIZE) == NULL) {
+    if (inet_ntop(AF_INET, &socket_address.sin_addr, result, BUFFER_SIZE) == NULL) {
         perror("inet_ntop()");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
     const uint64_t ip_length = strlen(result);
-    (void)snprintf(result + ip_length, BUFFER_SIZE - ip_length, ":%d", ntohs(socket_addres.sin_port));
+    (void)snprintf(result + ip_length, BUFFER_SIZE - ip_length, ":%d", ntohs(socket_address.sin_port));
     memcpy(out, result, strlen(result) + 1);
 }

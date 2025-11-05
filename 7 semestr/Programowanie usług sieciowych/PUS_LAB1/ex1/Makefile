@@ -34,7 +34,7 @@ CFLAGS_COMMON = -std=$(CSTD) -pthread \
 CFLAGS_DEBUG = $(CFLAGS_COMMON) -O0 -g3 -ggdb3 -fno-pie \
   -fno-omit-frame-pointer -fno-optimize-sibling-calls \
   -fvar-tracking-assignments -fno-inline -fno-inline-functions-called-once \
-  -fsanitize=address,undefined -fno-sanitize-recover=all -fsanitize=leak -fanalyzer
+  -fsanitize=address,undefined,leak -fno-sanitize-recover=all -fanalyzer
 CFLAGS_RELEASE = $(CFLAGS_COMMON) -O3 -march=native -mtune=native -fPIE \
   -flto -ffunction-sections -fdata-sections -fvisibility=hidden \
   -fomit-frame-pointer -fno-plt -fno-semantic-interposition
@@ -44,7 +44,7 @@ LDFLAGS_COMMON = -fuse-ld=gold -pthread -Wl,--fatal-warnings -Wl,--warn-common -
   -Wl,-z,defs -Wl,-z,relro -Wl,-z,now -Wl,-z,noexecstack -Wl,--enable-new-dtags \
   -Wl,--as-needed -Wl,--build-id -Wl,--hash-style=gnu -Wl,--warn-shared-textrel
 LDFLAGS_DEBUG = $(LDFLAGS_COMMON) -no-pie -Wl,-O0 -Wl,--export-dynamic -Wl,--gdb-index -Wl,-Map,$@.map \
-  -fsanitize=address,undefined -fno-sanitize-recover=all -fsanitize=leak
+  -fsanitize=address,undefined,leak -fno-sanitize-recover=all
 LDFLAGS_RELEASE = $(LDFLAGS_COMMON) -pie -flto -Wl,--gc-sections -Wl,-O1 -Wl,--icf=all
 
 # Linked libraries

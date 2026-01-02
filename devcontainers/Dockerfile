@@ -27,9 +27,9 @@ HEALTHCHECK --interval=10s --timeout=3s --start-period=5s --retries=3 \
 CMD ["/usr/sbin/sshd", "-D"]
 
 FROM ssh AS cpp
-# CLion 2025.2.4
+# CLion 2025.3.1
 RUN mkdir -p /opt
-RUN curl -fSL https://download.jetbrains.com/cpp/CLion-2025.2.4.tar.gz | tar -xz -C /opt
+RUN curl -fSL https://download.jetbrains.com/cpp/CLion-2025.3.1.tar.gz | tar -xz -C /opt
 RUN ln -s /opt/clion-* /opt/clion
 RUN su - dev -c "/opt/clion/bin/remote-dev-server.sh registerBackendLocationForGateway"
 

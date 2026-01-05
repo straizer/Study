@@ -68,14 +68,11 @@ SERVER_BIN = $(BIN_DIR)/server
 ALL_BINS = $(CLIENT_BIN) $(SERVER_BIN)
 ALL_OBJS = $(CLIENT_OBJS) $(SERVER_OBJS)
 
-# Dependency files
-DEPS := $(ALL_OBJS:.o=.d)
-
 # Build mode tracking
-MODE_FILE = $(OBJ_DIR)/.build_mode
+MODE_FILE = $(OBJ_DIR)/build_mode.txt
 
 # Include dependency files if they exist
--include $(DEPS)
+-include $(ALL_OBJS:.o=.d)
 
 # Default target
 .PHONY: help
@@ -168,7 +165,7 @@ run-server:
 # Clean compiled files
 clean:
 	echo "Cleaning build artifacts."
-	$(RM) $(ALL_BINS) $(ALL_OBJS) $(DEPS) $(MODE_FILE) $(OBJ_DIR)/*.dwo $(BIN_DIR)/*.map
+	$(RM) -r -- $(OBJ_DIR) $(BIN_DIR)
 	echo "\033[32mClean complete.\033[0m"
 
 # Phony targets

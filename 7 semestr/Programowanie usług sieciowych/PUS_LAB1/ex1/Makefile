@@ -113,13 +113,17 @@ endif
 	echo "\tCompiling..."
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
+check-unused-functions: $(OBJ_DIR)/unused/
+	echo "\033[33mLooking for unused functions.\033[0m"
+	cppcheck $(CPPCHECK_FLAGS) --cppcheck-build-dir=$(OBJ_DIR)/unused --enable=unusedFunction $(SRC_DIR)
+
 # Link client executable
-$(CLIENT_BIN): $(CLIENT_OBJS) | $(BIN_DIR)
+$(CLIENT_BIN): $(CLIENT_OBJS) | check-unused-functions $(BIN_DIR)/
 	echo "Linking $@."
 	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
 # Link server executable
-$(SERVER_BIN): $(SERVER_OBJS) | $(BIN_DIR)
+$(SERVER_BIN): $(SERVER_OBJS) | check-unused-functions $(BIN_DIR)/
 	echo "Linking $@."
 	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
 

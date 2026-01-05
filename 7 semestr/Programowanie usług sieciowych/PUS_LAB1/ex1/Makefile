@@ -94,12 +94,13 @@ LINT ?= 1
 # Pattern rule: compile .c to .o
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 ifneq ($(LINT),0) # Without it, Clion used `clang-format` or `clang-tidy` as a compiler.
-	echo "Formatting $<."
+	echo "Processing $<:"
+	echo "\tFormatting..."
 	clang-format -i $<
-	echo "Linting $<."
+	echo "\tLinting..."
 	clang-tidy --quiet $< -- -x c -std=$(CSTD) $(filter -I% -D%,$(CPPFLAGS) $(CFLAGS)) 2>/dev/null
 endif
-	echo "Compiling $<."
+	echo "\tCompiling..."
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
 # Link client executable
@@ -118,7 +119,7 @@ release: CFLAGS = $(CFLAGS_RELEASE)
 release: LDFLAGS = $(LDFLAGS_RELEASE)
 release: check-mode-release $(ALL_BINS)
 	echo "RELEASE" > $(MODE_FILE)
-	echo "Release build complete."
+	echo "\033[32mRelease build complete.\033[0m"
 
 # Build all in debug mode
 debug: CPPFLAGS = $(CPPFLAGS_DEBUG)
@@ -126,7 +127,7 @@ debug: CFLAGS = $(CFLAGS_DEBUG)
 debug: LDFLAGS = $(LDFLAGS_DEBUG)
 debug: check-mode-debug $(ALL_BINS)
 	echo "DEBUG" > $(MODE_FILE)
-	echo "Debug build complete."
+	echo "\033[32mDebug build complete.\033[0m"
 
 # Check if we need to clean due to mode change
 .PHONY: check-mode-release check-mode-debug
@@ -171,7 +172,7 @@ $(OBJ_DIR):
 clean:
 	echo "Cleaning build artifacts."
 	$(RM) $(ALL_BINS) $(ALL_OBJS) $(DEPS) $(MODE_FILE) $(OBJ_DIR)/*.dwo $(BIN_DIR)/*.map
-	echo "Clean complete."
+	echo "\033[32mClean complete.\033[0m"
 
 # Phony targets
 .PHONY: release debug run-client run-server clean

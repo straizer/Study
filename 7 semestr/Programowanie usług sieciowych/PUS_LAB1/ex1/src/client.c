@@ -14,7 +14,7 @@ int main(const int argc, const char* const* const argv) {
         (void)fprintf(stderr, "Invocation: %s <IPv4 ADDRESS> <PORT>\n", argv[0]);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
-    const struct in_addr server_address = getInternetAddress(argv[1]);
+    const in_addr server_address = getInternetAddress(argv[1]);
     const in_port_t server_port = getPort(argv[2]);
 
     const int32_t client_socket = connectToServerViaTCP(server_address, server_port);

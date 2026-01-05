@@ -12,17 +12,11 @@ enum {
     BUFFER_SIZE = 64,
 };
 
-int32_t getTCPSocket(void) {
-    const int32_t result = socket(PF_INET, SOCK_STREAM, 0);
-    if (result == -1) {
-        perror("socket()");
-        exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
-    }
-    return result;
-}
+int32_t getTCPSocket(void);
+sockaddr_in getInternetSocketAddress(in_addr internet_address, in_port_t port);
 
-struct in_addr getInternetAddress(const char* const ip) {
-    struct in_addr address;
+in_addr getInternetAddress(const char* const ip) {
+    in_addr address;
     const int result = inet_pton(AF_INET, ip, &address);
     if (result == 0) {
         (void)fprintf(stderr, "inet_pton(): invalid network address\n");
@@ -35,26 +29,17 @@ struct in_addr getInternetAddress(const char* const ip) {
     return address;
 }
 
-struct sockaddr_in getInternetSocketAddress(const struct in_addr internet_address, const in_port_t port) {
-    struct sockaddr_in socket_address = {0};
-    socket_address.sin_family = AF_INET;
-    socket_address.sin_addr = internet_address;
-    socket_address.sin_port = htons(port);
-    return socket_address;
-}
-
 int32_t startTCPServer(const in_port_t server_port, const int32_t backlog_size) {
     const int32_t tcp_socket = getTCPSocket();
 
     // Create a server address struct
-    // - AF_INET → IPv4
     // - INADDR_ANY → 0.0.0.0 (listen on all interfaces)
-    struct in_addr server_address = {0};
+    in_addr server_address = {0};
     server_address.s_addr = htonl(INADDR_ANY);
-    struct sockaddr_in server_socket_address = getInternetSocketAddress(server_address, server_port);
+    sockaddr_in server_socket_address = getInternetSocketAddress(server_address, server_port);
 
     // Assign IP + port to the socket
-    if (bind(tcp_socket, (struct sockaddr*)&server_socket_address, sizeof(server_socket_address)) == -1) {
+    if (bind(tcp_socket, (sockaddr*)&server_socket_address, sizeof(server_socket_address)) == -1) {
         perror("bind()");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
@@ -68,14 +53,14 @@ int32_t startTCPServer(const in_port_t server_port, const int32_t backlog_size) 
     return tcp_socket;
 }
 
-int32_t connectToServerViaTCP(const struct in_addr server_address, const in_port_t server_port) {
+int32_t connectToServerViaTCP(const in_addr server_address, const in_port_t server_port) {
     const int32_t tcp_socket = getTCPSocket();
-    const struct sockaddr_in server_socket_address = getInternetSocketAddress(server_address, server_port);
+    const sockaddr_in server_socket_address = getInternetSocketAddress(server_address, server_port);
     connectToSocket(tcp_socket, server_socket_address);
     return tcp_socket;
 }
 
-void socketAddressToString(const struct sockaddr_in socket_address, char* const out) {
+void socketAddressToString(const sockaddr_in socket_address, char* const out) {
     char result[BUFFER_SIZE];
     if (inet_ntop(AF_INET, &socket_address.sin_addr, result, BUFFER_SIZE) == NULL) {
         perror("inet_ntop()");
@@ -84,4 +69,21 @@ void socketAddressToString(const struct sockaddr_in socket_address, char* const 
     const uint64_t ip_length = strlen(result);
     (void)snprintf(result + ip_length, BUFFER_SIZE - ip_length, ":%d", ntohs(socket_address.sin_port));
     memcpy(out, result, strlen(result) + 1);
+}
+
+int32_t getTCPSocket(void) {
+    const int32_t result = socket(AF_INET, SOCK_STREAM, PF_UNSPEC);
+    if (result == -1) {
+        perror("socket()");
+        exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
+    }
+    return result;
+}
+
+sockaddr_in getInternetSocketAddress(const in_addr internet_address, const in_port_t port) {
+    sockaddr_in socket_address = {0};
+    socket_address.sin_family = AF_INET;
+    socket_address.sin_addr = internet_address;
+    socket_address.sin_port = htons(port);
+    return socket_address;
 }

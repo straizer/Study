@@ -22,11 +22,11 @@ int main(const int argc, const char* const* const argv) {
     printf("Server is listening for incoming connection\n");
 
     // Create a client address struct
-    struct sockaddr_in client_address = {0};
+    sockaddr_in client_address = {0};
     socklen_t client_address_length = sizeof(client_address);
 
     // Wait for the incoming connection and return a new socket file descriptor for communicating with a client
-    const int32_t client_socket = accept(server_socket, (struct sockaddr*)&client_address, &client_address_length);
+    const int32_t client_socket = accept(server_socket, (sockaddr*)&client_address, &client_address_length);
     if (client_socket == -1) {
         perror("accept()");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)

@@ -91,8 +91,13 @@ help:
 
 LINT ?= 1
 
+# Pattern rule: create directory
+%/:
+	echo "\033[36mCreating $@ directory.\033[0m"
+	mkdir -p $@
+
 # Pattern rule: compile .c to .o
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)/ $(OBJ_DIR)/analysis/
 ifneq ($(LINT),0) # Without it, Clion used `clang-format` or `clang-tidy` as a compiler.
 	echo "Processing $<:"
 	echo "\tFormatting..."
@@ -159,14 +164,6 @@ run-server:
 	fi
 	echo "Running server."
 	$(SERVER_BIN) $(PORT)
-
-# Create directories if they don't exist
-$(BIN_DIR):
-	echo "Creating $(BIN_DIR) directory."
-	mkdir -p $(BIN_DIR)
-$(OBJ_DIR):
-	echo "Creating $(OBJ_DIR) directory."
-	mkdir -p $(OBJ_DIR)
 
 # Clean compiled files
 clean:

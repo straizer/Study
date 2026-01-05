@@ -62,17 +62,8 @@ INC_DIR = include
 BIN_DIR = bin
 OBJ_DIR = obj
 
-# Define executables and their object files
-COMMON_OBJS = $(OBJ_DIR)/network.o $(OBJ_DIR)/ipv4.o $(OBJ_DIR)/io.o
-CLIENT_OBJS = $(OBJ_DIR)/client.o $(COMMON_OBJS)
-SERVER_OBJS = $(OBJ_DIR)/server.o $(COMMON_OBJS)
-
-CLIENT_BIN = $(BIN_DIR)/client
-SERVER_BIN = $(BIN_DIR)/server
-
-# All targets
-ALL_BINS = $(CLIENT_BIN) $(SERVER_BIN)
-ALL_OBJS = $(CLIENT_OBJS) $(SERVER_OBJS)
+# Project config
+include project.mk
 
 # Build mode tracking
 MODE_FILE = $(OBJ_DIR)/build_mode.txt
@@ -80,18 +71,7 @@ MODE_FILE = $(OBJ_DIR)/build_mode.txt
 # Include dependency files if they exist
 -include $(ALL_OBJS:.o=.d)
 
-# Default target
-.PHONY: help
-help:
-	echo "No default target. Use 'make release' or 'make debug' to build." >&2
-	echo "Available targets:" >&2
-	echo "  make release                        - Build all programs in release mode" >&2
-	echo "  make debug                          - Build all programs in debug mode" >&2
-	echo "  make run-client IP=<ip> PORT=<port> - Run client" >&2
-	echo "  make run-server PORT=<port>         - Run server" >&2
-	echo "  make clean                          - Remove compiled files" >&2
-	exit 0
-
+# Clion compliant; without it, Clion used `clang-format` or `clang-tidy` as a compiler.
 LINT ?= 1
 
 # Pattern rule: create directory
@@ -101,7 +81,7 @@ LINT ?= 1
 
 # Pattern rule: compile .c to .o
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)/ $(OBJ_DIR)/analysis/
-ifneq ($(LINT),0) # Without it, Clion used `clang-format` or `clang-tidy` as a compiler.
+ifneq ($(LINT),0)
 	echo "Processing $<:"
 	echo "\tFormatting..."
 	clang-format -i $<
@@ -117,21 +97,11 @@ check-unused-functions: $(OBJ_DIR)/unused/
 	echo "\033[33mLooking for unused functions.\033[0m"
 	cppcheck $(CPPCHECK_FLAGS) --cppcheck-build-dir=$(OBJ_DIR)/unused --enable=unusedFunction $(SRC_DIR)
 
-# Link client executable
-$(CLIENT_BIN): $(CLIENT_OBJS) | check-unused-functions $(BIN_DIR)/
-	echo "Linking $@."
-	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
-
-# Link server executable
-$(SERVER_BIN): $(SERVER_OBJS) | check-unused-functions $(BIN_DIR)/
-	echo "Linking $@."
-	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
-
 # Build all in release mode
 release: CPPFLAGS = $(CPPFLAGS_RELEASE)
 release: CFLAGS = $(CFLAGS_RELEASE)
 release: LDFLAGS = $(LDFLAGS_RELEASE)
-release: check-mode-release $(ALL_BINS)
+release: check-mode-release check-unused-functions $(BIN_DIR)/ $(ALL_BINS)
 	echo "RELEASE" > $(MODE_FILE)
 	echo "\033[32mRelease build complete.\033[0m"
 
@@ -139,12 +109,11 @@ release: check-mode-release $(ALL_BINS)
 debug: CPPFLAGS = $(CPPFLAGS_DEBUG)
 debug: CFLAGS = $(CFLAGS_DEBUG)
 debug: LDFLAGS = $(LDFLAGS_DEBUG)
-debug: check-mode-debug $(ALL_BINS)
+debug: check-mode-debug check-unused-functions $(BIN_DIR)/ $(ALL_BINS)
 	echo "DEBUG" > $(MODE_FILE)
 	echo "\033[32mDebug build complete.\033[0m"
 
 # Check if we need to clean due to mode change
-.PHONY: check-mode-release check-mode-debug
 check-mode-release:
 	if [ -f $(MODE_FILE) ] && [ "$$(cat $(MODE_FILE))" != "RELEASE" ]; then \
 		echo "Build mode changed, cleaning."; \
@@ -156,24 +125,6 @@ check-mode-debug:
 		$(MAKE) clean; \
 	fi
 
-# Run client
-run-client:
-	if [ ! -f $(CLIENT_BIN) ]; then \
-		echo "Error: client executable not found. Run 'make release' or 'make debug' first." >&2; \
-		exit 1; \
-	fi
-	echo "Running client."
-	$(CLIENT_BIN) $(IP) $(PORT)
-
-# Run server
-run-server:
-	if [ ! -f $(SERVER_BIN) ]; then \
-		echo "Error: server executable not found. Run 'make release' or 'make debug' first." >&2; \
-		exit 1; \
-	fi
-	echo "Running server."
-	$(SERVER_BIN) $(PORT)
-
 # Clean compiled files
 clean:
 	echo "Cleaning build artifacts."
@@ -181,4 +132,4 @@ clean:
 	echo "\033[32mClean complete.\033[0m"
 
 # Phony targets
-.PHONY: release debug run-client run-server clean
+.PHONY: help check-mode-release check-mode-debug release debug clean

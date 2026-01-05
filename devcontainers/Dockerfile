@@ -34,5 +34,10 @@ RUN ln -s /opt/clion-* /opt/clion
 RUN su - dev -c "/opt/clion/bin/remote-dev-server.sh registerBackendLocationForGateway"
 
 # CLI tools
-RUN apt-get install -y --no-install-recommends binutils-gold clang-format clang-tidy
+RUN apt-get install -y --no-install-recommends binutils-gold clang-format clang-tidy cppcheck
 RUN rm -rf /var/lib/apt/lists/*
+
+# Config files
+RUN mkdir -p /usr/share/cppcheck/cfg
+RUN curl -fsSL https://raw.githubusercontent.com/danmar/cppcheck/main/cfg/posix.cfg \
+  -o /usr/share/cppcheck/cfg/posix.cfg

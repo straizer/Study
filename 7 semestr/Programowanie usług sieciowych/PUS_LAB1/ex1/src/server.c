@@ -76,7 +76,10 @@ int main(const int argc, const char* const* const argv) {
 
     // Close listening socket
     printf("Closing listening socket and terminating server\n");
-    close(server_socket);
+    if (close(server_socket) == -1) {
+        perror("close()");
+        exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
+    }
 
     exit(EXIT_SUCCESS);  // NOLINT(concurrency-mt-unsafe)
 }

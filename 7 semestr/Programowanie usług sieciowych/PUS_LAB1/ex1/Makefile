@@ -47,6 +47,12 @@ LDFLAGS_DEBUG = $(LDFLAGS_COMMON) -no-pie -Wl,-O0 -Wl,--export-dynamic -Wl,--gdb
   -fsanitize=address,undefined,leak -fno-sanitize-recover=all
 LDFLAGS_RELEASE = $(LDFLAGS_COMMON) -pie -flto -Wl,--gc-sections -Wl,-O1 -Wl,--icf=all
 
+# Cppcheck flags
+CPPCHECK_FLAGS = -f -q -j 32 --platform=unix64 --language=c --std=$(CSTD) --template=gcc --inline-suppr \
+  --check-level=exhaustive --max-ctu-depth=10 --report-type=misra-c-2023 --suppressions-list=.cppcheck-suppress \
+  --inconclusive --library=/usr/share/cppcheck/cfg/posix.cfg,posix.cfg.xml --check-library --error-exitcode=1 \
+  #--addon=misra.json
+
 # Linked libraries
 LDLIBS =
 
@@ -101,6 +107,8 @@ ifneq ($(LINT),0) # Without it, Clion used `clang-format` or `clang-tidy` as a c
 	clang-format -i $<
 	echo "\tLinting..."
 	clang-tidy --quiet $< -- -x c -std=$(CSTD) $(filter -I% -D%,$(CPPFLAGS) $(CFLAGS)) 2>/dev/null
+	echo "\tStatic analysis..."
+	cppcheck $(CPPCHECK_FLAGS) --cppcheck-build-dir=$(OBJ_DIR)/analysis --enable=all --suppress=unusedFunction $<
 endif
 	echo "\tCompiling..."
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@

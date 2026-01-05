@@ -34,5 +34,8 @@ void closeConnection(const int32_t via_socket) {
         perror("shutdown()");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
-    close(via_socket);
+    if (close(via_socket) == -1) {
+        perror("close()");
+        exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
+    }
 }

@@ -38,6 +38,8 @@ RUN apt-get install -y --no-install-recommends binutils-gold clang-format clang-
 RUN rm -rf /var/lib/apt/lists/*
 
 # Config files
-RUN mkdir -p /usr/share/cppcheck/cfg
+RUN mkdir -p /usr/share/cppcheck/cfg /usr/share/cppcheck/misra
 RUN curl -fsSL https://raw.githubusercontent.com/danmar/cppcheck/main/cfg/posix.cfg \
   -o /usr/share/cppcheck/cfg/posix.cfg
+RUN curl -fsSL https://gitlab.com/MISRA/MISRA-C/MISRA-C-2012/tools/-/raw/main/misra_c_2023__headlines_for_cppcheck.txt \
+  -o /usr/share/cppcheck/misra/rules.txt

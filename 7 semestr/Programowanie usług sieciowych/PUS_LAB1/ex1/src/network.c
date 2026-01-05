@@ -1,5 +1,6 @@
 #include "network.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -10,9 +11,14 @@ enum {
 
 in_port_t getPort(const char* const port_string) {
     char* end = nullptr;
+    errno = 0;
     const uint64_t port_raw = strtoul(port_string, &end, 10);
+    if (errno != 0) {
+        perror("strtoul()");
+        exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
+    }
     if (*end != '\0') {
-        (void)fprintf(stderr, "Missing trailing \\0");
+        (void)fprintf(stderr, "Missing trailing '\\0'");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
     if (port_raw > MAX_PORT_NUMBER) {
@@ -23,7 +29,7 @@ in_port_t getPort(const char* const port_string) {
 }
 
 void connectToSocket(const int32_t via_socket, const sockaddr_in to_address) {
-    if (connect(via_socket, (const sockaddr*)&to_address, sizeof(to_address)) == -1) {
+    if (connect(via_socket, (const struct sockaddr*)&to_address, sizeof(to_address)) == -1) {
         perror("connect()");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }

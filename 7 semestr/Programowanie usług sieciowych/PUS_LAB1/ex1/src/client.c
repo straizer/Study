@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "io.h"
 #include "ipv4.h"
 #include "network.h"
 
@@ -18,7 +19,7 @@ int main(const int argc, const char* const* const argv) {
     const in_port_t server_port = getPort(argv[2]);
 
     const int32_t client_socket = connectToServerViaTCP(server_address, server_port);
-    printf("After the three-way handshake. Waiting for server response\n");
+    print("After the three-way handshake. Waiting for server response\n");
 
     char buffer[BUFFER_SIZE] = {0};
     const ssize_t bytes_read = read(client_socket, buffer, sizeof(buffer));
@@ -31,12 +32,12 @@ int main(const int argc, const char* const* const argv) {
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
-    printf("Received server response: %s\n", buffer);
+    print("Received server response: %s\n", buffer);
 
     // Send a FIN to close the server connection
-    printf("Shutting down server connection (sending FIN)\n");
+    print("Shutting down server connection (sending FIN)\n");
     closeConnection(client_socket);
 
-    printf("Terminating client\n");
+    print("Terminating client\n");
     exit(EXIT_SUCCESS);  // NOLINT(concurrency-mt-unsafe)
 }

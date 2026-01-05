@@ -1,0 +1,8 @@
+{
+  "script": "misra.py",
+  "args": [
+    "--rule-texts misra_rules.txt",
+    "--suppress-rules 5.6,8.7,17.1,17.3,21.6,21.8,21.10"
+  ],
+  "ctu": true
+}

@@ -39,7 +39,7 @@ int32_t startTCPServer(const in_port_t server_port, const int32_t backlog_size) 
     sockaddr_in server_socket_address = getInternetSocketAddress(server_address, server_port);
 
     // Assign IP + port to the socket
-    if (bind(tcp_socket, (sockaddr*)&server_socket_address, sizeof(server_socket_address)) == -1) {
+    if (bind(tcp_socket, (struct sockaddr*)&server_socket_address, sizeof(server_socket_address)) == -1) {
         perror("bind()");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
@@ -67,8 +67,8 @@ void socketAddressToString(const sockaddr_in socket_address, char* const out) {
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
     const uint64_t ip_length = strlen(result);
-    (void)snprintf(result + ip_length, BUFFER_SIZE - ip_length, ":%d", ntohs(socket_address.sin_port));
-    memcpy(out, result, strlen(result) + 1);
+    (void)snprintf(&result[ip_length], BUFFER_SIZE - ip_length, ":%d", ntohs(socket_address.sin_port));
+    (void)memcpy(out, result, strlen(result) + 1U);
 }
 
 int32_t getTCPSocket(void) {

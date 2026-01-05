@@ -51,7 +51,7 @@ LDFLAGS_RELEASE = $(LDFLAGS_COMMON) -pie -flto -Wl,--gc-sections -Wl,-O1 -Wl,--i
 CPPCHECK_FLAGS = -f -q -j 32 --platform=unix64 --language=c --std=$(CSTD) --template=gcc --inline-suppr \
   --check-level=exhaustive --max-ctu-depth=10 --report-type=misra-c-2023 --suppressions-list=.cppcheck-suppress \
   --inconclusive --library=/usr/share/cppcheck/cfg/posix.cfg,posix.cfg.xml --check-library --error-exitcode=1 \
-  #--addon=misra.json
+  --addon=misra.json -D SHUT_WR=1 -D AF_INET=2
 
 # Linked libraries
 LDLIBS =
@@ -63,9 +63,9 @@ BIN_DIR = bin
 OBJ_DIR = obj
 
 # Define executables and their object files
-NETWORK_OBJS = $(OBJ_DIR)/network.o $(OBJ_DIR)/ipv4.o
-CLIENT_OBJS = $(OBJ_DIR)/client.o $(NETWORK_OBJS)
-SERVER_OBJS = $(OBJ_DIR)/server.o $(NETWORK_OBJS)
+COMMON_OBJS = $(OBJ_DIR)/network.o $(OBJ_DIR)/ipv4.o $(OBJ_DIR)/io.o
+CLIENT_OBJS = $(OBJ_DIR)/client.o $(COMMON_OBJS)
+SERVER_OBJS = $(OBJ_DIR)/server.o $(COMMON_OBJS)
 
 CLIENT_BIN = $(BIN_DIR)/client
 SERVER_BIN = $(BIN_DIR)/server

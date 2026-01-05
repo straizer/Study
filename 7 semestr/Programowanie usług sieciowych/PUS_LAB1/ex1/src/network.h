@@ -3,7 +3,6 @@
 #include <netinet/in.h>
 
 typedef struct sockaddr_in sockaddr_in;
-typedef struct sockaddr sockaddr;
 
 in_port_t getPort(const char* port_string);
 

@@ -4,6 +4,7 @@
 #include <time.h>
 #include <unistd.h>
 
+#include "io.h"
 #include "ipv4.h"
 #include "network.h"
 
@@ -19,14 +20,14 @@ int main(const int argc, const char* const* const argv) {
     const in_port_t server_port = getPort(argv[1]);
 
     const int32_t server_socket = startTCPServer(server_port, 2);
-    printf("Server is listening for incoming connection\n");
+    print("Server is listening for incoming connection\n");
 
     // Create a client address struct
     sockaddr_in client_address = {0};
     socklen_t client_address_length = sizeof(client_address);
 
     // Wait for the incoming connection and return a new socket file descriptor for communicating with a client
-    const int32_t client_socket = accept(server_socket, (sockaddr*)&client_address, &client_address_length);
+    const int32_t client_socket = accept(server_socket, (struct sockaddr*)&client_address, &client_address_length);
     if (client_socket == -1) {
         perror("accept()");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
@@ -34,9 +35,9 @@ int main(const int argc, const char* const* const argv) {
 
     char client_ip[BUFFER_SIZE];
     socketAddressToString(client_address, client_ip);
-    printf("TCP connection accepted from %s\n", client_ip);
+    print("TCP connection accepted from %s\n", client_ip);
 
-    printf("Sending current date and time\n");
+    print("Sending current date and time\n");
 
     // Get the current system time and convert it to a human-readable local time structure
     time_t raw_time = 0;
@@ -46,7 +47,7 @@ int main(const int argc, const char* const* const argv) {
 
     // Format the time information into a text string
     char buffer[BUFFER_SIZE];
-    if (strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S %Z", &time_info) == 0) {
+    if (strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S %Z", &time_info) == 0U) {
         (void)fprintf(stderr, "Buffer size exceeded");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
@@ -68,14 +69,14 @@ int main(const int argc, const char* const* const argv) {
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
-    printf("Connection terminated by the client (received FIN, entering CLOSE_WAIT state)\n");
+    print("Connection terminated by the client (received FIN, entering CLOSE_WAIT state)\n");
 
     // Send a FIN to close the client connection
-    printf("Shutting down client connection (sending FIN)\n");
+    print("Shutting down client connection (sending FIN)\n");
     closeConnection(client_socket);
 
     // Close listening socket
-    printf("Closing listening socket and terminating server\n");
+    print("Closing listening socket and terminating server\n");
     if (close(server_socket) == -1) {
         perror("close()");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)

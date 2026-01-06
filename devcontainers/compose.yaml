@@ -1,6 +1,6 @@
 services:
   c:
-    image: devcontainer-c:1.0.0
+    image: devcontainer-c:1.1.0
     build:
       target: c
     container_name: devcontainer-c

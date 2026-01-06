@@ -23,7 +23,7 @@ sync:
         defaultDirectoryMode: 0755
   codeStyles:
     alpha: ../.idea/codeStyles
-    beta: docker://devcontainer-{{LANGUAGE}}/home/dev/workspace/.idea/codeStyles
+    beta: docker://devcontainer-{{LANGUAGE}}/home/dev/common/.idea/codeStyles
     configurationBeta: # container side only
       permissions:
         defaultOwner: "dev"     # or "id:1000"
@@ -32,7 +32,16 @@ sync:
         defaultDirectoryMode: 0755
   inspectionProfiles:
     alpha: ../.idea/inspectionProfiles
-    beta: docker://devcontainer-{{LANGUAGE}}/home/dev/workspace/.idea/inspectionProfiles
+    beta: docker://devcontainer-{{LANGUAGE}}/home/dev/common/.idea/inspectionProfiles
+    configurationBeta: # container side only
+      permissions:
+        defaultOwner: "dev"     # or "id:1000"
+        defaultGroup: "dev"     # or "id:1000"
+        defaultFileMode: 0644   # rw-r--r--
+        defaultDirectoryMode: 0755
+  common:
+    alpha: {{LANGUAGE}}
+    beta: docker://devcontainer-{{LANGUAGE}}/home/dev/common
     configurationBeta: # container side only
       permissions:
         defaultOwner: "dev"     # or "id:1000"

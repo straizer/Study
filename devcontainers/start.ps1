@@ -1,5 +1,5 @@
 param(
-    [Parameter(Mandatory = $true)][ValidateSet('cpp')][string]$Language,
+    [Parameter(Mandatory = $true)][ValidateSet('c')][string]$Language,
     [Parameter(Mandatory = $true)][string]$Project
 )
 

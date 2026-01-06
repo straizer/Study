@@ -14,7 +14,7 @@ sync:
         - "!src/**/*.*"   # include only files that have a dot
   project:
     alpha: {{ALPHA}}
-    beta: docker://{{LANGUAGE}}/home/dev/workspace
+    beta: docker://devcontainer-{{LANGUAGE}}/home/dev/workspace
     configurationBeta: # container side only
       permissions:
         defaultOwner: "dev"     # or "id:1000"
@@ -23,7 +23,7 @@ sync:
         defaultDirectoryMode: 0755
   codeStyles:
     alpha: ../.idea/codeStyles
-    beta: docker://{{LANGUAGE}}/home/dev/workspace/.idea/codeStyles
+    beta: docker://devcontainer-{{LANGUAGE}}/home/dev/workspace/.idea/codeStyles
     configurationBeta: # container side only
       permissions:
         defaultOwner: "dev"     # or "id:1000"
@@ -32,7 +32,7 @@ sync:
         defaultDirectoryMode: 0755
   inspectionProfiles:
     alpha: ../.idea/inspectionProfiles
-    beta: docker://{{LANGUAGE}}/home/dev/workspace/.idea/inspectionProfiles
+    beta: docker://devcontainer-{{LANGUAGE}}/home/dev/workspace/.idea/inspectionProfiles
     configurationBeta: # container side only
       permissions:
         defaultOwner: "dev"     # or "id:1000"

@@ -1,5 +1,7 @@
 $ErrorActionPreference = "Stop"
 
+. "$PSScriptRoot\utils.ps1"
+
 Push-Location devcontainers
 
 try
@@ -12,14 +14,10 @@ try
     }
 
     # 2. stop mutagen project
-    $cmd = "$mutagenExe project terminate"
-    Write-Host $cmd -ForegroundColor Blue
-    Invoke-Expression $cmd
+    Invoke "$mutagenExe project terminate"
 
     # 3. stop docker compose
-    $cmd = "docker compose down -v --remove-orphans"
-    Write-Host $cmd -ForegroundColor Blue
-    Invoke-Expression $cmd
+    Invoke "docker compose down -v --remove-orphans"
 
     # 4. clear temporary file
     Remove-Item mutagen.yml -ErrorAction SilentlyContinue

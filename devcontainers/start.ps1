@@ -5,10 +5,11 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+. "$PSScriptRoot\utils.ps1"
+
 if (-not (Test-Path $Project))
 {
-    Write-Error "Project '$Project' does not exist."
-    exit 1
+    throw "Project '$Project' does not exist."
 }
 
 Push-Location devcontainers
@@ -51,9 +52,7 @@ try
     if ($online)
     {
         Write-Host "Online: building and starting containers..." -ForegroundColor Green
-        $cmd = "docker compose up --build --force-recreate --no-log-prefix --remove-orphans --quiet-pull -V --wait $Language"
-        Write-Host $cmd -ForegroundColor Blue
-        Invoke-Expression $cmd
+        Invoke "docker compose up --build --force-recreate --no-log-prefix --remove-orphans --quiet-pull -V --wait $Language"
     }
     else
     {
@@ -63,16 +62,12 @@ try
         }
 
         Write-Host "Offline: using existing image '$imageName' without rebuild." -ForegroundColor Red
-        $cmd = "docker compose up --no-build --force-recreate --no-log-prefix --remove-orphans --quiet-pull -V --wait $Language"
-        Write-Host $cmd -ForegroundColor Blue
-        Invoke-Expression $cmd
+        Invoke "docker compose up --no-build --force-recreate --no-log-prefix --remove-orphans --quiet-pull -V --wait $Language"
     }
 
     # 3. start mutagen project
     (Get-Content mutagen.tpl.yml) -replace '{{LANGUAGE}}', $Language -replace '{{ALPHA}}', "../$Project" | Set-Content mutagen.yml
-    $cmd = "$mutagenExe project start"
-    Write-Host $cmd -ForegroundColor Blue
-    Invoke-Expression $cmd
+    Invoke "$mutagenExe project start"
 }
 finally
 {

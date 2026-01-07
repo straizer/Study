@@ -2,7 +2,7 @@
 ### Optionally, there may be added additional targets for running binaries.
 
 # Define executables and their object files
-COMMON_OBJS = $(OBJ_DIR)/network.o $(OBJ_DIR)/ipv4.o $(OBJ_DIR)/io.o
+COMMON_OBJS = $(OBJ_DIR)/utils.o $(OBJ_DIR)/network.o $(OBJ_DIR)/ipv4.o $(OBJ_DIR)/io.o
 CLIENT_OBJS = $(OBJ_DIR)/client.o $(COMMON_OBJS)
 SERVER_OBJS = $(OBJ_DIR)/server.o $(COMMON_OBJS)
 

@@ -1,7 +1,6 @@
 #include "network.h"
 
 #include <errno.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -41,16 +40,18 @@ connectToSocketOutput connectToSocket(const int32_t via_socket, const sockaddr_i
     if (connect(via_socket, (const struct sockaddr*)&to_address, sizeof(to_address)) == -1) {
         return connectToSocketErr(prefixErrno("connect"));
     }
+
     return connectToSocketOk(nullptr);
 }
 
-void closeConnection(const int32_t via_socket) {
-    if (shutdown(via_socket, SHUT_WR) == -1) {
-        perror("shutdown()");
-        exit(EXIT_FAILURE);  // cppcheck-suppress misra-c2012-21.8 // NOLINT(concurrency-mt-unsafe)
+closeConnectionOutput closeConnection(const int32_t via_socket, const uint8_t how) {
+    if (shutdown(via_socket, how) == -1) {
+        return closeConnectionErr(prefixErrno("shutdown"));
     }
+
     if (close(via_socket) == -1) {
-        perror("close()");
-        exit(EXIT_FAILURE);  // cppcheck-suppress misra-c2012-21.8 // NOLINT(concurrency-mt-unsafe)
+        return closeConnectionErr(prefixErrno("close"));
     }
+
+    return closeConnectionOk(nullptr);
 }

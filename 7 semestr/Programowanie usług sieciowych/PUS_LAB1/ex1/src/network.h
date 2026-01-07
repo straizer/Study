@@ -1,7 +1,8 @@
 #pragma once
 
-#include <netinet/in.h>
 #include <stddef.h>
+
+#include <netinet/in.h>
 
 #include "utils.h"
 
@@ -12,4 +13,6 @@ getPortOutput getPort(const char* port_string);
 
 OUTPUT_DEFINE(connectToSocket, nullptr_t)
 connectToSocketOutput connectToSocket(int32_t via_socket, sockaddr_in to_address);
-void closeConnection(int32_t via_socket);
+
+OUTPUT_DEFINE(closeConnection, nullptr_t)
+closeConnectionOutput closeConnection(int32_t via_socket, uint8_t how);

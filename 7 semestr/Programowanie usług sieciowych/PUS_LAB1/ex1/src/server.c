@@ -80,7 +80,11 @@ int main(const int argc, const char* const* const argv) {
 
     // Send a FIN to close the client connection
     print("Shutting down client connection (sending FIN)\n");
-    closeConnection(client_socket);
+    const closeConnectionOutput result = closeConnection(client_socket, SHUT_WR);
+    if (!result.ok) {
+        (void)fprintf(stderr, "closeConnection: %s\n", result.u.error);
+        exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
+    }
 
     // Close listening socket
     print("Closing listening socket and terminating server\n");

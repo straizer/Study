@@ -10,8 +10,14 @@ MAKEFLAGS += --no-print-directory
 CC = gcc
 CSTD = c23
 
+# Directories
+SRC_DIR = src
+INC_DIR = include
+BIN_DIR = bin
+OBJ_DIR = obj
+
 # Preprocessor flags
-CPPFLAGS_COMMON = -MMD -MP -D_FORTIFY_SOURCE=2 -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -I$(SRC_DIR) #-I$(INC_DIR)
+CPPFLAGS_COMMON = -MMD -MP -D_FORTIFY_SOURCE=2 -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 #-I$(SRC_DIR) #-I$(INC_DIR)
 CPPFLAGS_DEBUG = $(CPPFLAGS_COMMON) -DDEBUG
 CPPFLAGS_RELEASE = $(CPPFLAGS_COMMON) -DNDEBUG
 
@@ -51,16 +57,10 @@ LDFLAGS_RELEASE = $(LDFLAGS_COMMON) -pie -flto -Wl,--gc-sections -Wl,-O1 -Wl,--i
 CPPCHECK_FLAGS = -f -q -j 32 --platform=unix64 --language=c --std=$(CSTD) --template=gcc --inline-suppr \
   --check-level=exhaustive --max-ctu-depth=10 --report-type=misra-c-2023 --suppressions-list=.cppcheck-suppress \
   --inconclusive --library=/usr/share/cppcheck/cfg/posix.cfg,posix.cfg.xml --check-library --error-exitcode=1 \
-  --addon=misra.json -D SHUT_WR=1 -D AF_INET=2
+  --addon=misra.json -D nullptr=NULL -D SHUT_WR=1 -D AF_INET=2
 
 # Linked libraries
 LDLIBS =
-
-# Directories
-SRC_DIR = src
-INC_DIR = include
-BIN_DIR = bin
-OBJ_DIR = obj
 
 # Project config
 include project.mk
@@ -80,7 +80,7 @@ LINT ?= 1
 	mkdir -p $@
 
 # Pattern rule: compile .c to .o
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)/ $(OBJ_DIR)/analysis/
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)/analysis/
 ifneq ($(LINT),0)
 	echo "Processing $<:"
 	echo "\tFormatting..."

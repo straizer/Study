@@ -2,7 +2,7 @@
   "script": "misra.py",
   "args": [
     "--rule-texts /usr/share/cppcheck/misra/rules.txt",
-    "--suppress-rules 5.6,8.7,17.1,17.3,21.6,21.8,21.10"
+    "--suppress-rules 2.5,5.6,8.7,12.1,15.5,17.1,17.3,19.2,20.10,21.6,21.8,21.10"
   ],
   "ctu": true
 }

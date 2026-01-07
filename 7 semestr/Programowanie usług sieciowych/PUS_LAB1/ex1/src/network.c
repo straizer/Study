@@ -6,26 +6,35 @@
 #include <unistd.h>
 
 enum {
-    MAX_PORT_NUMBER = 65535,
+    MAX_PORT_NUMBER = 65535U,
 };
 
-in_port_t getPort(const char* const port_string) {
+getPortOutput getPort(const char* const port_string) {
+    if (port_string == nullptr) {
+        return getPortErr("port string is NULL");
+    }
+
     char* end = nullptr;
     errno = 0;
     const uint64_t port_raw = strtoul(port_string, &end, 10);
+
     if (errno != 0) {
-        perror("strtoul()");
-        exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
+        return getPortErr(prefixErrno("strtoul"));
     }
+
+    if (end == port_string) {
+        return getPortErr("port is not a number");
+    }
+
     if (*end != '\0') {
-        (void)fprintf(stderr, "Missing trailing '\\0'");
-        exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
+        return getPortErr("trailing characters after port number");
     }
+
     if (port_raw > MAX_PORT_NUMBER) {
-        (void)fprintf(stderr, "Invalid port number: %lu\n", port_raw);
-        exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
+        return getPortErr("port number out of range (0..65535)");
     }
-    return (uint16_t)port_raw;
+
+    return getPortOk((in_port_t)port_raw);
 }
 
 void connectToSocket(const int32_t via_socket, const sockaddr_in to_address) {

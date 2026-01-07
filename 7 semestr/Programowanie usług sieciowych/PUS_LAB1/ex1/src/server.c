@@ -17,9 +17,14 @@ int main(const int argc, const char* const* const argv) {
         (void)fprintf(stderr, "Invocation: %s <PORT>\n", argv[0]);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
-    const in_port_t server_port = getPort(argv[1]);
 
-    const int32_t server_socket = startTCPServer(server_port, 2);
+    const getPortOutput server_port = getPort(argv[1]);
+    if (!server_port.ok) {
+        (void)fprintf(stderr, "getPort: %s\n", server_port.u.error);
+        exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
+    }
+
+    const int32_t server_socket = startTCPServer(server_port.u.value, 2);
     print("Server is listening for incoming connection\n");
 
     // Create a client address struct

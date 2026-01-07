@@ -5,8 +5,7 @@
 #include <string.h>
 
 #include <arpa/inet.h>
-
-#include "network.h"
+#include <mylibs/network.h>
 
 enum {
     BUFFER_SIZE = 64,

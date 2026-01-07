@@ -11,13 +11,13 @@ CC = gcc
 CSTD = c23
 
 # Directories
-SRC_DIR = src
-INC_DIR = include
+SRC_DIRS := src libs/mylibs/src
+INC_DIRS = libs/mylibs/include
 BIN_DIR = bin
 OBJ_DIR = obj
 
 # Preprocessor flags
-CPPFLAGS_COMMON = -MMD -MP -D_FORTIFY_SOURCE=2 -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 #-I$(SRC_DIR) #-I$(INC_DIR)
+CPPFLAGS_COMMON = -MMD -MP -D_FORTIFY_SOURCE=2 -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -I$(INC_DIRS)
 CPPFLAGS_DEBUG = $(CPPFLAGS_COMMON) -DDEBUG
 CPPFLAGS_RELEASE = $(CPPFLAGS_COMMON) -DNDEBUG
 
@@ -57,7 +57,7 @@ LDFLAGS_RELEASE = $(LDFLAGS_COMMON) -pie -flto -Wl,--gc-sections -Wl,-O1 -Wl,--i
 CPPCHECK_FLAGS = -f -q -j 32 --platform=unix64 --language=c --std=$(CSTD) --template=gcc --inline-suppr \
   --check-level=exhaustive --max-ctu-depth=10 --report-type=misra-c-2023 --suppressions-list=.cppcheck-suppress \
   --inconclusive --library=/usr/share/cppcheck/cfg/posix.cfg,posix.cfg.xml --check-library --error-exitcode=1 \
-  --addon=misra.json -D nullptr=NULL -D SHUT_WR=1 -D AF_INET=2
+  $(filter -I% -D%,$(CPPFLAGS) $(CFLAGS)) --addon=misra.json -D nullptr=NULL -D SHUT_WR=1 -D AF_INET=2
 
 # Linked libraries
 LDLIBS =
@@ -70,6 +70,7 @@ MODE_FILE = $(OBJ_DIR)/build_mode.txt
 
 # Include dependency files if they exist
 -include $(ALL_OBJS:.o=.d)
+VPATH = $(SRC_DIRS)
 
 # Clion compliant; without it, Clion used `clang-format` or `clang-tidy` as a compiler.
 LINT ?= 1
@@ -80,7 +81,7 @@ LINT ?= 1
 	mkdir -p $@
 
 # Pattern rule: compile .c to .o
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)/analysis/
+$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)/analysis/
 ifneq ($(LINT),0)
 	echo "Processing $<:"
 	echo "\tFormatting..."
@@ -97,11 +98,19 @@ check-unused-functions: $(OBJ_DIR)/unused/
 	echo "\033[33mLooking for unused functions.\033[0m"
 	cppcheck $(CPPCHECK_FLAGS) --cppcheck-build-dir=$(OBJ_DIR)/unused --enable=unusedFunction $(SRC_DIR)
 
+format-headers:
+ifneq ($(LINT),0)
+	echo "Formatting headers."
+	clang-format -i $(shell find -L src $(INC_DIRS) -type f -name '*.h')
+else
+	@true
+endif
+
 # Build all in release mode
 release: CPPFLAGS = $(CPPFLAGS_RELEASE)
 release: CFLAGS = $(CFLAGS_RELEASE)
 release: LDFLAGS = $(LDFLAGS_RELEASE)
-release: check-mode-release check-unused-functions $(BIN_DIR)/ $(ALL_BINS)
+release: check-mode-release format-headers check-unused-functions $(BIN_DIR)/ $(ALL_BINS)
 	echo "RELEASE" > $(MODE_FILE)
 	echo "\033[32mRelease build complete.\033[0m"
 
@@ -109,7 +118,7 @@ release: check-mode-release check-unused-functions $(BIN_DIR)/ $(ALL_BINS)
 debug: CPPFLAGS = $(CPPFLAGS_DEBUG)
 debug: CFLAGS = $(CFLAGS_DEBUG)
 debug: LDFLAGS = $(LDFLAGS_DEBUG)
-debug: check-mode-debug check-unused-functions $(BIN_DIR)/ $(ALL_BINS)
+debug: check-mode-debug format-headers check-unused-functions $(BIN_DIR)/ $(ALL_BINS)
 	echo "DEBUG" > $(MODE_FILE)
 	echo "\033[32mDebug build complete.\033[0m"
 

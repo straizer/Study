@@ -1,4 +1,4 @@
-#include "network.h"
+#include "../include/mylibs/network.h"
 
 #include <errno.h>
 #include <stdlib.h>

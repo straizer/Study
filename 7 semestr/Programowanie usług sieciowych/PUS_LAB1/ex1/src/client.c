@@ -4,9 +4,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include <mylibs/network.h>
+
 #include "io.h"
 #include "ipv4.h"
-#include "network.h"
 
 enum {
     BUFFER_SIZE = 256,

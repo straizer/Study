@@ -37,11 +37,11 @@ getPortOutput getPort(const char* const port_string) {
     return getPortOk((in_port_t)port_raw);
 }
 
-void connectToSocket(const int32_t via_socket, const sockaddr_in to_address) {
+connectToSocketOutput connectToSocket(const int32_t via_socket, const sockaddr_in to_address) {
     if (connect(via_socket, (const struct sockaddr*)&to_address, sizeof(to_address)) == -1) {
-        perror("connect()");
-        exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
+        return connectToSocketErr(prefixErrno("connect"));
     }
+    return connectToSocketOk(nullptr);
 }
 
 void closeConnection(const int32_t via_socket) {

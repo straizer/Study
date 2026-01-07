@@ -56,7 +56,11 @@ int32_t startTCPServer(const in_port_t server_port, const int32_t backlog_size) 
 int32_t connectToServerViaTCP(const in_addr server_address, const in_port_t server_port) {
     const int32_t tcp_socket = getTCPSocket();
     const sockaddr_in server_socket_address = getInternetSocketAddress(server_address, server_port);
-    connectToSocket(tcp_socket, server_socket_address);
+    const connectToSocketOutput result = connectToSocket(tcp_socket, server_socket_address);
+    if (!result.ok) {
+        (void)fprintf(stderr, "connectToSocket: %s\n", result.u.error);
+        exit(EXIT_FAILURE);  // cppcheck-suppress misra-c2012-21.8 // NOLINT(concurrency-mt-unsafe)
+    }
     return tcp_socket;
 }
 

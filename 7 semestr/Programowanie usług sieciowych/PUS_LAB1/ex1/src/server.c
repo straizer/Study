@@ -1,3 +1,5 @@
+// cppcheck-suppress-file misra-c2012-21.8
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

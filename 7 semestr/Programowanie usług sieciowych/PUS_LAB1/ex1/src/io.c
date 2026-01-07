@@ -9,7 +9,7 @@ void print(const char* const format, ...) {
     va_start(args, format);
     if (vprintf(format, args) < 0) {
         perror("vprintf()");
-        exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
+        exit(EXIT_FAILURE);  // cppcheck-suppress misra-c2012-21.8 // NOLINT(concurrency-mt-unsafe)
     }
     va_end(args);
 }

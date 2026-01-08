@@ -1,10 +1,11 @@
-#include "ipv4.h"
+#include "../include/mylibs/ipv4.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
 #include <arpa/inet.h>
-#include <mylibs/network.h>
+
+#include "../include/mylibs/network.h"
 
 /* ------------------------------------------------ Private members ------------------------------------------------ */
 

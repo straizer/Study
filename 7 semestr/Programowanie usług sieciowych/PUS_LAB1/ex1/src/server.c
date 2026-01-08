@@ -6,10 +6,10 @@
 #include <time.h>
 #include <unistd.h>
 
+#include <mylibs/ipv4.h>
 #include <mylibs/network.h>
 
 #include "io.h"
-#include "ipv4.h"
 
 enum {
     CLIENT_ADDRESS_BUFFER_SIZE = 22,

@@ -12,8 +12,8 @@
 #include "ipv4.h"
 
 enum {
-    BUFFER_SIZE = 256,
     CLIENT_ADDRESS_BUFFER_SIZE = 22,
+    MESSAGE_BUFFER_SIZE = 256,
 };
 
 int main(const int argc, const char* const* const argv) {
@@ -66,20 +66,20 @@ int main(const int argc, const char* const* const argv) {
     (void)localtime_r(&raw_time, &time_info);
 
     // Format the time information into a text string
-    char buffer[BUFFER_SIZE];
-    if (strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S %Z", &time_info) == 0U) {
+    char message_buffer[MESSAGE_BUFFER_SIZE];
+    if (strftime(message_buffer, sizeof(message_buffer), "%Y-%m-%d %H:%M:%S %Z", &time_info) == 0U) {
         (void)fprintf(stderr, "Buffer size exceeded");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
     // Sends the buffer to the connected client through the client socket
-    if (write(client_socket, buffer, strlen(buffer)) == -1) {
+    if (write(client_socket, message_buffer, strlen(message_buffer)) == -1) {
         perror("write()");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
     // If read returns 0, the client has closed the connection (sent FIN)
-    const ssize_t bytes_read = read(client_socket, buffer, sizeof(buffer));
+    const ssize_t bytes_read = read(client_socket, message_buffer, sizeof(message_buffer));
     if (bytes_read == -1) {
         perror("read()");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)

@@ -10,7 +10,7 @@
 #include "ipv4.h"
 
 enum {
-    BUFFER_SIZE = 256,
+    MESSAGE_BUFFER_SIZE = 256,
 };
 
 int main(const int argc, const char* const* const argv) {
@@ -40,8 +40,8 @@ int main(const int argc, const char* const* const argv) {
 
     print("After the three-way handshake. Waiting for server response\n");
 
-    char buffer[BUFFER_SIZE] = {0};
-    const ssize_t bytes_read = read(client_socket.u.value, buffer, sizeof(buffer));
+    char message_buffer[MESSAGE_BUFFER_SIZE] = {0};
+    const ssize_t bytes_read = read(client_socket.u.value, message_buffer, sizeof(message_buffer));
     if (bytes_read == -1) {
         perror("read()");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
@@ -51,7 +51,7 @@ int main(const int argc, const char* const* const argv) {
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
-    print("Received server response: %s\n", buffer);
+    print("Received server response: %s\n", message_buffer);
 
     // Send a FIN to close the server connection
     print("Shutting down server connection (sending FIN)\n");

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stddef.h>
+
 #include <mylibs/utils.h>
 #include <netinet/in.h>
 
@@ -15,4 +17,5 @@ startTCPServerOutput startTCPServer(in_port_t server_port, int32_t backlog_size)
 OUTPUT_DEFINE(connectToServerViaTCP, int32_t)
 connectToServerViaTCPOutput connectToServerViaTCP(in_addr server_address, in_port_t server_port);
 
-void socketAddressToString(sockaddr_in socket_address, char* out);
+OUTPUT_DEFINE(socketAddressToString, nullptr_t)
+socketAddressToStringOutput socketAddressToString(sockaddr_in socket_address, char* out, size_t out_size);

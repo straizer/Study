@@ -45,6 +45,8 @@ CheckOptions:
     value: lower_case
   - key: readability-identifier-length.MinimumParameterNameLength
     value: 2
+  - key: readability-identifier-length.MinimumVariableNameLength
+    value: 2
 
   # ===== Fields =====
   - key: readability-identifier-naming.MemberCase

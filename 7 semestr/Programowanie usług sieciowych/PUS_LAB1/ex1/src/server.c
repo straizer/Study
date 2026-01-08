@@ -13,6 +13,7 @@
 
 enum {
     BUFFER_SIZE = 256,
+    CLIENT_ADDRESS_BUFFER_SIZE = 22,
 };
 
 int main(const int argc, const char* const* const argv) {
@@ -47,10 +48,15 @@ int main(const int argc, const char* const* const argv) {
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
-    char client_ip[BUFFER_SIZE];
-    socketAddressToString(client_address, client_ip);
-    print("TCP connection accepted from %s\n", client_ip);
+    char client_address_buffer[CLIENT_ADDRESS_BUFFER_SIZE];
+    const socketAddressToStringOutput result =
+        socketAddressToString(client_address, client_address_buffer, CLIENT_ADDRESS_BUFFER_SIZE);
+    if (!result.ok) {
+        (void)fprintf(stderr, "socketAddressToString: %s\n", result.u.error);
+        exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
+    }
 
+    print("TCP connection accepted from %s\n", client_address_buffer);
     print("Sending current date and time\n");
 
     // Get the current system time and convert it to a human-readable local time structure
@@ -79,7 +85,8 @@ int main(const int argc, const char* const* const argv) {
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
     if (bytes_read > 0) {
-        (void)fprintf(stderr, "Unexpected bytes received from %s:%d\n", client_ip, ntohs(client_address.sin_port));
+        (void)fprintf(stderr, "Unexpected bytes received from %s:%d\n", client_address_buffer,
+                      ntohs(client_address.sin_port));
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 

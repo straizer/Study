@@ -2,7 +2,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include <arpa/inet.h>
 #include <mylibs/network.h>
@@ -10,7 +9,8 @@
 /* ------------------------------------------------ Private members ------------------------------------------------ */
 
 enum {
-    BUFFER_SIZE = 64,
+    IP_BUFFER_SIZE = 16,
+    SOCKET_ADDRESS_BUFFER_SIZE = 22,
 };
 
 OUTPUT_DEFINE(getTCPSocket, int32_t)
@@ -97,15 +97,27 @@ connectToServerViaTCPOutput connectToServerViaTCP(const in_addr server_address, 
     return connectToServerViaTCPOk(tcp_socket.u.value);
 }
 
-void socketAddressToString(const sockaddr_in socket_address, char* const out) {
-    char result[BUFFER_SIZE];
-    if (inet_ntop(AF_INET, &socket_address.sin_addr, result, BUFFER_SIZE) == NULL) {
-        perror("inet_ntop()");
-        exit(EXIT_FAILURE);  // cppcheck-suppress misra-c2012-21.8 // NOLINT(concurrency-mt-unsafe)
+OUTPUT_CONSTRUCTORS(socketAddressToString, nullptr_t)
+socketAddressToStringOutput socketAddressToString(const sockaddr_in socket_address, char* const out,
+                                                  const size_t out_size) {
+    if (out == nullptr) {
+        return socketAddressToStringErr("out is NULL");
     }
-    const uint64_t ip_length = strlen(result);
-    (void)snprintf(&result[ip_length], BUFFER_SIZE - ip_length, ":%d", ntohs(socket_address.sin_port));
-    (void)memcpy(out, result, strlen(result) + 1U);
+    if (out_size < SOCKET_ADDRESS_BUFFER_SIZE) {
+        return socketAddressToStringErr("output buffer too small (must be at least 22)");
+    }
+
+    char ip[IP_BUFFER_SIZE];
+    if (inet_ntop(AF_INET, &socket_address.sin_addr, ip, sizeof(ip)) == nullptr) {
+        return socketAddressToStringErr(prefixErrno("inet_ntop"));
+    }
+
+    const int32_t result = snprintf(out, out_size, "%s:%u", ip, ntohs(socket_address.sin_port));
+    if (result < 0) {
+        return socketAddressToStringErr(prefixError("snprintf", "formatting failed"));
+    }
+
+    return socketAddressToStringOk(nullptr);
 }
 
 /* ------------------------------------------ Private function definitions ------------------------------------------ */

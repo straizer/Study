@@ -17,6 +17,8 @@ static _Thread_local char error_buffers  // NOLINT(cppcoreguidelines-avoid-non-c
 // cppcheck-suppress misra-c2012-1.4
 static _Thread_local unsigned error_buffer_idx;  // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
 
+const char* formatError(const char* first, const char* prefix_second, const char* second, const char* suffix_second);
+
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
 
 const char* prefixErrno(const char* const prefix) {
@@ -31,16 +33,31 @@ const char* prefixErrno(const char* const prefix) {
 }
 
 const char* prefixError(const char* const prefix, const char* const message) {
-    const bool prefix_valid = stringIsValid(prefix);
-    const bool message_valid = stringIsValid(message);
+    return formatError(prefix, ": ", message, nullptr);
+}
 
-    char* const out = error_buffers[error_buffer_idx % ERROR_BUFFERS_SLOTS];
-    error_buffer_idx++;
-
-    (void)snprintf(out, ERROR_BUFFERS_SIZE, "%s%s%s", prefix_valid ? prefix : "",
-                   prefix_valid && message_valid ? ": " : "", message_valid ? message : "");
-
-    return out;
+const char* errorDuring(const char* const primary_prefix, const char* const primary_message,
+                        const char* const secondary) {
+    return formatError(prefixError(primary_prefix, primary_message), " (while handling error: ", secondary, ")");
 }
 
 bool stringIsValid(const char* const string) { return string != nullptr && string[0] != '\0'; }
+
+/* ------------------------------------------ Private function definitions ------------------------------------------ */
+
+const char* formatError(const char* const first, const char* const prefix_second, const char* const second,
+                        const char* const suffix_second) {
+    char* const out = error_buffers[error_buffer_idx % ERROR_BUFFERS_SLOTS];
+    error_buffer_idx++;
+
+    const bool first_valid = stringIsValid(first);
+    const bool prefix_second_valid = stringIsValid(prefix_second);
+    const bool second_valid = stringIsValid(second);
+    const bool suffix_second_valid = stringIsValid(suffix_second);
+
+    (void)snprintf(out, ERROR_BUFFERS_SIZE, "%s%s%s%s", first_valid ? first : "",
+                   first_valid && second_valid && prefix_second_valid ? prefix_second : "", second_valid ? second : "",
+                   first_valid && second_valid && suffix_second_valid ? suffix_second : "");
+
+    return out;
+}

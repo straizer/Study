@@ -14,9 +14,9 @@ enum {
 };
 
 OUTPUT_DEFINE(getTCPSocket, int32_t)
-getTCPSocketOutput getTCPSocket(void);
+static getTCPSocketOutput getTCPSocket(void);
 
-sockaddr_in getInternetSocketAddress(in_addr internet_address, in_port_t port);
+static sockaddr_in getInternetSocketAddress(in_addr internet_address, in_port_t port);
 
 static const char* closeConnectionAndGetError(int32_t socket, const char* original_error);
 
@@ -30,7 +30,7 @@ getInternetAddressOutput getInternetAddress(const char* const ip) {
 
     in_addr address;
 
-    const int result = inet_pton(AF_INET, ip, &address);
+    const int32_t result = inet_pton(AF_INET, ip, &address);
     if (result == -1) {
         return getInternetAddressErr(prefixErrno("inet_pton"));
     }
@@ -111,7 +111,7 @@ socketAddressToStringOutput socketAddressToString(const sockaddr_in socket_addre
 /* ------------------------------------------ Private function definitions ------------------------------------------ */
 
 OUTPUT_CONSTRUCTORS(getTCPSocket, int32_t)
-getTCPSocketOutput getTCPSocket(void) {
+static getTCPSocketOutput getTCPSocket(void) {
     const int32_t result = socket(AF_INET, SOCK_STREAM, PF_UNSPEC);
     if (result == -1) {
         return getTCPSocketErr(prefixErrno("socket"));
@@ -120,7 +120,7 @@ getTCPSocketOutput getTCPSocket(void) {
     return getTCPSocketOk(result);
 }
 
-sockaddr_in getInternetSocketAddress(const in_addr internet_address, const in_port_t port) {
+static sockaddr_in getInternetSocketAddress(const in_addr internet_address, const in_port_t port) {
     sockaddr_in socket_address = {0};
     socket_address.sin_family = AF_INET;
     socket_address.sin_addr = internet_address;

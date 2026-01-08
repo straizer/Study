@@ -17,7 +17,8 @@ static _Thread_local char error_buffers  // NOLINT(cppcoreguidelines-avoid-non-c
 // cppcheck-suppress misra-c2012-1.4
 static _Thread_local unsigned error_buffer_idx;  // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
 
-const char* formatError(const char* first, const char* prefix_second, const char* second, const char* suffix_second);
+static const char* formatError(const char* first, const char* prefix_second, const char* second,
+                               const char* suffix_second);
 
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
 
@@ -45,8 +46,8 @@ bool stringIsValid(const char* const string) { return string != nullptr && strin
 
 /* ------------------------------------------ Private function definitions ------------------------------------------ */
 
-const char* formatError(const char* const first, const char* const prefix_second, const char* const second,
-                        const char* const suffix_second) {
+static const char* formatError(const char* const first, const char* const prefix_second, const char* const second,
+                               const char* const suffix_second) {
     char* const out = error_buffers[error_buffer_idx % ERROR_BUFFERS_SLOTS];
     error_buffer_idx++;
 

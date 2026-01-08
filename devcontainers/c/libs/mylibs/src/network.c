@@ -4,9 +4,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+/* ------------------------------------------------ Private members ------------------------------------------------ */
+
 enum {
     MAX_PORT_NUMBER = 65535U,
 };
+
+/* ------------------------------------------ Public function definitions ------------------------------------------ */
 
 OUTPUT_CONSTRUCTORS(getPort, in_port_t)
 getPortOutput getPort(const char* const port_string) {

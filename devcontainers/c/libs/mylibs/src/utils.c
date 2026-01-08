@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <string.h>
 
+/* ------------------------------------------------ Private members ------------------------------------------------ */
+
 enum {
     ERROR_BUFFERS_SLOTS = 8,
     ERROR_BUFFERS_SIZE = 256,
@@ -15,42 +17,30 @@ static _Thread_local char error_buffers  // NOLINT(cppcoreguidelines-avoid-non-c
 // cppcheck-suppress misra-c2012-1.4
 static _Thread_local unsigned error_buffer_idx;  // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
 
-static char* nextErrorBuffer(void) {
-    char* const buf = error_buffers[error_buffer_idx % ERROR_BUFFERS_SLOTS];
-    error_buffer_idx++;
-    return buf;
-}
+/* ------------------------------------------ Public function definitions ------------------------------------------ */
 
 const char* prefixErrno(const char* const prefix) {
     const int saved_errno = errno;
 
     char tmp[ERROR_BUFFERS_SIZE];
-    const char* const msg = strerror_r(saved_errno, tmp, sizeof(tmp));
-
-    char* const out = nextErrorBuffer();
-
-    if (prefix != nullptr && prefix[0] != '\0') {
-        (void)snprintf(out, ERROR_BUFFERS_SIZE, "%s: %s", prefix, msg);
-    } else {
-        (void)snprintf(out, ERROR_BUFFERS_SIZE, "%s", msg);
-    }
+    const char* const message = strerror_r(saved_errno, tmp, sizeof(tmp));
+    const char* const out = prefixError(prefix, message);
 
     errno = saved_errno;
     return out;
 }
 
 const char* prefixError(const char* const prefix, const char* const message) {
-    if (prefix == nullptr || prefix[0] == '\0') {
-        return message;
-    }
+    const bool prefix_valid = stringIsValid(prefix);
+    const bool message_valid = stringIsValid(message);
 
-    char* const out = nextErrorBuffer();
+    char* const out = error_buffers[error_buffer_idx % ERROR_BUFFERS_SLOTS];
+    error_buffer_idx++;
 
-    if (message == nullptr) {
-        (void)snprintf(out, ERROR_BUFFERS_SIZE, "%s", prefix);
-        return out;
-    }
+    (void)snprintf(out, ERROR_BUFFERS_SIZE, "%s%s%s", prefix_valid ? prefix : "",
+                   prefix_valid && message_valid ? ": " : "", message_valid ? message : "");
 
-    (void)snprintf(out, ERROR_BUFFERS_SIZE, "%s: %s", prefix, message);
     return out;
 }
+
+bool stringIsValid(const char* const string) { return string != nullptr && string[0] != '\0'; }

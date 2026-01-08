@@ -96,7 +96,7 @@ endif
 
 check-unused-functions: $(OBJ_DIR)/unused/
 	echo "\033[33mLooking for unused functions.\033[0m"
-	cppcheck $(CPPCHECK_FLAGS) --cppcheck-build-dir=$(OBJ_DIR)/unused --enable=unusedFunction $(SRC_DIR)
+	cppcheck $(CPPCHECK_FLAGS) --cppcheck-build-dir=$(OBJ_DIR)/unused --enable=unusedFunction $(SRC_DIRS)
 
 format-headers:
 ifneq ($(LINT),0)

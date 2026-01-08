@@ -31,11 +31,17 @@ int main(const int argc, const char* const* const argv) {
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
-    const int32_t client_socket = connectToServerViaTCP(server_address.u.value, server_port.u.value);
+    const connectToServerViaTCPOutput client_socket =
+        connectToServerViaTCP(server_address.u.value, server_port.u.value);
+    if (!client_socket.ok) {
+        (void)fprintf(stderr, "connectToServerViaTCP: %s\n", client_socket.u.error);
+        exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
+    }
+
     print("After the three-way handshake. Waiting for server response\n");
 
     char buffer[BUFFER_SIZE] = {0};
-    const ssize_t bytes_read = read(client_socket, buffer, sizeof(buffer));
+    const ssize_t bytes_read = read(client_socket.u.value, buffer, sizeof(buffer));
     if (bytes_read == -1) {
         perror("read()");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
@@ -49,7 +55,7 @@ int main(const int argc, const char* const* const argv) {
 
     // Send a FIN to close the server connection
     print("Shutting down server connection (sending FIN)\n");
-    const closeConnectionOutput result = closeConnection(client_socket, SHUT_WR);
+    const closeConnectionOutput result = closeConnection(client_socket.u.value, SHUT_WR);
     if (!result.ok) {
         (void)fprintf(stderr, "closeConnection: %s\n", result.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)

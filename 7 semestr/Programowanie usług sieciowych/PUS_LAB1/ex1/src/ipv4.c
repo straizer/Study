@@ -75,20 +75,26 @@ startTCPServerOutput startTCPServer(const in_port_t server_port, const int32_t b
     return startTCPServerOk(tcp_socket.u.value);
 }
 
-int32_t connectToServerViaTCP(const in_addr server_address, const in_port_t server_port) {
+OUTPUT_CONSTRUCTORS(connectToServerViaTCP, int32_t)
+connectToServerViaTCPOutput connectToServerViaTCP(const in_addr server_address, const in_port_t server_port) {
     const getTCPSocketOutput tcp_socket = getTCPSocket();
     if (!tcp_socket.ok) {
-        (void)fprintf(stderr, "getTCPSocket: %s\n", tcp_socket.u.error);
-        exit(EXIT_FAILURE);  // cppcheck-suppress misra-c2012-21.8 // NOLINT(concurrency-mt-unsafe)
+        return connectToServerViaTCPErr(prefixError("getTCPSocket", tcp_socket.u.error));
     }
 
     const sockaddr_in server_socket_address = getInternetSocketAddress(server_address, server_port);
-    const connectToSocketOutput result = connectToSocket(tcp_socket.u.value, server_socket_address);
-    if (!result.ok) {
-        (void)fprintf(stderr, "connectToSocket: %s\n", result.u.error);
-        exit(EXIT_FAILURE);  // cppcheck-suppress misra-c2012-21.8 // NOLINT(concurrency-mt-unsafe)
+
+    const connectToSocketOutput connect_result = connectToSocket(tcp_socket.u.value, server_socket_address);
+    if (!connect_result.ok) {
+        const char* const error = prefixError("connectToSocket", connect_result.u.error);
+        const closeConnectionOutput result = closeConnection(tcp_socket.u.value, SHUT_RDWR);
+        if (!result.ok) {
+            return connectToServerViaTCPErr(errorDuring("closeConnection", result.u.error, error));
+        }
+        return connectToServerViaTCPErr(error);
     }
-    return tcp_socket.u.value;
+
+    return connectToServerViaTCPOk(tcp_socket.u.value);
 }
 
 void socketAddressToString(const sockaddr_in socket_address, char* const out) {

@@ -18,7 +18,12 @@ int main(const int argc, const char* const* const argv) {
         (void)fprintf(stderr, "Invocation: %s <IPv4 ADDRESS> <PORT>\n", argv[0]);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
-    const in_addr server_address = getInternetAddress(argv[1]);
+
+    const getInternetAddressOutput server_address = getInternetAddress(argv[1]);
+    if (!server_address.ok) {
+        (void)fprintf(stderr, "getPort: %s\n", server_address.u.error);
+        exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
+    }
 
     const getPortOutput server_port = getPort(argv[2]);
     if (!server_port.ok) {
@@ -26,7 +31,7 @@ int main(const int argc, const char* const* const argv) {
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
-    const int32_t client_socket = connectToServerViaTCP(server_address, server_port.u.value);
+    const int32_t client_socket = connectToServerViaTCP(server_address.u.value, server_port.u.value);
     print("After the three-way handshake. Waiting for server response\n");
 
     char buffer[BUFFER_SIZE] = {0};

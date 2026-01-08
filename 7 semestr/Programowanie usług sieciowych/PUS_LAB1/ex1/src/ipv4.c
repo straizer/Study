@@ -7,29 +7,45 @@
 #include <arpa/inet.h>
 #include <mylibs/network.h>
 
+/* ------------------------------------------------ Private members ------------------------------------------------ */
+
 enum {
     BUFFER_SIZE = 64,
 };
 
-int32_t getTCPSocket(void);
+OUTPUT_DEFINE(getTCPSocket, int32_t)
+getTCPSocketOutput getTCPSocket(void);
+
 sockaddr_in getInternetSocketAddress(in_addr internet_address, in_port_t port);
 
-in_addr getInternetAddress(const char* const ip) {
+/* ------------------------------------------ Public function definitions ------------------------------------------ */
+
+OUTPUT_CONSTRUCTORS(getInternetAddress, in_addr)
+getInternetAddressOutput getInternetAddress(const char* const ip) {
+    if (!stringIsValid(ip)) {
+        return getInternetAddressErr("IP string is invalid");
+    }
+
     in_addr address;
     const int result = inet_pton(AF_INET, ip, &address);
-    if (result == 0) {
-        (void)fprintf(stderr, "inet_pton(): invalid network address\n");
-        exit(EXIT_FAILURE);  // cppcheck-suppress misra-c2012-21.8 // NOLINT(concurrency-mt-unsafe)
-    }
+
     if (result == -1) {
-        perror("inet_pton()");
-        exit(EXIT_FAILURE);  // cppcheck-suppress misra-c2012-21.8 // NOLINT(concurrency-mt-unsafe)
+        return getInternetAddressErr(prefixErrno("inet_pton"));
     }
-    return address;
+
+    if (result == 0) {
+        return getInternetAddressErr(prefixError("inet_pton", "invalid network address"));
+    }
+
+    return getInternetAddressOk(address);
 }
 
 int32_t startTCPServer(const in_port_t server_port, const int32_t backlog_size) {
-    const int32_t tcp_socket = getTCPSocket();
+    const getTCPSocketOutput tcp_socket = getTCPSocket();
+    if (!tcp_socket.ok) {
+        (void)fprintf(stderr, "getTCPSocket: %s\n", tcp_socket.u.error);
+        exit(EXIT_FAILURE);  // cppcheck-suppress misra-c2012-21.8 // NOLINT(concurrency-mt-unsafe)
+    }
 
     // Create a server address struct
     // - INADDR_ANY → 0.0.0.0 (listen on all interfaces)
@@ -38,29 +54,34 @@ int32_t startTCPServer(const in_port_t server_port, const int32_t backlog_size) 
     sockaddr_in server_socket_address = getInternetSocketAddress(server_address, server_port);
 
     // Assign IP + port to the socket
-    if (bind(tcp_socket, (struct sockaddr*)&server_socket_address, sizeof(server_socket_address)) == -1) {
+    if (bind(tcp_socket.u.value, (struct sockaddr*)&server_socket_address, sizeof(server_socket_address)) == -1) {
         perror("bind()");
         exit(EXIT_FAILURE);  // cppcheck-suppress misra-c2012-21.8 // NOLINT(concurrency-mt-unsafe)
     }
 
     // Put the socket into a passive (listening) mode, allowing it to accept incoming connection requests
-    if (listen(tcp_socket, backlog_size) == -1) {
+    if (listen(tcp_socket.u.value, backlog_size) == -1) {
         perror("listen()");
         exit(EXIT_FAILURE);  // cppcheck-suppress misra-c2012-21.8 // NOLINT(concurrency-mt-unsafe)
     }
 
-    return tcp_socket;
+    return tcp_socket.u.value;
 }
 
 int32_t connectToServerViaTCP(const in_addr server_address, const in_port_t server_port) {
-    const int32_t tcp_socket = getTCPSocket();
+    const getTCPSocketOutput tcp_socket = getTCPSocket();
+    if (!tcp_socket.ok) {
+        (void)fprintf(stderr, "getTCPSocket: %s\n", tcp_socket.u.error);
+        exit(EXIT_FAILURE);  // cppcheck-suppress misra-c2012-21.8 // NOLINT(concurrency-mt-unsafe)
+    }
+
     const sockaddr_in server_socket_address = getInternetSocketAddress(server_address, server_port);
-    const connectToSocketOutput result = connectToSocket(tcp_socket, server_socket_address);
+    const connectToSocketOutput result = connectToSocket(tcp_socket.u.value, server_socket_address);
     if (!result.ok) {
         (void)fprintf(stderr, "connectToSocket: %s\n", result.u.error);
         exit(EXIT_FAILURE);  // cppcheck-suppress misra-c2012-21.8 // NOLINT(concurrency-mt-unsafe)
     }
-    return tcp_socket;
+    return tcp_socket.u.value;
 }
 
 void socketAddressToString(const sockaddr_in socket_address, char* const out) {
@@ -74,13 +95,17 @@ void socketAddressToString(const sockaddr_in socket_address, char* const out) {
     (void)memcpy(out, result, strlen(result) + 1U);
 }
 
-int32_t getTCPSocket(void) {
+/* ------------------------------------------ Private function definitions ------------------------------------------ */
+
+OUTPUT_CONSTRUCTORS(getTCPSocket, int32_t)
+getTCPSocketOutput getTCPSocket(void) {
     const int32_t result = socket(AF_INET, SOCK_STREAM, PF_UNSPEC);
+
     if (result == -1) {
-        perror("socket()");
-        exit(EXIT_FAILURE);  // cppcheck-suppress misra-c2012-21.8 // NOLINT(concurrency-mt-unsafe)
+        return getTCPSocketErr(prefixErrno("socket"));
     }
-    return result;
+
+    return getTCPSocketOk(result);
 }
 
 sockaddr_in getInternetSocketAddress(const in_addr internet_address, const in_port_t port) {

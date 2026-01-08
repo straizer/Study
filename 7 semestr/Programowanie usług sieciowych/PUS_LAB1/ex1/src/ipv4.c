@@ -27,12 +27,11 @@ getInternetAddressOutput getInternetAddress(const char* const ip) {
     }
 
     in_addr address;
-    const int result = inet_pton(AF_INET, ip, &address);
 
+    const int result = inet_pton(AF_INET, ip, &address);
     if (result == -1) {
         return getInternetAddressErr(prefixErrno("inet_pton"));
     }
-
     if (result == 0) {
         return getInternetAddressErr(prefixError("inet_pton", "invalid network address"));
     }
@@ -108,7 +107,6 @@ void socketAddressToString(const sockaddr_in socket_address, char* const out) {
 OUTPUT_CONSTRUCTORS(getTCPSocket, int32_t)
 getTCPSocketOutput getTCPSocket(void) {
     const int32_t result = socket(AF_INET, SOCK_STREAM, PF_UNSPEC);
-
     if (result == -1) {
         return getTCPSocketErr(prefixErrno("socket"));
     }

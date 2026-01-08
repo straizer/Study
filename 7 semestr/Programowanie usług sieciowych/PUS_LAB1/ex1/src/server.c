@@ -37,10 +37,11 @@ int main(const int argc, const char* const* const argv) {
 
     // Create a client address struct
     sockaddr_in client_address = {0};
-    socklen_t client_address_len = sizeof(client_address);
+    socklen_t client_address_length = sizeof(client_address);
 
     // Wait for the incoming connection and return a new socket file descriptor for communicating with a client
-    const int32_t client_socket = accept(server_socket.u.value, (struct sockaddr*)&client_address, &client_address_len);
+    const int32_t client_socket =
+        accept(server_socket.u.value, (struct sockaddr*)&client_address, &client_address_length);
     if (client_socket == -1) {
         perror("accept()");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
@@ -86,16 +87,17 @@ int main(const int argc, const char* const* const argv) {
 
     // Send a FIN to close the client connection
     print("Shutting down client connection (sending FIN)\n");
-    const closeConnectionOutput result = closeConnection(client_socket, SHUT_WR);
-    if (!result.ok) {
-        (void)fprintf(stderr, "closeConnection: %s\n", result.u.error);
+    const closeConnectionOutput close_client_socket_result = closeConnection(client_socket, SHUT_WR);
+    if (!close_client_socket_result.ok) {
+        (void)fprintf(stderr, "closeConnection: %s\n", close_client_socket_result.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
     // Close listening socket
     print("Closing listening socket and terminating server\n");
-    if (close(server_socket.u.value) == -1) {
-        perror("close()");
+    const closeConnectionOutput close_server_socket_result = closeConnection(server_socket.u.value, SHUT_RDWR);
+    if (!close_server_socket_result.ok) {
+        (void)fprintf(stderr, "closeConnection: %s\n", close_server_socket_result.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 

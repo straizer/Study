@@ -20,16 +20,14 @@ getPortOutput getPort(const char* const port_string) {
 
     char* end = nullptr;
     errno = 0;
-    const uint64_t port_raw = strtoul(port_string, &end, 10);
 
+    const uint64_t port_raw = strtoul(port_string, &end, 10);
     if (errno != 0) {
         return getPortErr(prefixErrno("strtoul"));
     }
-
     if (end == port_string) {
         return getPortErr("port is not a number");
     }
-
     if (*end != '\0') {
         return getPortErr("trailing characters after port number");
     }

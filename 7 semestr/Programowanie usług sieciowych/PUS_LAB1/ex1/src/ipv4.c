@@ -40,11 +40,11 @@ getInternetAddressOutput getInternetAddress(const char* const ip) {
     return getInternetAddressOk(address);
 }
 
-int32_t startTCPServer(const in_port_t server_port, const int32_t backlog_size) {
+OUTPUT_CONSTRUCTORS(startTCPServer, int32_t)
+startTCPServerOutput startTCPServer(const in_port_t server_port, const int32_t backlog_size) {
     const getTCPSocketOutput tcp_socket = getTCPSocket();
     if (!tcp_socket.ok) {
-        (void)fprintf(stderr, "getTCPSocket: %s\n", tcp_socket.u.error);
-        exit(EXIT_FAILURE);  // cppcheck-suppress misra-c2012-21.8 // NOLINT(concurrency-mt-unsafe)
+        return startTCPServerErr(prefixError("getTCPSocket", tcp_socket.u.error));
     }
 
     // Create a server address struct
@@ -55,17 +55,25 @@ int32_t startTCPServer(const in_port_t server_port, const int32_t backlog_size) 
 
     // Assign IP + port to the socket
     if (bind(tcp_socket.u.value, (struct sockaddr*)&server_socket_address, sizeof(server_socket_address)) == -1) {
-        perror("bind()");
-        exit(EXIT_FAILURE);  // cppcheck-suppress misra-c2012-21.8 // NOLINT(concurrency-mt-unsafe)
+        const char* const error = prefixErrno("bind");
+        const closeConnectionOutput result = closeConnection(tcp_socket.u.value, SHUT_RDWR);
+        if (!result.ok) {
+            return startTCPServerErr(errorDuring("closeConnection", result.u.error, error));
+        }
+        return startTCPServerErr(error);
     }
 
     // Put the socket into a passive (listening) mode, allowing it to accept incoming connection requests
     if (listen(tcp_socket.u.value, backlog_size) == -1) {
-        perror("listen()");
-        exit(EXIT_FAILURE);  // cppcheck-suppress misra-c2012-21.8 // NOLINT(concurrency-mt-unsafe)
+        const char* const error = prefixErrno("listen");
+        const closeConnectionOutput result = closeConnection(tcp_socket.u.value, SHUT_RDWR);
+        if (!result.ok) {
+            return startTCPServerErr(errorDuring("closeConnection", result.u.error, error));
+        }
+        return startTCPServerErr(error);
     }
 
-    return tcp_socket.u.value;
+    return startTCPServerOk(tcp_socket.u.value);
 }
 
 int32_t connectToServerViaTCP(const in_addr server_address, const in_port_t server_port) {

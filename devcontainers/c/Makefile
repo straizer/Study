@@ -57,7 +57,7 @@ LDFLAGS_RELEASE = $(LDFLAGS_COMMON) -pie -flto -Wl,--gc-sections -Wl,-O1 -Wl,--i
 CPPCHECK_FLAGS = -f -q -j 32 --platform=unix64 --language=c --std=$(CSTD) --template=gcc --inline-suppr \
   --check-level=exhaustive --max-ctu-depth=10 --report-type=misra-c-2023 --suppressions-list=.cppcheck-suppress \
   --inconclusive --library=/usr/share/cppcheck/cfg/posix.cfg,posix.cfg.xml --check-library --error-exitcode=1 \
-  $(filter -I% -D%,$(CPPFLAGS) $(CFLAGS)) --addon=misra.json -D nullptr=NULL -D SHUT_WR=1 -D AF_INET=2
+  $(filter -I% -D%,$(CPPFLAGS) $(CFLAGS)) --addon=misra.json -D nullptr=NULL -D AF_INET=2
 
 # Linked libraries
 LDLIBS =

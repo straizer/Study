@@ -27,15 +27,20 @@ int main(const int argc, const char* const* const argv) {
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
-    const int32_t server_socket = startTCPServer(server_port.u.value, 2);
+    const startTCPServerOutput server_socket = startTCPServer(server_port.u.value, 2);
+    if (!server_socket.ok) {
+        (void)fprintf(stderr, "getPort: %s\n", server_socket.u.error);
+        exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
+    }
+
     print("Server is listening for incoming connection\n");
 
     // Create a client address struct
     sockaddr_in client_address = {0};
-    socklen_t client_address_length = sizeof(client_address);
+    socklen_t client_address_len = sizeof(client_address);
 
     // Wait for the incoming connection and return a new socket file descriptor for communicating with a client
-    const int32_t client_socket = accept(server_socket, (struct sockaddr*)&client_address, &client_address_length);
+    const int32_t client_socket = accept(server_socket.u.value, (struct sockaddr*)&client_address, &client_address_len);
     if (client_socket == -1) {
         perror("accept()");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
@@ -89,7 +94,7 @@ int main(const int argc, const char* const* const argv) {
 
     // Close listening socket
     print("Closing listening socket and terminating server\n");
-    if (close(server_socket) == -1) {
+    if (close(server_socket.u.value) == -1) {
         perror("close()");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }

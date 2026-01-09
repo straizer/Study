@@ -15,52 +15,52 @@ enum {
 
 int main(const int argc, const char* const* const argv) {
     if (argc != 3) {
-        (void)fprintf(stderr, "Invocation: %s <IPv4 ADDRESS> <PORT>\n", argv[0]);
+        printError("Invocation: %s <IPv4 ADDRESS> <PORT>", argv[0]);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
     const getInternetAddressOutput server_address = getInternetAddress(argv[1]);
     if (!server_address.ok) {
-        (void)fprintf(stderr, "getPort: %s\n", server_address.u.error);
+        printError("getPort: %s", server_address.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
     const getPortOutput server_port = getPort(argv[2]);
     if (!server_port.ok) {
-        (void)fprintf(stderr, "getPort: %s\n", server_port.u.error);
+        printError("getPort: %s", server_port.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
     const connectToServerViaTCPOutput client_socket =
         connectToServerViaTCP(server_address.u.value, server_port.u.value);
     if (!client_socket.ok) {
-        (void)fprintf(stderr, "connectToServerViaTCP: %s\n", client_socket.u.error);
+        printError("connectToServerViaTCP: %s", client_socket.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
-    print("After the three-way handshake. Waiting for server response\n");
+    printOutput("After the three-way handshake. Waiting for server response");
 
     char message_buffer[MESSAGE_BUFFER_SIZE] = {0};
     const ssize_t bytes_read = read(client_socket.u.value, message_buffer, sizeof(message_buffer));
     if (bytes_read == -1) {
-        perror("read()");
+        perror("read");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
     if (bytes_read == 0) {
-        (void)fprintf(stderr, "Unexpected termination of connection by server (received FIN).\n");
+        printError("Unexpected termination of connection by server (received FIN).");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
-    print("Received server response: %s\n", message_buffer);
+    printOutput("Received server response: %s", message_buffer);
 
     // Send a FIN to close the server connection
-    print("Shutting down server connection (sending FIN)\n");
+    printOutput("Shutting down server connection (sending FIN)");
     const closeConnectionOutput result = closeConnection(client_socket.u.value, SHUT_WR);
     if (!result.ok) {
-        (void)fprintf(stderr, "closeConnection: %s\n", result.u.error);
+        printError("closeConnection: %s", result.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
-    print("Terminating client\n");
+    printOutput("Terminating client");
     exit(EXIT_SUCCESS);  // NOLINT(concurrency-mt-unsafe)
 }

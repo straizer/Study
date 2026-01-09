@@ -18,23 +18,23 @@ enum {
 
 int main(const int argc, const char* const* const argv) {
     if (argc != 2) {
-        (void)fprintf(stderr, "Invocation: %s <PORT>\n", argv[0]);
+        printError("Invocation: %s <PORT>", argv[0]);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
     const getPortOutput server_port = getPort(argv[1]);
     if (!server_port.ok) {
-        (void)fprintf(stderr, "getPort: %s\n", server_port.u.error);
+        printError("getPort: %s", server_port.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
     const startTCPServerOutput server_socket = startTCPServer(server_port.u.value, 2);
     if (!server_socket.ok) {
-        (void)fprintf(stderr, "getPort: %s\n", server_socket.u.error);
+        printError("getPort: %s", server_socket.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
-    print("Server is listening for incoming connection\n");
+    printOutput("Server is listening for incoming connection");
 
     // Create a client address struct
     sockaddr_in client_address = {0};
@@ -44,7 +44,7 @@ int main(const int argc, const char* const* const argv) {
     const int32_t client_socket =
         accept(server_socket.u.value, (struct sockaddr*)&client_address, &client_address_length);
     if (client_socket == -1) {
-        perror("accept()");
+        perror("accept");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
@@ -52,12 +52,12 @@ int main(const int argc, const char* const* const argv) {
     const socketAddressToStringOutput result =
         socketAddressToString(client_address, client_address_buffer, CLIENT_ADDRESS_BUFFER_SIZE);
     if (!result.ok) {
-        (void)fprintf(stderr, "socketAddressToString: %s\n", result.u.error);
+        printError("socketAddressToString: %s", result.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
-    print("TCP connection accepted from %s\n", client_address_buffer);
-    print("Sending current date and time\n");
+    printOutput("TCP connection accepted from %s", client_address_buffer);
+    printOutput("Sending current date and time");
 
     // Get the current system time and convert it to a human-readable local time structure
     time_t raw_time = 0;
@@ -68,43 +68,42 @@ int main(const int argc, const char* const* const argv) {
     // Format the time information into a text string
     char message_buffer[MESSAGE_BUFFER_SIZE];
     if (strftime(message_buffer, sizeof(message_buffer), "%Y-%m-%d %H:%M:%S %Z", &time_info) == 0U) {
-        (void)fprintf(stderr, "Buffer size exceeded");
+        printError("Buffer size exceeded");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
     // Sends the buffer to the connected client through the client socket
     if (write(client_socket, message_buffer, strlen(message_buffer)) == -1) {
-        perror("write()");
+        perror("write");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
     // If read returns 0, the client has closed the connection (sent FIN)
     const ssize_t bytes_read = read(client_socket, message_buffer, sizeof(message_buffer));
     if (bytes_read == -1) {
-        perror("read()");
+        perror("read");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
     if (bytes_read > 0) {
-        (void)fprintf(stderr, "Unexpected bytes received from %s:%d\n", client_address_buffer,
-                      ntohs(client_address.sin_port));
+        printError("Unexpected bytes received from %s:%d", client_address_buffer, ntohs(client_address.sin_port));
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
-    print("Connection terminated by the client (received FIN, entering CLOSE_WAIT state)\n");
+    printOutput("Connection terminated by the client (received FIN, entering CLOSE_WAIT state)");
 
     // Send a FIN to close the client connection
-    print("Shutting down client connection (sending FIN)\n");
+    printOutput("Shutting down client connection (sending FIN)");
     const closeConnectionOutput close_client_socket_result = closeConnection(client_socket, SHUT_WR);
     if (!close_client_socket_result.ok) {
-        (void)fprintf(stderr, "closeConnection: %s\n", close_client_socket_result.u.error);
+        printError("closeConnection: %s", close_client_socket_result.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
     // Close listening socket
-    print("Closing listening socket and terminating server\n");
+    printOutput("Closing listening socket and terminating server");
     const closeConnectionOutput close_server_socket_result = closeConnection(server_socket.u.value, SHUT_RDWR);
     if (!close_server_socket_result.ok) {
-        (void)fprintf(stderr, "closeConnection: %s\n", close_server_socket_result.u.error);
+        printError("closeConnection: %s", close_server_socket_result.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 

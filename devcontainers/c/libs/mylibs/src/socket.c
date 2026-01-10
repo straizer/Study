@@ -1,5 +1,11 @@
 #include "../include/mylibs/socket.h"
 
+#include <libexplain/accept.h>
+#include <libexplain/bind.h>
+#include <libexplain/connect.h>
+#include <libexplain/listen.h>
+#include <libexplain/socket.h>
+
 #include "../include/mylibs/errors.h"
 
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
@@ -12,7 +18,9 @@ socketCreateOutput socketCreate(const int domain, const int type, const int prot
 
     const int fd = socket(domain, type, protocol);
     if (fd == -1) {
-        return socketCreateErr(prefixErrno("socket"));
+        char* const buffer = getErrorBuffer();
+        explain_message_socket(buffer, ERROR_BUFFER_SIZE, domain, type, protocol);
+        return socketCreateErr(buffer);
     }
     return socketCreateOk(fd);
 }
@@ -30,7 +38,9 @@ socketConnectOutput socketConnect(const int socket, const sockaddr* const addres
     }
 
     if (connect(socket, address, address_length) == -1) {
-        return socketConnectErr(prefixErrno("connect"));
+        char* const buffer = getErrorBuffer();
+        explain_message_connect(buffer, ERROR_BUFFER_SIZE, socket, address, (int)address_length);
+        return socketConnectErr(buffer);
     }
 
     return socketConnectOk(nullptr);
@@ -49,7 +59,9 @@ socketBindOutput socketBind(const int socket, const sockaddr* const address, con
     }
 
     if (bind(socket, address, address_length) == -1) {
-        return socketBindErr(prefixErrno("bind"));
+        char* const buffer = getErrorBuffer();
+        explain_message_bind(buffer, ERROR_BUFFER_SIZE, socket, address, (int)address_length);
+        return socketBindErr(buffer);
     }
     return socketBindOk(nullptr);
 }
@@ -64,7 +76,9 @@ socketListenOutput socketListen(const int socket, const int backlog_size) {
     }
 
     if (listen(socket, backlog_size) == -1) {
-        return socketListenErr(prefixErrno("listen"));
+        char* const buffer = getErrorBuffer();
+        explain_message_listen(buffer, ERROR_BUFFER_SIZE, socket, backlog_size);
+        return socketListenErr(buffer);
     }
     return socketListenOk(nullptr);
 }
@@ -82,7 +96,9 @@ socketAcceptOutput socketAccept(const int socket, sockaddr* const address, sockl
 
     const int connected_socket = accept(socket, address, address_length);
     if (connected_socket == -1) {
-        return socketAcceptErr(prefixErrno("accept"));
+        char* const buffer = getErrorBuffer();
+        explain_message_accept(buffer, ERROR_BUFFER_SIZE, socket, address, address_length);
+        return socketAcceptErr(buffer);
     }
 
     return socketAcceptOk(connected_socket);

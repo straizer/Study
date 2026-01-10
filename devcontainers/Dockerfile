@@ -41,7 +41,7 @@ RUN ln -s /opt/clion-* /opt/clion
 RUN su - dev -c "/opt/clion/bin/remote-dev-server.sh registerBackendLocationForGateway"
 
 # CLI tools
-RUN apt-get install -y --no-install-recommends binutils-gold clang-format clang-tidy cppcheck
+RUN apt-get install -y --no-install-recommends binutils-gold clang-format clang-tidy cppcheck libexplain-dev
 RUN rm -rf /var/lib/apt/lists/*
 
 # Config files

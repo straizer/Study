@@ -61,7 +61,7 @@ CPPCHECK_FLAGS = -f -q -j 32 --platform=unix64 --language=c --std=$(CSTD) --temp
   -D nullptr=NULL -D AF_INET=2 -D SHUT_RD=0 -D SHUT_WR=1 -D SHUT_RDWR=2
 
 # Linked libraries
-LDLIBS =
+LDLIBS = -lexplain
 
 # Project config
 include project.mk

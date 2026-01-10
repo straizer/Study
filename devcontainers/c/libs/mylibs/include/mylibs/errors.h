@@ -1,7 +1,7 @@
 #pragma once
 
 enum {
-    ERROR_BUFFER_SIZE = 256,
+    ERROR_BUFFER_SIZE = 512,
 };
 
 char* getErrorBuffer(void);

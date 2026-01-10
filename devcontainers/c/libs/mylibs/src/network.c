@@ -12,7 +12,7 @@ enum {
 
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
 
-OUTPUT_CONSTRUCTORS(getPort, in_port_t)
+OUTPUT_CONSTRUCTORS(getPort, uint16_t)
 getPortOutput getPort(const char* const port_string) {
     if (port_string == nullptr) {
         return getPortErr("port string is NULL");
@@ -21,7 +21,7 @@ getPortOutput getPort(const char* const port_string) {
     char* end = nullptr;
     errno = 0;
 
-    const uint64_t port_raw = strtoul(port_string, &end, 10);
+    const uint64_t port = strtoul(port_string, &end, 10);
     if (errno != 0) {
         return getPortErr(prefixErrno("strtoul"));
     }
@@ -32,16 +32,24 @@ getPortOutput getPort(const char* const port_string) {
         return getPortErr("trailing characters after port number");
     }
 
-    if (port_raw > MAX_PORT_NUMBER) {
+    if (port > MAX_PORT_NUMBER) {
         return getPortErr("port number out of range (0..65535)");
     }
 
-    return getPortOk((in_port_t)port_raw);
+    return getPortOk((uint16_t)port);
 }
 
 OUTPUT_CONSTRUCTORS(connectToSocket, nullptr_t)
-connectToSocketOutput connectToSocket(const int32_t via_socket, const sockaddr_in to_address) {
-    if (connect(via_socket, (const struct sockaddr*)&to_address, sizeof(to_address)) == -1) {
+connectToSocketOutput connectToSocket(const int32_t via_socket, const sockaddr* const to_address,
+                                      const socklen_t to_address_len) {
+    if (to_address == nullptr) {
+        return connectToSocketErr("address is NULL");
+    }
+    if (to_address_len == 0U) {
+        return connectToSocketErr("address length is 0");
+    }
+
+    if (connect(via_socket, to_address, to_address_len) == -1) {
         return connectToSocketErr(prefixErrno("connect"));
     }
 

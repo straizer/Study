@@ -1,7 +1,6 @@
 #include "../include/mylibs/ipv4.h"
 
 #include <stdio.h>
-#include <stdlib.h>
 
 #include <arpa/inet.h>
 
@@ -53,10 +52,10 @@ startTCPServerOutput startTCPServer(const in_port_t server_port, const int32_t b
     // - INADDR_ANY → 0.0.0.0 (listen on all interfaces)
     in_addr server_address = {0};
     server_address.s_addr = htonl(INADDR_ANY);
-    sockaddr_in server_socket_address = getInternetSocketAddress(server_address, server_port);
+    const sockaddr_in server_socket_address = getInternetSocketAddress(server_address, server_port);
 
     // Assign IP + port to the socket
-    if (bind(tcp_socket.u.value, (struct sockaddr*)&server_socket_address, sizeof(server_socket_address)) == -1) {
+    if (bind(tcp_socket.u.value, (const sockaddr*)&server_socket_address, sizeof(server_socket_address)) == -1) {
         return startTCPServerErr(closeConnectionAndGetError(tcp_socket.u.value, prefixErrno("bind")));
     }
 
@@ -77,7 +76,8 @@ connectToServerViaTCPOutput connectToServerViaTCP(const in_addr server_address, 
 
     const sockaddr_in server_socket_address = getInternetSocketAddress(server_address, server_port);
 
-    const connectToSocketOutput connect_result = connectToSocket(tcp_socket.u.value, server_socket_address);
+    const connectToSocketOutput connect_result =
+        connectToSocket(tcp_socket.u.value, (const sockaddr*)&server_socket_address, sizeof(server_socket_address));
     if (!connect_result.ok) {
         const char* const error = prefixError("connectToSocket", connect_result.u.error);
         return connectToServerViaTCPErr(closeConnectionAndGetError(tcp_socket.u.value, error));

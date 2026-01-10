@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "../include/mylibs/string.h"
+
 /* ------------------------------------------------ Private members ------------------------------------------------ */
 
 enum {
@@ -11,11 +13,14 @@ enum {
     ERROR_BUFFERS_SIZE = 256,
 };
 
+_Static_assert(ERROR_BUFFERS_SLOTS > 0, "ERROR_BUFFERS_SLOTS must be positive");
+_Static_assert(ERROR_BUFFERS_SIZE > 0, "ERROR_BUFFERS_SIZE must be positive");
+
 // cppcheck-suppress misra-c2012-1.4
 static _Thread_local char error_buffers  // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
     [ERROR_BUFFERS_SLOTS][ERROR_BUFFERS_SIZE];
 // cppcheck-suppress misra-c2012-1.4
-static _Thread_local unsigned error_buffer_idx;  // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
+static _Thread_local size_t error_buffer_idx;  // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
 
 static const char* formatError(const char* first, const char* prefix_second, const char* second,
                                const char* suffix_second);
@@ -41,8 +46,6 @@ const char* errorDuring(const char* const primary_prefix, const char* const prim
                         const char* const secondary) {
     return formatError(prefixError(primary_prefix, primary_message), " (while handling error: ", secondary, ")");
 }
-
-bool stringIsValid(const char* const string) { return string != nullptr && string[0] != '\0'; }
 
 /* ------------------------------------------ Private function definitions ------------------------------------------ */
 

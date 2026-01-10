@@ -18,7 +18,7 @@ static getTCPSocketOutput getTCPSocket(void);
 
 static sockaddr_in getInternetSocketAddress(in_addr internet_address, in_port_t port);
 
-static const char* closeConnectionAndGetError(int32_t socket, const char* original_error);
+static const char* closeSocketAndGetError(int32_t socket, const char* original_error);
 
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
 
@@ -56,12 +56,12 @@ startTCPServerOutput startTCPServer(const in_port_t server_port, const int32_t b
 
     // Assign IP + port to the socket
     if (bind(tcp_socket.u.value, (const sockaddr*)&server_socket_address, sizeof(server_socket_address)) == -1) {
-        return startTCPServerErr(closeConnectionAndGetError(tcp_socket.u.value, prefixErrno("bind")));
+        return startTCPServerErr(closeSocketAndGetError(tcp_socket.u.value, prefixErrno("bind")));
     }
 
     // Put the socket into a passive (listening) mode, allowing it to accept incoming connection requests
     if (listen(tcp_socket.u.value, backlog_size) == -1) {
-        return startTCPServerErr(closeConnectionAndGetError(tcp_socket.u.value, prefixErrno("listen")));
+        return startTCPServerErr(closeSocketAndGetError(tcp_socket.u.value, prefixErrno("listen")));
     }
 
     return startTCPServerOk(tcp_socket.u.value);
@@ -80,7 +80,7 @@ connectToServerViaTCPOutput connectToServerViaTCP(const in_addr server_address, 
         connectToSocket(tcp_socket.u.value, (const sockaddr*)&server_socket_address, sizeof(server_socket_address));
     if (!connect_result.ok) {
         const char* const error = prefixError("connectToSocket", connect_result.u.error);
-        return connectToServerViaTCPErr(closeConnectionAndGetError(tcp_socket.u.value, error));
+        return connectToServerViaTCPErr(closeSocketAndGetError(tcp_socket.u.value, error));
     }
 
     return connectToServerViaTCPOk(tcp_socket.u.value);
@@ -109,6 +109,20 @@ socketAddressToStringOutput socketAddressToString(const sockaddr_in socket_addre
     return socketAddressToStringOk(nullptr);
 }
 
+OUTPUT_CONSTRUCTORS(closeConnection, nullptr_t)
+closeConnectionOutput closeConnection(const int32_t via_socket, const uint8_t how) {
+    if (shutdown(via_socket, how) == -1) {
+        return closeConnectionErr(prefixErrno("shutdown"));
+    }
+
+    const closeFileDescriptorOutput result = closeFileDescriptor(via_socket);
+    if (!result.ok) {
+        return closeConnectionErr(prefixError("closeFileDescriptor", result.u.error));
+    }
+
+    return closeConnectionOk(nullptr);
+}
+
 /* ------------------------------------------ Private function definitions ------------------------------------------ */
 
 OUTPUT_CONSTRUCTORS(getTCPSocket, int32_t)
@@ -129,10 +143,10 @@ static sockaddr_in getInternetSocketAddress(const in_addr internet_address, cons
     return socket_address;
 }
 
-static const char* closeConnectionAndGetError(const int32_t socket, const char* const original_error) {
-    const closeConnectionOutput result = closeConnection(socket, SHUT_RDWR);
+static const char* closeSocketAndGetError(const int32_t socket, const char* const original_error) {
+    const closeFileDescriptorOutput result = closeFileDescriptor(socket);
     if (!result.ok) {
-        return errorDuring("closeConnection", result.u.error, original_error);
+        return errorDuring("closeFileDescriptor", result.u.error, original_error);
     }
     return original_error;
 }

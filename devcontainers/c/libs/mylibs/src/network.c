@@ -2,7 +2,6 @@
 
 #include <errno.h>
 #include <stdlib.h>
-#include <unistd.h>
 
 /* ------------------------------------------------ Private members ------------------------------------------------ */
 
@@ -54,17 +53,4 @@ connectToSocketOutput connectToSocket(const int32_t via_socket, const sockaddr* 
     }
 
     return connectToSocketOk(nullptr);
-}
-
-OUTPUT_CONSTRUCTORS(closeConnection, nullptr_t)
-closeConnectionOutput closeConnection(const int32_t via_socket, const uint8_t how) {
-    if (shutdown(via_socket, how) == -1) {
-        return closeConnectionErr(prefixErrno("shutdown"));
-    }
-
-    if (close(via_socket) == -1) {
-        return closeConnectionErr(prefixErrno("close"));
-    }
-
-    return closeConnectionOk(nullptr);
 }

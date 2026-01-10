@@ -3,6 +3,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 
 /* ------------------------------------------------ Private members ------------------------------------------------ */
 
@@ -43,6 +44,15 @@ const char* errorDuring(const char* const primary_prefix, const char* const prim
 }
 
 bool stringIsValid(const char* const string) { return string != nullptr && string[0] != '\0'; }
+
+OUTPUT_CONSTRUCTORS(closeFileDescriptor, nullptr_t)
+closeFileDescriptorOutput closeFileDescriptor(const int file_descriptor) {
+    if (close(file_descriptor) == -1) {
+        return closeFileDescriptorErr(prefixErrno("close"));
+    }
+
+    return closeFileDescriptorOk(nullptr);
+}
 
 /* ------------------------------------------ Private function definitions ------------------------------------------ */
 

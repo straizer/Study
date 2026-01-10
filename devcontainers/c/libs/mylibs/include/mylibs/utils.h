@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stddef.h>
+
 // cppcheck-suppress misra-c2012-20.7
 #define OUTPUT_DEFINE(Name, T)                    \
     typedef struct __attribute__((aligned(16))) { \
@@ -20,3 +22,6 @@ const char* prefixError(const char* prefix, const char* message);
 const char* errorDuring(const char* primary_prefix, const char* primary_message, const char* secondary);
 
 bool stringIsValid(const char* string);
+
+OUTPUT_DEFINE(closeFileDescriptor, nullptr_t)
+closeFileDescriptorOutput closeFileDescriptor(int file_descriptor);

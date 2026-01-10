@@ -101,9 +101,9 @@ int main(const int argc, const char* const* const argv) {
 
     // Close listening socket
     printOutput("Closing listening socket and terminating server");
-    const closeConnectionOutput close_server_socket_result = closeConnection(server_socket.u.value, SHUT_RDWR);
+    const closeFileDescriptorOutput close_server_socket_result = closeFileDescriptor(server_socket.u.value);
     if (!close_server_socket_result.ok) {
-        printError("closeConnection: %s", close_server_socket_result.u.error);
+        printError("closeFileDescriptor: %s", close_server_socket_result.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 

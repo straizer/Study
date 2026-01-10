@@ -1,7 +1,5 @@
 #pragma once
 
-#include <stddef.h>
-
 #include <netinet/in.h>
 
 #include "utils.h"
@@ -20,3 +18,6 @@ connectToServerViaTCPOutput connectToServerViaTCP(in_addr server_address, in_por
 
 OUTPUT_DEFINE(socketAddressToString, nullptr_t)
 socketAddressToStringOutput socketAddressToString(sockaddr_in socket_address, char* out, size_t out_size);
+
+OUTPUT_DEFINE(closeConnection, nullptr_t)
+closeConnectionOutput closeConnection(int32_t via_socket, uint8_t how);

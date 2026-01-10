@@ -56,9 +56,9 @@ int main(const int argc, const char* const* const argv) {
 
     // Send a FIN to close the server connection
     printOutput("Shutting down server connection (sending FIN)");
-    const closeConnectionOutput result = closeConnection(client_socket.u.value, SHUT_WR);
-    if (!result.ok) {
-        printError("closeConnection: %s", result.u.error);
+    const closeConnectionOutput output = closeConnection(client_socket.u.value, SHUT_WR);
+    if (!output.ok) {
+        printError("closeConnection: %s", output.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 

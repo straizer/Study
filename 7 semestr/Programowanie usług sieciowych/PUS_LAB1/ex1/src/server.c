@@ -42,17 +42,18 @@ int main(const int argc, const char* const* const argv) {
     socklen_t client_address_length = sizeof(client_address);
 
     // Wait for the incoming connection and return a new socket file descriptor for communicating with a client
-    const int client_socket = accept(server_socket.u.value, (struct sockaddr*)&client_address, &client_address_length);
-    if (client_socket == -1) {
-        perror("accept");
+    const socketAcceptOutput client_socket =
+        socketAccept(server_socket.u.value, (struct sockaddr*)&client_address, &client_address_length);
+    if (!client_socket.ok) {
+        printError("socketAccept: %s", client_socket.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
     char client_address_buffer[CLIENT_ADDRESS_BUFFER_SIZE];
-    const socketAddressToStringOutput result =
+    const socketAddressToStringOutput output =
         socketAddressToString(client_address, client_address_buffer, CLIENT_ADDRESS_BUFFER_SIZE);
-    if (!result.ok) {
-        printError("socketAddressToString: %s", result.u.error);
+    if (!output.ok) {
+        printError("socketAddressToString: %s", output.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
@@ -73,13 +74,13 @@ int main(const int argc, const char* const* const argv) {
     }
 
     // Sends the buffer to the connected client through the client socket
-    if (write(client_socket, message_buffer, strlen(message_buffer)) == -1) {
+    if (write(client_socket.u.value, message_buffer, strlen(message_buffer)) == -1) {
         perror("write");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
     // If read returns 0, the client has closed the connection (sent FIN)
-    const ssize_t bytes_read = read(client_socket, message_buffer, sizeof(message_buffer));
+    const ssize_t bytes_read = read(client_socket.u.value, message_buffer, sizeof(message_buffer));
     if (bytes_read == -1) {
         perror("read");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
@@ -93,17 +94,17 @@ int main(const int argc, const char* const* const argv) {
 
     // Send a FIN to close the client connection
     printOutput("Shutting down client connection (sending FIN)");
-    const closeConnectionOutput close_client_socket_result = closeConnection(client_socket, SHUT_WR);
-    if (!close_client_socket_result.ok) {
-        printError("closeConnection: %s", close_client_socket_result.u.error);
+    const closeConnectionOutput close_client_socket_output = closeConnection(client_socket.u.value, SHUT_WR);
+    if (!close_client_socket_output.ok) {
+        printError("closeConnection: %s", close_client_socket_output.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
     // Close listening socket
     printOutput("Closing listening socket and terminating server");
-    const closeFileDescriptorOutput close_server_socket_result = closeFileDescriptor(server_socket.u.value);
-    if (!close_server_socket_result.ok) {
-        printError("closeFileDescriptor: %s", close_server_socket_result.u.error);
+    const closeFileDescriptorOutput close_server_socket_output = closeFileDescriptor(server_socket.u.value);
+    if (!close_server_socket_output.ok) {
+        printError("closeFileDescriptor: %s", close_server_socket_output.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 

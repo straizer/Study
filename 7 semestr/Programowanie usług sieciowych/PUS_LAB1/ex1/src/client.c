@@ -20,7 +20,7 @@ int main(const int argc, const char* const* const argv) {
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
-    const getInternetAddressOutput server_address = getInternetAddress(argv[1]);
+    const ipv4StringToAddressOutput server_address = ipv4StringToAddress(argv[1]);
     if (!server_address.ok) {
         printError("getPort: %s", server_address.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)

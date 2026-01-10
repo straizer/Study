@@ -3,14 +3,16 @@
 #include <stddef.h>
 
 // cppcheck-suppress misra-c2012-20.7
-#define OUTPUT_DEFINE(Name, T)                    \
-    typedef struct __attribute__((aligned(16))) { \
-        bool ok;                                  \
-        union {                                   \
-            T value;                              \
-            const char* const error;              \
-        } u;                                      \
+#define OUTPUT_DEFINE_ALIGN(Name, T, Alignment)          \
+    typedef struct __attribute__((aligned(Alignment))) { \
+        bool ok;                                         \
+        union {                                          \
+            T value;                                     \
+            const char* const error;                     \
+        } u;                                             \
     } Name##Output;
+
+#define OUTPUT_DEFINE(Name, T) OUTPUT_DEFINE_ALIGN(Name, T, 16)
 
 // cppcheck-suppress misra-c2012-20.7
 #define OUTPUT_CONSTRUCTORS(Name, T)                                                                  \

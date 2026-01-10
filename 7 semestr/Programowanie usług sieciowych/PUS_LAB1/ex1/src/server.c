@@ -14,7 +14,6 @@
 #include "io.h"
 
 enum {
-    CLIENT_ADDRESS_BUFFER_SIZE = 22,
     MESSAGE_BUFFER_SIZE = 256,
 };
 
@@ -44,15 +43,15 @@ int main(const int argc, const char* const* const argv) {
 
     // Wait for the incoming connection and return a new socket file descriptor for communicating with a client
     const socketAcceptOutput client_socket =
-        socketAccept(server_socket.u.value, (struct sockaddr*)&client_address, &client_address_length);
+        socketAccept(server_socket.u.value, (sockaddr*)&client_address, &client_address_length);
     if (!client_socket.ok) {
         printError("socketAccept: %s", client_socket.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
-    char client_address_buffer[CLIENT_ADDRESS_BUFFER_SIZE];
-    const socketAddressToStringOutput output =
-        socketAddressToString(client_address, client_address_buffer, CLIENT_ADDRESS_BUFFER_SIZE);
+    char client_address_buffer[IPV4_IP_PORT_BUFFER_SIZE];
+    const ipv4SocketAddressToStringOutput output =
+        ipv4SocketAddressToString(&client_address, client_address_buffer, IPV4_IP_PORT_BUFFER_SIZE);
     if (!output.ok) {
         printError("socketAddressToString: %s", output.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)

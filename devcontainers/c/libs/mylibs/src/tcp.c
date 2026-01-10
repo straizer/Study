@@ -24,11 +24,11 @@ startTCPServerOutput startTCPServer(const in_port_t server_port, const int backl
     // - INADDR_ANY → 0.0.0.0 (listen on all interfaces)
     in_addr server_address = {0};
     server_address.s_addr = htonl(INADDR_ANY);
-    const sockaddr_in server_socket_address = getInternetSocketAddress(server_address, server_port);
+    const ipv4CreateSocketAddressOutput server_socket_address = ipv4CreateSocketAddress(&server_address, server_port);
 
     // Assign IP + port to the socket
     const socketBindOutput bind_output =
-        socketBind(tcp_socket.u.value, (const sockaddr*)&server_socket_address, sizeof(server_socket_address));
+        socketBind(tcp_socket.u.value, (const sockaddr*)&server_socket_address.u.value, sizeof(server_socket_address));
     if (!bind_output.ok) {
         return startTCPServerErr(closeSocketAndGetError(tcp_socket.u.value, bind_output.u.error));
     }
@@ -49,10 +49,10 @@ connectToServerViaTCPOutput connectToServerViaTCP(const in_addr server_address, 
         return connectToServerViaTCPErr(prefixError("getTCPSocket", tcp_socket.u.error));
     }
 
-    const sockaddr_in server_socket_address = getInternetSocketAddress(server_address, server_port);
+    const ipv4CreateSocketAddressOutput server_socket_address = ipv4CreateSocketAddress(&server_address, server_port);
 
-    const socketConnectOutput connect_output =
-        socketConnect(tcp_socket.u.value, (const sockaddr*)&server_socket_address, sizeof(server_socket_address));
+    const socketConnectOutput connect_output = socketConnect(
+        tcp_socket.u.value, (const sockaddr*)&server_socket_address.u.value, sizeof(server_socket_address));
     if (!connect_output.ok) {
         const char* const error = prefixError("connectToSocket", connect_output.u.error);
         return connectToServerViaTCPErr(closeSocketAndGetError(tcp_socket.u.value, error));

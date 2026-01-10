@@ -58,7 +58,7 @@ CPPCHECK_FLAGS = -f -q -j 32 --platform=unix64 --language=c --std=$(CSTD) --temp
   --check-level=exhaustive --max-ctu-depth=10 --report-type=misra-c-2023 --suppressions-list=.cppcheck-suppress \
   --inconclusive --library=/usr/share/cppcheck/cfg/posix.cfg,posix.cfg.xml --check-library --error-exitcode=1 \
   $(filter -I% -D%,$(CPPFLAGS) $(CFLAGS)) --addon=misra.json \
-  -D nullptr=NULL -D AF_INET=2 -D SHUT_RD=0 -D SHUT_WR=1 -D SHUT_RDWR=2
+  -D nullptr=NULL -D AF_INET=2 -D SHUT_RD=0 -D SHUT_WR=1 -D SHUT_RDWR=2 -D INET_ADDRSTRLEN=16
 
 # Linked libraries
 LDLIBS = -lexplain

@@ -41,8 +41,9 @@ const char* prefixError(const char* const prefix, const char* const message) {
 }
 
 const char* errorDuring(const char* const primary_prefix, const char* const primary_message,
-                        const char* const secondary) {
-    return formatError(prefixError(primary_prefix, primary_message), " (while handling error: ", secondary, ")");
+                        const char* const secondary_prefix, const char* const secondary_message) {
+    return formatError(prefixError(primary_prefix, primary_message),
+                       " (while handling error: ", prefixError(secondary_prefix, secondary_message), ")");
 }
 
 /* ------------------------------------------ Private function definitions ------------------------------------------ */

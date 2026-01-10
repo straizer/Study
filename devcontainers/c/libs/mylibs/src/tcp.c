@@ -9,7 +9,7 @@
 OUTPUT_DEFINE(getTCPSocket, int)
 static getTCPSocketOutput getTCPSocket(void);
 
-static const char* closeSocketAndGetError(int socket, const char* original_error);
+static const char* closeSocketAndGetError(int socket, const char* prefix, const char* error);
 
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
 
@@ -25,18 +25,22 @@ startTCPServerOutput startTCPServer(const in_port_t server_port, const int backl
     in_addr server_address = {0};
     server_address.s_addr = htonl(INADDR_ANY);
     const ipv4CreateSocketAddressOutput server_socket_address = ipv4CreateSocketAddress(&server_address, server_port);
+    if (!server_socket_address.ok) {
+        return startTCPServerErr(
+            closeSocketAndGetError(tcp_socket.u.value, "ipv4CreateSocketAddress", server_socket_address.u.error));
+    }
 
     // Assign IP + port to the socket
-    const socketBindOutput bind_output =
-        socketBind(tcp_socket.u.value, (const sockaddr*)&server_socket_address.u.value, sizeof(server_socket_address));
+    const socketBindOutput bind_output = socketBind(tcp_socket.u.value, (const sockaddr*)&server_socket_address.u.value,
+                                                    sizeof(server_socket_address.u.value));
     if (!bind_output.ok) {
-        return startTCPServerErr(closeSocketAndGetError(tcp_socket.u.value, bind_output.u.error));
+        return startTCPServerErr(closeSocketAndGetError(tcp_socket.u.value, "socketBind", bind_output.u.error));
     }
 
     // Put the socket into a passive (listening) mode, allowing it to accept incoming connection requests
     const socketListenOutput listen_output = socketListen(tcp_socket.u.value, backlog_size);
     if (!listen_output.ok) {
-        return startTCPServerErr(closeSocketAndGetError(tcp_socket.u.value, listen_output.u.error));
+        return startTCPServerErr(closeSocketAndGetError(tcp_socket.u.value, "socketListen", listen_output.u.error));
     }
 
     return startTCPServerOk(tcp_socket.u.value);
@@ -50,12 +54,16 @@ connectToServerViaTCPOutput connectToServerViaTCP(const in_addr server_address, 
     }
 
     const ipv4CreateSocketAddressOutput server_socket_address = ipv4CreateSocketAddress(&server_address, server_port);
+    if (!server_socket_address.ok) {
+        return connectToServerViaTCPErr(
+            closeSocketAndGetError(tcp_socket.u.value, "ipv4CreateSocketAddress", server_socket_address.u.error));
+    }
 
     const socketConnectOutput connect_output = socketConnect(
-        tcp_socket.u.value, (const sockaddr*)&server_socket_address.u.value, sizeof(server_socket_address));
+        tcp_socket.u.value, (const sockaddr*)&server_socket_address.u.value, sizeof(server_socket_address.u.value));
     if (!connect_output.ok) {
-        const char* const error = prefixError("connectToSocket", connect_output.u.error);
-        return connectToServerViaTCPErr(closeSocketAndGetError(tcp_socket.u.value, error));
+        return connectToServerViaTCPErr(
+            closeSocketAndGetError(tcp_socket.u.value, "socketConnect", connect_output.u.error));
     }
 
     return connectToServerViaTCPOk(tcp_socket.u.value);
@@ -88,11 +96,11 @@ static getTCPSocketOutput getTCPSocket(void) {
     return getTCPSocketOk(output.u.value);
 }
 
-static const char* closeSocketAndGetError(const int socket, const char* const original_error) {
+static const char* closeSocketAndGetError(const int socket, const char* const prefix, const char* const error) {
     const closeFileDescriptorOutput output = closeFileDescriptor(socket);
     if (!output.ok) {
-        return errorDuring("closeFileDescriptor", output.u.error, original_error);
+        return errorDuring("closeFileDescriptor", output.u.error, prefix, error);
     }
 
-    return original_error;
+    return prefixError(prefix, error);
 }

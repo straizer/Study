@@ -15,12 +15,12 @@ enum {
     SOCKET_ADDRESS_BUFFER_SIZE = 22,
 };
 
-OUTPUT_DEFINE(getTCPSocket, int32_t)
+OUTPUT_DEFINE(getTCPSocket, int)
 static getTCPSocketOutput getTCPSocket(void);
 
 static sockaddr_in getInternetSocketAddress(in_addr internet_address, in_port_t port);
 
-static const char* closeSocketAndGetError(int32_t socket, const char* original_error);
+static const char* closeSocketAndGetError(int socket, const char* original_error);
 
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
 
@@ -32,7 +32,7 @@ getInternetAddressOutput getInternetAddress(const char* const ip) {
 
     in_addr address;
 
-    const int32_t result = inet_pton(AF_INET, ip, &address);
+    const int result = inet_pton(AF_INET, ip, &address);
     if (result == -1) {
         return getInternetAddressErr(prefixErrno("inet_pton"));
     }
@@ -43,8 +43,12 @@ getInternetAddressOutput getInternetAddress(const char* const ip) {
     return getInternetAddressOk(address);
 }
 
-OUTPUT_CONSTRUCTORS(startTCPServer, int32_t)
-startTCPServerOutput startTCPServer(const in_port_t server_port, const int32_t backlog_size) {
+OUTPUT_CONSTRUCTORS(startTCPServer, int)
+startTCPServerOutput startTCPServer(const in_port_t server_port, const int backlog_size) {
+    if (backlog_size < 1) {
+        return startTCPServerErr("backlog size is not positive");
+    }
+
     const getTCPSocketOutput tcp_socket = getTCPSocket();
     if (!tcp_socket.ok) {
         return startTCPServerErr(prefixError("getTCPSocket", tcp_socket.u.error));
@@ -69,7 +73,7 @@ startTCPServerOutput startTCPServer(const in_port_t server_port, const int32_t b
     return startTCPServerOk(tcp_socket.u.value);
 }
 
-OUTPUT_CONSTRUCTORS(connectToServerViaTCP, int32_t)
+OUTPUT_CONSTRUCTORS(connectToServerViaTCP, int)
 connectToServerViaTCPOutput connectToServerViaTCP(const in_addr server_address, const in_port_t server_port) {
     const getTCPSocketOutput tcp_socket = getTCPSocket();
     if (!tcp_socket.ok) {
@@ -103,16 +107,26 @@ socketAddressToStringOutput socketAddressToString(const sockaddr_in socket_addre
         return socketAddressToStringErr(prefixErrno("inet_ntop"));
     }
 
-    const int32_t result = snprintf(out, out_size, "%s:%u", ip, ntohs(socket_address.sin_port));
+    const int result = snprintf(out, out_size, "%s:%u", ip, (unsigned)ntohs(socket_address.sin_port));
     if (result < 0) {
         return socketAddressToStringErr(prefixError("snprintf", "formatting failed"));
+    }
+    if ((size_t)result >= out_size) {
+        return socketAddressToStringErr(prefixError("snprintf", "output truncated"));
     }
 
     return socketAddressToStringOk(nullptr);
 }
 
 OUTPUT_CONSTRUCTORS(closeConnection, nullptr_t)
-closeConnectionOutput closeConnection(const int32_t via_socket, const uint8_t how) {
+closeConnectionOutput closeConnection(const int via_socket, const int how) {
+    if (via_socket < 0) {
+        return closeConnectionErr("socket file descriptor is negative");
+    }
+    if (how != SHUT_RD && how != SHUT_WR && how != SHUT_RDWR) {
+        return closeConnectionErr("invalid shutdown mode");
+    }
+
     if (shutdown(via_socket, how) == -1) {
         return closeConnectionErr(prefixErrno("shutdown"));
     }
@@ -127,9 +141,9 @@ closeConnectionOutput closeConnection(const int32_t via_socket, const uint8_t ho
 
 /* ------------------------------------------ Private function definitions ------------------------------------------ */
 
-OUTPUT_CONSTRUCTORS(getTCPSocket, int32_t)
+OUTPUT_CONSTRUCTORS(getTCPSocket, int)
 static getTCPSocketOutput getTCPSocket(void) {
-    const int32_t result = socket(AF_INET, SOCK_STREAM, PF_UNSPEC);
+    const int result = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (result == -1) {
         return getTCPSocketErr(prefixErrno("socket"));
     }
@@ -145,10 +159,11 @@ static sockaddr_in getInternetSocketAddress(const in_addr internet_address, cons
     return socket_address;
 }
 
-static const char* closeSocketAndGetError(const int32_t socket, const char* const original_error) {
+static const char* closeSocketAndGetError(const int socket, const char* const original_error) {
     const closeFileDescriptorOutput result = closeFileDescriptor(socket);
     if (!result.ok) {
         return errorDuring("closeFileDescriptor", result.u.error, original_error);
     }
+
     return original_error;
 }

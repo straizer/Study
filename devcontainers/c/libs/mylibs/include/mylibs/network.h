@@ -12,4 +12,4 @@ OUTPUT_DEFINE(getPort, uint16_t)
 getPortOutput getPort(const char* port_string);
 
 OUTPUT_DEFINE(connectToSocket, nullptr_t)
-connectToSocketOutput connectToSocket(int32_t via_socket, const sockaddr* to_address, socklen_t to_address_len);
+connectToSocketOutput connectToSocket(int via_socket, const sockaddr* to_address, socklen_t to_address_len);

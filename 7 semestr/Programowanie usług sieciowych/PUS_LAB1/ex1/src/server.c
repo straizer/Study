@@ -41,8 +41,7 @@ int main(const int argc, const char* const* const argv) {
     socklen_t client_address_length = sizeof(client_address);
 
     // Wait for the incoming connection and return a new socket file descriptor for communicating with a client
-    const int32_t client_socket =
-        accept(server_socket.u.value, (struct sockaddr*)&client_address, &client_address_length);
+    const int client_socket = accept(server_socket.u.value, (struct sockaddr*)&client_address, &client_address_length);
     if (client_socket == -1) {
         perror("accept");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)

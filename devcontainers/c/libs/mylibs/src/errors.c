@@ -13,9 +13,6 @@ enum {
     ERROR_BUFFERS_SIZE = 256,
 };
 
-_Static_assert(ERROR_BUFFERS_SLOTS > 0, "ERROR_BUFFERS_SLOTS must be positive");
-_Static_assert(ERROR_BUFFERS_SIZE > 0, "ERROR_BUFFERS_SIZE must be positive");
-
 // cppcheck-suppress misra-c2012-1.4
 static _Thread_local char error_buffers  // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
     [ERROR_BUFFERS_SLOTS][ERROR_BUFFERS_SIZE];

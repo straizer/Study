@@ -8,6 +8,10 @@
 
 OUTPUT_CONSTRUCTORS(closeFileDescriptor, nullptr_t)
 closeFileDescriptorOutput closeFileDescriptor(const int file_descriptor) {
+    if (file_descriptor < 0) {
+        return closeFileDescriptorErr("file descriptor is negative");
+    }
+
     if (close(file_descriptor) == -1) {
         return closeFileDescriptorErr(prefixErrno("close"));
     }

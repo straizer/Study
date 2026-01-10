@@ -3,6 +3,8 @@
 #include <errno.h>
 #include <stdlib.h>
 
+#include "../include/mylibs/errors.h"
+
 /* ------------------------------------------------ Private members ------------------------------------------------ */
 
 enum {

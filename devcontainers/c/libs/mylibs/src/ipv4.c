@@ -4,6 +4,7 @@
 
 #include <arpa/inet.h>
 
+#include "../include/mylibs/errors.h"
 #include "../include/mylibs/network.h"
 
 /* ------------------------------------------------ Private members ------------------------------------------------ */

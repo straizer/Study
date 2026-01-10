@@ -6,6 +6,7 @@
 
 #include <mylibs/inet.h>
 #include <mylibs/ipv4.h>
+#include <mylibs/tcp.h>
 
 #include "io.h"
 

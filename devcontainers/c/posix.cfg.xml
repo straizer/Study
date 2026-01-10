@@ -72,6 +72,23 @@
         <use-retval/>
     </function>
 
+    <!-- void explain_message_close(char *message, int message_size, int fildes); -->
+    <function name="explain_message_close">
+        <leak-ignore/>
+        <arg nr="1" direction="out">
+            <not-null/>
+            <minsize type="argvalue" arg="2"/>
+        </arg>
+        <arg nr="2">
+            <not-bool/>
+            <valid>0:</valid>
+        </arg>
+        <arg nr="3">
+            <not-bool/>
+            <valid>0:</valid>
+        </arg>
+    </function>
+
     <!-- void explain_message_socket(char* message, int message_size, int domain, int type, int protocol); -->
     <function name="explain_message_socket">
         <leak-ignore/>

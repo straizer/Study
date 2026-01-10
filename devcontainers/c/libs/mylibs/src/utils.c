@@ -2,6 +2,8 @@
 
 #include <unistd.h>
 
+#include <libexplain/close.h>
+
 #include "../include/mylibs/errors.h"
 
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
@@ -13,7 +15,9 @@ closeFileDescriptorOutput closeFileDescriptor(const int file_descriptor) {
     }
 
     if (close(file_descriptor) == -1) {
-        return closeFileDescriptorErr(prefixErrno("close"));
+        char* const buffer = getErrorBuffer();
+        explain_message_close(buffer, ERROR_BUFFER_SIZE, file_descriptor);
+        return closeFileDescriptorErr(buffer);
     }
 
     return closeFileDescriptorOk(nullptr);

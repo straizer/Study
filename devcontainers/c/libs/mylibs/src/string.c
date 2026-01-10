@@ -1,4 +1,4 @@
-#include "../include/mylibs/string.h"
+#include "./string.h"
 
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
 

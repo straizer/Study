@@ -4,9 +4,9 @@
 
 #include <arpa/inet.h>
 
-#include "../include/mylibs/errors.h"
 #include "../include/mylibs/socket.h"
-#include "../include/mylibs/string.h"
+#include "./errors.h"
+#include "./string.h"
 
 /* ------------------------------------------------ Private members ------------------------------------------------ */
 

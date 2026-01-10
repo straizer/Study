@@ -6,7 +6,7 @@
 #include <libexplain/listen.h>
 #include <libexplain/socket.h>
 
-#include "../include/mylibs/errors.h"
+#include "./errors.h"
 
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
 

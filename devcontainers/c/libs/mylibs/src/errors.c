@@ -1,10 +1,10 @@
-#include "../include/mylibs/errors.h"
+#include "./errors.h"
 
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
 
-#include "../include/mylibs/string.h"
+#include "./string.h"
 
 /* ------------------------------------------------ Private members ------------------------------------------------ */
 

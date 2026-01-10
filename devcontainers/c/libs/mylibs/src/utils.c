@@ -4,7 +4,7 @@
 
 #include <libexplain/close.h>
 
-#include "../include/mylibs/errors.h"
+#include "./errors.h"
 
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
 

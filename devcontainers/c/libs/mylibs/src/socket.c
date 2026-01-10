@@ -1,4 +1,4 @@
-#include "../include/mylibs/network.h"
+#include "../include/mylibs/socket.h"
 
 #include <errno.h>
 #include <stdlib.h>

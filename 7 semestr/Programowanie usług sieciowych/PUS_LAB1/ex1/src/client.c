@@ -42,7 +42,7 @@ int main(const int argc, const char* const* const argv) {
     printOutput("After the three-way handshake. Waiting for server response");
 
     char message_buffer[MESSAGE_BUFFER_SIZE] = {0};
-    const ssize_t bytes_read = read(client_socket.u.value, message_buffer, sizeof(message_buffer));
+    const ssize_t bytes_read = read(client_socket.u.value.file_descriptor, message_buffer, sizeof(message_buffer));
     if (bytes_read == -1) {
         perror("read");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)

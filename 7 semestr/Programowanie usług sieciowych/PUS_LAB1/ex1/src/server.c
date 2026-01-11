@@ -43,7 +43,7 @@ int main(const int argc, const char* const* const argv) {
 
     // Wait for the incoming connection and return a new socket file descriptor for communicating with a client
     const socketAcceptOutput client_socket =
-        socketAccept(server_socket.u.value, (sockaddr*)&client_address, &client_address_length);
+        socketAccept(&server_socket.u.value, (sockaddr*)&client_address, &client_address_length);
     if (!client_socket.ok) {
         printError("socketAccept: %s", client_socket.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
@@ -74,13 +74,13 @@ int main(const int argc, const char* const* const argv) {
     }
 
     // Sends the buffer to the connected client through the client socket
-    if (write(client_socket.u.value, message_buffer, strlen(message_buffer)) == -1) {
+    if (write(client_socket.u.value.file_descriptor, message_buffer, strlen(message_buffer)) == -1) {
         perror("write");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
     // If read returns 0, the client has closed the connection (sent FIN)
-    const ssize_t bytes_read = read(client_socket.u.value, message_buffer, sizeof(message_buffer));
+    const ssize_t bytes_read = read(client_socket.u.value.file_descriptor, message_buffer, sizeof(message_buffer));
     if (bytes_read == -1) {
         perror("read");
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
@@ -102,9 +102,9 @@ int main(const int argc, const char* const* const argv) {
 
     // Close listening socket
     printOutput("Closing listening socket and terminating server");
-    const closeFileDescriptorOutput close_server_socket_output = closeFileDescriptor(server_socket.u.value);
+    const socketCloseOutput close_server_socket_output = socketClose(&server_socket.u.value);
     if (!close_server_socket_output.ok) {
-        printError("closeFileDescriptor: %s", close_server_socket_output.u.error);
+        printError("socketClose: %s", close_server_socket_output.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 

@@ -6,20 +6,27 @@
 
 typedef struct sockaddr sockaddr;
 
-OUTPUT_DEFINE(socketCreate, int)
+typedef struct {
+    int file_descriptor;
+} Socket;
+
+OUTPUT_DEFINE(socketCreate, Socket)
 socketCreateOutput socketCreate(int domain, int type, int protocol);
 
 OUTPUT_DEFINE(socketConnect, nullptr_t)
-socketConnectOutput socketConnect(int socket, const sockaddr* address, socklen_t address_length);
+socketConnectOutput socketConnect(const Socket* socket, const sockaddr* address, socklen_t address_length);
 
 OUTPUT_DEFINE(socketBind, nullptr_t)
-socketBindOutput socketBind(int socket, const sockaddr* address, socklen_t address_length);
+socketBindOutput socketBind(const Socket* socket, const sockaddr* address, socklen_t address_length);
 
 OUTPUT_DEFINE(socketListen, nullptr_t)
-socketListenOutput socketListen(int socket, int backlog_size);
+socketListenOutput socketListen(const Socket* socket, int backlog_size);
 
-OUTPUT_DEFINE(socketAccept, int)
-socketAcceptOutput socketAccept(int socket, sockaddr* address, socklen_t* address_length);
+OUTPUT_DEFINE(socketAccept, Socket)
+socketAcceptOutput socketAccept(const Socket* socket, sockaddr* address, socklen_t* address_length);
 
 OUTPUT_DEFINE(socketShutdown, nullptr_t)
-socketShutdownOutput socketShutdown(int socket, int how);
+socketShutdownOutput socketShutdown(const Socket* socket, int how);
+
+OUTPUT_DEFINE(socketClose, nullptr_t)
+socketCloseOutput socketClose(const Socket* socket);

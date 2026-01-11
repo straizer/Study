@@ -1,7 +1,5 @@
 #pragma once
 
-#include <stddef.h>
-
 // cppcheck-suppress misra-c2012-20.7
 #define OUTPUT_DEFINE_ALIGN(Name, T, Alignment)          \
     typedef struct __attribute__((aligned(Alignment))) { \
@@ -18,6 +16,3 @@
 #define OUTPUT_CONSTRUCTORS(Name, T)                                                                  \
     static inline Name##Output Name##Ok(T val) { return (Name##Output){.ok = true, .u.value = val}; } \
     static inline Name##Output Name##Err(const char* const err) { return (Name##Output){.ok = false, .u.error = err}; }
-
-OUTPUT_DEFINE(closeFileDescriptor, nullptr_t)
-closeFileDescriptorOutput closeFileDescriptor(int file_descriptor);

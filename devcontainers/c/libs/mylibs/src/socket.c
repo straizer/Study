@@ -7,6 +7,7 @@
 #include <libexplain/socket.h>
 
 #include "./errors.h"
+#include "./utils.h"
 
 /* ------------------------------------------------ Private members ------------------------------------------------ */
 

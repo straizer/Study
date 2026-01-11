@@ -18,10 +18,10 @@ OBJ_DIR = obj
 
 # Mylibs objects
 STRING_OBJS = $(OBJ_DIR)/string.o
+IPV4_OBJS = $(OBJ_DIR)/ipv4.o
 ERRORS_OBJS = $(STRING_OBJS) $(OBJ_DIR)/errors.o
 UTILS_OBJS = $(ERRORS_OBJS) $(OBJ_DIR)/utils.o
 SOCKET_OBJS = $(UTILS_OBJS) $(OBJ_DIR)/socket.o
-IPV4_OBJS = $(UTILS_OBJS) $(OBJ_DIR)/ipv4.o
 
 # Preprocessor flags
 CPPFLAGS_COMMON = -MMD -MP -D_FORTIFY_SOURCE=2 -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -I$(INC_DIRS)

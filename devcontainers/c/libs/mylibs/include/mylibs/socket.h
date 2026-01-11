@@ -1,8 +1,10 @@
 #pragma once
 
+#include <stddef.h>
+
 #include <sys/socket.h>
 
-#include "./utils.h"
+#include "./macros.h"
 
 typedef struct sockaddr sockaddr;
 

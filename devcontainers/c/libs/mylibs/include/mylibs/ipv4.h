@@ -1,8 +1,10 @@
 #pragma once
 
+#include <stddef.h>
+
 #include <netinet/in.h>
 
-#include "./utils.h"
+#include "./macros.h"
 
 typedef struct in_addr in_addr;
 typedef struct sockaddr_in sockaddr_in;

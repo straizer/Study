@@ -2,8 +2,8 @@
 
 #include <netinet/in.h>
 
+#include "./macros.h"
 #include "./socket.h"
-#include "./utils.h"
 
 typedef struct in_addr in_addr;
 

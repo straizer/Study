@@ -1,16 +1,19 @@
 #pragma once
 
-// cppcheck-suppress misra-c2012-20.7
-#define OUTPUT_DEFINE_ALIGN(Name, T, Alignment)          \
-    typedef struct __attribute__((aligned(Alignment))) { \
-        bool ok;                                         \
-        union {                                          \
-            T value;                                     \
-            const char* const error;                     \
-        } u;                                             \
-    } Name##Output;
+#define STRUCT_ALIGNED(Alignment) struct __attribute__((aligned(Alignment)))
 
-#define OUTPUT_DEFINE(Name, T) OUTPUT_DEFINE_ALIGN(Name, T, 16)
+// cppcheck-suppress misra-c2012-20.7
+#define OUTPUT_DEFINE_ALIGNED(Name, T, Alignment) \
+    typedef STRUCT_ALIGNED(Alignment) {           \
+        bool ok;                                  \
+        union {                                   \
+            T value;                              \
+            const char* const error;              \
+        } u;                                      \
+    }                                             \
+    Name##Output;
+
+#define OUTPUT_DEFINE(Name, T) OUTPUT_DEFINE_ALIGNED(Name, T, 16)
 
 // cppcheck-suppress misra-c2012-20.7
 #define OUTPUT_CONSTRUCTORS(Name, T)                                                                  \

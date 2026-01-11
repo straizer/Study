@@ -20,5 +20,5 @@ OUTPUT_DEFINE(ipv4SocketAddressToString, nullptr_t)
 ipv4SocketAddressToStringOutput ipv4SocketAddressToString(const sockaddr_in* socket_address, char* out,
                                                           size_t out_size);
 
-OUTPUT_DEFINE_ALIGN(ipv4CreateSocketAddress, sockaddr_in, 32)
+OUTPUT_DEFINE_ALIGNED(ipv4CreateSocketAddress, sockaddr_in, 32)
 ipv4CreateSocketAddressOutput ipv4CreateSocketAddress(const in_addr* ipv4_address, in_port_t port);

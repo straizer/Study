@@ -31,7 +31,7 @@ socketCreateOutput socketCreate(const int domain, const int type, const int prot
     return socketCreateOk(socketConstructor(file_descriptor));
 }
 
-OUTPUT_CONSTRUCTORS(socketConnect, nullptr_t)
+OUTPUT_CONSTRUCTORS_VOID(socketConnect)
 socketConnectOutput socketConnect(const Socket* const socket, const SocketAddress* const address) {
     if (socket == nullptr) {
         return socketConnectErr("socket is NULL");
@@ -57,10 +57,10 @@ socketConnectOutput socketConnect(const Socket* const socket, const SocketAddres
         return socketConnectErr(buffer);
     }
 
-    return socketConnectOk(nullptr);
+    return socketConnectOk();
 }
 
-OUTPUT_CONSTRUCTORS(socketBind, nullptr_t)
+OUTPUT_CONSTRUCTORS_VOID(socketBind)
 socketBindOutput socketBind(const Socket* const socket, const sockaddr* const address, const socklen_t address_length) {
     if (socket == nullptr) {
         return socketBindErr("socket is NULL");
@@ -82,10 +82,10 @@ socketBindOutput socketBind(const Socket* const socket, const sockaddr* const ad
         explain_message_bind(buffer, ERROR_BUFFER_SIZE, file_descriptor, address, (int)address_length);
         return socketBindErr(buffer);
     }
-    return socketBindOk(nullptr);
+    return socketBindOk();
 }
 
-OUTPUT_CONSTRUCTORS(socketListen, nullptr_t)
+OUTPUT_CONSTRUCTORS_VOID(socketListen)
 socketListenOutput socketListen(const Socket* const socket, const int backlog_size) {
     if (socket == nullptr) {
         return socketListenErr("socket is NULL");
@@ -104,7 +104,7 @@ socketListenOutput socketListen(const Socket* const socket, const int backlog_si
         explain_message_listen(buffer, ERROR_BUFFER_SIZE, file_descriptor, backlog_size);
         return socketListenErr(buffer);
     }
-    return socketListenOk(nullptr);
+    return socketListenOk();
 }
 
 OUTPUT_CONSTRUCTORS(socketAccept, Socket)
@@ -133,7 +133,7 @@ socketAcceptOutput socketAccept(const Socket* const socket, sockaddr* const addr
     return socketAcceptOk(socketConstructor(connected_socket_file_descriptor));
 }
 
-OUTPUT_CONSTRUCTORS(socketShutdown, nullptr_t)
+OUTPUT_CONSTRUCTORS_VOID(socketShutdown)
 socketShutdownOutput socketShutdown(const Socket* const socket, const int how) {
     if (socket == nullptr) {
         return socketShutdownErr("socket is NULL");
@@ -151,10 +151,10 @@ socketShutdownOutput socketShutdown(const Socket* const socket, const int how) {
         return socketShutdownErr(prefixErrno("shutdown"));
     }
 
-    return socketShutdownOk(nullptr);
+    return socketShutdownOk();
 }
 
-OUTPUT_CONSTRUCTORS(socketClose, nullptr_t)
+OUTPUT_CONSTRUCTORS_VOID(socketClose)
 socketCloseOutput socketClose(const Socket* socket) {
     if (socket == nullptr) {
         return socketCloseErr("socket is NULL");
@@ -165,7 +165,7 @@ socketCloseOutput socketClose(const Socket* socket) {
         return socketCloseErr(prefixError("closeFileDescriptor", output.u.error));
     }
 
-    return socketCloseOk(nullptr);
+    return socketCloseOk();
 }
 
 /* ------------------------------------------ Private function definitions ------------------------------------------ */

@@ -1,8 +1,6 @@
 #pragma once
 
-#include <stddef.h>
-
 #include "../include/mylibs/macros.h"
 
-OUTPUT_DEFINE(closeFileDescriptor, nullptr_t)
+OUTPUT_DEFINE_VOID(closeFileDescriptor)
 closeFileDescriptorOutput closeFileDescriptor(int file_descriptor);

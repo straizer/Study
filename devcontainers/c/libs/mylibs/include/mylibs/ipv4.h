@@ -1,7 +1,5 @@
 #pragma once
 
-#include <stddef.h>
-
 #include <netinet/in.h>
 
 #include "./macros.h"
@@ -16,7 +14,7 @@ enum {
 OUTPUT_DEFINE(ipv4StringToAddress, in_addr)
 ipv4StringToAddressOutput ipv4StringToAddress(const char* ip);
 
-OUTPUT_DEFINE(ipv4SocketAddressToString, nullptr_t)
+OUTPUT_DEFINE_VOID(ipv4SocketAddressToString)
 ipv4SocketAddressToStringOutput ipv4SocketAddressToString(const sockaddr_in* socket_address, char* out,
                                                           size_t out_size);
 

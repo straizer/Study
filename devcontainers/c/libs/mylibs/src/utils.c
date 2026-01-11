@@ -8,7 +8,7 @@
 
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
 
-OUTPUT_CONSTRUCTORS(closeFileDescriptor, nullptr_t)
+OUTPUT_CONSTRUCTORS_VOID(closeFileDescriptor)
 closeFileDescriptorOutput closeFileDescriptor(const int file_descriptor) {
     if (file_descriptor < 0) {
         return closeFileDescriptorErr("file descriptor is negative");
@@ -20,5 +20,5 @@ closeFileDescriptorOutput closeFileDescriptor(const int file_descriptor) {
         return closeFileDescriptorErr(buffer);
     }
 
-    return closeFileDescriptorOk(nullptr);
+    return closeFileDescriptorOk();
 }

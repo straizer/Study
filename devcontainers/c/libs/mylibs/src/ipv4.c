@@ -29,7 +29,7 @@ ipv4StringToAddressOutput ipv4StringToAddress(const char* const ip) {
     return ipv4StringToAddressOk(address);
 }
 
-OUTPUT_CONSTRUCTORS(ipv4SocketAddressToString, nullptr_t)
+OUTPUT_CONSTRUCTORS_VOID(ipv4SocketAddressToString)
 ipv4SocketAddressToStringOutput ipv4SocketAddressToString(const sockaddr_in* const socket_address, char* const out,
                                                           const size_t out_size) {
     if (socket_address == nullptr) {
@@ -58,7 +58,7 @@ ipv4SocketAddressToStringOutput ipv4SocketAddressToString(const sockaddr_in* con
         return ipv4SocketAddressToStringErr(prefixError("snprintf", "output truncated"));
     }
 
-    return ipv4SocketAddressToStringOk(nullptr);
+    return ipv4SocketAddressToStringOk();
 }
 
 OUTPUT_CONSTRUCTORS(ipv4CreateSocketAddress, sockaddr_in)

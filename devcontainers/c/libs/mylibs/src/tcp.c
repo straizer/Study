@@ -70,7 +70,7 @@ connectToServerViaTCPOutput connectToServerViaTCP(const in_addr server_address, 
     return connectToServerViaTCPOk(tcp_socket.u.value);
 }
 
-OUTPUT_CONSTRUCTORS(closeConnection, nullptr_t)
+OUTPUT_CONSTRUCTORS_VOID(closeConnection)
 closeConnectionOutput closeConnection(const Socket socket, const int how) {
     const socketShutdownOutput shutdown_output = socketShutdown(&socket, how);
     if (!shutdown_output.ok) {
@@ -82,7 +82,7 @@ closeConnectionOutput closeConnection(const Socket socket, const int how) {
         return closeConnectionErr(prefixError("socketClose", close_output.u.error));
     }
 
-    return closeConnectionOk(nullptr);
+    return closeConnectionOk();
 }
 
 /* ------------------------------------------ Private function definitions ------------------------------------------ */

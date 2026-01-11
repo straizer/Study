@@ -1,7 +1,5 @@
 #pragma once
 
-#include <stddef.h>
-
 #include <sys/socket.h>
 
 #include "./macros.h"
@@ -21,20 +19,20 @@ SocketAddress;
 OUTPUT_DEFINE(socketCreate, Socket)
 socketCreateOutput socketCreate(int domain, int type, int protocol);
 
-OUTPUT_DEFINE(socketConnect, nullptr_t)
+OUTPUT_DEFINE_VOID(socketConnect)
 socketConnectOutput socketConnect(const Socket* socket, const SocketAddress* address);
 
-OUTPUT_DEFINE(socketBind, nullptr_t)
+OUTPUT_DEFINE_VOID(socketBind)
 socketBindOutput socketBind(const Socket* socket, const sockaddr* address, socklen_t address_length);
 
-OUTPUT_DEFINE(socketListen, nullptr_t)
+OUTPUT_DEFINE_VOID(socketListen)
 socketListenOutput socketListen(const Socket* socket, int backlog_size);
 
 OUTPUT_DEFINE(socketAccept, Socket)
 socketAcceptOutput socketAccept(const Socket* socket, sockaddr* address, socklen_t* address_length);
 
-OUTPUT_DEFINE(socketShutdown, nullptr_t)
+OUTPUT_DEFINE_VOID(socketShutdown)
 socketShutdownOutput socketShutdown(const Socket* socket, int how);
 
-OUTPUT_DEFINE(socketClose, nullptr_t)
+OUTPUT_DEFINE_VOID(socketClose)
 socketCloseOutput socketClose(const Socket* socket);

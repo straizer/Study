@@ -32,26 +32,28 @@ socketCreateOutput socketCreate(const int domain, const int type, const int prot
 }
 
 OUTPUT_CONSTRUCTORS(socketConnect, nullptr_t)
-socketConnectOutput socketConnect(const Socket* const socket, const sockaddr* const address,
-                                  const socklen_t address_length) {
+socketConnectOutput socketConnect(const Socket* const socket, const SocketAddress* const address) {
     if (socket == nullptr) {
         return socketConnectErr("socket is NULL");
-    }
-    const int file_descriptor = socket->file_descriptor;
-
-    if (file_descriptor < 0) {
-        return socketConnectErr("socket file descriptor is negative");
     }
     if (address == nullptr) {
         return socketConnectErr("address is NULL");
     }
-    if (address_length == 0U) {
+
+    if (socket->file_descriptor < 0) {
+        return socketConnectErr("socket file descriptor is negative");
+    }
+    if (address->value == nullptr) {
+        return socketConnectErr("address value is NULL");
+    }
+    if (address->length == 0U) {
         return socketConnectErr("address length is 0");
     }
 
-    if (connect(file_descriptor, address, address_length) == -1) {
+    if (connect(socket->file_descriptor, address->value, address->length) == -1) {
         char* const buffer = getErrorBuffer();
-        explain_message_connect(buffer, ERROR_BUFFER_SIZE, file_descriptor, address, (int)address_length);
+        explain_message_connect(buffer, ERROR_BUFFER_SIZE, socket->file_descriptor, address->value,
+                                (int)address->length);
         return socketConnectErr(buffer);
     }
 

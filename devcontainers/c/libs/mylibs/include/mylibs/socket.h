@@ -12,11 +12,17 @@ typedef struct {
     int file_descriptor;
 } Socket;
 
+typedef STRUCT_ALIGNED(16) {
+    const sockaddr* const value;
+    const socklen_t length;
+}
+SocketAddress;
+
 OUTPUT_DEFINE(socketCreate, Socket)
 socketCreateOutput socketCreate(int domain, int type, int protocol);
 
 OUTPUT_DEFINE(socketConnect, nullptr_t)
-socketConnectOutput socketConnect(const Socket* socket, const sockaddr* address, socklen_t address_length);
+socketConnectOutput socketConnect(const Socket* socket, const SocketAddress* address);
 
 OUTPUT_DEFINE(socketBind, nullptr_t)
 socketBindOutput socketBind(const Socket* socket, const sockaddr* address, socklen_t address_length);

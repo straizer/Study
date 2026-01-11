@@ -58,8 +58,10 @@ connectToServerViaTCPOutput connectToServerViaTCP(const in_addr server_address, 
             closeSocketAndGetError(tcp_socket.u.value, "ipv4CreateSocketAddress", server_socket_address.u.error));
     }
 
-    const socketConnectOutput connect_output = socketConnect(
-        &tcp_socket.u.value, (const sockaddr*)&server_socket_address.u.value, sizeof(server_socket_address.u.value));
+    const SocketAddress ssa = {.value = (const sockaddr*)&server_socket_address.u.value,
+                               .length = sizeof(server_socket_address.u.value)};
+
+    const socketConnectOutput connect_output = socketConnect(&tcp_socket.u.value, &ssa);
     if (!connect_output.ok) {
         return connectToServerViaTCPErr(
             closeSocketAndGetError(tcp_socket.u.value, "socketConnect", connect_output.u.error));

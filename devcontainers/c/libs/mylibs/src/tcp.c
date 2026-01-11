@@ -5,7 +5,7 @@
 
 /* ------------------------------------------------ Private members ------------------------------------------------ */
 
-DECLARATION_STATIC(getTCPSocket, Socket)
+DECLARATION_NO_PARAMS_STATIC(getTCPSocket, Socket)
 
 static const char* closeSocketAndGetError(Socket socket, const char* prefix, const char* error);
 

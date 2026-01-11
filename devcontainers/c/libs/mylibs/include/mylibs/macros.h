@@ -2,56 +2,43 @@
 
 #include <stddef.h>
 
-#define CONCATENATE_TOKENS(a, b) a##b
-
 #define STRUCT_ALIGNED(Alignment) struct __attribute__((aligned(Alignment)))
 
-// cppcheck-suppress misra-c2012-20.7
-#define OUTPUT_DEFINE_ALIGNED(Name, T, Alignment) \
-    typedef STRUCT_ALIGNED(Alignment) {           \
-        bool ok;                                  \
-        union {                                   \
-            const T value;                        \
-            const char* const error;              \
-        } u;                                      \
-    }                                             \
-    CONCATENATE_TOKENS(Name, Output);
+/* ------------------------------------------------- Private macros ------------------------------------------------- */
 
-#define OUTPUT_DEFINE(Name, T) OUTPUT_DEFINE_ALIGNED(Name, T, 16)
-#define OUTPUT_DEFINE_VOID(Name) OUTPUT_DEFINE(Name, nullptr_t)
+// Concatenate tokens
+#define INTERNAL__CONCATENATE_TOKENS(a, b) a##b
 
-#define DECLARATION(Name, T, ...) \
-    OUTPUT_DEFINE(Name, T)        \
-    CONCATENATE_TOKENS(Name, Output) Name(__VA_ARGS__);
+// Declare function and output
+#define INTERNAL__DECLARE_ALIGNED(Name, Static, T, Alignment, ...) \
+    typedef STRUCT_ALIGNED(Alignment) {                            \
+        bool ok;                                                   \
+        union {                                                    \
+            const T value;                                         \
+            const char* const error;                               \
+        } u;                                                       \
+    }                                                              \
+    INTERNAL__CONCATENATE_TOKENS(Name, Output);                    \
+    Static INTERNAL__CONCATENATE_TOKENS(Name, Output) Name(__VA_ARGS__);
 
-#define DECLARATION_STATIC(Name, T, ...) \
-    OUTPUT_DEFINE(Name, T)               \
-    static CONCATENATE_TOKENS(Name, Output) Name(__VA_ARGS__);
+#define INTERNAL__DECLARE(Name, Static, T, ...) INTERNAL__DECLARE_ALIGNED(Name, Static, T, 16, __VA_ARGS__)
 
-#define DECLARATION_VOID(Name, ...) \
-    OUTPUT_DEFINE_VOID(Name)        \
-    CONCATENATE_TOKENS(Name, Output) Name(__VA_ARGS__);
-
-#define DECLARATION_ALIGNED(Name, T, Alignment, ...) \
-    OUTPUT_DEFINE_ALIGNED(Name, T, Alignment)        \
-    CONCATENATE_TOKENS(Name, Output) Name(__VA_ARGS__);
-
-// cppcheck-suppress misra-c2012-20.7
-#define OUTPUT_ERROR_CONSTRUCTOR(Name)                                                                    \
-    static inline CONCATENATE_TOKENS(Name, Output) CONCATENATE_TOKENS(Name, Err)(const char* const err) { \
-        return (CONCATENATE_TOKENS(Name, Output)){.ok = false, .u.error = err};                           \
+// Define output constructor
+#define INTERNAL__DEFINE_OUTPUT_CONSTRUCTOR(Name, Suffix, Param, Ok, Assignment)                                 \
+    static inline INTERNAL__CONCATENATE_TOKENS(Name, Output) INTERNAL__CONCATENATE_TOKENS(Name, Suffix)(Param) { \
+        return (INTERNAL__CONCATENATE_TOKENS(Name, Output)){.ok = (Ok), .u.Assignment};                          \
     }
 
-// cppcheck-suppress misra-c2012-20.7
-#define OUTPUT_CONSTRUCTORS(Name, T)                                                           \
-    OUTPUT_ERROR_CONSTRUCTOR(Name)                                                             \
-    static inline CONCATENATE_TOKENS(Name, Output) CONCATENATE_TOKENS(Name, Ok)(const T val) { \
-        return (CONCATENATE_TOKENS(Name, Output)){.ok = true, .u.value = val};                 \
-    }
+#define INTERNAL__DEFINE_OUTPUT_CONSTRUCTORS(Name, Param, Value)                              \
+    INTERNAL__DEFINE_OUTPUT_CONSTRUCTOR(Name, Err, const char* const err, false, error = err) \
+    INTERNAL__DEFINE_OUTPUT_CONSTRUCTOR(Name, Ok, Param, true, value = (Value))
 
-// cppcheck-suppress misra-c2012-20.7
-#define OUTPUT_CONSTRUCTORS_VOID(Name)                                                  \
-    OUTPUT_ERROR_CONSTRUCTOR(Name)                                                      \
-    static inline CONCATENATE_TOKENS(Name, Output) CONCATENATE_TOKENS(Name, Ok)(void) { \
-        return (CONCATENATE_TOKENS(Name, Output)){.ok = true, .u.value = nullptr};      \
-    }
+/* ------------------------------------------------- Public macros ------------------------------------------------- */
+
+#define DECLARATION(Name, T, ...) INTERNAL__DECLARE(Name, , T, __VA_ARGS__)
+#define DECLARATION_VOID(Name, ...) INTERNAL__DECLARE(Name, , nullptr_t, __VA_ARGS__)
+#define DECLARATION_NO_PARAMS_STATIC(Name, T) INTERNAL__DECLARE(Name, static, T, void)
+#define DECLARATION_ALIGNED(Name, T, Alignment, ...) INTERNAL__DECLARE_ALIGNED(Name, , T, Alignment, __VA_ARGS__)
+
+#define OUTPUT_CONSTRUCTORS(Name, T) INTERNAL__DEFINE_OUTPUT_CONSTRUCTORS(Name, const T val, val)
+#define OUTPUT_CONSTRUCTORS_VOID(Name) INTERNAL__DEFINE_OUTPUT_CONSTRUCTORS(Name, void, nullptr)

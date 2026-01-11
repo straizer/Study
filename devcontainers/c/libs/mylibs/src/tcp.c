@@ -11,8 +11,7 @@ static const char* closeSocketAndGetError(Socket socket, const char* prefix, con
 
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
 
-OUTPUT_CONSTRUCTORS(startTCPServer, Socket)
-startTCPServerOutput startTCPServer(const in_port_t server_port, const int backlog_size) {
+DEFINITION(startTCPServer, Socket, const in_port_t server_port, const int backlog_size) {
     const getTCPSocketOutput tcp_socket = getTCPSocket();
     if (!tcp_socket.ok) {
         return startTCPServerErr(prefixError("getTCPSocket", tcp_socket.u.error));
@@ -44,8 +43,7 @@ startTCPServerOutput startTCPServer(const in_port_t server_port, const int backl
     return startTCPServerOk(tcp_socket.u.value);
 }
 
-OUTPUT_CONSTRUCTORS(connectToServerViaTCP, Socket)
-connectToServerViaTCPOutput connectToServerViaTCP(const in_addr server_address, const in_port_t server_port) {
+DEFINITION(connectToServerViaTCP, Socket, const in_addr server_address, const in_port_t server_port) {
     const getTCPSocketOutput tcp_socket = getTCPSocket();
     if (!tcp_socket.ok) {
         return connectToServerViaTCPErr(prefixError("getTCPSocket", tcp_socket.u.error));
@@ -69,8 +67,7 @@ connectToServerViaTCPOutput connectToServerViaTCP(const in_addr server_address, 
     return connectToServerViaTCPOk(tcp_socket.u.value);
 }
 
-OUTPUT_CONSTRUCTORS_VOID(closeConnection)
-closeConnectionOutput closeConnection(const Socket socket, const int how) {
+DEFINITION_VOID(closeConnection, const Socket socket, const int how) {
     const socketShutdownOutput shutdown_output = socketShutdown(&socket, how);
     if (!shutdown_output.ok) {
         return closeConnectionErr(prefixError("socketShutdown", shutdown_output.u.error));
@@ -86,8 +83,7 @@ closeConnectionOutput closeConnection(const Socket socket, const int how) {
 
 /* ------------------------------------------ Private function definitions ------------------------------------------ */
 
-OUTPUT_CONSTRUCTORS(getTCPSocket, Socket)
-static getTCPSocketOutput getTCPSocket(void) {
+DEFINITION_NO_PARAMS_STATIC(getTCPSocket, Socket) {
     const socketCreateOutput output = socketCreate(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (!output.ok) {
         return getTCPSocketErr(prefixError("socketCreate", output.u.error));

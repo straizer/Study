@@ -13,8 +13,7 @@ enum {
 
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
 
-OUTPUT_CONSTRUCTORS(getPort, uint16_t)
-getPortOutput getPort(const char* const port_string) {
+DEFINITION(getPort, uint16_t, const char* const port_string) {
     if (port_string == nullptr) {
         return getPortErr("port string is NULL");
     }

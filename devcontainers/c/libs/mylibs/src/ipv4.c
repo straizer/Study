@@ -9,8 +9,7 @@
 
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
 
-OUTPUT_CONSTRUCTORS(ipv4StringToAddress, in_addr)
-ipv4StringToAddressOutput ipv4StringToAddress(const char* const ip) {
+DEFINITION(ipv4StringToAddress, in_addr, const char* const ip) {
     if (!stringIsValid(ip)) {
         return ipv4StringToAddressErr("IP string is invalid");
     }
@@ -29,9 +28,8 @@ ipv4StringToAddressOutput ipv4StringToAddress(const char* const ip) {
     return ipv4StringToAddressOk(address);
 }
 
-OUTPUT_CONSTRUCTORS_VOID(ipv4SocketAddressToString)
-ipv4SocketAddressToStringOutput ipv4SocketAddressToString(const sockaddr_in* const socket_address, char* const out,
-                                                          const size_t out_size) {
+DEFINITION_VOID(ipv4SocketAddressToString, const sockaddr_in* const socket_address, char* const out,
+                const size_t out_size) {
     if (socket_address == nullptr) {
         return ipv4SocketAddressToStringErr("socket_address is NULL");
     }
@@ -61,8 +59,7 @@ ipv4SocketAddressToStringOutput ipv4SocketAddressToString(const sockaddr_in* con
     return ipv4SocketAddressToStringOk();
 }
 
-OUTPUT_CONSTRUCTORS(ipv4CreateSocketAddress, sockaddr_in)
-ipv4CreateSocketAddressOutput ipv4CreateSocketAddress(const in_addr* const ipv4_address, const in_port_t port) {
+DEFINITION(ipv4CreateSocketAddress, sockaddr_in, const in_addr* const ipv4_address, const in_port_t port) {
     if (ipv4_address == nullptr) {
         return ipv4CreateSocketAddressErr("ipv4_address is NULL");
     }

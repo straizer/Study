@@ -8,8 +8,7 @@
 
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
 
-OUTPUT_CONSTRUCTORS_VOID(closeFileDescriptor)
-closeFileDescriptorOutput closeFileDescriptor(const int file_descriptor) {
+DEFINITION_VOID(closeFileDescriptor, const int file_descriptor) {
     if (file_descriptor < 0) {
         return closeFileDescriptorErr("file descriptor is negative");
     }

@@ -15,8 +15,7 @@ static Socket socketConstructor(int file_descriptor);
 
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
 
-OUTPUT_CONSTRUCTORS(socketCreate, Socket)
-socketCreateOutput socketCreate(const int domain, const int type, const int protocol) {
+DEFINITION(socketCreate, Socket, const int domain, const int type, const int protocol) {
     if (protocol < 0) {
         return socketCreateErr("protocol is negative");
     }
@@ -31,8 +30,7 @@ socketCreateOutput socketCreate(const int domain, const int type, const int prot
     return socketCreateOk(socketConstructor(file_descriptor));
 }
 
-OUTPUT_CONSTRUCTORS_VOID(socketConnect)
-socketConnectOutput socketConnect(const Socket* const socket, const SocketAddress* const address) {
+DEFINITION_VOID(socketConnect, const Socket* const socket, const SocketAddress* const address) {
     if (socket == nullptr) {
         return socketConnectErr("socket is NULL");
     }
@@ -60,8 +58,7 @@ socketConnectOutput socketConnect(const Socket* const socket, const SocketAddres
     return socketConnectOk();
 }
 
-OUTPUT_CONSTRUCTORS_VOID(socketBind)
-socketBindOutput socketBind(const Socket* const socket, const sockaddr* const address, const socklen_t address_length) {
+DEFINITION_VOID(socketBind, const Socket* const socket, const sockaddr* const address, const socklen_t address_length) {
     if (socket == nullptr) {
         return socketBindErr("socket is NULL");
     }
@@ -85,8 +82,7 @@ socketBindOutput socketBind(const Socket* const socket, const sockaddr* const ad
     return socketBindOk();
 }
 
-OUTPUT_CONSTRUCTORS_VOID(socketListen)
-socketListenOutput socketListen(const Socket* const socket, const int backlog_size) {
+DEFINITION_VOID(socketListen, const Socket* const socket, const int backlog_size) {
     if (socket == nullptr) {
         return socketListenErr("socket is NULL");
     }
@@ -107,8 +103,7 @@ socketListenOutput socketListen(const Socket* const socket, const int backlog_si
     return socketListenOk();
 }
 
-OUTPUT_CONSTRUCTORS(socketAccept, Socket)
-socketAcceptOutput socketAccept(const Socket* const socket, sockaddr* const address, socklen_t* const address_length) {
+DEFINITION(socketAccept, Socket, const Socket* const socket, sockaddr* const address, socklen_t* const address_length) {
     if (socket == nullptr) {
         return socketAcceptErr("socket is NULL");
     }
@@ -133,8 +128,7 @@ socketAcceptOutput socketAccept(const Socket* const socket, sockaddr* const addr
     return socketAcceptOk(socketConstructor(connected_socket_file_descriptor));
 }
 
-OUTPUT_CONSTRUCTORS_VOID(socketShutdown)
-socketShutdownOutput socketShutdown(const Socket* const socket, const int how) {
+DEFINITION_VOID(socketShutdown, const Socket* const socket, const int how) {
     if (socket == nullptr) {
         return socketShutdownErr("socket is NULL");
     }
@@ -154,8 +148,7 @@ socketShutdownOutput socketShutdown(const Socket* const socket, const int how) {
     return socketShutdownOk();
 }
 
-OUTPUT_CONSTRUCTORS_VOID(socketClose)
-socketCloseOutput socketClose(const Socket* socket) {
+DEFINITION_VOID(socketClose, const Socket* socket) {
     if (socket == nullptr) {
         return socketCloseErr("socket is NULL");
     }

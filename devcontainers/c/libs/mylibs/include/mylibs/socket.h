@@ -16,23 +16,10 @@ typedef STRUCT_ALIGNED(16) {
 }
 SocketAddress;
 
-OUTPUT_DEFINE(socketCreate, Socket)
-socketCreateOutput socketCreate(int domain, int type, int protocol);
-
-OUTPUT_DEFINE_VOID(socketConnect)
-socketConnectOutput socketConnect(const Socket* socket, const SocketAddress* address);
-
-OUTPUT_DEFINE_VOID(socketBind)
-socketBindOutput socketBind(const Socket* socket, const sockaddr* address, socklen_t address_length);
-
-OUTPUT_DEFINE_VOID(socketListen)
-socketListenOutput socketListen(const Socket* socket, int backlog_size);
-
-OUTPUT_DEFINE(socketAccept, Socket)
-socketAcceptOutput socketAccept(const Socket* socket, sockaddr* address, socklen_t* address_length);
-
-OUTPUT_DEFINE_VOID(socketShutdown)
-socketShutdownOutput socketShutdown(const Socket* socket, int how);
-
-OUTPUT_DEFINE_VOID(socketClose)
-socketCloseOutput socketClose(const Socket* socket);
+DECLARATION(socketCreate, Socket, int domain, int type, int protocol)
+DECLARATION_VOID(socketConnect, const Socket* socket, const SocketAddress* address)
+DECLARATION_VOID(socketBind, const Socket* socket, const sockaddr* address, socklen_t address_length)
+DECLARATION_VOID(socketListen, const Socket* socket, int backlog_size)
+DECLARATION(socketAccept, Socket, const Socket* socket, sockaddr* address, socklen_t* address_length)
+DECLARATION_VOID(socketShutdown, const Socket* socket, int how)
+DECLARATION_VOID(socketClose, const Socket* socket)

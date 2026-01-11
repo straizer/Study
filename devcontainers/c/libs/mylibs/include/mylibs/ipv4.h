@@ -11,12 +11,6 @@ enum {
     IPV4_IP_PORT_BUFFER_SIZE = INET_ADDRSTRLEN + 6,  // IPv4 + ":" + PORT
 };
 
-OUTPUT_DEFINE(ipv4StringToAddress, in_addr)
-ipv4StringToAddressOutput ipv4StringToAddress(const char* ip);
-
-OUTPUT_DEFINE_VOID(ipv4SocketAddressToString)
-ipv4SocketAddressToStringOutput ipv4SocketAddressToString(const sockaddr_in* socket_address, char* out,
-                                                          size_t out_size);
-
-OUTPUT_DEFINE_ALIGNED(ipv4CreateSocketAddress, sockaddr_in, 32)
-ipv4CreateSocketAddressOutput ipv4CreateSocketAddress(const in_addr* ipv4_address, in_port_t port);
+DECLARATION(ipv4StringToAddress, in_addr, const char* ip)
+DECLARATION_VOID(ipv4SocketAddressToString, const sockaddr_in* socket_address, char* out, size_t out_size)
+DECLARATION_ALIGNED(ipv4CreateSocketAddress, sockaddr_in, 32, const in_addr* ipv4_address, in_port_t port)

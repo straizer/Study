@@ -4,5 +4,4 @@
 
 #include "./macros.h"
 
-OUTPUT_DEFINE(getPort, uint16_t)
-getPortOutput getPort(const char* port_string);
+DECLARATION(getPort, uint16_t, const char* port_string)

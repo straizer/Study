@@ -5,8 +5,7 @@
 
 /* ------------------------------------------------ Private members ------------------------------------------------ */
 
-OUTPUT_DEFINE(getTCPSocket, Socket)
-static getTCPSocketOutput getTCPSocket(void);
+DECLARATION_STATIC(getTCPSocket, Socket)
 
 static const char* closeSocketAndGetError(Socket socket, const char* prefix, const char* error);
 

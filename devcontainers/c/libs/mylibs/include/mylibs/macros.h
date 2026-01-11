@@ -20,6 +20,22 @@
 #define OUTPUT_DEFINE(Name, T) OUTPUT_DEFINE_ALIGNED(Name, T, 16)
 #define OUTPUT_DEFINE_VOID(Name) OUTPUT_DEFINE(Name, nullptr_t)
 
+#define DECLARATION(Name, T, ...) \
+    OUTPUT_DEFINE(Name, T)        \
+    CONCATENATE_TOKENS(Name, Output) Name(__VA_ARGS__);
+
+#define DECLARATION_STATIC(Name, T, ...) \
+    OUTPUT_DEFINE(Name, T)               \
+    static CONCATENATE_TOKENS(Name, Output) Name(__VA_ARGS__);
+
+#define DECLARATION_VOID(Name, ...) \
+    OUTPUT_DEFINE_VOID(Name)        \
+    CONCATENATE_TOKENS(Name, Output) Name(__VA_ARGS__);
+
+#define DECLARATION_ALIGNED(Name, T, Alignment, ...) \
+    OUTPUT_DEFINE_ALIGNED(Name, T, Alignment)        \
+    CONCATENATE_TOKENS(Name, Output) Name(__VA_ARGS__);
+
 // cppcheck-suppress misra-c2012-20.7
 #define OUTPUT_ERROR_CONSTRUCTOR(Name)                                                                    \
     static inline CONCATENATE_TOKENS(Name, Output) CONCATENATE_TOKENS(Name, Err)(const char* const err) { \

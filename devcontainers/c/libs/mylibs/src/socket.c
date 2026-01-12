@@ -41,17 +41,14 @@ DEFINITION_VOID(socketConnect, const Socket* const socket, const SocketAddress* 
     if (address == nullptr) {
         return socketConnectErr("address is NULL");
     }
-    if (address->value == nullptr) {
-        return socketConnectErr("address value is NULL");
-    }
     if (address->length == 0U) {
         return socketConnectErr("address length is 0");
     }
 
-    if (connect(socket->file_descriptor, address->value, address->length) == -1) {
+    if (connect(socket->file_descriptor, (const struct sockaddr*)&address->value, address->length) == -1) {
         char* const buffer = getErrorBuffer();
-        explain_message_connect(buffer, ERROR_BUFFER_SIZE, socket->file_descriptor, address->value,
-                                (int)address->length);
+        explain_message_connect(buffer, ERROR_BUFFER_SIZE, socket->file_descriptor,
+                                (const struct sockaddr*)&address->value, (int)address->length);
         return socketConnectErr(buffer);
     }
 
@@ -69,16 +66,14 @@ DEFINITION_VOID(socketBind, const Socket* const socket, const SocketAddress* con
     if (address == nullptr) {
         return socketBindErr("address is NULL");
     }
-    if (address->value == nullptr) {
-        return socketBindErr("address value is NULL");
-    }
     if (address->length == 0U) {
         return socketBindErr("address length is 0");
     }
 
-    if (bind(socket->file_descriptor, address->value, address->length) == -1) {
+    if (bind(socket->file_descriptor, (const struct sockaddr*)&address->value, address->length) == -1) {
         char* const buffer = getErrorBuffer();
-        explain_message_bind(buffer, ERROR_BUFFER_SIZE, socket->file_descriptor, address->value, (int)address->length);
+        explain_message_bind(buffer, ERROR_BUFFER_SIZE, socket->file_descriptor,
+                             (const struct sockaddr*)&address->value, (int)address->length);
         return socketBindErr(buffer);
     }
     return socketBindOk();
@@ -104,6 +99,7 @@ DEFINITION_VOID(socketListen, const Socket* const socket, const int backlog_size
         explain_message_listen(buffer, ERROR_BUFFER_SIZE, socket->file_descriptor, backlog_size);
         return socketListenErr(buffer);
     }
+
     return socketListenOk();
 }
 
@@ -115,28 +111,25 @@ DEFINITION(socketAccept, Socket, const Socket* const socket, SocketAddress* cons
         return socketAcceptErr("socket file descriptor is negative");
     }
 
-    sockaddr* socket_address = nullptr;
-    socklen_t* socket_length = nullptr;
+    struct sockaddr* socket_address = nullptr;
+    socklen_t socket_length = 0;
+    socklen_t* socket_length_ptr = nullptr;
 
     if (address != nullptr) {
-        if (address->value == nullptr) {
-            if (address->length != 0U) {
-                return socketAcceptErr("address length must be 0 when address value is NULL");
-            }
-        } else {
-            if (address->length == 0U) {
-                return socketAcceptErr("address length must be non-zero when address value is non-NULL");
-            }
-            socket_length = &address->length;
-        }
-        socket_address = address->value;
+        socket_address = (struct sockaddr*)&address->value;
+        socket_length = sizeof(address->value);
+        socket_length_ptr = &socket_length;
     }
 
-    const int connected_socket_file_descriptor = accept(socket->file_descriptor, socket_address, socket_length);
+    const int connected_socket_file_descriptor = accept(socket->file_descriptor, socket_address, socket_length_ptr);
     if (connected_socket_file_descriptor == -1) {
         char* const buffer = getErrorBuffer();
-        explain_message_accept(buffer, ERROR_BUFFER_SIZE, socket->file_descriptor, socket_address, socket_length);
+        explain_message_accept(buffer, ERROR_BUFFER_SIZE, socket->file_descriptor, socket_address, socket_length_ptr);
         return socketAcceptErr(buffer);
+    }
+
+    if (address != nullptr) {
+        address->length = socket_length;
     }
 
     return socketAcceptOk(socketConstructor(connected_socket_file_descriptor));

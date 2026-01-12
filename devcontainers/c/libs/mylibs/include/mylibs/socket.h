@@ -4,14 +4,12 @@
 
 #include "./macros.h"
 
-typedef struct sockaddr sockaddr;
-
 typedef struct {
     int file_descriptor;
 } Socket;
 
-typedef STRUCT_ALIGNED(16) {
-    sockaddr* const value;
+typedef STRUCT_ALIGNED(128) {
+    struct sockaddr_storage value;
     socklen_t length;
 }
 SocketAddress;

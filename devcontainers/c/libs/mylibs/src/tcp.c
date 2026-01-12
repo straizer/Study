@@ -1,5 +1,7 @@
 #include "../include/mylibs/tcp.h"
 
+#include <string.h>
+
 #include "../include/mylibs/ipv4.h"
 #include "./errors.h"
 
@@ -21,14 +23,14 @@ DEFINITION(startTCPServer, Socket, const in_port_t server_port, const int backlo
     // - INADDR_ANY → 0.0.0.0 (listen on all interfaces)
     in_addr server_address = {0};
     server_address.s_addr = htonl(INADDR_ANY);
-    ipv4CreateSocketAddressOutput server_socket_address = ipv4CreateSocketAddress(&server_address, server_port);
+    const ipv4CreateSocketAddressOutput server_socket_address = ipv4CreateSocketAddress(&server_address, server_port);
     if (!server_socket_address.ok) {
         return startTCPServerErr(
             closeSocketAndGetError(tcp_socket.u.value, "ipv4CreateSocketAddress", server_socket_address.u.error));
     }
 
-    const SocketAddress ssa = {.value = (sockaddr*)&server_socket_address.u.value,
-                               .length = sizeof(server_socket_address.u.value)};
+    SocketAddress ssa = {.length = sizeof(server_socket_address.u.value)};
+    (void)memcpy(&ssa.value, &server_socket_address.u.value, ssa.length);
 
     // Assign IP + port to the socket
     const socketBindOutput bind_output = socketBind(&tcp_socket.u.value, &ssa);
@@ -51,14 +53,14 @@ DEFINITION(connectToServerViaTCP, Socket, const in_addr server_address, const in
         return connectToServerViaTCPErr(prefixError("getTCPSocket", tcp_socket.u.error));
     }
 
-    ipv4CreateSocketAddressOutput server_socket_address = ipv4CreateSocketAddress(&server_address, server_port);
+    const ipv4CreateSocketAddressOutput server_socket_address = ipv4CreateSocketAddress(&server_address, server_port);
     if (!server_socket_address.ok) {
         return connectToServerViaTCPErr(
             closeSocketAndGetError(tcp_socket.u.value, "ipv4CreateSocketAddress", server_socket_address.u.error));
     }
 
-    const SocketAddress ssa = {.value = (sockaddr*)&server_socket_address.u.value,
-                               .length = sizeof(server_socket_address.u.value)};
+    SocketAddress ssa = {.length = sizeof(server_socket_address.u.value)};
+    (void)memcpy(&ssa.value, &server_socket_address.u.value, ssa.length);
 
     const socketConnectOutput connect_output = socketConnect(&tcp_socket.u.value, &ssa);
     if (!connect_output.ok) {

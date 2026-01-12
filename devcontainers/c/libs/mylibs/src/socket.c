@@ -159,7 +159,7 @@ DEFINITION_NULL(socketClose, Socket* socket) {
         return socketCloseErr("socket is NULL");
     }
 
-    const closeFileDescriptorOutput output = closeFileDescriptor(&socket->file_descriptor);
+    const utilsCloseOutput output = utilsClose(&socket->file_descriptor);
     if (!output.ok) {
         return socketCloseErr(prefixError("closeFileDescriptor", output.u.error));
     }

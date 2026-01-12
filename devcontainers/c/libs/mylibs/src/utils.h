@@ -2,4 +2,4 @@
 
 #include "../include/mylibs/macros.h"
 
-DECLARATION_VOID(closeFileDescriptor, int* file_descriptor)
+DECLARATION_VOID(utilsClose, int* file_descriptor)

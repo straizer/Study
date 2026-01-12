@@ -59,15 +59,17 @@ DEFINITION_VOID(ipv4SocketAddressToString, const sockaddr_in* const socket_addre
     return ipv4SocketAddressToStringOk();
 }
 
-DEFINITION(ipv4CreateSocketAddress, sockaddr_in, const in_addr* const ipv4_address, const in_port_t port) {
+DEFINITION(ipv4CreateSocketAddress, SocketAddress, const in_addr* const ipv4_address, const in_port_t port) {
     if (ipv4_address == nullptr) {
         return ipv4CreateSocketAddressErr("ipv4_address is NULL");
     }
 
-    sockaddr_in socket_address = {0};
-    socket_address.sin_family = AF_INET;
-    socket_address.sin_addr = *ipv4_address;
-    socket_address.sin_port = htons(port);
+    SocketAddress socket_address = {.length = sizeof(sockaddr_in)};
+    sockaddr_in* const ipv4_socket_address = (sockaddr_in* const)&socket_address.value;
+
+    ipv4_socket_address->sin_family = AF_INET;
+    ipv4_socket_address->sin_addr = *ipv4_address;
+    ipv4_socket_address->sin_port = htons(port);
 
     return ipv4CreateSocketAddressOk(socket_address);
 }

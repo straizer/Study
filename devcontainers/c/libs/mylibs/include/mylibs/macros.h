@@ -18,7 +18,7 @@
     typedef STRUCT_ALIGNED(Alignment) {                            \
         bool ok;                                                   \
         union {                                                    \
-            const T value;                                         \
+            T value;                                               \
             const char* const error;                               \
         } u;                                                       \
     }                                                              \

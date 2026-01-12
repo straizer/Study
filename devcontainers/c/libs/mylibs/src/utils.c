@@ -8,7 +8,7 @@
 
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
 
-DEFINITION_VOID(closeFileDescriptor, int* file_descriptor) {
+DEFINITION_NULL(closeFileDescriptor, int* file_descriptor) {
     if (*file_descriptor < 0) {
         return closeFileDescriptorErr("file descriptor is negative");
     }

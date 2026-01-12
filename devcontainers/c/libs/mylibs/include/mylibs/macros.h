@@ -37,10 +37,16 @@
 // Define function and output constructors
 #define INTERNAL__DEFINE_CAN_VOID(Name, Static, Param, Value, ...)                            \
     INTERNAL__DEFINE_OUTPUT_CONSTRUCTOR(Name, Err, const char* const err, false, error = err) \
-    INTERNAL__DEFINE_OUTPUT_CONSTRUCTOR(Name, Ok, Param, true, value = (Value))               \
+    INTERNAL__DEFINE_OUTPUT_CONSTRUCTOR(Name, Ok, Param, true, value = Value)                 \
     INTERNAL__SIGNATURE(Name, Static, __VA_ARGS__)
 
-#define INTERNAL__DEFINE(Name, Static, T, ...) INTERNAL__DEFINE_CAN_VOID(Name, Static, const T val, val, __VA_ARGS__)
+#define INTERNAL__DEFINE_NULL(Name, Static, ...) INTERNAL__DEFINE_CAN_VOID(Name, Static, void, nullptr, __VA_ARGS__)
+
+#define INTERNAL__DEFINE_LVALUE(Name, Static, T, ...) \
+    INTERNAL__DEFINE_CAN_VOID(Name, Static, const T* const ptr, *ptr, __VA_ARGS__)
+
+#define INTERNAL__DEFINE_RVALUE(Name, Static, T, ...) \
+    INTERNAL__DEFINE_CAN_VOID(Name, Static, const T val, val, __VA_ARGS__)
 
 /* ------------------------------------------------- Public macros ------------------------------------------------- */
 
@@ -49,6 +55,7 @@
 #define DECLARATION_VOID(Name, ...) INTERNAL__DECLARE_NO_STATIC(Name, nullptr_t, __VA_ARGS__)
 #define DECLARATION_NO_PARAMS_STATIC(Name, T) INTERNAL__DECLARE(Name, static, T, void)
 
-#define DEFINITION(Name, T, ...) INTERNAL__DEFINE(Name, , T, __VA_ARGS__)
-#define DEFINITION_VOID(Name, ...) INTERNAL__DEFINE_CAN_VOID(Name, , void, nullptr, __VA_ARGS__)
-#define DEFINITION_NO_PARAMS_STATIC(Name, T) INTERNAL__DEFINE(Name, static, T, void)
+#define DEFINITION_NULL(Name, ...) INTERNAL__DEFINE_NULL(Name, , __VA_ARGS__)
+#define DEFINITION_LVALUE(Name, T, ...) INTERNAL__DEFINE_LVALUE(Name, , T, __VA_ARGS__)
+#define DEFINITION_LVALUE_NO_PARAMS_STATIC(Name, T) INTERNAL__DEFINE_LVALUE(Name, static, T, void)
+#define DEFINITION_RVALUE(Name, T, ...) INTERNAL__DEFINE_RVALUE(Name, , T, __VA_ARGS__)

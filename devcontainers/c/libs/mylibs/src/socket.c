@@ -15,7 +15,7 @@ static Socket socketConstructor(int file_descriptor);
 
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
 
-DEFINITION(socketCreate, Socket, const int domain, const int type, const int protocol) {
+DEFINITION_RVALUE(socketCreate, Socket, const int domain, const int type, const int protocol) {
     if (protocol < 0) {
         return socketCreateErr("protocol is negative");
     }
@@ -30,7 +30,7 @@ DEFINITION(socketCreate, Socket, const int domain, const int type, const int pro
     return socketCreateOk(socketConstructor(file_descriptor));
 }
 
-DEFINITION_VOID(socketConnect, const Socket* const socket, const SocketAddress* const address) {
+DEFINITION_NULL(socketConnect, const Socket* const socket, const SocketAddress* const address) {
     if (socket == nullptr) {
         return socketConnectErr("socket is NULL");
     }
@@ -55,7 +55,7 @@ DEFINITION_VOID(socketConnect, const Socket* const socket, const SocketAddress* 
     return socketConnectOk();
 }
 
-DEFINITION_VOID(socketBind, const Socket* const socket, const SocketAddress* const address) {
+DEFINITION_NULL(socketBind, const Socket* const socket, const SocketAddress* const address) {
     if (socket == nullptr) {
         return socketBindErr("socket is NULL");
     }
@@ -79,7 +79,7 @@ DEFINITION_VOID(socketBind, const Socket* const socket, const SocketAddress* con
     return socketBindOk();
 }
 
-DEFINITION_VOID(socketListen, const Socket* const socket, const int backlog_size) {
+DEFINITION_NULL(socketListen, const Socket* const socket, const int backlog_size) {
     if (socket == nullptr) {
         return socketListenErr("socket is NULL");
     }
@@ -103,7 +103,7 @@ DEFINITION_VOID(socketListen, const Socket* const socket, const int backlog_size
     return socketListenOk();
 }
 
-DEFINITION(socketAccept, Socket, const Socket* const socket, SocketAddress* const address) {
+DEFINITION_RVALUE(socketAccept, Socket, const Socket* const socket, SocketAddress* const address) {
     if (socket == nullptr) {
         return socketAcceptErr("socket is NULL");
     }
@@ -135,7 +135,7 @@ DEFINITION(socketAccept, Socket, const Socket* const socket, SocketAddress* cons
     return socketAcceptOk(socketConstructor(connected_socket_file_descriptor));
 }
 
-DEFINITION_VOID(socketShutdown, const Socket* const socket, const int how) {
+DEFINITION_NULL(socketShutdown, const Socket* const socket, const int how) {
     if (socket == nullptr) {
         return socketShutdownErr("socket is NULL");
     }
@@ -154,7 +154,7 @@ DEFINITION_VOID(socketShutdown, const Socket* const socket, const int how) {
     return socketShutdownOk();
 }
 
-DEFINITION_VOID(socketClose, Socket* socket) {
+DEFINITION_NULL(socketClose, Socket* socket) {
     if (socket == nullptr) {
         return socketCloseErr("socket is NULL");
     }

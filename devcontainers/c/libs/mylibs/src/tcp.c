@@ -7,7 +7,7 @@
 
 /* ------------------------------------------------ Private members ------------------------------------------------ */
 
-DECLARATION_NO_PARAMS_STATIC(getTCPSocket, const Socket)
+DECLARATION_NO_PARAMS_STATIC(getTCPSocket, Socket)
 
 static const char* closeSocketAndGetError(Socket socket, const char* prefix, const char* error);
 
@@ -71,7 +71,7 @@ DEFINITION(connectToServerViaTCP, Socket, const in_addr server_address, const in
     return connectToServerViaTCPOk(tcp_socket.u.value);
 }
 
-DEFINITION_VOID(closeConnection, const Socket socket, const int how) {
+DEFINITION_VOID(closeConnection, Socket socket, const int how) {
     const socketShutdownOutput shutdown_output = socketShutdown(&socket, how);
     if (!shutdown_output.ok) {
         return closeConnectionErr(prefixError("socketShutdown", shutdown_output.u.error));
@@ -96,7 +96,7 @@ DEFINITION_NO_PARAMS_STATIC(getTCPSocket, Socket) {
     return getTCPSocketOk(output.u.value);
 }
 
-static const char* closeSocketAndGetError(const Socket socket, const char* const prefix, const char* const error) {
+static const char* closeSocketAndGetError(Socket socket, const char* const prefix, const char* const error) {
     const socketCloseOutput output = socketClose(&socket);
     if (!output.ok) {
         return errorDuring("socketClose", output.u.error, prefix, error);

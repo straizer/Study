@@ -29,7 +29,7 @@ int main(const int argc, const char* const* const argv) {
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
-    const startTCPServerOutput server_socket = startTCPServer(server_port.u.value, 2);
+    startTCPServerOutput server_socket = startTCPServer(server_port.u.value, 2);
     if (!server_socket.ok) {
         printError("getPort: %s", server_socket.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)

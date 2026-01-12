@@ -154,12 +154,12 @@ DEFINITION_VOID(socketShutdown, const Socket* const socket, const int how) {
     return socketShutdownOk();
 }
 
-DEFINITION_VOID(socketClose, const Socket* socket) {
+DEFINITION_VOID(socketClose, Socket* socket) {
     if (socket == nullptr) {
         return socketCloseErr("socket is NULL");
     }
 
-    const closeFileDescriptorOutput output = closeFileDescriptor(socket->file_descriptor);
+    const closeFileDescriptorOutput output = closeFileDescriptor(&socket->file_descriptor);
     if (!output.ok) {
         return socketCloseErr(prefixError("closeFileDescriptor", output.u.error));
     }

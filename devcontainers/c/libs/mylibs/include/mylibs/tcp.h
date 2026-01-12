@@ -7,6 +7,6 @@
 
 typedef struct in_addr in_addr;
 
-DECLARATION(startTCPServer, const Socket, in_port_t server_port, int backlog_size)
+DECLARATION(startTCPServer, Socket, in_port_t server_port, int backlog_size)
 DECLARATION(connectToServerViaTCP, const Socket, in_addr server_address, in_port_t server_port)
 DECLARATION_VOID(closeConnection, Socket socket, int how)

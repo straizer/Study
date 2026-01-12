@@ -39,11 +39,10 @@ int main(const int argc, const char* const* const argv) {
 
     // Create a client address struct
     sockaddr_in client_address = {0};
-    socklen_t client_address_length = sizeof(client_address);
+    SocketAddress csa = {.value = (sockaddr*)&client_address, .length = sizeof(client_address)};
 
     // Wait for the incoming connection and return a new socket file descriptor for communicating with a client
-    const socketAcceptOutput client_socket =
-        socketAccept(&server_socket.u.value, (sockaddr*)&client_address, &client_address_length);
+    const socketAcceptOutput client_socket = socketAccept(&server_socket.u.value, &csa);
     if (!client_socket.ok) {
         printError("socketAccept: %s", client_socket.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)

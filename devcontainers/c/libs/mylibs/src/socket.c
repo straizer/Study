@@ -107,7 +107,7 @@ DEFINITION_VOID(socketListen, const Socket* const socket, const int backlog_size
     return socketListenOk();
 }
 
-DEFINITION(socketAccept, Socket, const Socket* const socket, sockaddr* const address, socklen_t* const address_length) {
+DEFINITION(socketAccept, Socket, const Socket* const socket, SocketAddress* const address) {
     if (socket == nullptr) {
         return socketAcceptErr("socket is NULL");
     }
@@ -115,15 +115,27 @@ DEFINITION(socketAccept, Socket, const Socket* const socket, sockaddr* const add
         return socketAcceptErr("socket file descriptor is negative");
     }
 
-    /* POSIX: if addr is NULL, addrlen is ignored; passing NULL is fine. */
-    if ((address == nullptr) != (address_length == nullptr)) {
-        return socketAcceptErr("address and address length must be both NULL or both non-NULL");
+    sockaddr* socket_address = nullptr;
+    socklen_t* socket_length = nullptr;
+
+    if (address != nullptr) {
+        if (address->value == nullptr) {
+            if (address->length != 0U) {
+                return socketAcceptErr("address length must be 0 when address value is NULL");
+            }
+        } else {
+            if (address->length == 0U) {
+                return socketAcceptErr("address length must be non-zero when address value is non-NULL");
+            }
+            socket_length = &address->length;
+        }
+        socket_address = address->value;
     }
 
-    const int connected_socket_file_descriptor = accept(socket->file_descriptor, address, address_length);
+    const int connected_socket_file_descriptor = accept(socket->file_descriptor, socket_address, socket_length);
     if (connected_socket_file_descriptor == -1) {
         char* const buffer = getErrorBuffer();
-        explain_message_accept(buffer, ERROR_BUFFER_SIZE, socket->file_descriptor, address, address_length);
+        explain_message_accept(buffer, ERROR_BUFFER_SIZE, socket->file_descriptor, socket_address, socket_length);
         return socketAcceptErr(buffer);
     }
 

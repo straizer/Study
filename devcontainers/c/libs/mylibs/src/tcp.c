@@ -27,9 +27,11 @@ DEFINITION(startTCPServer, Socket, const in_port_t server_port, const int backlo
             closeSocketAndGetError(tcp_socket.u.value, "ipv4CreateSocketAddress", server_socket_address.u.error));
     }
 
+    const SocketAddress ssa = {.value = (const sockaddr*)&server_socket_address.u.value,
+                               .length = sizeof(server_socket_address.u.value)};
+
     // Assign IP + port to the socket
-    const socketBindOutput bind_output = socketBind(
-        &tcp_socket.u.value, (const sockaddr*)&server_socket_address.u.value, sizeof(server_socket_address.u.value));
+    const socketBindOutput bind_output = socketBind(&tcp_socket.u.value, &ssa);
     if (!bind_output.ok) {
         return startTCPServerErr(closeSocketAndGetError(tcp_socket.u.value, "socketBind", bind_output.u.error));
     }

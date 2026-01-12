@@ -58,25 +58,27 @@ DEFINITION_VOID(socketConnect, const Socket* const socket, const SocketAddress* 
     return socketConnectOk();
 }
 
-DEFINITION_VOID(socketBind, const Socket* const socket, const sockaddr* const address, const socklen_t address_length) {
+DEFINITION_VOID(socketBind, const Socket* const socket, const SocketAddress* const address) {
     if (socket == nullptr) {
         return socketBindErr("socket is NULL");
     }
-    const int file_descriptor = socket->file_descriptor;
-
-    if (file_descriptor < 0) {
+    if (socket->file_descriptor < 0) {
         return socketBindErr("socket file descriptor is negative");
     }
+
     if (address == nullptr) {
         return socketBindErr("address is NULL");
     }
-    if (address_length == 0U) {
+    if (address->value == nullptr) {
+        return socketBindErr("address value is NULL");
+    }
+    if (address->length == 0U) {
         return socketBindErr("address length is 0");
     }
 
-    if (bind(file_descriptor, address, address_length) == -1) {
+    if (bind(socket->file_descriptor, address->value, address->length) == -1) {
         char* const buffer = getErrorBuffer();
-        explain_message_bind(buffer, ERROR_BUFFER_SIZE, file_descriptor, address, (int)address_length);
+        explain_message_bind(buffer, ERROR_BUFFER_SIZE, socket->file_descriptor, address->value, (int)address->length);
         return socketBindErr(buffer);
     }
     return socketBindOk();

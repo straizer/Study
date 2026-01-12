@@ -18,7 +18,7 @@ SocketAddress;
 
 DECLARATION(socketCreate, Socket, int domain, int type, int protocol)
 DECLARATION_VOID(socketConnect, const Socket* socket, const SocketAddress* address)
-DECLARATION_VOID(socketBind, const Socket* socket, const sockaddr* address, socklen_t address_length)
+DECLARATION_VOID(socketBind, const Socket* socket, const SocketAddress* address)
 DECLARATION_VOID(socketListen, const Socket* socket, int backlog_size)
 DECLARATION(socketAccept, Socket, const Socket* socket, sockaddr* address, socklen_t* address_length)
 DECLARATION_VOID(socketShutdown, const Socket* socket, int how)

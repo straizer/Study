@@ -85,7 +85,7 @@ int main(const int argc, const char* const* const argv) {
     }
     if (bytes_read > 0) {
         printError("Unexpected bytes received from %s:%d", client_address_buffer,
-                   ntohs(((const struct sockaddr_in*)&client_address.value)->sin_port));
+                   ntohs(((const struct sockaddr_in*)&client_address.storage)->sin_port));
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 

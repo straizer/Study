@@ -45,10 +45,10 @@ DEFINITION_NULL(socketConnect, const Socket* const socket, const SocketAddress* 
         return socketConnectErr("address length is 0");
     }
 
-    if (connect(socket->file_descriptor, (const struct sockaddr*)&address->value, address->length) == -1) {
+    if (connect(socket->file_descriptor, (const struct sockaddr*)&address->storage, address->length) == -1) {
         char* const buffer = getErrorBuffer();
         explain_message_connect(buffer, ERROR_BUFFER_SIZE, socket->file_descriptor,
-                                (const struct sockaddr*)&address->value, (int)address->length);
+                                (const struct sockaddr*)&address->storage, (int)address->length);
         return socketConnectErr(buffer);
     }
 
@@ -70,10 +70,10 @@ DEFINITION_NULL(socketBind, const Socket* const socket, const SocketAddress* con
         return socketBindErr("address length is 0");
     }
 
-    if (bind(socket->file_descriptor, (const struct sockaddr*)&address->value, address->length) == -1) {
+    if (bind(socket->file_descriptor, (const struct sockaddr*)&address->storage, address->length) == -1) {
         char* const buffer = getErrorBuffer();
         explain_message_bind(buffer, ERROR_BUFFER_SIZE, socket->file_descriptor,
-                             (const struct sockaddr*)&address->value, (int)address->length);
+                             (const struct sockaddr*)&address->storage, (int)address->length);
         return socketBindErr(buffer);
     }
     return socketBindOk();
@@ -116,8 +116,8 @@ DEFINITION_RVALUE(socketAccept, Socket, const Socket* const socket, SocketAddres
     socklen_t* socket_length_ptr = nullptr;
 
     if (address != nullptr) {
-        socket_address = (struct sockaddr*)&address->value;
-        socket_length = sizeof(address->value);
+        socket_address = (struct sockaddr*)&address->storage;
+        socket_length = sizeof(address->storage);
         socket_length_ptr = &socket_length;
     }
 

@@ -36,7 +36,7 @@ DEFINITION_NULL(ipv4SocketAddressToString, const SocketAddress* const address, c
     if (address == nullptr) {
         return ipv4SocketAddressToStringErr("address is NULL");
     }
-    const ipv4_socket_address* const socket_address = (const ipv4_socket_address* const)&address->value;
+    const ipv4_socket_address* const socket_address = (const ipv4_socket_address* const)&address->storage;
     if (socket_address->sin_family != AF_INET) {
         return ipv4SocketAddressToStringErr("address is not IPv4");
     }
@@ -69,7 +69,7 @@ DEFINITION_LVALUE(ipv4CreateSocketAddress, SocketAddress, const in_addr* const i
     }
 
     SocketAddress address = {.length = sizeof(ipv4_socket_address)};
-    ipv4_socket_address* const socket_address = (ipv4_socket_address* const)&address.value;
+    ipv4_socket_address* const socket_address = (ipv4_socket_address* const)&address.storage;
 
     socket_address->sin_family = AF_INET;
     socket_address->sin_addr = *ipv4_address;

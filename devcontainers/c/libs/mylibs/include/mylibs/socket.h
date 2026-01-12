@@ -9,7 +9,7 @@ typedef struct {
 } Socket;
 
 typedef STRUCT_ALIGNED(128) {
-    struct sockaddr_storage value;
+    struct sockaddr_storage storage;
     socklen_t length;
 }
 SocketAddress;

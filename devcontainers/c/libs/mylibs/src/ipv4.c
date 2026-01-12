@@ -7,6 +7,10 @@
 #include "./errors.h"
 #include "./string.h"
 
+/* ------------------------------------------------ Private members ------------------------------------------------ */
+
+typedef struct sockaddr_in ipv4_socket_address;
+
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
 
 DEFINITION_LVALUE(ipv4StringToAddress, in_addr, const char* const ip) {
@@ -28,11 +32,11 @@ DEFINITION_LVALUE(ipv4StringToAddress, in_addr, const char* const ip) {
     return ipv4StringToAddressOk(&address);
 }
 
-DEFINITION_NULL(ipv4SocketAddressToString, const sockaddr_in* const socket_address, char* const out,
-                const size_t out_size) {
-    if (socket_address == nullptr) {
-        return ipv4SocketAddressToStringErr("socket_address is NULL");
+DEFINITION_NULL(ipv4SocketAddressToString, const SocketAddress* const address, char* const out, const size_t out_size) {
+    if (address == nullptr) {
+        return ipv4SocketAddressToStringErr("address is NULL");
     }
+    const ipv4_socket_address* const socket_address = (const ipv4_socket_address* const)&address->value;
     if (socket_address->sin_family != AF_INET) {
         return ipv4SocketAddressToStringErr("address is not IPv4");
     }
@@ -64,12 +68,12 @@ DEFINITION_LVALUE(ipv4CreateSocketAddress, SocketAddress, const in_addr* const i
         return ipv4CreateSocketAddressErr("ipv4_address is NULL");
     }
 
-    SocketAddress socket_address = {.length = sizeof(sockaddr_in)};
-    sockaddr_in* const ipv4_socket_address = (sockaddr_in* const)&socket_address.value;
+    SocketAddress address = {.length = sizeof(ipv4_socket_address)};
+    ipv4_socket_address* const socket_address = (ipv4_socket_address* const)&address.value;
 
-    ipv4_socket_address->sin_family = AF_INET;
-    ipv4_socket_address->sin_addr = *ipv4_address;
-    ipv4_socket_address->sin_port = htons(port);
+    socket_address->sin_family = AF_INET;
+    socket_address->sin_addr = *ipv4_address;
+    socket_address->sin_port = htons(port);
 
-    return ipv4CreateSocketAddressOk(&socket_address);
+    return ipv4CreateSocketAddressOk(&address);
 }

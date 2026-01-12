@@ -38,7 +38,7 @@ int main(const int argc, const char* const* const argv) {
     printOutput("Server is listening for incoming connection");
 
     // Create a client address struct
-    SocketAddress client_address = {.length = sizeof(sockaddr_in)};
+    SocketAddress client_address = {.length = sizeof(struct sockaddr_in)};
 
     // Wait for the incoming connection and return a new socket file descriptor for communicating with a client
     const socketAcceptOutput client_socket = socketAccept(&server_socket.u.value, &client_address);
@@ -48,8 +48,8 @@ int main(const int argc, const char* const* const argv) {
     }
 
     char client_address_buffer[IPV4_IP_PORT_BUFFER_SIZE];
-    const ipv4SocketAddressToStringOutput output = ipv4SocketAddressToString(
-        (const sockaddr_in*)&client_address.value, client_address_buffer, IPV4_IP_PORT_BUFFER_SIZE);
+    const ipv4SocketAddressToStringOutput output =
+        ipv4SocketAddressToString(&client_address, client_address_buffer, IPV4_IP_PORT_BUFFER_SIZE);
     if (!output.ok) {
         printError("ipv4SocketAddressToString: %s", output.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
@@ -85,7 +85,7 @@ int main(const int argc, const char* const* const argv) {
     }
     if (bytes_read > 0) {
         printError("Unexpected bytes received from %s:%d", client_address_buffer,
-                   ntohs(((const sockaddr_in*)&client_address.value)->sin_port));
+                   ntohs(((const struct sockaddr_in*)&client_address.value)->sin_port));
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 

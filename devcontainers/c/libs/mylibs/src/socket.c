@@ -34,12 +34,12 @@ DEFINITION_VOID(socketConnect, const Socket* const socket, const SocketAddress* 
     if (socket == nullptr) {
         return socketConnectErr("socket is NULL");
     }
-    if (address == nullptr) {
-        return socketConnectErr("address is NULL");
-    }
-
     if (socket->file_descriptor < 0) {
         return socketConnectErr("socket file descriptor is negative");
+    }
+
+    if (address == nullptr) {
+        return socketConnectErr("address is NULL");
     }
     if (address->value == nullptr) {
         return socketConnectErr("address value is NULL");
@@ -88,18 +88,20 @@ DEFINITION_VOID(socketListen, const Socket* const socket, const int backlog_size
     if (socket == nullptr) {
         return socketListenErr("socket is NULL");
     }
-    const int file_descriptor = socket->file_descriptor;
-
-    if (file_descriptor < 0) {
+    if (socket->file_descriptor < 0) {
         return socketListenErr("socket file descriptor is negative");
     }
+
     if (backlog_size < 0) {
         return socketListenErr("backlog size is negative");
     }
 
-    if (listen(file_descriptor, backlog_size) == -1) {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wanalyzer-fd-leak"
+    if (listen(socket->file_descriptor, backlog_size) == -1) {
+#pragma GCC diagnostic pop
         char* const buffer = getErrorBuffer();
-        explain_message_listen(buffer, ERROR_BUFFER_SIZE, file_descriptor, backlog_size);
+        explain_message_listen(buffer, ERROR_BUFFER_SIZE, socket->file_descriptor, backlog_size);
         return socketListenErr(buffer);
     }
     return socketListenOk();
@@ -109,9 +111,7 @@ DEFINITION(socketAccept, Socket, const Socket* const socket, sockaddr* const add
     if (socket == nullptr) {
         return socketAcceptErr("socket is NULL");
     }
-    const int file_descriptor = socket->file_descriptor;
-
-    if (file_descriptor < 0) {
+    if (socket->file_descriptor < 0) {
         return socketAcceptErr("socket file descriptor is negative");
     }
 
@@ -120,10 +120,10 @@ DEFINITION(socketAccept, Socket, const Socket* const socket, sockaddr* const add
         return socketAcceptErr("address and address length must be both NULL or both non-NULL");
     }
 
-    const int connected_socket_file_descriptor = accept(file_descriptor, address, address_length);
+    const int connected_socket_file_descriptor = accept(socket->file_descriptor, address, address_length);
     if (connected_socket_file_descriptor == -1) {
         char* const buffer = getErrorBuffer();
-        explain_message_accept(buffer, ERROR_BUFFER_SIZE, file_descriptor, address, address_length);
+        explain_message_accept(buffer, ERROR_BUFFER_SIZE, socket->file_descriptor, address, address_length);
         return socketAcceptErr(buffer);
     }
 
@@ -134,16 +134,15 @@ DEFINITION_VOID(socketShutdown, const Socket* const socket, const int how) {
     if (socket == nullptr) {
         return socketShutdownErr("socket is NULL");
     }
-    const int file_descriptor = socket->file_descriptor;
-
-    if (file_descriptor < 0) {
+    if (socket->file_descriptor < 0) {
         return socketShutdownErr("socket file descriptor is negative");
     }
+
     if (how != SHUT_RD && how != SHUT_WR && how != SHUT_RDWR) {
         return socketShutdownErr("invalid shutdown mode");
     }
 
-    if (shutdown(file_descriptor, how) == -1) {
+    if (shutdown(socket->file_descriptor, how) == -1) {
         return socketShutdownErr(prefixErrno("shutdown"));
     }
 

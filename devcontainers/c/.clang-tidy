@@ -8,6 +8,7 @@ Checks: |
   -clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling
   -bugprone-easily-swappable-parameters
   -readability-implicit-bool-conversion
+  -clang-diagnostic-unknown-warning-option
 WarningsAsErrors: '*'
 HeaderFilterRegex: '.*'
 

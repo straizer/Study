@@ -46,7 +46,7 @@
     INTERNAL__DEFINE_CAN_VOID(Name, Static, const T* const ptr, *ptr, __VA_ARGS__)
 
 #define INTERNAL__DEFINE_RVALUE(Name, Static, T, ...) \
-    INTERNAL__DEFINE_CAN_VOID(Name, Static, const T val, val, __VA_ARGS__)
+    INTERNAL__DEFINE_CAN_VOID(Name, Static, T const val, val, __VA_ARGS__)
 
 /* ------------------------------------------------- Public macros ------------------------------------------------- */
 

@@ -203,4 +203,21 @@
         <arg nr="5" direction="inout"/>
     </function>
 
+    <!-- void explain_message_malloc(char* message, int message_size, size_t size); -->
+    <function name="explain_message_malloc">
+        <leak-ignore/>
+        <arg nr="1" direction="out">
+            <not-null/>
+            <minsize type="argvalue" arg="2"/>
+        </arg>
+        <arg nr="2">
+            <not-bool/>
+            <valid>0:</valid>
+        </arg>
+        <arg nr="3">
+            <not-bool/>
+            <valid>0:</valid>
+        </arg>
+    </function>
+
 </def>

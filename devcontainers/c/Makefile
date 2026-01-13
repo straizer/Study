@@ -17,9 +17,9 @@ BIN_DIR = bin
 OBJ_DIR = obj
 
 # Mylibs objects
-STRING_OBJS = $(OBJ_DIR)/string.o
+BUFFER_OBJS = $(OBJ_DIR)/buffer.o
 IPV4_OBJS = $(OBJ_DIR)/ipv4.o
-ERRORS_OBJS = $(STRING_OBJS) $(OBJ_DIR)/errors.o
+ERRORS_OBJS = $(BUFFER_OBJS) $(OBJ_DIR)/errors.o
 UTILS_OBJS = $(ERRORS_OBJS) $(OBJ_DIR)/utils.o
 SOCKET_OBJS = $(UTILS_OBJS) $(OBJ_DIR)/socket.o
 

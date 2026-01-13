@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "./string.h"
+#include "./buffer.h"
 
 /* ------------------------------------------------ Private members ------------------------------------------------ */
 
@@ -52,10 +52,10 @@ static const char* formatError(const char* const first, const char* const prefix
                                const char* const suffix_second) {
     char* const out = getErrorBuffer();
 
-    const bool first_valid = stringIsValid(first);
-    const bool prefix_second_valid = stringIsValid(prefix_second);
-    const bool second_valid = stringIsValid(second);
-    const bool suffix_second_valid = stringIsValid(suffix_second);
+    const bool first_valid = bufferStringIsValid(first);
+    const bool prefix_second_valid = bufferStringIsValid(prefix_second);
+    const bool second_valid = bufferStringIsValid(second);
+    const bool suffix_second_valid = bufferStringIsValid(suffix_second);
 
     (void)snprintf(out, ERROR_BUFFER_SIZE, "%s%s%s%s", first_valid ? first : "",
                    first_valid && second_valid && prefix_second_valid ? prefix_second : "", second_valid ? second : "",

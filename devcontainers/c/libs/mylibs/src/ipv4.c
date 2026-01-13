@@ -4,8 +4,8 @@
 
 #include <arpa/inet.h>
 
+#include "./buffer.h"
 #include "./errors.h"
-#include "./string.h"
 
 /* ------------------------------------------------ Private members ------------------------------------------------ */
 
@@ -14,7 +14,7 @@ typedef struct sockaddr_in ipv4_socket_address;
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
 
 DEFINITION_LVALUE(ipv4StringToAddress, in_addr, const char* const ip) {
-    if (!stringIsValid(ip)) {
+    if (!bufferStringIsValid(ip)) {
         return ipv4StringToAddressErr("IP string is invalid");
     }
 

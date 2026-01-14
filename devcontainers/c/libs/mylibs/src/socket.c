@@ -15,19 +15,19 @@ static Socket socketConstructor(int file_descriptor);
 
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
 
-DEFINITION_LRVALUE(socketCreate, Socket, const int domain, const int type, const int protocol) {
+DEFINITION_LRVALUE(socketNew, Socket, const int domain, const int type, const int protocol) {
     if (protocol < 0) {
-        return socketCreateErr("protocol is negative");
+        return socketNewErr("protocol is negative");
     }
 
     const int file_descriptor = socket(domain, type, protocol);
     if (file_descriptor == -1) {
         char* const buffer = getErrorBuffer();
         explain_message_socket(buffer, ERROR_BUFFER_SIZE, domain, type, protocol);
-        return socketCreateErr(buffer);
+        return socketNewErr(buffer);
     }
 
-    return socketCreateOk(socketConstructor(file_descriptor));
+    return socketNewOk(socketConstructor(file_descriptor));
 }
 
 DEFINITION_NULL(socketConnect, const Socket* const socket, const SocketAddress* const address) {

@@ -14,7 +14,7 @@ typedef STRUCT_ALIGNED(128) {
 }
 SocketAddress;
 
-DECLARATION(socketCreate, const Socket, int domain, int type, int protocol)
+DECLARATION(socketNew, const Socket, int domain, int type, int protocol)
 DECLARATION_VOID(socketConnect, const Socket* socket, const SocketAddress* address)
 DECLARATION_VOID(socketBind, const Socket* socket, const SocketAddress* address)
 DECLARATION_VOID(socketListen, const Socket* socket, int backlog_size)

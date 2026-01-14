@@ -82,9 +82,9 @@ DEFINITION_NULL(closeConnection, Socket socket, const int how) {
 /* ------------------------------------------ Private function definitions ------------------------------------------ */
 
 DEFINITION_LVALUE_NO_PARAMS_STATIC(getTCPSocket, Socket) {
-    const socketCreateOutput output = socketCreate(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    const socketNewOutput output = socketNew(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (!output.ok) {
-        return getTCPSocketErr(prefixError("socketCreate", output.u.error));
+        return getTCPSocketErr(prefixError("socketNew", output.u.error));
     }
 
     return getTCPSocketOk(&output.u.value);

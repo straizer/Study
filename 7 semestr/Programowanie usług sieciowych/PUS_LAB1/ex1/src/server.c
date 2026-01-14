@@ -47,15 +47,14 @@ int main(const int argc, const char* const* const argv) {
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
-    char client_address_buffer[IPV4_IP_PORT_BUFFER_SIZE];
-    const ipv4SocketAddressToStringOutput output =
-        ipv4SocketAddressToString(&client_address, client_address_buffer, IPV4_IP_PORT_BUFFER_SIZE);
+    ipv4SocketAddressToStringOutput output = ipv4SocketAddressToString(&client_address);
     if (!output.ok) {
         printError("ipv4SocketAddressToString: %s", output.u.error);
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
+    const AUTO_STRING client_address_string = stringMove(&output.u.value);
 
-    printOutput("TCP connection accepted from %s", client_address_buffer);
+    printOutput("TCP connection accepted from %s", client_address_string.data);
     printOutput("Sending current date and time");
 
     // Get the current system time and convert it to a human-readable local time structure
@@ -84,7 +83,7 @@ int main(const int argc, const char* const* const argv) {
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
     if (bytes_read > 0) {
-        printError("Unexpected bytes received from %s:%d", client_address_buffer,
+        printError("Unexpected bytes received from %s:%d", client_address_string.data,
                    ntohs(((const struct sockaddr_in*)&client_address.storage)->sin_port));
         exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }

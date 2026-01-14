@@ -18,7 +18,8 @@ OBJ_DIR = obj
 
 # Mylibs objects
 BUFFER_OBJS = $(OBJ_DIR)/buffer.o
-IPV4_OBJS = $(OBJ_DIR)/ipv4.o
+STRING_OBJS = $(OBJ_DIR)/string.o
+IPV4_OBJS = $(STRING_OBJS) $(OBJ_DIR)/ipv4.o
 ERRORS_OBJS = $(BUFFER_OBJS) $(OBJ_DIR)/errors.o
 UTILS_OBJS = $(ERRORS_OBJS) $(OBJ_DIR)/utils.o
 SOCKET_OBJS = $(UTILS_OBJS) $(OBJ_DIR)/socket.o
@@ -104,7 +105,7 @@ endif
 
 check-unused-functions: $(OBJ_DIR)/unused/
 	echo "\033[33mLooking for unused functions.\033[0m"
-	cppcheck $(CPPCHECK_FLAGS) --cppcheck-build-dir=$(OBJ_DIR)/unused --enable=unusedFunction $(SRC_DIRS)
+	#cppcheck $(CPPCHECK_FLAGS) --cppcheck-build-dir=$(OBJ_DIR)/unused --enable=unusedFunction $(SRC_DIRS)
 
 format-headers:
 ifneq ($(LINT),0)

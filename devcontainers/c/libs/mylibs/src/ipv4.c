@@ -9,6 +9,10 @@
 
 /* ------------------------------------------------ Private members ------------------------------------------------ */
 
+enum {
+    IPV4_IP_PORT_BUFFER_SIZE = INET_ADDRSTRLEN + 6,  // IPv4 + ":" + PORT
+};
+
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
 
 DEFINITION_LVALUE(ipv4StringToAddress, in_addr, const char* const ip) {
@@ -30,7 +34,7 @@ DEFINITION_LVALUE(ipv4StringToAddress, in_addr, const char* const ip) {
     return ipv4StringToAddressOk(&address);
 }
 
-DEFINITION_NULL(ipv4SocketAddressToString, const SocketAddress* const address, char* const out, const size_t out_size) {
+DEFINITION_LVALUE(ipv4SocketAddressToString, String, const SocketAddress* address) {
     if (address == nullptr) {
         return ipv4SocketAddressToStringErr("address is NULL");
     }
@@ -38,27 +42,19 @@ DEFINITION_NULL(ipv4SocketAddressToString, const SocketAddress* const address, c
     if (socket_address->sin_family != AF_INET) {
         return ipv4SocketAddressToStringErr("address is not IPv4");
     }
-    if (out == nullptr) {
-        return ipv4SocketAddressToStringErr("out is NULL");
-    }
-    if (out_size < IPV4_IP_PORT_BUFFER_SIZE) {
-        return ipv4SocketAddressToStringErr("output buffer too small");
-    }
 
     char ip[INET_ADDRSTRLEN];
     if (inet_ntop(AF_INET, &socket_address->sin_addr, ip, sizeof(ip)) == nullptr) {
         return ipv4SocketAddressToStringErr(prefixErrno("inet_ntop"));
     }
 
-    const int result = snprintf(out, out_size, "%s:%u", ip, (unsigned)ntohs(socket_address->sin_port));
-    if (result < 0) {
-        return ipv4SocketAddressToStringErr(prefixError("snprintf", "formatting failed"));
-    }
-    if ((size_t)result >= out_size) {
-        return ipv4SocketAddressToStringErr(prefixError("snprintf", "output truncated"));
+    const stringFormatNewOutput string =
+        stringFormatNew(IPV4_IP_PORT_BUFFER_SIZE, "%s:%u", ip, (unsigned)ntohs(socket_address->sin_port));
+    if (!string.ok) {
+        return ipv4SocketAddressToStringErr(prefixError("stringFormatNew", string.u.error));
     }
 
-    return ipv4SocketAddressToStringOk();
+    return ipv4SocketAddressToStringOk(&string.u.value);
 }
 
 DEFINITION_LVALUE(ipv4CreateSocketAddress, SocketAddress, const in_addr* const ipv4_address, const in_port_t port) {

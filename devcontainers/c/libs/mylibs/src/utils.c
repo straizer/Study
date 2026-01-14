@@ -26,7 +26,7 @@ DEFINITION_NULL(utilsClose, int* file_descriptor) {
     return utilsCloseOk();
 }
 
-DEFINITION_RVALUE(utilsMalloc, void*, const size_t size) {
+DEFINITION_LRVALUE(utilsMalloc, void*, const size_t size) {
     void* const result = malloc(size);  // cppcheck-suppress misra-c2012-21.3
     if (result == nullptr) {
         char* const buffer = getErrorBuffer();

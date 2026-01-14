@@ -13,7 +13,7 @@ enum {
 
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
 
-DEFINITION_RVALUE(getPort, uint16_t, const char* const port_string) {
+DEFINITION_LRVALUE(getPort, uint16_t, const char* const port_string) {
     if (port_string == nullptr) {
         return getPortErr("port string is NULL");
     }

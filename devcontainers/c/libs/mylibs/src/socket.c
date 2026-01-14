@@ -15,7 +15,7 @@ static Socket socketConstructor(int file_descriptor);
 
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
 
-DEFINITION_RVALUE(socketCreate, Socket, const int domain, const int type, const int protocol) {
+DEFINITION_LRVALUE(socketCreate, Socket, const int domain, const int type, const int protocol) {
     if (protocol < 0) {
         return socketCreateErr("protocol is negative");
     }
@@ -103,7 +103,7 @@ DEFINITION_NULL(socketListen, const Socket* const socket, const int backlog_size
     return socketListenOk();
 }
 
-DEFINITION_RVALUE(socketAccept, Socket, const Socket* const socket, SocketAddress* const address) {
+DEFINITION_LRVALUE(socketAccept, Socket, const Socket* const socket, SocketAddress* const address) {
     if (socket == nullptr) {
         return socketAcceptErr("socket is NULL");
     }

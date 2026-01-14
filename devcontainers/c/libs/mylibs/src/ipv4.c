@@ -9,8 +9,6 @@
 
 /* ------------------------------------------------ Private members ------------------------------------------------ */
 
-typedef struct sockaddr_in ipv4_socket_address;
-
 /* ------------------------------------------ Public function definitions ------------------------------------------ */
 
 DEFINITION_LVALUE(ipv4StringToAddress, in_addr, const char* const ip) {
@@ -36,7 +34,7 @@ DEFINITION_NULL(ipv4SocketAddressToString, const SocketAddress* const address, c
     if (address == nullptr) {
         return ipv4SocketAddressToStringErr("address is NULL");
     }
-    const ipv4_socket_address* const socket_address = (const ipv4_socket_address* const)&address->storage;
+    const struct sockaddr_in* const socket_address = (const struct sockaddr_in* const)&address->storage;
     if (socket_address->sin_family != AF_INET) {
         return ipv4SocketAddressToStringErr("address is not IPv4");
     }
@@ -68,8 +66,8 @@ DEFINITION_LVALUE(ipv4CreateSocketAddress, SocketAddress, const in_addr* const i
         return ipv4CreateSocketAddressErr("ipv4_address is NULL");
     }
 
-    SocketAddress address = {.length = sizeof(ipv4_socket_address)};
-    ipv4_socket_address* const socket_address = (ipv4_socket_address* const)&address.storage;
+    SocketAddress address = {.length = sizeof(struct sockaddr_in)};
+    struct sockaddr_in* const socket_address = (struct sockaddr_in* const)&address.storage;
 
     socket_address->sin_family = AF_INET;
     socket_address->sin_addr = *ipv4_address;
